@@ -40,7 +40,7 @@ class SignUpActivity : AppCompatActivity() {
         tvAlreadyMember.setOnClickListener {
             // TODO: change to login Activity
             throw NotImplementedError()
-            val Intent = Intent(this, LoginActivity::class.java)
+            // val Intent = Intent(this, LoginActivity::class.java)
         }
     }
 }
