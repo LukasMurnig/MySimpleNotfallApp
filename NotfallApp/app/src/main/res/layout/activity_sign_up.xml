@@ -23,6 +23,17 @@
             android:layout_marginBottom="10dp"
             android:textSize="10pt"/>
 
+        <!--  Tel-Nr Label -->
+        <EditText
+            android:id="@+id/input_telnr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/telNr"
+            android:inputType="textPhonetic"
+            android:layout_marginBottom="10dp"
+            android:textSize="10pt"/>
+
         <!-- Email Label -->
         <EditText
             android:id="@+id/input_email"

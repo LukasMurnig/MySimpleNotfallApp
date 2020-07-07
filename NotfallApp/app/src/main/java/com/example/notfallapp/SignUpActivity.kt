@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class SignUpActivity : AppCompatActivity() {
-
+    // Vorname, Nachname, Geschlecht, Geburtstag, email, tel in der API
     private lateinit var etName : EditText
+    private lateinit var etTelNr : EditText
     private lateinit var etEmail : EditText
     private lateinit var etPassword : EditText
     private lateinit var btnSignUp : Button
@@ -20,27 +21,36 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         etName = findViewById(R.id.input_name)
+        etTelNr = findViewById(R.id.input_telnr)
         etEmail = findViewById(R.id.input_email)
         etPassword = findViewById(R.id.input_password)
         btnSignUp = findViewById(R.id.btn_signup)
         tvAlreadyMember = findViewById(R.id.link_login)
 
         btnSignUp.setOnClickListener{
-            if (etName.text != null && etEmail.text != null){
-                // TODO: change to a service request
-                // wird dann ein Service request:
-                val intent = Intent(this, MainActivity::class.java )
-                intent.putExtra("name", etName.text)
-                intent.putExtra("email", etEmail.text)
-                intent.putExtra("password", etPassword.text)
-                startActivity(intent)
-            }
+            signUp()
         }
 
         tvAlreadyMember.setOnClickListener {
-            // TODO: change to login Activity
-            throw NotImplementedError()
-            // val Intent = Intent(this, LoginActivity::class.java)
+            changeToLoginActivity()
         }
+    }
+
+    fun signUp() {
+        if (etName.text != null && etTelNr.text != null && etEmail.text != null){
+            // TODO: change to a service request
+            // wird dann ein Service request:
+            val intent = Intent(this, MainActivity::class.java )
+            intent.putExtra("name", etName.text)
+            intent.putExtra("email", etEmail.text)
+            intent.putExtra("password", etPassword.text)
+            startActivity(intent)
+        }
+    }
+
+    fun changeToLoginActivity(){
+        // TODO: change to login Activity
+        throw NotImplementedError()
+        // val Intent = Intent(this, LoginActivity::class.java)
     }
 }

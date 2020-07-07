@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NotfallApp</string>
     <string name="name">Name</string>
+    <string name="telNr">Telefon Nummer</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="createAccount">Erstelle Benutzer</string>
