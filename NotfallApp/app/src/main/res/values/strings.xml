@@ -4,10 +4,13 @@
     <string name="telNr">Telefon Nummer</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="emailUser">Email oder Benutzername</string>
     <string name="createAccount">Erstelle Benutzer</string>
     <string name="alreadyMember">Bereits einen Benutzer? Login</string>
     <string name="sos">SOS</string>
     <string name="device">Geräte</string>
     <string name="contacts">Kontakte</string>
     <string name="settings">Einstellungen</string>
+    <string name="loginbutton">Einloggen</string>
+    <string name="noUser">Sie haben noch keinen Benutzer? Registrieren Sie sich!</string>
 </resources>

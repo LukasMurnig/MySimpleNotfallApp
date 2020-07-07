@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Theme for Progressbar in Login -->
+    <style name="ProgressdialogLogin" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:text">@color/colorDark</item>
+    </style>
+
 </resources>
