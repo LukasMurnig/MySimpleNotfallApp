@@ -6,4 +6,5 @@
     <string name="password">Password</string>
     <string name="createAccount">Erstelle Benutzer</string>
     <string name="alreadyMember">Bereits einen Benutzer? Login</string>
+    <string name="sos">SOS</string>
 </resources>

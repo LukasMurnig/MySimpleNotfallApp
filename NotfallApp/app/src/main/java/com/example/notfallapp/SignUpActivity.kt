@@ -36,19 +36,19 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    fun signUp() {
+    private fun signUp() {
+        val intent = Intent(this, MainActivity::class.java )
         if (etName.text != null && etTelNr.text != null && etEmail.text != null){
             // TODO: change to a service request
-            // wird dann ein Service request:
-            val intent = Intent(this, MainActivity::class.java )
+            // wird dann wahrscheinlich ein Service request:
             intent.putExtra("name", etName.text)
             intent.putExtra("email", etEmail.text)
             intent.putExtra("password", etPassword.text)
-            startActivity(intent)
         }
+        startActivity(intent)
     }
 
-    fun changeToLoginActivity(){
+    private fun changeToLoginActivity(){
         // TODO: change to login Activity
         throw NotImplementedError()
         // val Intent = Intent(this, LoginActivity::class.java)
