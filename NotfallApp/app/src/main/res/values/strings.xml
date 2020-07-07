@@ -7,4 +7,7 @@
     <string name="createAccount">Erstelle Benutzer</string>
     <string name="alreadyMember">Bereits einen Benutzer? Login</string>
     <string name="sos">SOS</string>
+    <string name="device">Geräte</string>
+    <string name="contacts">Kontakte</string>
+    <string name="settings">Einstellungen</string>
 </resources>

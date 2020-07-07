@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         var toolbar = findViewById<Toolbar>(R.id.toolbar_main)
+        toolbar.title=""
         setSupportActionBar(toolbar)
 
         btnSos = findViewById(R.id.btn_sos)
