@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">NotfallApp</string>
-    <string name="app_register_button">Noch nicht Registriert? Erstellen Sie einen Benutzer!</string>
-    <string name="app_login">Anmelden</string>
-    <string name="app_email_username">Email oder Benutzernamen</string>
-    <string name="app_password">Passwort</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="createAccount">Erstelle Benutzer</string>
+    <string name="alreadyMember">Bereits einen Benutzer? Login</string>
 </resources>
