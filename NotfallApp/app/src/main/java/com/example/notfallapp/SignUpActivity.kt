@@ -1,5 +1,7 @@
 package com.example.notfallapp
 
+import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -37,15 +39,48 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-        val intent = Intent(this, MainActivity::class.java )
-        if (etName.text != null && etTelNr.text != null && etEmail.text != null){
-            // TODO: change to a service request
-            // wird dann wahrscheinlich ein Service request:
-            intent.putExtra("name", etName.text)
-            intent.putExtra("email", etEmail.text)
-            intent.putExtra("password", etPassword.text)
+
+        if(!valid()){
+            println("Falsch eingetragen")
+            return
         }
-        startActivity(intent)
+
+        // btnSignUp.isEnabled=false
+
+        setResult(Activity.RESULT_OK, null)
+        finish()
+    }
+
+    private fun valid() : Boolean{
+
+        var valid: Boolean = true
+
+        var name: String = etName.text.toString()
+        var telnr: String = etTelNr.text.toString()
+        var email: String = etEmail.text.toString()
+        var password: String = etPassword.text.toString()
+
+        if(name.isEmpty()) {
+            etName.error = "Name ist nicht ausgefüllt"
+            valid = false;
+        }
+
+        if(telnr.isEmpty() || !android.util.Patterns.PHONE.matcher(telnr).matches()) {
+            etTelNr.error = "Keine gültige Telefon Nummer eingegeben"
+            valid = false
+        }
+
+        if(email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            etEmail.error = "Keine gültige E-mail eingegeben"
+            valid = false
+        }
+
+        if(password.length < 6) {
+            etPassword.error = "muss mehr als 5 Zeichen haben"
+            return false
+        }
+
+        return valid
     }
 
     private fun changeToLoginActivity(){
