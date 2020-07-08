@@ -2,6 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/colorRed"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -13,48 +14,76 @@
         android:paddingRight="24dp">
 
         <!--  Name Label -->
-        <EditText
-            android:id="@+id/input_name"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:hint="@string/name"
-            android:inputType="textCapWords"
-            android:layout_marginBottom="10dp"
-            android:textSize="10pt"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:theme="@style/TextLabel">
+            <EditText
+                android:id="@+id/input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/name"
+                android:inputType="textCapWords"
+                android:layout_marginBottom="10dp"
+                android:textSize="10pt"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!--  Tel-Nr Label -->
-        <EditText
-            android:id="@+id/input_telnr"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:hint="@string/telNr"
-            android:inputType="textPhonetic"
-            android:layout_marginBottom="10dp"
-            android:textSize="10pt"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:theme="@style/TextLabel">
+            <EditText
+                android:id="@+id/input_telnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/telNr"
+                android:inputType="textPhonetic"
+                android:layout_marginBottom="10dp"
+                android:textSize="10pt"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Email Label -->
-        <EditText
-            android:id="@+id/input_email"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="10dp"
-            android:textSize="10pt"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:theme="@style/TextLabel">
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:layout_marginBottom="10dp"
+                android:textSize="10pt"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Label -->
-        <EditText
-            android:id="@+id/input_password"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:layout_marginBottom="10dp"
-            android:textSize="10pt"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:theme="@style/TextLabel">
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:layout_marginBottom="10dp"
+                android:textSize="10pt"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Signup Button -->
         <androidx.appcompat.widget.AppCompatButton
