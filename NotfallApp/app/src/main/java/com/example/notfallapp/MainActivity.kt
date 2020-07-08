@@ -29,9 +29,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar_main)
+        /*val toolbar = findViewById<Toolbar>(R.id.toolbar_main)
         toolbar.title=""
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar)*/
 
         createButtonBar()
 
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu) : Boolean{
+    /*override fun onCreateOptionsMenu(menu: Menu) : Boolean{
         menuInflater.inflate(R.menu.menubar, menu)
         return true
     }
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return(super.onOptionsItemSelected(item));
-    }
+    }*/
 
     private fun createButtonBar() {
         btnFirst = findViewById(R.id.btnFirst)
