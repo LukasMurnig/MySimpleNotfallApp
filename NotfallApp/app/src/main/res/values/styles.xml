@@ -18,6 +18,12 @@
     <style name="ProgressdialogLogin" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:text">@color/colorDark</item>
     </style>
-
+    <!-- Theme for Buttons in Button bar -->
+    <style name="ButtonStyle" parent="android:Widget.ImageButton">
+        <item name="background">@color/colorDodgerBlue</item>
+    </style>
+    <style name="ButtonTheme" parent="">
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+</style>
 
 </resources>
