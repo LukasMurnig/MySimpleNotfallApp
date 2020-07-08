@@ -48,12 +48,16 @@ class LoginActivity : AppCompatActivity() {
         var progressDialog: ProgressDialog = ProgressDialog(this, R.style.ProgressdialogLogin)
         progressDialog.setIndeterminate(true)
         progressDialog.setMessage("Authentifizieren ...")
+        // zum Testen
+        progressDialog.max = 100
         progressDialog.show();
 
         var email: String? = emailText.getText().toString()
         var password: String? = passwordText.getText().toString()
 
         //Todo: Implementation of the authentication  methode.
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
     fun onLoginFailed() {
