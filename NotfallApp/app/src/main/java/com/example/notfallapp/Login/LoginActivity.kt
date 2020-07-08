@@ -3,6 +3,7 @@ package com.example.notfallapp.Login
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -57,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
         var password: String? = passwordText.getText().toString()
 
         //Todo: Implementation of the authentication  methode.
-        var intent: Intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
 

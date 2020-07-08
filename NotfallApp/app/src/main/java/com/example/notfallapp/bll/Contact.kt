@@ -11,7 +11,7 @@ class Contact constructor( firstname: String, lastname: String, email: String, n
     @ColumnInfo(name = "lastname")
     var lastname: String? = ""
     @PrimaryKey
-    var email: String? = ""
+    var email: String = ""
     @ColumnInfo(name = "number")
     var number: Int? = 0
 }
