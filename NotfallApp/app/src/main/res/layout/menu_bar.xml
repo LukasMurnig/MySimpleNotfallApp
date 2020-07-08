@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/button_bar"
+    android:layout_width="360dp"
+    android:layout_marginBottom="255dp"
+    android:orientation="horizontal"
+    android:layout_height="100dp"
+    tools:showIn="@layout/activity_main">
+
+    <ImageButton
+        android:id="@+id/btnHome"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorDodgerBlue"
+        android:src="@drawable/profil" />
+
+    <ImageButton
+        android:id="@+id/btnAlarms"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorDodgerBlue"
+        android:src="@drawable/device" />
+
+    <ImageButton
+        android:id="@+id/btnContact"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorDodgerBlue"
+        android:src="@drawable/contacts" />
+
+    <ImageButton
+        android:id="@+id/btnSettings"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorDodgerBlue"
+        android:src="@drawable/settings" />
+</LinearLayout>
