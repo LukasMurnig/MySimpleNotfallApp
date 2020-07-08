@@ -1,4 +1,4 @@
-package com.example.notfallapp
+package com.example.notfallapp.Login
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -9,6 +9,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.notfallapp.MainActivity
+import com.example.notfallapp.R
 
 class LoginActivity : AppCompatActivity() {
     companion object{
@@ -45,11 +47,11 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton.setEnabled(true)
 
-        var progressDialog: ProgressDialog = ProgressDialog(this, R.style.ProgressdialogLogin)
+        var progressDialog: ProgressDialog = ProgressDialog(this,
+            R.style.ProgressdialogLogin
+        )
         progressDialog.setIndeterminate(true)
         progressDialog.setMessage("Authentifizieren ...")
-        // zum Testen
-        progressDialog.max = 100
         progressDialog.show();
 
         var email: String? = emailText.getText().toString()

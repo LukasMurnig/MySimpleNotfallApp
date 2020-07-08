@@ -1,35 +1,29 @@
 package com.example.notfallapp
 
-import android.annotation.SuppressLint
+import android.content.ClipData
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.drawable.Icon
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.style.BackgroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
-import androidx.core.graphics.component1
+import com.example.notfallapp.Login.SignUpActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var btnFirst : ImageButton
-    private lateinit var btnDevice : ImageButton
-    private lateinit var btnContacts : ImageButton
-    private lateinit var btnSettings : ImageButton
-    private lateinit var btnSos : Button
-
+    private lateinit var btnSos: Button
+    private lateinit var btnHome: MenuItem
+    private lateinit var btnContact: MenuItem
+    private lateinit var btnAlarms: MenuItem
+    private lateinit var btnSettings: MenuItem
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         /*val toolbar = findViewById<Toolbar>(R.id.toolbar_main)
+        setMainActivityControls()
         toolbar.title=""
         setSupportActionBar(toolbar)*/
 
@@ -42,6 +36,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
+
+       /* btnAlarms.setOnMenuItemClickListener(){
+            // TODO Open register with alarms from Database
+        }*/
+
+
     }
 
     /*override fun onCreateOptionsMenu(menu: Menu) : Boolean{
@@ -72,20 +72,20 @@ class MainActivity : AppCompatActivity() {
     }*/
 
     private fun createButtonBar() {
-        btnFirst = findViewById(R.id.btnFirst)
-        btnDevice = findViewById(R.id.btnDevice)
-        btnContacts = findViewById(R.id.btnContacts)
-        btnSettings = findViewById(R.id.btnSettings)
+        btnHome = menu.findItem(R.id.btnFirst)
+        btnAlarms = menu.findItem(R.id.btnDevice)
+        btnContact = menu.findItem(R.id.btnContacts)
+        btnSettings = menu.findItem(R.id.btnSettings)
 
-        btnFirst.setOnClickListener(){
+        btnHome.setOnClickListener(){
             println("firstItem Click")
         }
 
-        btnDevice.setOnClickListener(){
+        btnAlarms.setOnClickListener(){
             println("secondItem Click")
         }
 
-        btnContacts.setOnClickListener(){
+        btnContact.setOnClickListener(){
             println("thirdItem Click")
         }
 
