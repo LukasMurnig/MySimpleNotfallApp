@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(),
         btnSos = findViewById(R.id.btn_sos)
         createSOSOnClickListener(this, btnSos)
 
-        btnAlarms.setOnClickListener(){
+        /*btnAlarms.setOnClickListener(){
             // TODO Open register with alarms from Database
             Log.d("MenuItemClicked", "Alarmregister were clicked in MainActivity")
         }
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(),
         btnSettings.setOnClickListener(){
             // TODO open settingsActivity
             Log.d("MenuItemClicked", "Settings were clicked in MainActivity")
-        }
+        }*/
     }
 
     private fun createButtonBar() {
@@ -52,6 +52,6 @@ class MainActivity : AppCompatActivity(),
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createOnClickListener(btnHome, btnAlarms, btnContact, btnSettings)
+        createOnClickListener(this, btnHome, btnAlarms, btnContact, btnSettings)
     }
 }
