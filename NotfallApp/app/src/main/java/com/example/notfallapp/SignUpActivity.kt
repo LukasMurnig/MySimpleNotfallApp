@@ -1,7 +1,6 @@
 package com.example.notfallapp
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -39,7 +38,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-
+        // check if all fields are correct
         if(!valid()){
             println("Falsch eingetragen")
             return
@@ -52,30 +51,29 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun valid() : Boolean{
+        var valid = true
 
-        var valid: Boolean = true
+        val name: String? = etName.text.toString()
+        val telnr: String? = etTelNr.text.toString()
+        val email: String? = etEmail.text.toString()
+        val password: String? = etPassword.text.toString()
 
-        var name: String = etName.text.toString()
-        var telnr: String = etTelNr.text.toString()
-        var email: String = etEmail.text.toString()
-        var password: String = etPassword.text.toString()
-
-        if(name.isEmpty()) {
+        if(name?.isEmpty()!!) {
             etName.error = "Name ist nicht ausgefüllt"
-            valid = false;
+            valid = false
         }
 
-        if(telnr.isEmpty() || !android.util.Patterns.PHONE.matcher(telnr).matches()) {
+        if(telnr?.isEmpty()!! || !android.util.Patterns.PHONE.matcher(telnr).matches()) {
             etTelNr.error = "Keine gültige Telefon Nummer eingegeben"
             valid = false
         }
 
-        if(email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if(email?.isEmpty()!! || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             etEmail.error = "Keine gültige E-mail eingegeben"
             valid = false
         }
 
-        if(password.length < 6) {
+        if(password?.length!! < 6) {
             etPassword.error = "muss mehr als 5 Zeichen haben"
             return false
         }
@@ -84,8 +82,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun changeToLoginActivity(){
-        // TODO: change to login Activity
-        throw NotImplementedError()
-        // val Intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 }

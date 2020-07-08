@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
         signupText.setOnClickListener{
             //start the signup activity
             var intent: Intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
         }
     }
 
