@@ -14,10 +14,10 @@ import com.example.notfallapp.Login.SignUpActivity
 class MainActivity : AppCompatActivity() {
 
     private lateinit var btnSos: Button
-    private lateinit var btnHome: MenuItem
-    private lateinit var btnContact: MenuItem
-    private lateinit var btnAlarms: MenuItem
-    private lateinit var btnSettings: MenuItem
+    private lateinit var btnHome: ImageButton
+    private lateinit var btnContact: ImageButton
+    private lateinit var btnAlarms: ImageButton
+    private lateinit var btnSettings: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -72,10 +72,10 @@ class MainActivity : AppCompatActivity() {
     }*/
 
     private fun createButtonBar() {
-        btnHome = menu.findItem(R.id.btnFirst)
-        btnAlarms = menu.findItem(R.id.btnDevice)
-        btnContact = menu.findItem(R.id.btnContacts)
-        btnSettings = menu.findItem(R.id.btnSettings)
+        btnHome = findViewById(R.id.btnFirst)
+        btnAlarms = findViewById(R.id.btnDevice)
+        btnContact = findViewById(R.id.btnContacts)
+        btnSettings = findViewById(R.id.btnSettings)
 
         btnHome.setOnClickListener(){
             println("firstItem Click")
