@@ -13,4 +13,14 @@
     <string name="settings">Einstellungen</string>
     <string name="loginbutton">Einloggen</string>
     <string name="noUser">Sie haben noch keinen Benutzer? Registrieren Sie sich!</string>
+    <string name="noContacts">Sie besitzen leider noch keine Kontakte!</string>
+    <string name="createContact">Glückwunsch! Sie haben erfolgreich einen neuen Kontakt hinzugefügt.</string>
+    <string name="updateContact">Ihr Kontakt wurde erfolgreich aktualisiert.</string>
+    <string name="deleteContact">Ihr Kontakt wurde erfolgreich gelöscht.</string>
+    <string name="createContactFailed">Leider konnte ihr Kontakt nicht erstellt werden.
+                                      Grund dafür ist:</string>
+    <string name="updateContactFailed">Ihr Kontakt konnte nicht aktualisiert werden.
+                                      Grund dafür ist:</string>
+    <string name="deleteContactFailed">Ihr Kontakt konnte nicht gelöscht werden.
+                                      Grund dafür ist:</string>
 </resources>
