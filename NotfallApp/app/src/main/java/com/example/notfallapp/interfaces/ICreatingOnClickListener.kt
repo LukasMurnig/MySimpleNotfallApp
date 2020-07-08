@@ -1,11 +1,16 @@
 package com.example.notfallapp.interfaces
 
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.widget.ImageButton
+import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.menubar.ContactActivity
 
 interface ICreatingOnClickListener {
 
-    fun createOnClickListener(btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
+    fun createOnClickListener(context: Context, btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
 
         btnHome.setOnClickListener(){
             println("firstItem Click")
@@ -14,14 +19,19 @@ interface ICreatingOnClickListener {
         btnAlarms.setOnClickListener(){
             println("secondItem Click")
             // TODO Open register with alarms from Database
+            Log.d("MenuItemClicked", "Alarmregister were clicked in MainActivity")
         }
 
         btnContact.setOnClickListener(){
-            println("thirdItem Click")
+            // TODO open ContactActivity
+            Log.d("MenuItemClicked", "Contacts were clicked in MainActivity")
+            val intent = Intent(context, ContactActivity::class.java)
+            startActivity(context, intent, null)
         }
 
         btnSettings.setOnClickListener(){
-            println("fourthItem Click")
+            // TODO open settingsActivity
+            Log.d("MenuItemClicked", "Settings were clicked in MainActivity")
         }
     }
 }
