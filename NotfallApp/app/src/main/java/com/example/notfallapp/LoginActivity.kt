@@ -3,6 +3,7 @@ package com.example.notfallapp
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -31,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
         signupText.setOnClickListener{
             //start the signup activity
-            //var intent: Intent = Intent(this, SignUpActivity::class.java)
+            var intent: Intent = Intent(this, SignUpActivity::class.java)
         }
     }
 
