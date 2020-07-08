@@ -1,11 +1,11 @@
-package com.example.notfallapp.menubar
+package com.example.notfallapp.interfaces
 
 import android.widget.ImageButton
 import com.example.notfallapp.R
 
-interface ICreatingButtonBar {
+interface ICreatingOnClickListener {
 
-    fun createButtonBar(btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
+    fun createOnClickListener(btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
 
         btnHome.setOnClickListener(){
             println("firstItem Click")
@@ -13,6 +13,7 @@ interface ICreatingButtonBar {
 
         btnAlarms.setOnClickListener(){
             println("secondItem Click")
+            // TODO Open register with alarms from Database
         }
 
         btnContact.setOnClickListener(){

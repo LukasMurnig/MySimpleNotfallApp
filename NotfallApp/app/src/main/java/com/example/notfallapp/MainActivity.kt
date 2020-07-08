@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import com.example.notfallapp.Login.SignUpActivity
-import com.example.notfallapp.menubar.ICreatingButtonBar
+import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.interfaces.ISOSOnClickListener
 
-class MainActivity : AppCompatActivity(), ICreatingButtonBar {
+class MainActivity : AppCompatActivity(),
+    ICreatingOnClickListener, ISOSOnClickListener {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -22,18 +24,7 @@ class MainActivity : AppCompatActivity(), ICreatingButtonBar {
         createButtonBar()
 
         btnSos = findViewById(R.id.btn_sos)
-
-        btnSos.setOnClickListener(){
-            // TODO Now open sign up, later send alert
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
-
-       /* btnAlarms.setOnMenuItemClickListener(){
-            // TODO Open register with alarms from Database
-        }*/
-
-
+        createSOSOnClickListener(this, btnSos)
     }
 
     private fun createButtonBar() {
@@ -42,6 +33,6 @@ class MainActivity : AppCompatActivity(), ICreatingButtonBar {
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createButtonBar(btnHome, btnAlarms, btnContact, btnSettings)
+        createOnClickListener(btnHome, btnAlarms, btnContact, btnSettings)
     }
 }
