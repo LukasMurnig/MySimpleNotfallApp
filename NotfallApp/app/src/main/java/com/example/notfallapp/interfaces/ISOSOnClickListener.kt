@@ -11,7 +11,7 @@ import com.example.notfallapp.Login.SignUpActivity
 interface ISOSOnClickListener {
 
     fun createSOSOnClickListener(context: Context, btnSos: Button){
-        btnSos.setOnClickListener(){
+        btnSos.setOnClickListener{
             // TODO Now open sign up, later send alert
             Log.d("SOSButton", "SOSButton was clicked!")
             val toast = Toast.makeText(context, "SORRY WE have not implemented yet!", Toast.LENGTH_SHORT)
