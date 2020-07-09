@@ -2,7 +2,6 @@ package com.example.notfallapp.database
 
 import android.content.Context
 import androidx.room.Room
-import com.example.notfallapp.menubar.ContactActivity
 
 
 class DatabaseClient(context: Context?) {
@@ -25,7 +24,8 @@ class DatabaseClient(context: Context?) {
     fun getAppDatabase(context: Context): EmergencyAppDatabase? {
         //creating the app database with Room database builder
         emergencyAppDatabase =
-            Room.databaseBuilder<EmergencyAppDatabase>(context, EmergencyAppDatabase::class.java, DB_NAME).build()
+            Room.databaseBuilder<EmergencyAppDatabase>(context, EmergencyAppDatabase::class.java, DB_NAME).fallbackToDestructiveMigration()
+                .build()
         return emergencyAppDatabase
     }
 }

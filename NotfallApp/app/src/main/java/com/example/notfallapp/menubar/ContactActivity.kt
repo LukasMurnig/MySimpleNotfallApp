@@ -9,11 +9,10 @@ import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.DatabaseClient
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.ISOSOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnClickListener {
+class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -37,8 +36,6 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnClic
             var toast = Toast.makeText(this, "Sorry we have not implemented yet!", Toast.LENGTH_SHORT)
             toast.show()
         }
-        btnSos = findViewById(R.id.btn_sos)
-        createSOSOnClickListener(this, btnSos)
 
         try{
             getAllContacts()
@@ -48,12 +45,14 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnClic
     }
 
     private fun createButtonBar() {
+        btnSos = findViewById(R.id.btn_sos)
+
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createOnClickListener(this, btnHome, btnAlarms, btnContact, btnSettings)
+        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 
     private fun initComponents(){
