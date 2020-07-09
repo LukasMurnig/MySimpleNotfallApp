@@ -1,6 +1,7 @@
 package com.example.notfallapp.database
 
 import android.content.Context
+import android.os.AsyncTask
 import android.util.Log
 import androidx.annotation.NonNull
 import androidx.room.Database
@@ -16,7 +17,7 @@ import kotlinx.coroutines.GlobalScope
 abstract class EmergencyAppDatabase : RoomDatabase(){
     abstract fun contactDao(): ContactDao
 
-    companion object  {
+    /*companion object  {
         private var INSTANCE: EmergencyAppDatabase? = null
         private val DB_NAME: String = "emergency.db"
 
@@ -24,16 +25,13 @@ abstract class EmergencyAppDatabase : RoomDatabase(){
             if (INSTANCE == null){
                 synchronized(EmergencyAppDatabase::class.java) {
                     if (INSTANCE == null) {
+                        System.out.println(context.applicationContext)
                         INSTANCE == Room.databaseBuilder(context.applicationContext, EmergencyAppDatabase::class.java, DB_NAME)
-                            .addCallback(object : Callback(){
-                                override fun onCreate(db: SupportSQLiteDatabase) {
-                                    super.onCreate(db)
-                                }
-                            }).build()
+                            .build()
                     }
                 }
             }
             return INSTANCE!!
         }
-    }
+    }*/
 }

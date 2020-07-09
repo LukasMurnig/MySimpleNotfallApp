@@ -5,8 +5,13 @@ import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.adapter.ContactListAdapter
+import com.example.notfallapp.bll.Contact
+import com.example.notfallapp.database.DatabaseClient
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ISOSOnClickListener
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnClickListener {
 
@@ -35,6 +40,11 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnClic
         btnSos = findViewById(R.id.btn_sos)
         createSOSOnClickListener(this, btnSos)
 
+        try{
+            getAllContacts()
+        }catch (ex: Exception){
+            Log.e("ExceptionDatabase", ex.toString())
+        }
     }
 
     private fun createButtonBar() {
@@ -51,5 +61,26 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnClic
         lbMessageNoContacts = findViewById(R.id.lbMessageNoContacts)
         lvContacts = findViewById(R.id.lvContacts)
         addButton = findViewById(R.id.addButton)
+    }
+
+    private fun getAllContacts(){
+        val dbclient = DatabaseClient(this)
+        val db = dbclient.getAppDatabase(this)
+        GlobalScope.launch {
+            val data = db?.contactDao()?.getAllContact()
+            if (data != null) {
+                if(data.isEmpty()) {
+                    lbMessageNoContacts.setText(getResources().getString(R.string.noContacts))
+                }else{
+                    setAdapter(data)
+                }
+            }
+
+        }
+    }
+
+    private fun setAdapter(data: List<Contact>){
+        val adapter = ContactListAdapter(this, data as ArrayList<Contact>)
+        lvContacts.adapter = adapter;
     }
 }

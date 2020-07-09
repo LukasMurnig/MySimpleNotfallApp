@@ -5,25 +5,36 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.dao.ContactDao
+import com.example.notfallapp.database.DatabaseClient
 import com.example.notfallapp.database.EmergencyAppDatabase
 
 class ContactViewModel(application: Application) : AndroidViewModel(application) {
-    private val contactDao: ContactDao = EmergencyAppDatabase.getDatabase(application).contactDao()
-    val contactList: List<Contact>
+    var dbclient = DatabaseClient(application)
+    var db = dbclient.getAppDatabase(application)
+    private val contactDao: ContactDao? = db?.contactDao()
+    lateinit var contactList: List<Contact>
 
     init {
-        contactList = contactDao.getAllContact()
+        if (contactDao != null) {
+            contactList = contactDao.getAllContact()
+        }
     }
 
     suspend fun insert(contacts: List<Contact>){
-        contactDao.insertAllContacts(contacts)
+        if (contactDao != null) {
+            contactDao.insertAllContacts(contacts)
+        }
     }
 
     suspend fun update(contact: Contact){
-        contactDao.updateContact(contact)
+        if (contactDao != null) {
+            contactDao.updateContact(contact)
+        }
     }
 
     suspend fun delete(contact: Contact){
-        contactDao.deleteContact(contact)
+        if (contactDao != null) {
+            contactDao.deleteContact(contact)
+        }
     }
 }
