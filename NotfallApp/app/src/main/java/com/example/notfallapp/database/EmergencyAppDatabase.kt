@@ -7,14 +7,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.bll.Contact
+import com.example.notfallapp.dao.AlarmsDao
 import com.example.notfallapp.dao.ContactDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 
-@Database(entities = arrayOf(Contact::class), version = 1)
+@Database(entities = [Contact::class, Alarm::class], version = 1)
 abstract class EmergencyAppDatabase : RoomDatabase(){
     abstract fun contactDao(): ContactDao
+    abstract fun alarmsDao(): AlarmsDao
 
     companion object  {
         private var INSTANCE: EmergencyAppDatabase? = null

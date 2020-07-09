@@ -1,11 +1,20 @@
 package com.example.notfallapp.menubar
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageButton
+import android.util.Log
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.adapters.CustomAlarmAdapter
+import com.example.notfallapp.bll.Alarm
+import com.example.notfallapp.database.EmergencyAppDatabase
+import com.example.notfallapp.databasemanager.DatabaseManager
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.viewmodel.AlarmsViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.lang.Exception
+import java.util.*
 
 class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
@@ -15,11 +24,40 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var btnAlarms: ImageButton
     private lateinit var btnSettings: ImageButton
 
+    private lateinit var lvAlarms: ListView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarms)
 
         configureButtons()
+
+        // fill ListView with Alerts
+        lvAlarms = findViewById(R.id.lvAlarms)
+
+        getAlarms()
+    }
+
+    private fun getAlarms(){
+        try {
+            val db = EmergencyAppDatabase.getDatabase(this)
+
+            GlobalScope.launch {
+                val data = db.alarmsDao().getAllAlarms()
+
+                setAdapter(data)
+            }
+
+        }catch (error: Exception){
+            Log.e("DatabaseError", error.toString())
+
+            /*val h = listOf(Alarm("1", "Could not load alerts", "gerade"))
+            setAdapter(h)*/
+        }
+    }
+
+    private fun setAdapter(data: List<Alarm>){
+        lvAlarms.adapter = CustomAlarmAdapter(this, data)
     }
 
     private fun configureButtons() {
