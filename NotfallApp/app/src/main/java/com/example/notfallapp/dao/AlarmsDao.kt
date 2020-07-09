@@ -1,8 +1,10 @@
 package com.example.notfallapp.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
 import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.bll.Contact
 
 @Dao
 interface AlarmsDao {
@@ -12,6 +14,12 @@ interface AlarmsDao {
     @Insert
     fun insertAlarm(alarm: Alarm)
 
+    @Insert
+    fun insertAlarm(vararg alarms: Alarm?)
+
     @Delete
     fun deleteAlarm(alarm: Alarm)
+
+    @Query("DELETE from Alarms")
+    fun deleteAll()
 }

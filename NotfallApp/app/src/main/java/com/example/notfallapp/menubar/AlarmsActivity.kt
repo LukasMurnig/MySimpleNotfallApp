@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import com.example.notfallapp.R
 import com.example.notfallapp.adapters.CustomAlarmAdapter
 import com.example.notfallapp.bll.Alarm
@@ -40,7 +41,13 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
     private fun getAlarms(){
         try {
-            val db = EmergencyAppDatabase.getDatabase(this)
+            val db = Room.databaseBuilder(
+                        applicationContext,
+                        EmergencyAppDatabase::class.java, "emergency.db"
+                    ).build()
+
+            println("Hallo")
+            println("$db")
 
             GlobalScope.launch {
                 val data = db.alarmsDao().getAllAlarms()
