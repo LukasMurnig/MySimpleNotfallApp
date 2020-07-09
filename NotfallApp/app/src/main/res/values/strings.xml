@@ -31,4 +31,5 @@
                                       Grund dafür ist:</string>
     <string name="deleteContactFailed">Ihr Kontakt konnte nicht gelöscht werden.
                                       Grund dafür ist:</string>
+    <string name="add">Hinzufügen</string>
 </resources>

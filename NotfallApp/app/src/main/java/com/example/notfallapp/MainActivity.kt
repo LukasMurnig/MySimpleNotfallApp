@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.TextView
 import com.example.notfallapp.Login.SignUpActivity
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ISOSOnClickListener
@@ -27,23 +29,6 @@ class MainActivity : AppCompatActivity(),
 
         btnSos = findViewById(R.id.btn_sos)
         createSOSOnClickListener(this, btnSos)
-
-        /*btnAlarms.setOnClickListener(){
-            // TODO Open register with alarms from Database
-            Log.d("MenuItemClicked", "Alarmregister were clicked in MainActivity")
-        }
-
-        btnContact.setOnClickListener(){
-            // TODO open ContactActivity
-            Log.d("MenuItemClicked", "Contacts were clicked in MainActivity")
-            val intent = Intent(this, ContactActivity::class.java)
-            startActivity(intent)
-        }
-
-        btnSettings.setOnClickListener(){
-            // TODO open settingsActivity
-            Log.d("MenuItemClicked", "Settings were clicked in MainActivity")
-        }*/
     }
 
     private fun createButtonBar() {

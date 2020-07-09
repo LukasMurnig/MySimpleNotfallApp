@@ -14,8 +14,8 @@
         android:paddingRight="24dp">
 
         <ImageView
-            android:layout_width="319dp"
-            android:layout_height="156dp"
+            android:layout_width="470dp"
+            android:layout_height="259dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
             android:src="@drawable/notfallapplogo" />
