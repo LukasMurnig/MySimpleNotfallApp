@@ -6,16 +6,15 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import com.example.notfallapp.R
-import com.example.notfallapp.adapters.CustomAlarmAdapter
+import com.example.notfallapp.adapter.AlarmsListAdapter
+import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.databasemanager.DatabaseManager
+import com.example.notfallapp.bll.Contact
+import com.example.notfallapp.database.DatabaseClient
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.viewmodel.AlarmsViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.lang.Exception
-import java.util.*
 
 class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
@@ -26,6 +25,7 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var btnSettings: ImageButton
 
     private lateinit var lvAlarms: ListView
+    private lateinit var lbMessageNoAlarms: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,36 +35,30 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
         // fill ListView with Alerts
         lvAlarms = findViewById(R.id.lvAlarms)
+        lbMessageNoAlarms = findViewById(R.id.lbMessageNoAlarms)
 
         getAlarms()
     }
 
     private fun getAlarms(){
-        try {
-            val db = Room.databaseBuilder(
-                        applicationContext,
-                        EmergencyAppDatabase::class.java, "emergency.db"
-                    ).build()
-
-            println("Hallo")
-            println("$db")
-
-            GlobalScope.launch {
-                val data = db.alarmsDao().getAllAlarms()
-
-                setAdapter(data)
+        val dbclient = DatabaseClient(this)
+        val db = dbclient.getAppDatabase(this)
+        GlobalScope.launch {
+            val data = db?.alarmsDao()?.getAllAlarms()
+            if (data != null) {
+                if(data.isEmpty()) {
+                    lbMessageNoAlarms.setText(getResources().getString(R.string.noAlarms))
+                }else{
+                    setAdapter(data)
+                }
             }
 
-        }catch (error: Exception){
-            Log.e("DatabaseError", error.toString())
-
-            /*val h = listOf(Alarm("1", "Could not load alerts", "gerade"))
-            setAdapter(h)*/
         }
     }
 
     private fun setAdapter(data: List<Alarm>){
-        lvAlarms.adapter = CustomAlarmAdapter(this, data)
+        val adapter = AlarmsListAdapter(this, data as ArrayList<Alarm>)
+        lvAlarms.adapter = adapter;
     }
 
     private fun configureButtons() {

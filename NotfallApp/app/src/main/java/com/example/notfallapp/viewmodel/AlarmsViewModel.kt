@@ -4,27 +4,31 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.room.Room
 import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.dao.AlarmsDao
 import com.example.notfallapp.dao.ContactDao
-import com.example.notfallapp.database.EmergencyAppDatabase
+import com.example.notfallapp.database.DatabaseClient
 
 class AlarmsViewModel(application: Application) : AndroidViewModel(application) {
-    private val alarmsDao: AlarmsDao = Room.databaseBuilder(
-        application,
-        EmergencyAppDatabase::class.java, "emergency.db"
-    ).build().alarmsDao()
-    val alarmsList: List<Alarm>
+    var dbclient = DatabaseClient(application)
+    var db = dbclient.getAppDatabase(application)
+    private val alarmsDao: AlarmsDao? = db?.alarmsDao()
+    lateinit var alarmsList: List<Alarm>
 
     init {
-        alarmsList = alarmsDao.getAllAlarms()
+        if (alarmsDao != null) {
+            alarmsList = alarmsDao.getAllAlarms()
+        }
     }
 
     suspend fun insert(alarm: Alarm){
-        alarmsDao.insertAlarm(alarm)
+        if (alarmsDao != null) {
+            alarmsDao.insertAlarm(alarm)
+        }
     }
 
     suspend fun delete(alarm: Alarm){
-        alarmsDao.deleteAlarm(alarm)
+        if (alarmsDao != null) {
+            alarmsDao.deleteAlarm(alarm)
+        }
     }
 }
