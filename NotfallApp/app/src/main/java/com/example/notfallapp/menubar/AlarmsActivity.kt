@@ -1,27 +1,23 @@
-package com.example.notfallapp
+package com.example.notfallapp.menubar
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
-import com.example.notfallapp.Login.SignUpActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.ISOSOnClickListener
-import com.example.notfallapp.menubar.ContactActivity
 
-class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener {
+class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
     private lateinit var btnAlarms: ImageButton
     private lateinit var btnSettings: ImageButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_alarms)
 
         configureButtons()
     }

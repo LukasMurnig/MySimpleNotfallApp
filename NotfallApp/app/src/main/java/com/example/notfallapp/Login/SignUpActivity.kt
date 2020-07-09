@@ -40,6 +40,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
+
         // check if all fields are correct
         if(!valid()){
             println("Falsch eingetragen")
@@ -52,13 +53,13 @@ class SignUpActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun valid() : Boolean{
-        var valid = true
-
+    fun valid() : Boolean{
         val name: String? = etName.text.toString()
         val telnr: String? = etTelNr.text.toString()
         val email: String? = etEmail.text.toString()
         val password: String? = etPassword.text.toString()
+
+        var valid = true
 
         if(name?.isEmpty()!!) {
             etName.error = "Name ist nicht ausgefüllt"
@@ -75,8 +76,8 @@ class SignUpActivity : AppCompatActivity() {
             valid = false
         }
 
-        if(password?.length!! < 6) {
-            etPassword.error = "muss mehr als 5 Zeichen haben"
+        if(password?.length!! < 4) {
+            etPassword.error = "muss mehr als 3 Zeichen haben"
             return false
         }
 

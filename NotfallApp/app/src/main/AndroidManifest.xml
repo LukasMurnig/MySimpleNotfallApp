@@ -21,6 +21,9 @@
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".menubar.AlarmsActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
