@@ -3,14 +3,23 @@ package com.example.notfallapp.interfaces
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat.startActivity
+import com.example.notfallapp.Login.SignUpActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.menubar.ContactActivity
 
 interface ICreatingOnClickListener {
 
-    fun createOnClickListener(context: Context, btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
+    fun createOnClickListener(context: Context, btnSos: Button, btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
+
+        btnSos.setOnClickListener(){
+            // TODO Now open sign up, later send alert
+
+            val intent = Intent(context, SignUpActivity::class.java)
+            startActivity(context, intent,null)
+        }
 
         btnHome.setOnClickListener(){
             println("firstItem Click")

@@ -12,7 +12,7 @@ import com.example.notfallapp.interfaces.ISOSOnClickListener
 import com.example.notfallapp.menubar.ContactActivity
 
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener, ISOSOnClickListener {
+    ICreatingOnClickListener {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -23,35 +23,17 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        createButtonBar()
-
-        btnSos = findViewById(R.id.btn_sos)
-        createSOSOnClickListener(this, btnSos)
-
-        /*btnAlarms.setOnClickListener(){
-            // TODO Open register with alarms from Database
-            Log.d("MenuItemClicked", "Alarmregister were clicked in MainActivity")
-        }
-
-        btnContact.setOnClickListener(){
-            // TODO open ContactActivity
-            Log.d("MenuItemClicked", "Contacts were clicked in MainActivity")
-            val intent = Intent(this, ContactActivity::class.java)
-            startActivity(intent)
-        }
-
-        btnSettings.setOnClickListener(){
-            // TODO open settingsActivity
-            Log.d("MenuItemClicked", "Settings were clicked in MainActivity")
-        }*/
+        configureButtons()
     }
 
-    private fun createButtonBar() {
+    private fun configureButtons() {
+        btnSos = findViewById(R.id.btn_sos)
+
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createOnClickListener(this, btnHome, btnAlarms, btnContact, btnSettings)
+        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 }
