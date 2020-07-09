@@ -10,6 +10,7 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.Login.SignUpActivity
 import com.example.notfallapp.menubar.AlarmsActivity
 import com.example.notfallapp.menubar.ContactActivity
+import com.example.notfallapp.menubar.SettingsActivity
 
 interface ICreatingOnClickListener {
 
@@ -48,6 +49,8 @@ interface ICreatingOnClickListener {
         btnSettings.setOnClickListener{
             // TODO open settingsActivity
             Log.d("MenuItemClicked", "Settings were clicked")
+            val intent = Intent(context, SettingsActivity::class.java)
+            startActivity(context, intent, null)
         }
     }
 }

@@ -33,4 +33,5 @@
     <string name="deleteContactFailed">Ihr Kontakt konnte nicht gelöscht werden.
                                       Grund dafür ist:</string>
     <string name="add">Hinzufügen</string>
+    <string name="ChangeProfil">Ändere Daten</string>
 </resources>
