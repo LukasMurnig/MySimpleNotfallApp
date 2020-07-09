@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Contact")
-class Contact constructor( firstname: String, lastname: String, email: String, number: Int) {
+class Contact constructor( firstname: String, lastname: String, email: String, number: Int, imageResourceId: Int) {
     @ColumnInfo(name = "firstname")
     var firstname: String? = ""
     @ColumnInfo(name = "lastname")
@@ -14,4 +14,7 @@ class Contact constructor( firstname: String, lastname: String, email: String, n
     var email: String = ""
     @ColumnInfo(name = "number")
     var number: Int? = 0
+    @ColumnInfo(name = "pictureID")
+    var imageResourceId: Int = 0
+
 }

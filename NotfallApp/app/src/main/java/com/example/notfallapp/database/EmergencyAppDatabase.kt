@@ -2,6 +2,8 @@ package com.example.notfallapp.database
 
 import android.content.Context
 import android.os.AsyncTask
+import android.util.Log
+import androidx.annotation.NonNull
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -16,9 +18,9 @@ abstract class EmergencyAppDatabase : RoomDatabase(){
     abstract fun contactDao(): ContactDao
     abstract fun alarmsDao(): AlarmsDao
 
-    companion object  {
-        @Volatile private var INSTANCE: EmergencyAppDatabase? = null
-        private val LOCK = Any()
+    /*companion object  {
+        private var INSTANCE: EmergencyAppDatabase? = null
+        private val DB_NAME: String = "emergency.db"
 
         operator fun invoke(context: Context)= INSTANCE ?: synchronized(LOCK) {
             INSTANCE ?: buildDatabase(context).also{ INSTANCE = it}
@@ -34,12 +36,8 @@ abstract class EmergencyAppDatabase : RoomDatabase(){
             if (INSTANCE == null){
                 synchronized(EmergencyAppDatabase::class.java) {
                     if (INSTANCE == null) {
+                        System.out.println(context.applicationContext)
                         INSTANCE == Room.databaseBuilder(context.applicationContext, EmergencyAppDatabase::class.java, DB_NAME)
-                            .addCallback(object : Callback(){
-                                override fun onCreate(db: SupportSQLiteDatabase) {
-                                    super.onCreate(db)
-                                }
-                            }).allowMainThreadQueries()
                             .build()
                     }
                 }
@@ -63,5 +61,5 @@ abstract class EmergencyAppDatabase : RoomDatabase(){
         init {
             alarmsDAO = INSTANCE?.alarmsDao()!!
         }
-    }
+    }*/
 }

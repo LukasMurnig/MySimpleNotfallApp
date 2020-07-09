@@ -48,7 +48,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
     // GSON
-    implementation files('libs/gson-2.5.jar')
+    //implementation files('libs/gson-2.5.jar')
     // implementation 'com.google.code.gson:gson:2.8.6'
     // Testing
     testImplementation 'junit:junit:4.13'
