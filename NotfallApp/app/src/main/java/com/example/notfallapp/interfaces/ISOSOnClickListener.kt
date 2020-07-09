@@ -9,7 +9,7 @@ import com.example.notfallapp.Login.SignUpActivity
 interface ISOSOnClickListener {
 
     fun createSOSOnClickListener(context: Context, btnSos: Button){
-        btnSos.setOnClickListener(){
+        btnSos.setOnClickListener{
             // TODO Now open sign up, later send alert
 
             val intent = Intent(context, SignUpActivity::class.java)
