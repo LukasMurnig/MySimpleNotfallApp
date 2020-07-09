@@ -1,20 +1,15 @@
 package com.example.notfallapp.menubar
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlarmsListAdapter
-import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.DatabaseClient
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
@@ -47,18 +42,17 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
             val data = db?.alarmsDao()?.getAllAlarms()
             if (data != null) {
                 if(data.isEmpty()) {
-                    lbMessageNoAlarms.setText(getResources().getString(R.string.noAlarms))
+                    lbMessageNoAlarms.text = resources.getString(R.string.noAlarms)
                 }else{
                     setAdapter(data)
                 }
             }
-
         }
     }
 
     private fun setAdapter(data: List<Alarm>){
         val adapter = AlarmsListAdapter(this, data as ArrayList<Alarm>)
-        lvAlarms.adapter = adapter;
+        lvAlarms.adapter = adapter
     }
 
     private fun configureButtons() {

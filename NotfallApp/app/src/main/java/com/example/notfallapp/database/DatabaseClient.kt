@@ -2,7 +2,6 @@ package com.example.notfallapp.database
 
 import android.content.Context
 import androidx.room.Room
-import com.example.notfallapp.menubar.ContactActivity
 
 
 class DatabaseClient(context: Context?) {
