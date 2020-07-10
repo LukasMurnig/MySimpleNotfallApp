@@ -2,15 +2,21 @@ package com.example.notfallapp.interfaces
 
 import android.content.Context
 import android.content.Intent
+import android.provider.Settings
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat.startActivity
-import com.example.notfallapp.MainActivity
 import com.example.notfallapp.Login.SignUpActivity
+import com.example.notfallapp.MainActivity
+import com.example.notfallapp.bll.Alarm
+import com.example.notfallapp.database.DatabaseClient
 import com.example.notfallapp.menubar.AlarmsActivity
 import com.example.notfallapp.menubar.ContactActivity
 import com.example.notfallapp.menubar.SettingsActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
 
 interface ICreatingOnClickListener {
 
@@ -18,6 +24,22 @@ interface ICreatingOnClickListener {
 
         btnSos.setOnClickListener{
             // TODO Now open sign up, later send and save alert
+
+            val android_id: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+            val clickedTime: Date = Calendar.getInstance().time
+
+            val dbclient = DatabaseClient(context)
+            val db = dbclient.getAppDatabase(context)
+            try{
+                GlobalScope.launch {
+                    db?.alarmsDao()?.deleteAll()
+
+                    // wird in der Activity noch nicht angezeigt
+                    //db?.alarmsDao()?.insertAlarm(Alarm(android_id, "test", clickedTime.toString()))
+                }
+            }catch (ex: Exception){
+                println("Konnte Alarm nicht speichern. Grund: $ex")
+            }
 
             val intent = Intent(context, SignUpActivity::class.java)
             startActivity(context, intent,null)

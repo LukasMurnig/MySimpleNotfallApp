@@ -39,7 +39,7 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
         val dbclient = DatabaseClient(this)
         val db = dbclient.getAppDatabase(this)
         GlobalScope.launch {
-            val data = db?.alarmsDao()?.getAllAlarms()
+            val data: List<Alarm>? = db?.alarmsDao()?.getAllAlarms()
             if (data != null) {
                 if(data.isEmpty()) {
                     lbMessageNoAlarms.text = resources.getString(R.string.noAlarms)
