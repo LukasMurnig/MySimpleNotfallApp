@@ -18,25 +18,26 @@ class AlarmsListAdapter(context: Activity, alarms: ArrayList<Alarm>) :
     }
 
     override fun getView(position: Int, convertView: View, parent: ViewGroup ): View {
-        var listItemView: View = convertView
+        var listItemView: View? = null //convertView
 
         if (listItemView == null){
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.activity_alarms, parent, false)
+            listItemView = LayoutInflater.from(context).inflate(R.layout.listview_item_alarm, parent, false)
         }
 
-        var currentAlarm: Alarm =getItem(position)
+        var currentAlarm: Alarm = getItem(position)
 
-        var alarmIdTextView: TextView = listItemView.findViewById(R.id.alertId) as TextView
 
-        alarmIdTextView.setText(currentAlarm.deviceId)
+        var alarmIdTextView: TextView = listItemView?.findViewById(R.id.alertId) as TextView
 
-        var alarmNameTextView: TextView = listItemView.findViewById(R.id.alertName) as TextView
+        alarmIdTextView.text = currentAlarm.deviceId
 
-        alarmNameTextView.setText(currentAlarm.deviceName)
+        var alarmNameTextView: TextView = listItemView?.findViewById(R.id.alertName) as TextView
 
-        var alarmTimeTextView: TextView = listItemView.findViewById(R.id.alertTime) as TextView
+        alarmNameTextView.text = currentAlarm.deviceName
 
-        alarmTimeTextView.setText(currentAlarm.alertTime)
+        var alarmTimeTextView: TextView = listItemView?.findViewById(R.id.alertTime) as TextView
+
+        alarmTimeTextView.text = currentAlarm.alertTime
 
         return listItemView
 }}

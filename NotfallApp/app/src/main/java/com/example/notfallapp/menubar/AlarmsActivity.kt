@@ -1,7 +1,10 @@
 package com.example.notfallapp.menubar
 
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlarmsListAdapter
@@ -38,21 +41,31 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
     private fun getAlarms(){
         val dbclient = DatabaseClient(this)
         val db = dbclient.getAppDatabase(this)
+
+
+        // get Database data from Alarms
         GlobalScope.launch {
             val data: List<Alarm>? = db?.alarmsDao()?.getAllAlarms()
             if (data != null) {
                 if(data.isEmpty()) {
                     lbMessageNoAlarms.text = resources.getString(R.string.noAlarms)
-                }else{
-                    setAdapter(data)
+                    return@launch
                 }
+                setAdapter(data)
             }
         }
     }
 
     private fun setAdapter(data: List<Alarm>){
-        val adapter = AlarmsListAdapter(this, data as ArrayList<Alarm>)
-        //lvAlarms.adapter = adapter
+        val array: ArrayList<Alarm> = ArrayList()
+        for(a in data){
+            array.add(a)
+        }
+        runOnUiThread{
+            val adapter = AlarmsListAdapter(this, array)
+
+            lvAlarms.adapter = adapter
+        }
     }
 
     private fun configureButtons() {

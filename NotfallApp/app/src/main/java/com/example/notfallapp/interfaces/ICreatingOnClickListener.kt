@@ -46,15 +46,12 @@ interface ICreatingOnClickListener {
         }
 
         btnHome.setOnClickListener{
-            println("firstItem Click")
-
             Log.d("MenuItemClicked", "Homeregister were clicked in MainActivity")
             val intent = Intent(context, MainActivity::class.java)
             startActivity(context, intent, null)
         }
 
         btnAlarms.setOnClickListener{
-            println("secondItem Click")
             // TODO Open register with alarms from Database
             Log.d("MenuItemClicked", "Alarmregister were clicked in MainActivity")
             val intent = Intent(context, AlarmsActivity::class.java)
