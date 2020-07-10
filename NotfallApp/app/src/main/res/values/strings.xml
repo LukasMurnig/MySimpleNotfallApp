@@ -22,6 +22,7 @@
     <string name="btnSettings">Button Settings</string>
     <!-- Contacts -->
     <string name="noContacts">Sie besitzen leider noch keine Kontakte!</string>
+    <string name="noAlarms">Gottseidank besitzen Sie noch keine Alarme!</string>
     <string name="createContact">Glückwunsch! Sie haben erfolgreich einen neuen Kontakt hinzugefügt.</string>
     <string name="updateContact">Ihr Kontakt wurde erfolgreich aktualisiert.</string>
     <string name="deleteContact">Ihr Kontakt wurde erfolgreich gelöscht.</string>
@@ -32,8 +33,5 @@
     <string name="deleteContactFailed">Ihr Kontakt konnte nicht gelöscht werden.
                                       Grund dafür ist:</string>
     <string name="add">Hinzufügen</string>
-    <string name="firstname">Vorname</string>
-    <string name="lastname">Nachname</string>
-    <string name="number">Telefonnummer</string>
-    <string name="cancel">Abbrechen</string>
+    <string name="ChangeProfil">Ändere Daten</string>
 </resources>
