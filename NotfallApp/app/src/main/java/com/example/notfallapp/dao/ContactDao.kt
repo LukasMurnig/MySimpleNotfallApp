@@ -9,7 +9,7 @@ interface ContactDao {
     fun getAllContact(): List<Contact>
 
     @Insert
-    fun insertAllContacts(contacts: List<Contact>)
+    fun insertContact(contact: Contact)
 
     @Update
     fun updateContact(contact: Contact)

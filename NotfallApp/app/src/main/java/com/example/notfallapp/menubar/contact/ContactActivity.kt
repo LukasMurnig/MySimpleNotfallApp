@@ -1,8 +1,12 @@
-package com.example.notfallapp.menubar
+package com.example.notfallapp.menubar.contact
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.ContactListAdapter
@@ -34,8 +38,9 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnClic
 
         addButton.setOnClickListener() {
             Log.d("AddButton", "Add Button to add contacts were clicked!")
-            var toast = Toast.makeText(this, "Sorry we have not implemented yet!", Toast.LENGTH_SHORT)
-            toast.show()
+            var intent = Intent(this, AddContactActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivityForResult(intent, 0)
         }
         btnSos = findViewById(R.id.btn_sos)
         createSOSOnClickListener(this, btnSos)

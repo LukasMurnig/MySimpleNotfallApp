@@ -20,9 +20,9 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    suspend fun insert(contacts: List<Contact>){
+    suspend fun insert(contact: Contact){
         if (contactDao != null) {
-            contactDao.insertAllContacts(contacts)
+            contactDao.insertContact(contact)
         }
     }
 

@@ -6,8 +6,7 @@ import android.util.Log
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.MainActivity
-import com.example.notfallapp.R
-import com.example.notfallapp.menubar.ContactActivity
+import com.example.notfallapp.menubar.contact.ContactActivity
 
 interface ICreatingOnClickListener {
 
