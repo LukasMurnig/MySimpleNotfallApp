@@ -1,6 +1,5 @@
 package com.example.notfallapp.menubar
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -41,15 +40,11 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
         tvEmail.text = "maria.musterfrau@mail.com"
 
         btnChangeDate.setOnClickListener {
-            // TODO implement change Profil Activity
-
-            throw NotImplementedError()
-
-            /*val intent = Intent(this, ChangeProfilActivity::class.java)
+            val intent = Intent(this, ChangeProfilActivity::class.java)
             intent.putExtra("name", tvName.text as String)
             intent.putExtra("telNr", tvTelNr.text as String)
             intent.putExtra("email", tvEmail.text as String)
-            startActivityForResult(intent, Activity.RESULT_OK)*/
+            startActivityForResult(intent, 0)
         }
 
         // TODO save spinner setting in a database
@@ -76,6 +71,18 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
                     this@SettingsActivity,
                     "Not implemented yet", Toast.LENGTH_SHORT
                 ).show()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK) {
+                tvName.text = data!!.getStringExtra("name")
+                tvTelNr.text = data!!.getStringExtra("telNr")
+                tvEmail.text = data!!.getStringExtra("email")
             }
         }
     }

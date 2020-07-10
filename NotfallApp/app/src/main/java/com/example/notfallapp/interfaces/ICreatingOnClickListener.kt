@@ -32,10 +32,10 @@ interface ICreatingOnClickListener {
             val db = dbclient.getAppDatabase(context)
             try{
                 GlobalScope.launch {
-                    db?.alarmsDao()?.deleteAll()
+                    //db?.alarmsDao()?.deleteAll()
 
                     // wird in der Activity noch nicht angezeigt
-                    //db?.alarmsDao()?.insertAlarm(Alarm(android_id, "test", clickedTime.toString()))
+                    db?.alarmsDao()?.insertAlarm(Alarm(android_id, "test", clickedTime.toString()))
                 }
             }catch (ex: Exception){
                 println("Konnte Alarm nicht speichern. Grund: $ex")

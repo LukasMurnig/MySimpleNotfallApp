@@ -52,7 +52,7 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
     private fun setAdapter(data: List<Alarm>){
         val adapter = AlarmsListAdapter(this, data as ArrayList<Alarm>)
-        lvAlarms.adapter = adapter
+        //lvAlarms.adapter = adapter
     }
 
     private fun configureButtons() {

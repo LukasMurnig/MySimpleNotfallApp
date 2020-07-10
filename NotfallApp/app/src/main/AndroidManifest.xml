@@ -33,6 +33,8 @@
         <activity android:name=".menubar.SettingsActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".menubar.ChangeProfilActivity">
+        </activity>
     </application>
 
 </manifest>
