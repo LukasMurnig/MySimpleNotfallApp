@@ -10,12 +10,11 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.Login.SignUpActivity
 import com.example.notfallapp.menubar.AlarmsActivity
-import com.example.notfallapp.menubar.ContactActivity
 import com.example.notfallapp.menubar.SettingsActivity
 
 interface ICreatingOnClickListener {
 
-    fun createOnClickListener(context: Context, btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
+    fun createOnClickListener(context: Context,btnSos: Button,  btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
 
         btnHome.setOnClickListener(){
             Log.d("MenuItemClicked", "Alarmregister were clicked")
@@ -42,6 +41,12 @@ interface ICreatingOnClickListener {
             // TODO open settingsActivity
             Log.d("MenuItemClicked", "Settings were clicked")
             val intent = Intent(context, SettingsActivity::class.java)
+            startActivity(context, intent, null)
+        }
+
+        btnSos.setOnClickListener() {
+            Log.d("SOSButtonClicked", "SOS Button were clicked!")
+            val intent = Intent(context, SignUpActivity::class.java)
             startActivity(context, intent, null)
         }
     }

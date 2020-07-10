@@ -13,10 +13,10 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.DatabaseClient
+import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.ISOSOnClickListener
 
-class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnClickListener {
+class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -31,18 +31,12 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnC
     private lateinit var input_email: EditText
     private lateinit var input_number: EditText
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addcontact)
-
         createButtonBar()
 
-        //initComponents()
-
-        btnSos = findViewById(R.id.btn_sos)
-        createSOSOnClickListener(this, btnSos)
+        initComponents()
         addpicture.setOnClickListener() {
             Log.d("AddButton", "Add Button to add picture to Contact were clicked!")
             var toast = Toast.makeText(this, "Sorry we have not implemented yet!", Toast.LENGTH_SHORT)
@@ -56,9 +50,8 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnC
             if(validate()){
                 var contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
                     input_email.text.toString(), input_number.text.toString().toInt(), 0)
-                var dbclient = DatabaseClient(this)
-                var db = dbclient.getAppDatabase(this)
-                db?.contactDao()?.insertContact(contact)
+                val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
+                appDb.contactDao().insertContact(contact)
                var intent = Intent(this, ContactActivity::class.java)
                 startActivity(intent)
             }
@@ -72,16 +65,15 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ISOSOnC
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
-
     }
     private fun createButtonBar() {
+        btnSos = findViewById(R.id.btn_sos)
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createOnClickListener(this, btnHome, btnAlarms, btnContact, btnSettings)
+        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 
     private fun initComponents() {

@@ -34,4 +34,8 @@
                                       Grund dafür ist:</string>
     <string name="add">Hinzufügen</string>
     <string name="ChangeProfil">Ändere Daten</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="lastname">Nachname</string>
+    <string name="firstname">Vorname</string>
+    <string name="number">Telefonnummer</string>
 </resources>

@@ -10,10 +10,9 @@ import android.widget.ListView
 import android.widget.TextView
 import com.example.notfallapp.Login.SignUpActivity
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.ISOSOnClickListener
 
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener, ISOSOnClickListener {
+    ICreatingOnClickListener {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -23,21 +22,14 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        createButtonBar()
-
-    private fun configureButtons() {
-        // SOS Button
-        btnSos = findViewById(R.id.btn_sos)
-        createSOSOnClickListener(this, btnSos)
-    }
-
         // Button bar
+        btnSos = findViewById(R.id.btn_sos)
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createOnClickListener(this, btnHome, btnAlarms, btnContact, btnSettings)
+        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
+
 }

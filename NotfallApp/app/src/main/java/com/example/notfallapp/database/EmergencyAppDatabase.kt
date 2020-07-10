@@ -14,23 +14,30 @@ import com.example.notfallapp.dao.AlarmsDao
 import com.example.notfallapp.dao.ContactDao
 
 @Database(entities = [Contact::class, Alarm::class], version = 2)
-abstract class EmergencyAppDatabase : RoomDatabase(){
+abstract class EmergencyAppDatabase : RoomDatabase() {
     abstract fun contactDao(): ContactDao
     abstract fun alarmsDao(): AlarmsDao
 
-    /*companion object  {
+    companion object {
         private var INSTANCE: EmergencyAppDatabase? = null
         private val DB_NAME: String = "emergency.db"
 
-        operator fun invoke(context: Context)= INSTANCE ?: synchronized(LOCK) {
-            INSTANCE ?: buildDatabase(context).also{ INSTANCE = it}
+        fun getInstance(context: Context): EmergencyAppDatabase {
+            if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(
+                        context.getApplicationContext(),
+                        EmergencyAppDatabase::class.java, DB_NAME
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
+            }
+            return INSTANCE as EmergencyAppDatabase
         }
 
-        private fun buildDatabase(context: Context) = Room.databaseBuilder(context,
+        /*private fun buildDatabase(context: Context) = Room.databaseBuilder(context,
                 EmergencyAppDatabase::class.java, "emergency.db")
                 .build()
 
-        /*private val DB_NAME: String = "emergency.db"
 
         fun getDatabase(context: Context): EmergencyAppDatabase? {
             if (INSTANCE == null){
@@ -43,9 +50,8 @@ abstract class EmergencyAppDatabase : RoomDatabase(){
                 }
             }
             return INSTANCE
-        }*/
+        }
     }
-    //
     private class PopulateDbAsync(instance: com.example.notfallapp.database.EmergencyAppDatabase) :
         AsyncTask<Void?, Void?, Void?>() {
         private lateinit var alarmsDAO: AlarmsDao;
@@ -62,4 +68,5 @@ abstract class EmergencyAppDatabase : RoomDatabase(){
             alarmsDAO = INSTANCE?.alarmsDao()!!
         }
     }*/
+    }
 }
