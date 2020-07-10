@@ -17,7 +17,7 @@ interface ICreatingOnClickListener {
     fun createOnClickListener(context: Context, btnSos: Button, btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
 
         btnSos.setOnClickListener{
-            // TODO Now open sign up, later send alert
+            // TODO Now open sign up, later send and save alert
 
             val intent = Intent(context, SignUpActivity::class.java)
             startActivity(context, intent,null)

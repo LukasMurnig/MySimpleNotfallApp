@@ -1,8 +1,10 @@
 package com.example.notfallapp.menubar
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
@@ -38,7 +40,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
         tvTelNr.text = "0123456789"
         tvEmail.text = "maria.musterfrau@mail.com"
 
-        btnChangeDate.setOnClickListener{
+        btnChangeDate.setOnClickListener {
             // TODO implement change Profil Activity
 
             throw NotImplementedError()
@@ -50,8 +52,32 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
             startActivityForResult(intent, Activity.RESULT_OK)*/
         }
 
-        spStartAppSettings.adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-            arrayListOf("App im Hintergrund geöffnet lassen", "App nur beim Starten öffnen"))
+        // TODO save spinner setting in a database
+        // fills the spinner
+        spStartAppSettings.adapter = ArrayAdapter<String>(
+            this, android.R.layout.simple_spinner_item,
+            arrayListOf("App im Hintergrund geöffnet lassen", "App nur beim Starten öffnen")
+        )
+
+        spStartAppSettings.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                Toast.makeText(
+                    this@SettingsActivity,
+                    "Not implemented yet", Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                Toast.makeText(
+                    this@SettingsActivity,
+                    "Not implemented yet", Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun configureButtons() {
