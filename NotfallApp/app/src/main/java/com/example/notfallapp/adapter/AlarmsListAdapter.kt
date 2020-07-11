@@ -1,43 +1,74 @@
 package com.example.notfallapp.adapter
 
-import android.app.Activity
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.annotation.NonNull
+import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alarm
+import kotlinx.android.synthetic.main.listview_item_alarm.view.*
 
 
-class AlarmsListAdapter(context: Activity, alarms: ArrayList<Alarm>) :
-    ArrayAdapter<Alarm>(context, 0) {
+class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.AlarmsViewHolder>{
+    private lateinit var layoutInflater: LayoutInflater
+    private lateinit var alarms: List<Alarm>
+    private lateinit var context: Context
 
-    companion object {
-        private val LOG_TAG: String? = AlarmsListAdapter::class.simpleName
+    fun AlarmsListAdapter(
+        alarms: List<Alarm>,
+        context: Context?
+    ) {
+        layoutInflater = LayoutInflater.from(context)
+        this.alarms = alarms
+        this.context = context!!
     }
 
-    override fun getView(position: Int, convertView: View, parent: ViewGroup ): View {
-        var listItemView: View? = null //convertView
+    @NonNull
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): AlarmsListAdapter.AlarmsViewHolder {
+        val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.listview_item_alarm, parent, false)
+        return AlarmsViewHolder(itemView)
+    }
 
-        if (listItemView == null){
-            listItemView = LayoutInflater.from(context).inflate(R.layout.listview_item_alarm, parent, false)
+    override fun onBindViewHolder(holder: AlarmsListAdapter.AlarmsViewHolder, position: Int) {
+        if(alarms == null){
+            return
         }
 
-        var currentAlarm: Alarm = getItem(position)
+        val alarm: Alarm? = alarms[position]
+        if(alarm!=null){
+            holder.alertId.setText(alarm.deviceId)
+            holder.alertName.setText(alarm.deviceName)
+            holder.alertTime.setText(alarm.alertTime)
+            holder.itemView.setOnClickListener({
+                throw NotImplementedError()
+            })
+        }
+    }
 
+    override fun getItemCount(): Int {
+        if(alarms==null){
+            return 0
+        }else{
+            return alarms.size
+        }
+    }
 
-        var alarmIdTextView: TextView = listItemView?.findViewById(R.id.alertId) as TextView
+    class AlarmsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private lateinit var deviceId: TextView
+        private lateinit var deviceName: TextView
+        private lateinit var alertTime: TextView
 
-        alarmIdTextView.text = currentAlarm.deviceId
-
-        var alarmNameTextView: TextView = listItemView?.findViewById(R.id.alertName) as TextView
-
-        alarmNameTextView.text = currentAlarm.deviceName
-
-        var alarmTimeTextView: TextView = listItemView?.findViewById(R.id.alertTime) as TextView
-
-        alarmTimeTextView.text = currentAlarm.alertTime
-
-        return listItemView
-}}
+        fun AlarmsViewHolder(@NonNull itemView: View){
+            super(itemView)
+            deviceId = itemView.findViewById(R.id.alertId)
+            deviceName = itemView.findViewById(R.id.alertName)
+            alertTime = itemView.findViewById(R.id.alertTime)
+        }
+    }
+}

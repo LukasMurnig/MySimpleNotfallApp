@@ -1,14 +1,19 @@
 package com.example.notfallapp.menubar
 
+import android.os.AsyncTask
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.bll.Alarm
+import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.database.DatabaseClient
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
@@ -22,7 +27,7 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var btnAlarms: ImageButton
     private lateinit var btnSettings: ImageButton
 
-    private lateinit var lvAlarms: ListView
+    private lateinit var rvAlarms: RecyclerView
     private lateinit var lbMessageNoAlarms: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +37,9 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
         configureButtons()
 
         // fill ListView with Alerts
-        lvAlarms = findViewById(R.id.lvAlarms)
+        rvAlarms = findViewById(R.id.rvAlarms)
+        rvAlarms.setHasFixedSize(false)
+        rvAlarms.layoutManager = LinearLayoutManager(this)
         lbMessageNoAlarms = findViewById(R.id.lbMessageNoAlarms)
 
         getAlarms()
@@ -54,6 +61,27 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
                 setAdapter(data)
             }
         }
+    }
+
+    private fun getData(){
+        // val db = Room.databaseBuilder(applicationContext, AlarmDatabase::class.java, "alarms.db").build()
+        // oder
+        // val db2 = AlarmDatabase(this)
+        class GetData : AsyncTask<Unit, Unit, List<Alarm>>() {
+
+            override fun doInBackground(vararg p0: Unit?): List<Alarm> {
+                val db = AlarmDatabase(this@AlarmsActivity)
+                val alarms: List<Alarm> = db.alarmsDao().getAllAlarms()
+                return alarms
+            }
+
+            override fun onPostExecute(result: List<Alarm>?) {
+
+            }
+        }
+
+        val gd = GetData()
+        gd.execute()
     }
 
     private fun setAdapter(data: List<Alarm>){

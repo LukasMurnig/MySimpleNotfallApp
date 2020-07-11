@@ -2,30 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:padding="16dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/alertId"
         android:layout_marginStart="@dimen/size30"
         android:layout_width="wrap_content"
         android:layout_weight="1"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:visibility="visible"/>
 
     <TextView
         android:id="@+id/alertName"
         android:layout_marginStart="@dimen/size30"
         android:layout_width="wrap_content"
         android:layout_weight="1"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:padding="3dp"/>
 
     <TextView
         android:id="@+id/alertTime"
         android:layout_marginStart="@dimen/size30"
         android:layout_width="wrap_content"
         android:layout_weight="1"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:padding="3dp"/>
 
 </LinearLayout>
