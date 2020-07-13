@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.Login.SignUpActivity
+import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.menubar.AlarmsActivity
 import com.example.notfallapp.menubar.SettingsActivity
 
@@ -46,7 +47,7 @@ interface ICreatingOnClickListener {
 
         btnSos.setOnClickListener() {
             Log.d("SOSButtonClicked", "SOS Button were clicked!")
-            val intent = Intent(context, SignUpActivity::class.java)
+            val intent = Intent(context, CallAlarmActivity::class.java)
             startActivity(context, intent, null)
         }
     }

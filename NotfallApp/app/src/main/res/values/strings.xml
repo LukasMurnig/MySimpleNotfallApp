@@ -38,4 +38,11 @@
     <string name="lastname">Nachname</string>
     <string name="firstname">Vorname</string>
     <string name="number">Telefonnummer</string>
+    <!-- Alarm called -->
+    <string name="alarmcalled">Ein Alarm wurde ausgelöst!
+                            In Kürze wird ein Alarm an die Zentrale weitergeleitet!</string>
+    <string name="alarmcanceled">Der Alarm wurde erfolgreich abgebrochen!</string>
+    <string name="alarmcanceledok">OK</string>
+    <string name="alarmcalledsuccesful">Ihr Alarm wurde erfolgreich an die Zentrale weitergeleitet!
+                                        Hilfe ist unterwegs!</string>
 </resources>
