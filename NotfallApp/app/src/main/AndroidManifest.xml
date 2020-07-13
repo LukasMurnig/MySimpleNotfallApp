@@ -36,12 +36,15 @@
         <activity android:name=".menubar.SettingsActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".alarm.CallAlarmActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".alarm.AlarmCanceledActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".alarm.AlarmSuccesfulActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".alarm.CallAlarmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".alarm.AlarmCanceledActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".alarm.AlarmSuccesfulActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".menubar.ChangeProfilActivity">
         </activity>
     </application>

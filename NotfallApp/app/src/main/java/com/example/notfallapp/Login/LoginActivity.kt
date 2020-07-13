@@ -3,7 +3,6 @@ package com.example.notfallapp.Login
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -15,7 +14,7 @@ import com.example.notfallapp.R
 class LoginActivity : AppCompatActivity() {
     companion object{
         private val TAG :String = "LoginActivity"
-        private val REQUEST_SIGNUP :Int = 0
+        private const val REQUEST_SIGNUP :Int = 0
     }
     private lateinit var emailText: EditText
     private lateinit var passwordText: EditText
@@ -34,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
 
         signupText.setOnClickListener{
             //start the signup activity
-            var intent: Intent = Intent(this, SignUpActivity::class.java)
+            val intent: Intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
     }
@@ -47,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton.setEnabled(true)
 
-        var progressDialog: ProgressDialog = ProgressDialog(this,
+        val progressDialog = ProgressDialog(this,
             R.style.ProgressdialogLogin
         )
         progressDialog.setIndeterminate(true)
@@ -81,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
             emailText.setError(null)
         }
 
-        if (password?.isEmpty()!! || password?.length!! < 4) {
+        if (password?.isEmpty()!! || password?.length < 4) {
             passwordText.setError("Kennwort muss mindestens 4 Zeichen lang sein.");
             validate = false;
         }else{

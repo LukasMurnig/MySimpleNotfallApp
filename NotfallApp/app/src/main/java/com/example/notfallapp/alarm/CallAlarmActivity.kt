@@ -83,7 +83,7 @@ class CallAlarmActivity : AppCompatActivity(){
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = getString(R.string.notificationTitle)
-            val descriptionText = getString(R.string.notificationDescription)
+            val descriptionText = getString(R.string.notificationTitle)
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
