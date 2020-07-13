@@ -28,12 +28,11 @@
 
     <Button
         android:id="@+id/btnCancelNotificationAlarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="155dp"
+        android:layout_height="79dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="62dp"
-        android:text="@string/cancel"
-        />
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/cancel" />
 </RelativeLayout>

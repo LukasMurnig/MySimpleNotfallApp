@@ -36,19 +36,13 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener {
         configureButtons()
         initComponents()
 
-        val extras = intent.extras
-
-        if(extras !=null){
-
-        }
-
         val intent = Intent(this, AlarmCanceledActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.contacts)
+            .setSmallIcon(R.drawable.notfallapplogo)
             .setContentTitle("My notification")
             .setContentText("Alarm wurde abgebrochen")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -62,7 +56,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener {
 
         btnCancelAlarmOk.setOnClickListener() {
             Log.d("ButtonOk", "Button ok in AlarmCanceledActivity clicked!")
-            var intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }

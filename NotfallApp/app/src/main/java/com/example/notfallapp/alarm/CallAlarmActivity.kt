@@ -61,7 +61,7 @@ class CallAlarmActivity : AppCompatActivity(){
 
         // build custom notification
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.contacts)
+            .setSmallIcon(R.drawable.notfallapplogo)
             .setCustomContentView(notificationLayout)
             .setCustomBigContentView(notificationLayout)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

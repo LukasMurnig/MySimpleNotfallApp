@@ -14,12 +14,11 @@ class TimerHandler {
             handler.postDelayed({
                 val intent = Intent(context, AlarmSuccesfulActivity::class.java)
                 startActivity(context, intent, null)
-            },5000)
+            },10000)
         }
 
         fun deleteTimer(){
             handler.removeCallbacksAndMessages(null)
         }
-
     }
 }
