@@ -1,13 +1,19 @@
-package com.example.notfallapp.menubar
+package com.example.notfallapp.menubar.contact
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.DatabaseClient
+import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -33,8 +39,8 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
         addButton.setOnClickListener() {
             Log.d("AddButton", "Add Button to add contacts were clicked!")
-            var toast = Toast.makeText(this, "Sorry we have not implemented yet!", Toast.LENGTH_SHORT)
-            toast.show()
+            var intent = Intent(this, AddContactActivity::class.java)
+            startActivity( intent, null)
         }
 
         try{
@@ -63,14 +69,15 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     }
 
     private fun getAllContacts(){
-        val dbclient = DatabaseClient(this)
-        val db = dbclient.getAppDatabase(this)
+        val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
         GlobalScope.launch {
-            val data = db?.contactDao()?.getAllContact()
+            System.out.println("HELLO 1")
+            val data  = appDb.contactDao().getAllContact()
             if (data != null) {
                 if(data.isEmpty()) {
                     lbMessageNoContacts.setText(getResources().getString(R.string.noContacts))
                 }else{
+                    System.out.println("HELLO 2")
                     setAdapter(data)
                 }
             }
@@ -79,6 +86,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     }
 
     private fun setAdapter(data: List<Contact>){
+        System.out.println("HELLO 3")
         val adapter = ContactListAdapter(this, data as ArrayList<Contact>)
         lvContacts.adapter = adapter;
     }

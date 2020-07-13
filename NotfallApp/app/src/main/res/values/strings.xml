@@ -20,7 +20,7 @@
     <string name="btnAlarms">Button Alarms</string>
     <string name="btnContact">Button Contact</string>
     <string name="btnSettings">Button Settings</string>
-
+    <!-- Contacts -->
     <string name="noContacts">Sie besitzen leider noch keine Kontakte!</string>
     <string name="noAlarms">Gottseidank besitzen Sie noch keine Alarme!</string>
     <string name="createContact">Glückwunsch! Sie haben erfolgreich einen neuen Kontakt hinzugefügt.</string>
@@ -36,6 +36,18 @@
 
     <!-- Settings -->
     <string name="ChangeProfil">Ändere Daten</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="lastname">Nachname</string>
+    <string name="firstname">Vorname</string>
+    <string name="number">Telefonnummer</string>
     <string name="updateProfil">Aktualisieren</string>
     <string name="cancelProfil">Abbrechen</string>
+  
+    <!-- Alarm called -->
+    <string name="alarmcalled">Ein Alarm wurde ausgelöst!
+                            In Kürze wird ein Alarm an die Zentrale weitergeleitet!</string>
+    <string name="alarmcanceled">Der Alarm wurde erfolgreich abgebrochen!</string>
+    <string name="alarmcanceledok">OK</string>
+    <string name="alarmcalledsuccesful">Ihr Alarm wurde erfolgreich an die Zentrale weitergeleitet!
+                                        Hilfe ist unterwegs!</string>
 </resources>

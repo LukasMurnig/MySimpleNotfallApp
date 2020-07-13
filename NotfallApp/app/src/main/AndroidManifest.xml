@@ -24,15 +24,23 @@
         <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".menubar.ContactActivity"
+        <activity android:name=".menubar.contact.ContactActivity"
         android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".menubar.contact.AddContactActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".menubar.AlarmsActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".menubar.SettingsActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".alarm.CallAlarmActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".alarm.AlarmCanceledActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".alarm.AlarmSuccesfulActivity"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".menubar.ChangeProfilActivity">
         </activity>
     </application>

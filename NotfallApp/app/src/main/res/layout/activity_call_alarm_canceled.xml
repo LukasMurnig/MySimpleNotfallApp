@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/limeGreen"
+    >
+
+    <include
+        layout="@layout/menu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+    <TextView
+        android:id="@+id/tvCanceledAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="144dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="165dp"
+        android:text="@string/alarmcanceled"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/size30" />
+
+    <Button
+        android:id="@+id/btn_cancel_alarm_ok"
+        android:layout_width="173dp"
+        android:layout_height="73dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="323dp"
+        android:text="@string/alarmcanceledok" />
+
+    <include
+        layout="@layout/layout_button_sos"
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:layout_below="@+id/btn_cancel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="0dp" />
+
+
+</RelativeLayout>

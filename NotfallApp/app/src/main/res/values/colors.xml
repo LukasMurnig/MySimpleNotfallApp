@@ -9,4 +9,5 @@
     <color name="colorDark">#000000</color>
     <color name="hintColor">#D3D3D3</color>
     <color name="addButton">#ee7415</color>
+    <color name="limeGreen">#00FF00</color>
 </resources>

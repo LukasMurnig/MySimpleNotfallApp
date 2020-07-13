@@ -13,31 +13,34 @@
     <TextView
         android:id="@+id/lbMessageContacts"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="88dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="107dp"
+        android:layout_marginEnd="0dp"
         android:text=""
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:textSize="@dimen/size20"/>
 
     <TextView
         android:id="@+id/lbMessageNoContacts"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_width="407dp"
+        android:layout_height="157dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="492dp"
+        android:layout_marginTop="366dp"
         android:layout_marginEnd="4dp"
-        android:text="" />
+        android:text=""
+        android:textSize="@dimen/size20"/>
 
     <ListView
         android:id="@+id/lvContacts"
         android:layout_width="370dp"
         android:layout_height="336dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="151dp" />
+        android:layout_centerInParent="true"
+        android:layout_marginTop="195dp" />
 
     <ImageButton
         android:id="@+id/addButton"

@@ -1,9 +1,14 @@
 package com.example.notfallapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.TextView
+import com.example.notfallapp.Login.SignUpActivity
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 
 class MainActivity : AppCompatActivity(),
@@ -17,15 +22,8 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        configureButtons()
-    }
-
-    private fun configureButtons() {
-        // SOS Button
-        btnSos = findViewById(R.id.btn_sos)
-
         // Button bar
+        btnSos = findViewById(R.id.btn_sos)
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
@@ -33,4 +31,5 @@ class MainActivity : AppCompatActivity(),
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
+
 }
