@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.RemoteViews
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -36,6 +37,18 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener {
         configureButtons()
         initComponents()
 
+        createNotification()
+
+        btnCancelAlarmOk.setOnClickListener() {
+            Log.d("ButtonOk", "Button ok in AlarmCanceledActivity clicked!")
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun createNotification(){
+        val notificationLayout = RemoteViews(packageName, R.layout.notification_alarm_canceled)
+
         val intent = Intent(this, AlarmCanceledActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -43,21 +56,16 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener {
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.notfallapplogo)
-            .setContentTitle("My notification")
-            .setContentText("Alarm wurde abgebrochen")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setCustomContentView(notificationLayout)
+            .setCustomBigContentView(notificationLayout)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
             // Set the intent that will fire when the user taps the notification
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)){
             notify(1444, builder.build())
-        }
-
-        btnCancelAlarmOk.setOnClickListener() {
-            Log.d("ButtonOk", "Button ok in AlarmCanceledActivity clicked!")
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
         }
     }
 

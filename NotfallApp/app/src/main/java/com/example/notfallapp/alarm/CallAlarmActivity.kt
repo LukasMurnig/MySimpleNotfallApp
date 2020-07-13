@@ -64,7 +64,10 @@ class CallAlarmActivity : AppCompatActivity(){
             .setSmallIcon(R.drawable.notfallapplogo)
             .setCustomContentView(notificationLayout)
             .setCustomBigContentView(notificationLayout)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setTicker("Alarm")
+            .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
             // Set the intent that will fire when the user taps the notification
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
@@ -81,7 +84,7 @@ class CallAlarmActivity : AppCompatActivity(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = getString(R.string.notificationTitle)
             val descriptionText = getString(R.string.notificationDescription)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }
