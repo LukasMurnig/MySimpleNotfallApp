@@ -29,9 +29,18 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // delete Timer of CallAlarmActivity
+        TimerHandler.deleteTimer()
+
         setContentView(R.layout.activity_call_alarm_canceled)
         configureButtons()
         initComponents()
+
+        val extras = intent.extras
+
+        if(extras !=null){
+
+        }
 
         val intent = Intent(this, AlarmCanceledActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
