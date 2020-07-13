@@ -27,17 +27,19 @@
     <string name="updateContact">Ihr Kontakt wurde erfolgreich aktualisiert.</string>
     <string name="deleteContact">Ihr Kontakt wurde erfolgreich gelöscht.</string>
     <string name="createContactFailed">Leider konnte ihr Kontakt nicht erstellt werden.
-                                      Grund dafür ist:</string>
+                                      Grund dafür ist: %1$s</string>
     <string name="updateContactFailed">Ihr Kontakt konnte nicht aktualisiert werden.
-                                      Grund dafür ist:</string>
+                                      Grund dafür ist: %1$s</string>
     <string name="deleteContactFailed">Ihr Kontakt konnte nicht gelöscht werden.
-                                      Grund dafür ist:</string>
+                                      Grund dafür ist: %1$s</string>
     <string name="add">Hinzufügen</string>
     <string name="ChangeProfil">Ändere Daten</string>
     <string name="cancel">Abbrechen</string>
     <string name="lastname">Nachname</string>
     <string name="firstname">Vorname</string>
     <string name="number">Telefonnummer</string>
+    <string name="sureStopCreatingContact">Sind Sie sich sicher, dass Sie, dass bearbeiten von Ihrem
+                                            Kontakt beenden wollen?</string>
     <!-- Alarm called -->
     <string name="alarmcalled">Ein Alarm wurde ausgelöst!
                             In Kürze wird ein Alarm an die Zentrale weitergeleitet!</string>
@@ -45,4 +47,16 @@
     <string name="alarmcanceledok">OK</string>
     <string name="alarmcalledsuccesful">Ihr Alarm wurde erfolgreich an die Zentrale weitergeleitet!
                                         Hilfe ist unterwegs!</string>
+    <!-- Connect bracelet -->
+    <string name="nobraceletconnected">Sie haben kein Armband mit Ihrer App Verbunden</string>
+    <string name="braceleteconnected">Ihr Armband: %1$s wurde erfolgreich verbunden.</string>
+    <string name="tryToConnectBracelet">Wir versuchen uns mit Ihrem Armand zu verbinden!
+                                        Drücken Sie den Knopf des Armbandes bis es grün blinkt!</string>
+    <string name="retrySearching">Erneut suchen</string>
+    <string name="sureStopSearching">Sind Sie sich sicher, dass Sie das suchen nach einem Bluetootharmband
+                                    beenden wollen?</string>
+    <!-- Sure dialog -->
+    <string name="confirm">Bestätigen</string>
+    <string name="Yes">JA</string>
+    <string name="No">NEIN</string>
 </resources>
