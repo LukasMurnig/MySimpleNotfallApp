@@ -41,6 +41,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".alarm.AlarmSuccesfulActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".menubar.ChangeProfilActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -33,11 +33,16 @@
     <string name="deleteContactFailed">Ihr Kontakt konnte nicht gelöscht werden.
                                       Grund dafür ist:</string>
     <string name="add">Hinzufügen</string>
+
+    <!-- Settings -->
     <string name="ChangeProfil">Ändere Daten</string>
     <string name="cancel">Abbrechen</string>
     <string name="lastname">Nachname</string>
     <string name="firstname">Vorname</string>
     <string name="number">Telefonnummer</string>
+    <string name="updateProfil">Aktualisieren</string>
+    <string name="cancelProfil">Abbrechen</string>
+  
     <!-- Alarm called -->
     <string name="alarmcalled">Ein Alarm wurde ausgelöst!
                             In Kürze wird ein Alarm an die Zentrale weitergeleitet!</string>
