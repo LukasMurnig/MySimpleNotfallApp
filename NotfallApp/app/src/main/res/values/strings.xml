@@ -50,4 +50,11 @@
     <string name="alarmcanceledok">OK</string>
     <string name="alarmcalledsuccesful">Ihr Alarm wurde erfolgreich an die Zentrale weitergeleitet!
                                         Hilfe ist unterwegs!</string>
+
+    <!-- Notification -->
+    <string name="notificationTitle">Notfall App</string>
+    <string name="alarmWasCalled">Ein Alarm wurde ausgelöst!</string>
+    <string name="notificationDescription">Alarms from Notfall App</string>
+    <string name="alarmWasSuccessful">Der Alarm war erfolgreich!</string>
+    <string name="alarmWasCanceled">Der Alarm wurde abgebrochen!</string>
 </resources>
