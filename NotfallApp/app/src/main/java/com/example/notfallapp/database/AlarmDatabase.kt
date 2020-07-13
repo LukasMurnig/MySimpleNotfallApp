@@ -1,15 +1,16 @@
 package com.example.notfallapp.database
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.dao.AlarmsDao
-import java.util.concurrent.locks.Lock
 
-@Database(entities = [Alarm::class], version = 1, exportSchema = false)
+
+@Database(entities = [Alarm::class], version = 2, exportSchema = false)
 abstract class AlarmDatabase : RoomDatabase() {
 
     abstract fun alarmsDao(): AlarmsDao
@@ -23,8 +24,17 @@ abstract class AlarmDatabase : RoomDatabase() {
             instance ?: buildDatabase(context).also{ instance = it}
         }
 
+        private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "ALTER TABLE users "
+                            + "ADD COLUMN address TEXT"
+                )
+            }
+        }
+
         private fun buildDatabase(context: Context) = Room.databaseBuilder(context,
-            AlarmDatabase::class.java, db_name)
+            AlarmDatabase::class.java, db_name).addMigrations(MIGRATION_1_2)
             .build()
 
         // instance von Database wird anders geholt

@@ -9,12 +9,10 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alarm
-import kotlinx.android.synthetic.main.listview_item_alarm.view.*
 
 
-class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.AlarmsViewHolder>{
+class AlarmsListAdapter(private var alarms: List<Alarm>) : RecyclerView.Adapter<AlarmsListAdapter.AlarmsViewHolder>(){
     private lateinit var layoutInflater: LayoutInflater
-    private lateinit var alarms: List<Alarm>
     private lateinit var context: Context
 
     fun AlarmsListAdapter(
@@ -30,33 +28,20 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.AlarmsViewHolde
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AlarmsListAdapter.AlarmsViewHolder {
+    ): AlarmsViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.listview_item_alarm, parent, false)
         return AlarmsViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: AlarmsListAdapter.AlarmsViewHolder, position: Int) {
-        if(alarms == null){
-            return
-        }
-
+    override fun onBindViewHolder(holder: AlarmsViewHolder, position: Int) {
         val alarm: Alarm? = alarms[position]
         if(alarm!=null){
-            holder.alertId.setText(alarm.deviceId)
-            holder.alertName.setText(alarm.deviceName)
-            holder.alertTime.setText(alarm.alertTime)
-            holder.itemView.setOnClickListener({
-                throw NotImplementedError()
-            })
+            holder.bindAlarm(alarm)
         }
     }
 
     override fun getItemCount(): Int {
-        if(alarms==null){
-            return 0
-        }else{
-            return alarms.size
-        }
+        return alarms.size
     }
 
     class AlarmsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -64,11 +49,13 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.AlarmsViewHolde
         private lateinit var deviceName: TextView
         private lateinit var alertTime: TextView
 
-        fun AlarmsViewHolder(@NonNull itemView: View){
-            super(itemView)
+        fun bindAlarm(alarm: Alarm){
             deviceId = itemView.findViewById(R.id.alertId)
             deviceName = itemView.findViewById(R.id.alertName)
             alertTime = itemView.findViewById(R.id.alertTime)
+            deviceId.text = alarm.deviceId
+            deviceName.text = alarm.deviceName
+            alertTime.text = alarm.alertTime
         }
     }
 }

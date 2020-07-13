@@ -7,10 +7,11 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat.startActivity
+import androidx.room.Room
 import com.example.notfallapp.Login.SignUpActivity
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.database.DatabaseClient
+import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.menubar.AlarmsActivity
 import com.example.notfallapp.menubar.ContactActivity
 import com.example.notfallapp.menubar.SettingsActivity
@@ -28,14 +29,14 @@ interface ICreatingOnClickListener {
             val android_id: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
             val clickedTime: Date = Calendar.getInstance().time
 
-            val dbclient = DatabaseClient(context)
-            val db = dbclient.getAppDatabase(context)
+            val alarm = Alarm(android_id, "IAmTest", clickedTime.toString())
+
+            val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
             try{
                 GlobalScope.launch {
-                    //db?.alarmsDao()?.deleteAll()
+                    //db.alarmsDao().deleteAll()
 
-                    // wird in der Activity noch nicht angezeigt
-                    db?.alarmsDao()?.insertAlarm(Alarm(android_id, "test", clickedTime.toString()))
+                    db.alarmsDao().insertAlarm(alarm)
                 }
             }catch (ex: Exception){
                 println("Konnte Alarm nicht speichern. Grund: $ex")

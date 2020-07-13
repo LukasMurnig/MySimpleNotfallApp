@@ -4,20 +4,15 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.AlarmDatabase
-import com.example.notfallapp.database.DatabaseClient
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
@@ -34,33 +29,15 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarms)
 
-        configureButtons()
-
         // fill ListView with Alerts
         rvAlarms = findViewById(R.id.rvAlarms)
         rvAlarms.setHasFixedSize(false)
         rvAlarms.layoutManager = LinearLayoutManager(this)
         lbMessageNoAlarms = findViewById(R.id.lbMessageNoAlarms)
+        getData()
 
-        getAlarms()
-    }
-
-    private fun getAlarms(){
-        val dbclient = DatabaseClient(this)
-        val db = dbclient.getAppDatabase(this)
-
-
-        // get Database data from Alarms
-        GlobalScope.launch {
-            val data: List<Alarm>? = db?.alarmsDao()?.getAllAlarms()
-            if (data != null) {
-                if(data.isEmpty()) {
-                    lbMessageNoAlarms.text = resources.getString(R.string.noAlarms)
-                    return@launch
-                }
-                setAdapter(data)
-            }
-        }
+        // set button bar and sos button
+        configureButtons()
     }
 
     private fun getData(){
@@ -71,29 +48,24 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
             override fun doInBackground(vararg p0: Unit?): List<Alarm> {
                 val db = AlarmDatabase(this@AlarmsActivity)
-                val alarms: List<Alarm> = db.alarmsDao().getAllAlarms()
-                return alarms
+                return db.alarmsDao().getAllAlarms()
             }
 
             override fun onPostExecute(result: List<Alarm>?) {
-
+                if(result != null){
+                    if(result.isEmpty()){
+                        lbMessageNoAlarms.text = resources.getString(R.string.noAlarms)
+                    }else{
+                        val adapter = AlarmsListAdapter(result)
+                        rvAlarms.adapter = adapter
+                        adapter.notifyDataSetChanged()
+                    }
+                }
             }
         }
 
         val gd = GetData()
         gd.execute()
-    }
-
-    private fun setAdapter(data: List<Alarm>){
-        val array: ArrayList<Alarm> = ArrayList()
-        for(a in data){
-            array.add(a)
-        }
-        runOnUiThread{
-            val adapter = AlarmsListAdapter(this, array)
-
-            lvAlarms.adapter = adapter
-        }
     }
 
     private fun configureButtons() {

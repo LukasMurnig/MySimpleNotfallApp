@@ -8,7 +8,7 @@ import com.example.notfallapp.bll.Alarm
 
 @Dao
 interface AlarmsDao {
-    @Query("SELECT * from Alarms ORDER BY alertTime asc")
+    @Query("SELECT * from Alarms")
     fun getAllAlarms(): List<Alarm>
 
     @Insert
