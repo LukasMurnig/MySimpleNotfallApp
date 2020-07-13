@@ -43,6 +43,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".connectBracelet.AddBraceletActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".menubar.ChangeProfilActivity">
+        </activity>
     </application>
 
 </manifest>
