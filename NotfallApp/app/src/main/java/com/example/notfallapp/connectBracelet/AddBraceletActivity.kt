@@ -88,7 +88,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         builder = AlertDialog.Builder(this)
         mReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                println("Hello 2")
                 val action = intent.action
                 if (BluetoothAdapter.ACTION_DISCOVERY_STARTED == action) {
                     //discovery starts, we can show progress dialog or perform other tasks
@@ -98,9 +97,11 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
                     //bluetooth device found
                     val device =
                         intent.getParcelableExtra<Parcelable>(BluetoothDevice.EXTRA_DEVICE) as BluetoothDevice
-                    devices.plus(device)
-                    val toast = Toast.makeText(context, "Found device " + device.name, Toast.LENGTH_LONG)
-                    toast.show()
+                    devices.plusElement(device)
+                    lvDevices.adapter = ArrayAdapter<BluetoothDevice>(context, 0, devices)
+                    lvDevices.deferNotifyDataSetChanged()
+                    /*val toast = Toast.makeText(context, "Found device " + device.name, Toast.LENGTH_LONG)
+                    toast.show()*/
                 }
             }
         }
@@ -153,8 +154,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     override fun onDestroy() {
         bAdapter.cancelDiscovery()
         unregisterReceiver(mReceiver)
-        lvDevices.adapter = ArrayAdapter<BluetoothDevice>(context, 0, devices)
-        lvDevices.deferNotifyDataSetChanged()
         super.onDestroy()
     }
 
