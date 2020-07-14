@@ -35,13 +35,13 @@
 
         <activity
             android:name=".menubar.MapActivity"
-            android:label="@string/title_activity_map"></activity>
+            android:label="@string/title_activity_map" />
         <activity
             android:name=".Login.LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Login.SignUpActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -53,16 +53,16 @@
         </activity>
         <activity
             android:name=".menubar.contact.ContactActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".menubar.contact.AddContactActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".menubar.AlarmsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".menubar.SettingsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".alarm.CallAlarmActivity"
             android:screenOrientation="portrait"
@@ -73,11 +73,9 @@
         <activity
             android:name=".alarm.AlarmSuccesfulActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".menubar.ChangeProfilActivity"></activity>
+        <activity android:name=".menubar.ChangeProfilActivity" />
         <activity android:name=".connectBracelet.AddBraceletActivity"
             android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".menubar.ChangeProfilActivity">
         </activity>
     </application>
 
