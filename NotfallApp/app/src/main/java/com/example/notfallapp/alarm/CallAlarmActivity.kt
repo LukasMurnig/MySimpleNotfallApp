@@ -12,16 +12,19 @@ import android.util.Log
 import android.widget.Button
 import android.widget.RemoteViews
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.R
+import com.google.android.gms.cast.CastRemoteDisplayLocalService
 
 class CallAlarmActivity : AppCompatActivity(){
     private lateinit var btnCancelAlarm: Button
     private lateinit var tvAlarm: TextView
     private val CHANNEL_ID = "144NA"
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +45,7 @@ class CallAlarmActivity : AppCompatActivity(){
     }
 
     private fun createNotification(){
-        createNotificationChannel()
+        //createNotificationChannel()
 
         val notificationLayout = RemoteViews(packageName, R.layout.notification_call_alarm)
 
@@ -83,7 +86,7 @@ class CallAlarmActivity : AppCompatActivity(){
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = getString(R.string.notificationTitle)
-            val descriptionText = getString(R.string.notificationDescription)
+            val descriptionText = getString(R.string.notificationTitle)
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText

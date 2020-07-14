@@ -32,7 +32,7 @@ class AlarmSuccesfulActivity : AppCompatActivity() {
 
         buttonsuccesfulOk.setOnClickListener() {
             Log.d("ButtonOk", "Button Ok was clicked in AlarmSuccesfulActivity")
-            var intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
