@@ -6,9 +6,11 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.R
+import com.example.notfallapp.alarm.AlarmCanceledActivity
 import com.example.notfallapp.alarm.CallAlarmActivity
 
 // create a notification with a sos button to send a alarm
@@ -19,6 +21,15 @@ interface INotificationCreateAlarm {
 
         createNotificationChannel(context, CHANNEL_ID)
 
+        val notificationLayout = RemoteViews(context.packageName, R.layout.notification_sos)
+
+        // when user click on button "SOS", call alarm
+        val intentOnSos = Intent(context, CallAlarmActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntentOnSos: PendingIntent = PendingIntent.getActivity(context, 0, intentOnSos, 0)
+        notificationLayout.setOnClickPendingIntent(R.id.btnNotSOS, pendingIntentOnSos)
+
         val intent = Intent(context, CallAlarmActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -26,14 +37,12 @@ interface INotificationCreateAlarm {
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.notfallapplogo)
-            .setContentTitle("Notfall App")
-            .setContentText("First Test")
+            .setCustomContentView(notificationLayout)
+            .setCustomBigContentView(notificationLayout)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setTicker("Alarm")
             .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
-            .addAction(R.drawable.contacts, context.getString(R.string.sos),
-                pendingIntent);
 
         // show notification
         with(NotificationManagerCompat.from(context)){

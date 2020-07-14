@@ -31,8 +31,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import java.io.IOException
 import java.util.*
 
-
-// Key: AIzaSyAQ3T7x_6I67x2EnA_PpO9yw3y8g_K8BlM
 open class MapActivity : AppCompatActivity(),  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener,
     LocationListener, ICreatingOnClickListener {
