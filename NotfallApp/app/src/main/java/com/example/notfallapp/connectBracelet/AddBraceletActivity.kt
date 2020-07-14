@@ -3,6 +3,7 @@ package com.example.notfallapp.connectBracelet
 import android.Manifest
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothClass
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -41,6 +42,9 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     private var bAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
     private lateinit var mReceiver: BroadcastReceiver
     private var context = this
+
+    private var devices = emptyArray<BluetoothDevice>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -94,6 +98,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
                     //bluetooth device found
                     val device =
                         intent.getParcelableExtra<Parcelable>(BluetoothDevice.EXTRA_DEVICE) as BluetoothDevice
+                    devices.plus(device)
                     val toast = Toast.makeText(context, "Found device " + device.name, Toast.LENGTH_LONG)
                     toast.show()
                 }
@@ -148,6 +153,8 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     override fun onDestroy() {
         bAdapter.cancelDiscovery()
         unregisterReceiver(mReceiver)
+        lvDevices.adapter = ArrayAdapter<BluetoothDevice>(context, 0, devices)
+        lvDevices.deferNotifyDataSetChanged()
         super.onDestroy()
     }
 
