@@ -4,11 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import com.example.notfallapp.Login.SignUpActivity
+import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotificationCreateAlarm
 
@@ -21,9 +19,27 @@ class MainActivity : AppCompatActivity(),
     private lateinit var btnAlarms: ImageButton
     private lateinit var btnMap: ImageButton
     private lateinit var btnSettings: ImageButton
+    private lateinit var btnaddBracelet: ImageButton
+    private lateinit var tvStatusbracelet: TextView
+    private lateinit var tvaddbracelet: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        configureButtons()
+        initComponents()
+
+
+        btnaddBracelet.setOnClickListener() {
+            Log.d("ButtonAdd", "Button Add bracelet was clicked in MainActivity")
+            var intent = Intent(this, AddBraceletActivity::class.java)
+            startActivity(intent)
+        }
+
+
+    }
+
+    private fun configureButtons(){
         // Button bar
         btnSos = findViewById(R.id.btn_sos)
         btnHome = findViewById(R.id.btnHome)
@@ -36,4 +52,13 @@ class MainActivity : AppCompatActivity(),
         createNotificationCreateAlarm(this)
     }
 
+    private fun initComponents(){
+        btnaddBracelet = findViewById(R.id.btn_add_bracelet)
+        tvStatusbracelet = findViewById(R.id.tvStatusbracelet)
+        tvaddbracelet = findViewById(R.id.tvaddbracelet)
+    }
+
+    private fun checkForConnectedDevice(callback: Unit){
+
+    }
 }

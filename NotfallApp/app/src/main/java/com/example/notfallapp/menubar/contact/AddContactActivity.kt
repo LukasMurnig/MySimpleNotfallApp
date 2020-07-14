@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
@@ -32,7 +33,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var input_lastname: EditText
     private lateinit var input_email: EditText
     private lateinit var input_number: EditText
-
+    private lateinit var builder: AlertDialog.Builder
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addcontact)
@@ -61,11 +62,9 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
         btn_cancel.setOnClickListener() {
             Log.d("CancelButton", "Cancel Button to add Contact were clicked!")
-
-            // TODO ask if the user is for sure!
-
-            var intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            sureDialog()
+            val alert = builder.create()
+            alert.show()
         }
     }
     private fun createButtonBar() {
@@ -90,6 +89,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         input_lastname = findViewById(R.id.input_lastname)
         input_email = findViewById(R.id.input_email)
         input_number = findViewById(R.id.input_number)
+        builder = AlertDialog.Builder(this)
     }
 
     private fun validate(): Boolean {
@@ -128,5 +128,20 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         }
 
         return validate
+    }
+
+    private fun sureDialog() {
+        builder.setTitle(getResources().getString(R.string.confirm))
+        builder.setMessage(getResources().getString(R.string.sureStopCreatingContact))
+
+        builder.setPositiveButton(getResources().getString(R.string.Yes)) { dialog, which ->
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton(getResources().getString(R.string.No)) {dialog, which ->
+            dialog.dismiss()
+        }
     }
 }
