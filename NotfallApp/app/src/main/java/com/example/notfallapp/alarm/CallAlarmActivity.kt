@@ -42,7 +42,7 @@ class CallAlarmActivity : AppCompatActivity(){
     }
 
     private fun createNotification(){
-        createNotificationChannel()
+        //createNotificationChannel()
 
         val notificationLayout = RemoteViews(packageName, R.layout.notification_call_alarm)
 
