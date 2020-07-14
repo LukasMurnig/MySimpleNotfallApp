@@ -8,14 +8,16 @@ import android.widget.*
 import com.example.notfallapp.Login.SignUpActivity
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.interfaces.INotificationCreateAlarm
 
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener {
+    ICreatingOnClickListener, INotificationCreateAlarm {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
     private lateinit var btnAlarms: ImageButton
+    private lateinit var btnMap: ImageButton
     private lateinit var btnSettings: ImageButton
     private lateinit var btnaddBracelet: ImageButton
     private lateinit var tvStatusbracelet: TextView
@@ -43,9 +45,11 @@ class MainActivity : AppCompatActivity(),
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
+        btnMap = findViewById(R.id.btnMap)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
+        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnMap, btnSettings)
+        createNotificationCreateAlarm(this)
     }
 
     private fun initComponents(){

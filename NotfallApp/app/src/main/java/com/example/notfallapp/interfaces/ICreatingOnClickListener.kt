@@ -1,5 +1,6 @@
 package com.example.notfallapp.interfaces
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
@@ -15,17 +16,20 @@ import com.example.notfallapp.Login.SignUpActivity
 import com.example.notfallapp.alarm.CallAlarmActivity
 import androidx.room.Room
 import com.example.notfallapp.R
+import com.example.notfallapp.alarm.TimerHandler
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.menubar.AlarmsActivity
+import com.example.notfallapp.menubar.MapActivity
 import com.example.notfallapp.menubar.SettingsActivity
+import com.google.android.gms.cast.CastRemoteDisplayLocalService.startService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
 interface ICreatingOnClickListener {
 
-    fun createOnClickListener(context: Context,btnSos: Button,  btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
+    fun createOnClickListener(context: Context,btnSos: Button,  btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnMap: ImageButton, btnSettings: ImageButton){
 
         btnSos.setOnClickListener{
             createAlarmInDb(context)
@@ -34,9 +38,6 @@ interface ICreatingOnClickListener {
 
             Log.d("SOSButtonClicked", "SOS Button were clicked!")
             val intent = Intent(context, CallAlarmActivity::class.java)
-
-
-
 
             startActivity(context, intent, null)
         }
@@ -58,6 +59,16 @@ interface ICreatingOnClickListener {
             // TODO open ContactActivity
             Log.d("MenuItemClicked", "Contacts were clicked")
             val intent = Intent(context, ContactActivity::class.java)
+            startActivity(context, intent, null)
+        }
+
+        btnMap.setOnClickListener{
+            Log.d("MenuItemClicked", "Map was clicked")
+            val intent = Intent(context, MapActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+
             startActivity(context, intent, null)
         }
 
