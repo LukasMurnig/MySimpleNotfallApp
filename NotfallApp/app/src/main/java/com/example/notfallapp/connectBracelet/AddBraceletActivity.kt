@@ -33,7 +33,9 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
     private lateinit var btnAlarms: ImageButton
+    private lateinit var btnMap: ImageButton
     private lateinit var btnSettings: ImageButton
+
     private lateinit var btnRetrySearching: Button
     private lateinit var btnCancel: Button
     private lateinit var tvConnectBracelet: TextView
