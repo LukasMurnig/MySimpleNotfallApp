@@ -17,7 +17,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -25,8 +24,6 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 
-
-@RequiresApi(Build.VERSION_CODES.O)
 class AddBraceletActivity : Activity(), ICreatingOnClickListener {
 
     private lateinit var btnSos: Button
@@ -73,9 +70,10 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
+        btnMap = findViewById(R.id.btnMap)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
+        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnMap, btnSettings)
     }
 
     private fun initComponents() {
