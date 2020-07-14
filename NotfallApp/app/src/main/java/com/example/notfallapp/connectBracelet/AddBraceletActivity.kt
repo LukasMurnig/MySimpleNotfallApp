@@ -4,14 +4,11 @@ import android.Manifest
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.bluetooth.le.ScanCallback
-import android.bluetooth.le.ScanResult
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -33,7 +30,9 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
     private lateinit var btnAlarms: ImageButton
+    private lateinit var btnMap: ImageButton
     private lateinit var btnSettings: ImageButton
+
     private lateinit var btnRetrySearching: Button
     private lateinit var btnCancel: Button
     private lateinit var tvConnectBracelet: TextView
@@ -50,14 +49,14 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         configureButtons()
         initComponents()
 
-        btnCancel.setOnClickListener() {
+        btnCancel.setOnClickListener {
             Log.d("ButtonCancel", "Cancel Button was clicked in AddBraceletActivity")
             sureDialog()
             val alert = builder.create()
             alert.show()
         }
 
-        btnRetrySearching.setOnClickListener() {
+        btnRetrySearching.setOnClickListener {
             Log.d("ButtonSearch", "Search Button was clicked in AddBraceletActivity")
             searchDevices()
         }
@@ -71,9 +70,10 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
+        btnMap = findViewById(R.id.btnMap)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
+        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnMap, btnSettings)
     }
 
     private fun initComponents() {
@@ -84,7 +84,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         builder = AlertDialog.Builder(this)
         mReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                System.out.println("Hello 2")
+                println("Hello 2")
                 val action = intent.action
                 if (BluetoothAdapter.ACTION_DISCOVERY_STARTED == action) {
                     //discovery starts, we can show progress dialog or perform other tasks
@@ -104,10 +104,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     private fun searchDevices() {
         //TODO search for Bluetooth devices.
         Log.d("SearchDevices", "SearchDevices was called in AddBraceletActivity")
-        if (bAdapter == null) {
-            tvConnectBracelet.setError(getResources().getString(R.string.deviceNotSupportBluetooth))
-            return;
-        }
 
         if (!bAdapter.isEnabled) {
             val eintent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
@@ -151,16 +147,16 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
 
     override fun onDestroy() {
         bAdapter.cancelDiscovery()
-        unregisterReceiver(mReceiver);
-        super.onDestroy();
+        unregisterReceiver(mReceiver)
+        super.onDestroy()
     }
 
     private fun sureDialog() {
         builder.setTitle(getResources().getString(R.string.confirm))
-        builder.setMessage(getResources().getString(R.string.sureStopSearching))
+        builder.setMessage(resources.getString(R.string.sureStopSearching))
 
         builder.setPositiveButton(getResources().getString(R.string.Yes)) { dialog, which ->
-            var intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             dialog.dismiss()
         }
