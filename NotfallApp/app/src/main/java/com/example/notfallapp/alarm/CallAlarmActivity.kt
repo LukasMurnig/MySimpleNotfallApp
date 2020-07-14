@@ -12,16 +12,19 @@ import android.util.Log
 import android.widget.Button
 import android.widget.RemoteViews
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.R
+import com.google.android.gms.cast.CastRemoteDisplayLocalService
 
 class CallAlarmActivity : AppCompatActivity(){
     private lateinit var btnCancelAlarm: Button
     private lateinit var tvAlarm: TextView
     private val CHANNEL_ID = "144NA"
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

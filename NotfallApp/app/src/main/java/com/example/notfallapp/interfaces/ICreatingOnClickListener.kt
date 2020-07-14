@@ -16,11 +16,13 @@ import com.example.notfallapp.Login.SignUpActivity
 import com.example.notfallapp.alarm.CallAlarmActivity
 import androidx.room.Room
 import com.example.notfallapp.R
+import com.example.notfallapp.alarm.TimerHandler
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.menubar.AlarmsActivity
 import com.example.notfallapp.menubar.MapActivity
 import com.example.notfallapp.menubar.SettingsActivity
+import com.google.android.gms.cast.CastRemoteDisplayLocalService.startService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
