@@ -113,7 +113,6 @@ open class MapActivity : AppCompatActivity(),  OnMapReadyCallback, GoogleApiClie
             == PackageManager.PERMISSION_GRANTED
         ) {
             val pendingIntent: PendingIntent =PendingIntent.getService(this, 0, intent, 0)
-            //val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, this.intent, 0)
 
             LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient,
@@ -189,7 +188,6 @@ open class MapActivity : AppCompatActivity(),  OnMapReadyCallback, GoogleApiClie
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
         val pendingIntent: PendingIntent = PendingIntent.getService(this, 0, intent, 0)
-        //val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, this.intent, 0)
         LocationServices.FusedLocationApi.removeLocationUpdates(
             mGoogleApiClient,
             pendingIntent
