@@ -39,23 +39,22 @@ class CallAlarmActivity : AppCompatActivity(){
         createNotification()
 
         btnCancelAlarm.setOnClickListener() {
-            TimerHandler.deleteTimer()
             Log.d("CancelButtonClicked", "Cancel Button in CallAlarmActivity clicked")
-            val intent = Intent(this, AlarmCanceledActivity::class.java)
-            startActivity(intent)
+
+            // start service cancel alarm, which also stop the timer;
+            val intent = Intent(this, ServiceCancelAlarm::class.java)
+            startService(intent)
         }
     }
 
     private fun createNotification(){
         //createNotificationChannel()
 
-        val notificationLayout = RemoteViews(packageName, R.layout.notification_call_alarm)
-
         // when user click on button "Abbrechen", service cancel alarm open, which stop the alarm
-        val i=Intent(this, ServiceCancelAlarm::class.java).apply {
+        val intentSos=Intent(this, ServiceCancelAlarm::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val p = PendingIntent.getService(this, 4444, i, PendingIntent.FLAG_CANCEL_CURRENT)
+        val pendingIntentSos = PendingIntent.getService(this, 4444, intentSos, PendingIntent.FLAG_CANCEL_CURRENT)
 
         // when user click on message, open CallAlarm Activity
         val intent = Intent(this, CallAlarmActivity::class.java).apply {
@@ -75,7 +74,9 @@ class CallAlarmActivity : AppCompatActivity(){
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-        notificationLayout.setOnClickPendingIntent(R.id.btnCancelNotificationAlarm, p)
+        // getting the layout of the notification
+        val notificationLayout = RemoteViews(packageName, R.layout.notification_call_alarm)
+        notificationLayout.setOnClickPendingIntent(R.id.btnCancelNotificationAlarm, pendingIntentSos)
         builder.setCustomContentView(notificationLayout).setCustomBigContentView(notificationLayout)
 
         // show notification

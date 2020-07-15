@@ -13,7 +13,9 @@ class ServiceCancelAlarm: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags2: Int, startId: Int): Int {
+        // stop timer
         TimerHandler.deleteTimer()
+
         val intentOnSos = Intent(applicationContext, AlarmCanceledActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
         }

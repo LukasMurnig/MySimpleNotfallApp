@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.IBinder
 import com.example.notfallapp.alarm.CallAlarmActivity
 
+// open Call Alarm Activity
 class ServiceCallAlarm: Service() {
     override fun onBind(p0: Intent?): IBinder? {
         return null

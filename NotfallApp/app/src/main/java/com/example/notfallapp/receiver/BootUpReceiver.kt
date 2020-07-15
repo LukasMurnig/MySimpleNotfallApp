@@ -7,6 +7,8 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.interfaces.INotificationCreateAlarm
 
 class BootUpReceiver : BroadcastReceiver() {
+
+    // should open MainActivity, when device is finished with boot up
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context != null && intent !=null){
             if (Intent.ACTION_BOOT_COMPLETED.equals(intent.action)) {

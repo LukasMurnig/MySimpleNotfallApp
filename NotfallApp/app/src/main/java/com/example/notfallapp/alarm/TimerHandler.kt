@@ -39,10 +39,10 @@ class TimerHandler {
         private fun createSuccesfulNotification(context: Context){
             val notificationLayout = RemoteViews(context.packageName, R.layout.notification_successful_alarm)
 
-            val intent = Intent(context, AlarmSuccesfulActivity::class.java).apply {
+            val intentSuccesful = Intent(context, AlarmSuccesfulActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+            val pendingIntentSuccesful: PendingIntent = PendingIntent.getActivity(context, 0, intentSuccesful, 0)
 
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.notfallapplogo)
@@ -52,7 +52,7 @@ class TimerHandler {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
                 // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntent)
+                .setContentIntent(pendingIntentSuccesful)
                 .setAutoCancel(true)
 
             with(NotificationManagerCompat.from(context)){

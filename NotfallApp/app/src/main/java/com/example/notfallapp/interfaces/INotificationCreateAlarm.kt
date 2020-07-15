@@ -24,10 +24,10 @@ interface INotificationCreateAlarm {
         val notificationLayout = RemoteViews(context.packageName, R.layout.notification_sos)
 
         // when user click on button "SOS", call service call alarm, which call alarm
-        val i=Intent(context, ServiceCallAlarm::class.java).apply {
+        val intentCallAlarm=Intent(context, ServiceCallAlarm::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val p = PendingIntent.getService(context, 4444, i, PendingIntent.FLAG_CANCEL_CURRENT)
+        val pendingIntentCallAlarm = PendingIntent.getService(context, 4444, intentCallAlarm, PendingIntent.FLAG_CANCEL_CURRENT)
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.notfallapplogo)
@@ -35,7 +35,7 @@ interface INotificationCreateAlarm {
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setOngoing(true)
 
-        notificationLayout.setOnClickPendingIntent(R.id.btnNotSOS, p)
+        notificationLayout.setOnClickPendingIntent(R.id.btnNotSOS, pendingIntentCallAlarm)
         builder.setCustomContentView(notificationLayout).setCustomBigContentView(notificationLayout)
 
         // show notification
