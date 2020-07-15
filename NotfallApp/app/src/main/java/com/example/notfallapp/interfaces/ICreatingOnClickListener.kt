@@ -22,6 +22,7 @@ import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.menubar.AlarmsActivity
 import com.example.notfallapp.menubar.MapActivity
 import com.example.notfallapp.menubar.SettingsActivity
+import com.example.notfallapp.service.ServiceCallAlarm
 import com.google.android.gms.cast.CastRemoteDisplayLocalService.startService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,9 +33,9 @@ interface ICreatingOnClickListener {
     fun createOnClickListener(context: Context,btnSos: Button,  btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnMap: ImageButton, btnSettings: ImageButton){
 
         btnSos.setOnClickListener{
+            // TODO implement also for notification button and move to when it is a succesful alarm?
+            // works only with app button, not notification button
             createAlarmInDb(context)
-
-            //createMessage(context)
 
             Log.d("SOSButtonClicked", "SOS Button were clicked!")
             val intent = Intent(context, CallAlarmActivity::class.java)
@@ -67,7 +68,6 @@ interface ICreatingOnClickListener {
             val intent = Intent(context, MapActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
             startActivity(context, intent, null)
         }
@@ -78,10 +78,6 @@ interface ICreatingOnClickListener {
             val intent = Intent(context, SettingsActivity::class.java)
             startActivity(context, intent, null)
         }
-    }
-
-    fun createMessage(context: Context){
-
     }
 
     fun createAlarmInDb(context: Context){
