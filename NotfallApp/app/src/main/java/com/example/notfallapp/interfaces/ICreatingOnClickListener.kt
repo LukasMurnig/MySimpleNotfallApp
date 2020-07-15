@@ -67,7 +67,6 @@ interface ICreatingOnClickListener {
             val intent = Intent(context, MapActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
             startActivity(context, intent, null)
         }

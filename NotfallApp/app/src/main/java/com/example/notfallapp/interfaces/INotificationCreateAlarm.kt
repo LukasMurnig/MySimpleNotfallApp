@@ -10,43 +10,37 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.R
-import com.example.notfallapp.alarm.AlarmCanceledActivity
 import com.example.notfallapp.alarm.CallAlarmActivity
+import com.example.notfallapp.service.ServiceCallAlarm
 
 // create a notification with a sos button to send a alarm
 interface INotificationCreateAlarm {
 
     fun createNotificationCreateAlarm(context: Context){
-        val CHANNEL_ID: String = "144NA"
+        val CHANNEL_ID: String = "NA12345"
 
         createNotificationChannel(context, CHANNEL_ID)
 
         val notificationLayout = RemoteViews(context.packageName, R.layout.notification_sos)
 
-        // when user click on button "SOS", call alarm
-        val intentOnSos = Intent(context, CallAlarmActivity::class.java).apply {
+        // when user click on button "SOS", call service call alarm, which call alarm
+        val i=Intent(context, ServiceCallAlarm::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val pendingIntentOnSos: PendingIntent = PendingIntent.getActivity(context, 0, intentOnSos, 0)
-        notificationLayout.setOnClickPendingIntent(R.id.btnNotSOS, pendingIntentOnSos)
-
-        val intent = Intent(context, CallAlarmActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val p = PendingIntent.getService(context, 4444, i, PendingIntent.FLAG_CANCEL_CURRENT)
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.notfallapplogo)
-            .setCustomContentView(notificationLayout)
-            .setCustomBigContentView(notificationLayout)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setTicker("Alarm")
-            .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
+            .setOngoing(true)
+
+        notificationLayout.setOnClickPendingIntent(R.id.btnNotSOS, p)
+        builder.setCustomContentView(notificationLayout).setCustomBigContentView(notificationLayout)
 
         // show notification
         with(NotificationManagerCompat.from(context)){
-            notify(1444, builder.build())
+            notify(4444, builder.build())
         }
     }
 
