@@ -18,7 +18,7 @@ abstract class AlarmDatabase : RoomDatabase() {
     companion object {
         @Volatile private var instance: AlarmDatabase? = null
         private val LOCK = Any()
-        private val db_name: String = "alarms.db"
+        private const val db_name: String = "alarms.db"
 
         operator fun invoke(context: Context)= instance ?: synchronized(LOCK) {
             instance ?: buildDatabase(context).also{ instance = it}
