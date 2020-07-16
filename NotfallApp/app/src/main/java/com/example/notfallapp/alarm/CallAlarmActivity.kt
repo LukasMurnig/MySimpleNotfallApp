@@ -17,14 +17,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.R
+import com.example.notfallapp.service.ServiceCallAlarm
+import com.example.notfallapp.service.ServiceCancelAlarm
 import com.google.android.gms.cast.CastRemoteDisplayLocalService
 
 class CallAlarmActivity : AppCompatActivity(){
     private lateinit var btnCancelAlarm: Button
     private lateinit var tvAlarm: TextView
-    private val CHANNEL_ID = "144NA"
+    private val CHANNEL_ID = "NA12345"
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,22 +40,21 @@ class CallAlarmActivity : AppCompatActivity(){
 
         btnCancelAlarm.setOnClickListener() {
             Log.d("CancelButtonClicked", "Cancel Button in CallAlarmActivity clicked")
-            val intent = Intent(this, AlarmCanceledActivity::class.java)
-            startActivity(intent)
+
+            // start service cancel alarm, which also stop the timer;
+            val intent = Intent(this, ServiceCancelAlarm::class.java)
+            startService(intent)
         }
     }
 
     private fun createNotification(){
         //createNotificationChannel()
 
-        val notificationLayout = RemoteViews(packageName, R.layout.notification_call_alarm)
-
-        // when user click on button "Abbrechen", alarm cancels
-        val intentOnCancel = Intent(this, AlarmCanceledActivity::class.java).apply {
+        // when user click on button "Abbrechen", service cancel alarm open, which stop the alarm
+        val intentSos=Intent(this, ServiceCancelAlarm::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val pendingIntentOnCancel: PendingIntent = PendingIntent.getActivity(this, 0, intentOnCancel, 0)
-        notificationLayout.setOnClickPendingIntent(R.id.btnCancelNotificationAlarm, pendingIntentOnCancel)
+        val pendingIntentSos = PendingIntent.getService(this, 4444, intentSos, PendingIntent.FLAG_CANCEL_CURRENT)
 
         // when user click on message, open CallAlarm Activity
         val intent = Intent(this, CallAlarmActivity::class.java).apply {
@@ -65,19 +65,23 @@ class CallAlarmActivity : AppCompatActivity(){
         // build custom notification
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.notfallapplogo)
-            .setCustomContentView(notificationLayout)
-            .setCustomBigContentView(notificationLayout)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setTicker("Alarm")
             .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
+            .setOngoing(true)
             // Set the intent that will fire when the user taps the notification
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
+        // getting the layout of the notification
+        val notificationLayout = RemoteViews(packageName, R.layout.notification_call_alarm)
+        notificationLayout.setOnClickPendingIntent(R.id.btnCancelNotificationAlarm, pendingIntentSos)
+        builder.setCustomContentView(notificationLayout).setCustomBigContentView(notificationLayout)
+
         // show notification
         with(NotificationManagerCompat.from(this)){
-            notify(1444, builder.build())
+            notify(4444, builder.build())
         }
     }
 

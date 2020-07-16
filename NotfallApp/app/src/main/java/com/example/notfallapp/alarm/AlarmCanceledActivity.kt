@@ -32,9 +32,6 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // delete Timer of CallAlarmActivity
-        TimerHandler.deleteTimer()
-
         setContentView(R.layout.activity_call_alarm_canceled)
         configureButtons()
         initComponents()
@@ -61,13 +58,14 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener {
             .setCustomContentView(notificationLayout)
             .setCustomBigContentView(notificationLayout)
             .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
             // Set the intent that will fire when the user taps the notification
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)){
-            notify(1444, builder.build())
+            notify(4444, builder.build())
         }
     }
 

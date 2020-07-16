@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity(),
             var intent = Intent(this, AddBraceletActivity::class.java)
             startActivity(intent)
         }
-
-
     }
 
     private fun configureButtons(){
