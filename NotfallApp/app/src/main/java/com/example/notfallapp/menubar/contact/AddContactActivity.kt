@@ -23,7 +23,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
     private lateinit var btnAlarms: ImageButton
-    private lateinit var btnMap: ImageButton
     private lateinit var btnSettings: ImageButton
 
     private lateinit var addpicture: ImageButton
@@ -75,10 +74,9 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
-        btnMap = findViewById(R.id.btnMap)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnMap, btnSettings)
+        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 
     private fun initComponents() {

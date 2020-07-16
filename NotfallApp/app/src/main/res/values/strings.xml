@@ -20,7 +20,7 @@
     <string name="btnAlarms">Button Alarms</string>
     <string name="btnContact">Button Contact</string>
     <string name="btnSettings">Button Settings</string>
-    <string name="btnMap">Button Map</string>
+
     <!-- Contacts -->
     <string name="noContacts">Sie besitzen leider noch keine Kontakte!</string>
     <string name="noAlarms">Gottseidank besitzen Sie noch keine Alarme!</string>
@@ -53,6 +53,12 @@
     <string name="alarmcanceledok">OK</string>
     <string name="alarmcalledsuccesful">Ihr Alarm wurde erfolgreich an die Zentrale weitergeleitet!
                                         Hilfe ist unterwegs!</string>
+
+    <string name="longitude">Längengrad:</string>
+    <string name="latitude">Breitengrad:</string>
+    <string name="accuracy">Genauigkeit:</string>
+    <string name="errorGeoInfo">konnte kein GPS bekommen</string>
+
     <!-- Connect bracelet -->
     <string name="nobraceletconnected">Sie haben kein Armband mit Ihrer App Verbunden</string>
     <string name="braceleteconnected">Ihr Armband wurde erfolgreich verbunden.</string>

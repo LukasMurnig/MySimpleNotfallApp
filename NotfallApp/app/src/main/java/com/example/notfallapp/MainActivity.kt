@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -24,11 +26,12 @@ class MainActivity : AppCompatActivity(),
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
     private lateinit var btnAlarms: ImageButton
-    private lateinit var btnMap: ImageButton
     private lateinit var btnSettings: ImageButton
+
     private lateinit var btnaddBracelet: ImageButton
     private lateinit var tvStatusbracelet: TextView
     private lateinit var tvaddbracelet: TextView
+
     private lateinit var handler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +53,9 @@ class MainActivity : AppCompatActivity(),
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
-        btnMap = findViewById(R.id.btnMap)
         btnSettings = findViewById(R.id.btnSettings)
 
-        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnMap, btnSettings)
+        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
         createNotificationCreateAlarm(this)
     }
 
