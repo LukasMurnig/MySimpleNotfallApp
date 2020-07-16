@@ -20,7 +20,7 @@
     <string name="btnAlarms">Button Alarms</string>
     <string name="btnContact">Button Contact</string>
     <string name="btnSettings">Button Settings</string>
-    <string name="btnMap">Button Map</string>
+
     <!-- Contacts -->
     <string name="noContacts">Sie besitzen leider noch keine Kontakte!</string>
     <string name="noAlarms">Gottseidank besitzen Sie noch keine Alarme!</string>
