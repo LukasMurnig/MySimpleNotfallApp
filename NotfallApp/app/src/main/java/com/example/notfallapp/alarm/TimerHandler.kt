@@ -15,7 +15,7 @@ import com.example.notfallapp.R
 
 class TimerHandler {
     companion object {
-            private lateinit var handler: Handler
+            lateinit var handler: Handler
         private val CHANNEL_ID = "144NA"
 
             fun timerHandler(context: Context){
