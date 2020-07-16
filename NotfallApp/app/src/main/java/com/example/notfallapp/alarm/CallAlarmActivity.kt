@@ -1,30 +1,34 @@
 package com.example.notfallapp.alarm
 
+import android.Manifest
 import android.annotation.SuppressLint
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.RemoteViews
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.ActivityCompat
 import com.example.notfallapp.R
-import com.example.notfallapp.service.ServiceCallAlarm
 import com.example.notfallapp.service.ServiceCancelAlarm
-import com.google.android.gms.cast.CastRemoteDisplayLocalService
+import kotlin.math.roundToInt
+
 
 class CallAlarmActivity : AppCompatActivity(){
     private lateinit var btnCancelAlarm: Button
     private lateinit var tvAlarm: TextView
-    private val CHANNEL_ID = "NA12345"
+    private lateinit var tvConnectionState: TextView
+    private lateinit var tvLongitude: TextView
+    private lateinit var tvLatitude: TextView
+    private lateinit var tvAccuracy: TextView
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +37,6 @@ class CallAlarmActivity : AppCompatActivity(){
 
         initComponents()
 
-        // create Timer
-        TimerHandler.timerHandler(this)
-
-        createNotification()
-
         btnCancelAlarm.setOnClickListener() {
             Log.d("CancelButtonClicked", "Cancel Button in CallAlarmActivity clicked")
 
@@ -45,65 +44,72 @@ class CallAlarmActivity : AppCompatActivity(){
             val intent = Intent(this, ServiceCancelAlarm::class.java)
             startService(intent)
         }
+
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        if(activeNetwork?.isConnectedOrConnecting == true){
+            tvConnectionState.text = "Connected"
+        }else{
+            tvConnectionState.text = "not Connected"
+        }
+
+        setLatestKnownLocation()
     }
 
-    private fun createNotification(){
-        //createNotificationChannel()
+    private fun setLatestKnownLocation(){
+        // get position
+        val lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        // when user click on button "Abbrechen", service cancel alarm open, which stop the alarm
-        val intentSos=Intent(this, ServiceCancelAlarm::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
         }
-        val pendingIntentSos = PendingIntent.getService(this, 4444, intentSos, PendingIntent.FLAG_CANCEL_CURRENT)
+        val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        val longitude = location.longitude
+        val latitude = location.latitude
+        val accuracy = location.accuracy
+        val verticalAccuracyMeters = getVerticalAccuracyMeters(location)
 
-        // when user click on message, open CallAlarm Activity
-        val intent = Intent(this, CallAlarmActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
+        tvLongitude.text = longitude.toString()
+        tvLatitude.text = latitude.toString()
+
+        if(accuracy.roundToInt()<accuracy){
+            tvAccuracy.text = (accuracy.roundToInt()+1).toString()
+        }else{
+            tvAccuracy.text = accuracy.roundToInt().toString()
         }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
-        // build custom notification
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.notfallapplogo)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setTicker("Alarm")
-            .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
-            .setOngoing(true)
-            // Set the intent that will fire when the user taps the notification
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-
-        // getting the layout of the notification
-        val notificationLayout = RemoteViews(packageName, R.layout.notification_call_alarm)
-        notificationLayout.setOnClickPendingIntent(R.id.btnCancelNotificationAlarm, pendingIntentSos)
-        builder.setCustomContentView(notificationLayout).setCustomBigContentView(notificationLayout)
-
-        // show notification
-        with(NotificationManagerCompat.from(this)){
-            notify(4444, builder.build())
-        }
+        tvAccuracy.text = tvAccuracy.text as String + " m"
     }
 
-    private fun createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.notificationTitle)
-            val descriptionText = getString(R.string.notificationTitle)
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-            // Register the channel with the system
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+    private fun getVerticalAccuracyMeters(location:Location): Float{
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            location.verticalAccuracyMeters
+        }else{
+            0.0F
         }
+
     }
 
     private fun initComponents(){
         btnCancelAlarm = findViewById(R.id.btn_cancel_alarm)
         tvAlarm = findViewById(R.id.tvAlarm)
+        tvConnectionState = findViewById(R.id.tvConnection)
+        tvLongitude = findViewById(R.id.tvLongitude)
+        tvLatitude = findViewById(R.id.tvLatitude)
+        tvAccuracy = findViewById(R.id.tvAccuracy)
     }
 }
