@@ -57,6 +57,7 @@
     <string name="longitude">Längengrad:</string>
     <string name="latitude">Breitengrad:</string>
     <string name="accuracy">Genauigkeit:</string>
+    <string name="errorGeoInfo">konnte kein GPS bekommen</string>
 
     <!-- Connect bracelet -->
     <string name="nobraceletconnected">Sie haben kein Armband mit Ihrer App Verbunden</string>

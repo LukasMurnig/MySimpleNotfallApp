@@ -48,7 +48,7 @@
         android:layout_marginTop="150dp"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
-        android:text="did not get"/>
+        android:text="@string/errorGeoInfo"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
         android:layout_marginTop="200dp"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
-        android:text="did not get"/>
+        android:text="@string/errorGeoInfo"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
         android:layout_marginTop="250dp"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
-        android:text="did not get"/>
+        android:text="@string/errorGeoInfo"/>
 
     <TextView
         android:id="@+id/tvAlarm"
