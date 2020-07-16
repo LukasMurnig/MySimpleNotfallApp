@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/deviceMACAddress"
+        android:layout_marginStart="@dimen/size30"
+        android:layout_width="wrap_content"
+        android:layout_weight="100"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/deviceName"
+        android:layout_marginStart="@dimen/size30"
+        android:layout_width="wrap_content"
+        android:layout_weight="100"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:padding="3dp"/>
+
+</RelativeLayout>

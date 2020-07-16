@@ -63,6 +63,7 @@
                                     beenden wollen?</string>
     <string name="deviceNotSupportBluetooth">Es tut uns schrecklich leid, aber Ihr Geräte unterstützt
                                             kein Bluetooth!</string>
+    <string name="nobluetoothdevicesfound">Wir haben leider keine Bluetoothgeräte in Ihrer nähe gefunden.</string>
     <!-- Sure dialog -->
     <string name="confirm">Bestätigen</string>
     <string name="Yes">JA</string>
