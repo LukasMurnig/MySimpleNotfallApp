@@ -101,8 +101,8 @@ open class MapActivity : AppCompatActivity(),  OnMapReadyCallback, GoogleApiClie
     @SuppressLint("RestrictedApi")
     override fun onConnected(bundle: Bundle?) {
         mLocationRequest = LocationRequest()
-        mLocationRequest.interval = 30000
-        mLocationRequest.fastestInterval = 10000
+        mLocationRequest.interval = 12000
+        mLocationRequest.fastestInterval = 8000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -168,10 +168,10 @@ open class MapActivity : AppCompatActivity(),  OnMapReadyCallback, GoogleApiClie
                     latitude,
                     longitude, 1
                 )
-                if (null != listAddresses && listAddresses.size > 0) {
-                    val state: String = listAddresses[0].getAdminArea()
-                    val country: String = listAddresses[0].getCountryName()
-                    val subLocality: String = listAddresses[0].getSubLocality()
+                if (null != listAddresses && listAddresses.isNotEmpty()) {
+                    val state: String = listAddresses[0].adminArea
+                    val country: String = listAddresses[0].countryName
+                    val subLocality: String = listAddresses[0].subLocality
                     markerOptions.title(
                         "" + latLng + "," + subLocality + "," + state
                                 + "," + country
@@ -227,7 +227,7 @@ open class MapActivity : AppCompatActivity(),  OnMapReadyCallback, GoogleApiClie
     ) {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_LOCATION -> {
-                if (grantResults.size > 0
+                if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
                     if (ContextCompat.checkSelfPermission(
@@ -250,15 +250,15 @@ open class MapActivity : AppCompatActivity(),  OnMapReadyCallback, GoogleApiClie
     }
 
     override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onProviderEnabled(p0: String?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onProviderDisabled(p0: String?) {
-        TODO("Not yet implemented")
+
     }
 
     private fun configureButtons() {

@@ -1,11 +1,9 @@
 package com.example.notfallapp.alarm
 
 import android.app.PendingIntent
-import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.os.*
-import android.os.Process.THREAD_PRIORITY_BACKGROUND
+import android.os.Handler
 import android.provider.Settings
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -23,7 +21,7 @@ import java.util.*
 class TimerHandler {
     companion object {
             private lateinit var handler: Handler
-        private val CHANNEL_ID = "144NA"
+        private const val CHANNEL_ID = "144NA"
 
             fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
@@ -36,7 +34,7 @@ class TimerHandler {
                     // create alarm in DB
                     createAlarmInDb(context)
 
-                    createSuccesfulNotification(context)
+                    createSuccessfulNotification(context)
                     val intent = Intent(context, AlarmSuccesfulActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, intent, null)
@@ -47,11 +45,11 @@ class TimerHandler {
                 handler.removeCallbacksAndMessages(null)
             }
 
-        fun createAlarmInDb(context: Context){
-            val android_id: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        private fun createAlarmInDb(context: Context){
+            val androidId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
             val clickedTime: Date = Calendar.getInstance().time
 
-            val alarm = Alarm(android_id, "IAmTest", clickedTime.toString())
+            val alarm = Alarm(androidId, "IAmATest", clickedTime.toString())
 
             val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
             try{
@@ -66,7 +64,7 @@ class TimerHandler {
             }
         }
 
-        private fun createSuccesfulNotification(context: Context){
+        private fun createSuccessfulNotification(context: Context){
             val notificationLayout = RemoteViews(context.packageName, R.layout.notification_successful_alarm)
 
             val intentSuccesful = Intent(context, AlarmSuccesfulActivity::class.java).apply {
@@ -78,7 +76,7 @@ class TimerHandler {
                 .setSmallIcon(R.drawable.notfallapplogo)
                 .setCustomContentView(notificationLayout)
                 .setCustomBigContentView(notificationLayout)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
                 // Set the intent that will fire when the user taps the notification

@@ -10,16 +10,17 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.R
-import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 
 // create a notification with a sos button to send a alarm
 interface INotificationCreateAlarm {
 
-    fun createNotificationCreateAlarm(context: Context){
-        val CHANNEL_ID: String = "NA12345"
+    val channelId: String
+        get() = "NA123451"
 
-        createNotificationChannel(context, CHANNEL_ID)
+    fun createNotificationCreateAlarm(context: Context){
+
+        createNotificationChannel(context)
 
         // when user click on button "SOS", call service call alarm, which call alarm
         val intentCallAlarm=Intent(context, ServiceCallAlarm::class.java).apply {
@@ -27,9 +28,9 @@ interface INotificationCreateAlarm {
         }
         val pendingIntentCallAlarm = PendingIntent.getService(context, 4444, intentCallAlarm, PendingIntent.FLAG_CANCEL_CURRENT)
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.notfallapplogo)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setPriority(NotificationCompat.PRIORITY_MIN)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setOngoing(true)
 
@@ -43,14 +44,14 @@ interface INotificationCreateAlarm {
         }
     }
 
-    private fun createNotificationChannel(context: Context, CHANNEL_ID: String) {
+    private fun createNotificationChannel(context: Context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.getString(R.string.notificationTitle)
             val descriptionText = context.getString(R.string.notificationTitle)
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+            val importance = NotificationManager.IMPORTANCE_LOW
+            val channel = NotificationChannel(channelId, name, importance).apply {
                 description = descriptionText
             }
             // Register the channel with the system

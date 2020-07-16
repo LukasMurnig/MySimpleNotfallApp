@@ -24,9 +24,7 @@ class ServiceCancelAlarm: Service() {
 
         createCanceledAlarmNotification()
 
-        val intentOnSos = Intent(applicationContext, AlarmCanceledActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+        val intentOnSos = Intent(applicationContext, AlarmCanceledActivity::class.java)
         intentOnSos.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         applicationContext.startActivity(intentOnSos)
 
@@ -45,7 +43,7 @@ class ServiceCancelAlarm: Service() {
             .setSmallIcon(R.drawable.notfallapplogo)
             .setCustomContentView(notificationLayout)
             .setCustomBigContentView(notificationLayout)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
             // Set the intent that will fire when the user taps the notification

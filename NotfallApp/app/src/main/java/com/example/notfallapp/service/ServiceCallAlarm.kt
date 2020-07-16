@@ -29,9 +29,7 @@ class ServiceCallAlarm: Service() {
 
         createCalledAlarmNotification()
 
-        val intentOnSos = Intent(applicationContext, CallAlarmActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+        val intentOnSos = Intent(applicationContext, CallAlarmActivity::class.java)
         intentOnSos.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         applicationContext.startActivity(intentOnSos)
 
@@ -39,7 +37,7 @@ class ServiceCallAlarm: Service() {
     }
 
     private fun createCalledAlarmNotification(){
-        //createNotificationChannel()
+        createNotificationChannel()
 
         // when user click on button "Abbrechen", service cancel alarm open, which stop the alarm
         val intentSos=Intent(this, ServiceCancelAlarm::class.java).apply {
@@ -56,7 +54,7 @@ class ServiceCallAlarm: Service() {
         // build custom notification
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.notfallapplogo)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setTicker("Alarm")
             .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
@@ -87,7 +85,7 @@ class ServiceCallAlarm: Service() {
                 description = descriptionText
             }
             // Register the channel with the system
-            val notificationManager: NotificationManager =
+            val notificationManager: NotificationManager = this.
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
