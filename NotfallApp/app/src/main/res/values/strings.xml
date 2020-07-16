@@ -61,7 +61,7 @@
 
     <!-- Connect bracelet -->
     <string name="nobraceletconnected">Sie haben kein Armband mit Ihrer App Verbunden</string>
-    <string name="braceleteconnected">Ihr Armband: %1$s wurde erfolgreich verbunden.</string>
+    <string name="braceleteconnected">Ihr Armband wurde erfolgreich verbunden.</string>
     <string name="tryToConnectBracelet">Wir versuchen uns mit Ihrem Armband zu verbinden!
                                         Drücken Sie den Knopf des Armbandes bis es grün blinkt!</string>
     <string name="retrySearching">Erneut suchen</string>
@@ -69,7 +69,9 @@
                                     beenden wollen?</string>
     <string name="deviceNotSupportBluetooth">Es tut uns schrecklich leid, aber Ihr Geräte unterstützt
                                             kein Bluetooth!</string>
-    <string name="nobluetoothdevicesfound">Wir haben leider keine Bluetoothgeräte in Ihrer nähe gefunden.</string>
+    <string name="nobluetoothdevicesfound">Wir haben leider keine Bluetoothgeräte in Ihrer nähe gefunden.
+                                            Bitte versuchen Sie es erneut!</string>
+    <string name="error">Hoppla, da ist wohl etwas schiefgelaufen bitte versuchen Sie es nochmal!</string>
     <!-- Sure dialog -->
     <string name="confirm">Bestätigen</string>
     <string name="Yes">JA</string>

@@ -1,5 +1,7 @@
 package com.example.notfallapp
 
+import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -29,10 +31,13 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         configureButtons()
         initComponents()
-
+        var state: Boolean = AddBraceletActivity.connected
+        println(state)
+        if (state){
+            tvStatusbracelet.text = getResources().getString(R.string.braceleteconnected)
+        }
 
         btnaddBracelet.setOnClickListener() {
             Log.d("ButtonAdd", "Button Add bracelet was clicked in MainActivity")
@@ -58,8 +63,5 @@ class MainActivity : AppCompatActivity(),
         tvStatusbracelet = findViewById(R.id.tvStatusbracelet)
         tvaddbracelet = findViewById(R.id.tvaddbracelet)
     }
-
-    private fun checkForConnectedDevice(callback: Unit){
-
-    }
 }
+
