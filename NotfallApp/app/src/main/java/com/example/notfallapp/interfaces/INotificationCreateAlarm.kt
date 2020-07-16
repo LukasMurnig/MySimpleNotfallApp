@@ -21,8 +21,6 @@ interface INotificationCreateAlarm {
 
         createNotificationChannel(context, CHANNEL_ID)
 
-        val notificationLayout = RemoteViews(context.packageName, R.layout.notification_sos)
-
         // when user click on button "SOS", call service call alarm, which call alarm
         val intentCallAlarm=Intent(context, ServiceCallAlarm::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -35,6 +33,7 @@ interface INotificationCreateAlarm {
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setOngoing(true)
 
+        val notificationLayout = RemoteViews(context.packageName, R.layout.notification_sos)
         notificationLayout.setOnClickPendingIntent(R.id.btnNotSOS, pendingIntentCallAlarm)
         builder.setCustomContentView(notificationLayout).setCustomBigContentView(notificationLayout)
 

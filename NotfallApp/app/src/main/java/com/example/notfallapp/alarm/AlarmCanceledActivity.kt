@@ -36,36 +36,10 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener {
         configureButtons()
         initComponents()
 
-        createNotification()
-
         btnCancelAlarmOk.setOnClickListener() {
             Log.d("ButtonOk", "Button ok in AlarmCanceledActivity clicked!")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-        }
-    }
-
-    private fun createNotification(){
-        val notificationLayout = RemoteViews(packageName, R.layout.notification_alarm_canceled)
-
-        val intent = Intent(this, AlarmCanceledActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.notfallapplogo)
-            .setCustomContentView(notificationLayout)
-            .setCustomBigContentView(notificationLayout)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
-            // Set the intent that will fire when the user taps the notification
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-
-        with(NotificationManagerCompat.from(this)){
-            notify(4444, builder.build())
         }
     }
 

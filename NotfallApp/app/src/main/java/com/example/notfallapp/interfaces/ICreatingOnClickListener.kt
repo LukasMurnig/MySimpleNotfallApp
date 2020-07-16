@@ -33,14 +33,11 @@ interface ICreatingOnClickListener {
     fun createOnClickListener(context: Context,btnSos: Button,  btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnMap: ImageButton, btnSettings: ImageButton){
 
         btnSos.setOnClickListener{
-            // TODO implement also for notification button and move to when it is a succesful alarm?
-            // works only with app button, not notification button
-            createAlarmInDb(context)
-
             Log.d("SOSButtonClicked", "SOS Button were clicked!")
-            val intent = Intent(context, CallAlarmActivity::class.java)
 
-            startActivity(context, intent, null)
+            // Service open Call Alarm Activity
+            val intent = Intent(context, ServiceCallAlarm::class.java)
+            context.startService(intent)
         }
 
         btnHome.setOnClickListener{

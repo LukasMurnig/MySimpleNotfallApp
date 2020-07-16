@@ -6,11 +6,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.*
 import android.os.Process.THREAD_PRIORITY_BACKGROUND
+import android.provider.Settings
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.room.Room
 import com.example.notfallapp.R
+import com.example.notfallapp.bll.Alarm
+import com.example.notfallapp.database.AlarmDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
 
 
 class TimerHandler {
@@ -26,8 +33,12 @@ class TimerHandler {
                     // here must the alarm send to the server
 
 
+                    // create alarm in DB
+                    createAlarmInDb(context)
+
                     createSuccesfulNotification(context)
                     val intent = Intent(context, AlarmSuccesfulActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, intent, null)
                 }, 10000)
             }
@@ -35,6 +46,25 @@ class TimerHandler {
             fun deleteTimer(){
                 handler.removeCallbacksAndMessages(null)
             }
+
+        fun createAlarmInDb(context: Context){
+            val android_id: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+            val clickedTime: Date = Calendar.getInstance().time
+
+            val alarm = Alarm(android_id, "IAmTest", clickedTime.toString())
+
+            val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
+            try{
+                GlobalScope.launch {
+                    // zum Testen
+                    db.alarmsDao().deleteAll()
+
+                    db.alarmsDao().insertAlarm(alarm)
+                }
+            }catch (ex: Exception){
+                println("Konnte Alarm nicht speichern. Grund: $ex")
+            }
+        }
 
         private fun createSuccesfulNotification(context: Context){
             val notificationLayout = RemoteViews(context.packageName, R.layout.notification_successful_alarm)
