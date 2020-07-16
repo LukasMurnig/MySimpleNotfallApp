@@ -10,7 +10,7 @@ import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.dao.AlarmsDao
 
 
-@Database(entities = [Alarm::class], version = 2, exportSchema = false)
+@Database(entities = [Alarm::class], version = 4, exportSchema = false)
 abstract class AlarmDatabase : RoomDatabase() {
 
     abstract fun alarmsDao(): AlarmsDao

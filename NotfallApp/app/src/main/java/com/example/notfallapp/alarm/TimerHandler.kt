@@ -1,11 +1,15 @@
 package com.example.notfallapp.alarm
 
+import android.Manifest
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Handler
 import android.provider.Settings
 import android.widget.RemoteViews
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.startActivity
@@ -38,7 +42,7 @@ class TimerHandler {
                     val intent = Intent(context, AlarmSuccesfulActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, intent, null)
-                }, 30000)
+                }, 5000)
             }
 
             fun deleteTimer(){
@@ -49,13 +53,27 @@ class TimerHandler {
             val androidId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
             val clickedTime: Date = Calendar.getInstance().time
 
-            val alarm = Alarm(androidId, "IAmATest", clickedTime.toString())
+            val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+            val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+            val alarm = Alarm(androidId, location.longitude, location.latitude, "nobody now", clickedTime.toString())
 
             val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
             try{
                 GlobalScope.launch {
                     // zum Testen
-                    db.alarmsDao().deleteAll()
+                    //db.alarmsDao().deleteAll()
 
                     db.alarmsDao().insertAlarm(alarm)
                 }

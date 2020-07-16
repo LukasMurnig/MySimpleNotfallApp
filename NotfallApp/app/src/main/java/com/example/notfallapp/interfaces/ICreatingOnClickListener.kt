@@ -58,23 +58,4 @@ interface ICreatingOnClickListener {
             startActivity(context, intent, null)
         }
     }
-
-    fun createAlarmInDb(context: Context){
-        val android_id: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-        val clickedTime: Date = Calendar.getInstance().time
-
-        val alarm = Alarm(android_id, "IAmTest", clickedTime.toString())
-
-        val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
-        try{
-            GlobalScope.launch {
-                // zum Testen
-                db.alarmsDao().deleteAll()
-
-                db.alarmsDao().insertAlarm(alarm)
-            }
-        }catch (ex: Exception){
-            println("Konnte Alarm nicht speichern. Grund: $ex")
-        }
-    }
 }
