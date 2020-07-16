@@ -16,7 +16,7 @@ import com.example.notfallapp.service.ServiceCallAlarm
 interface INotificationCreateAlarm {
 
     val channelId: String
-        get() = "NA123451"
+        get() = "NA12345"
 
     fun createNotificationCreateAlarm(context: Context){
 
