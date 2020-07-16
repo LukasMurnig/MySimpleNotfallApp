@@ -2,8 +2,7 @@ package com.example.notfallapp.connectBracelet
 
 import android.Manifest
 import android.app.Activity
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
+import android.bluetooth.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,22 +11,26 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.google.android.material.snackbar.Snackbar
-import java.lang.reflect.Array
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AddBraceletActivity : Activity(), ICreatingOnClickListener {
-
+    companion object{
+        var connected: Boolean = false
+    }
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
@@ -42,10 +45,21 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     private lateinit var builder: AlertDialog.Builder
     private var bAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
     private lateinit var mReceiver: BroadcastReceiver
-    private var context = this
-
     private var devices = ArrayList<BluetoothDevice>()
-
+    private var bluetoothGatt: BluetoothGatt? = null
+    private val STATE_DISCONNECTED = 0
+    private val STATE_CONNECTING = 1
+    private val STATE_CONNECTED = 2
+    val ACTION_GATT_CONNECTED = "com.example.bluetooth.le.ACTION_GATT_CONNECTED"
+    val ACTION_GATT_DISCONNECTED = "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED"
+    val ACTION_GATT_SERVICES_DISCOVERED =
+        "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED"
+    val ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE"
+    val EXTRA_DATA = "com.example.bluetooth.le.EXTRA_DATA"
+    private var connectionState = STATE_DISCONNECTED
+    private lateinit var characteristic: BluetoothGattCharacteristic
+    private lateinit var descriptor: BluetoothGattDescriptor
+    var enabled: Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -63,12 +77,15 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
 
         btnRetrySearching.setOnClickListener {
             Log.d("ButtonSearch", "Search Button was clicked in AddBraceletActivity")
+            tvConnectBracelet.text = getResources().getString(R.string.tryToConnectBracelet)
             searchDevices()
         }
 
         lvDevices.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+            Log.d("ListViewClicked", "List View in Add BraceletActivity was clicked")
             val device: BluetoothDevice = devices[position]
-            Toast.makeText(this, "SOrry we have not implemented yet to connect to your device:" +device.toString(), Toast.LENGTH_LONG).show()
+            //characteristic = BluetoothGattCharacteristic(UUID.fromString(uuidExtra.toString()), 1, 3)
+            connect(device)
         })
         searchDevices()
     }
@@ -99,16 +116,38 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
                     devices = ArrayList<BluetoothDevice>()
                     //discovery starts, we can show progress dialog or perform other tasks
                 } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
-                    println("Arraysize: "+devices.size)
-                    val adapter = BluetoothListAdapter(applicationContext, devices)
-                    println(adapter.count.toString())
-                    lvDevices.adapter = adapter
-                    adapter.notifyDataSetChanged()
+                    if(devices.size == 0){
+                        tvConnectBracelet.text = getResources().getString(R.string.nobluetoothdevicesfound)
+                    }else {
+                        val adapter = BluetoothListAdapter(applicationContext, devices)
+                        println(adapter.count.toString())
+                        lvDevices.adapter = adapter
+                        adapter.notifyDataSetChanged()
+                    }
                 } else if (BluetoothDevice.ACTION_FOUND == action) {
                     //bluetooth device found
-                    val device =
-                        intent.getParcelableExtra<Parcelable>(BluetoothDevice.EXTRA_DEVICE) as BluetoothDevice
-                    devices.add(device)
+                    try {
+                        var device =
+                            intent.getParcelableExtra<Parcelable>(BluetoothDevice.EXTRA_DEVICE) as BluetoothDevice
+                        if (device != null) {
+                            if (device.name != null) {
+                                if (device.name.contains("V")) {
+                                    var exist: Boolean = false
+                                    for (indx in devices.indices) {
+                                        var arraydevice: BluetoothDevice = devices[indx]
+                                        if (arraydevice.address.equals(device.address)) {
+                                            exist = true;
+                                        }
+                                    }
+                                    if (exist != true) {
+                                        devices.add(device)
+                                    }
+                                }
+                            }
+                        }
+                    }catch(ex: Exception){
+                        tvConnectBracelet.text = getResources().getString(R.string.error)
+                    }
                 }
             }
         }
@@ -156,12 +195,11 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
                 1
             )
         }
-        bAdapter.startDiscovery()
-
         val onFoundFilter = IntentFilter(BluetoothDevice.ACTION_FOUND)
         onFoundFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
         onFoundFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
         registerReceiver(mReceiver, onFoundFilter)
+        bAdapter.startDiscovery()
     }
 
     override fun onDestroy() {
@@ -170,6 +208,47 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         super.onDestroy()
     }
 
+    private fun connect(device: BluetoothDevice){
+        bluetoothGatt = device.connectGatt(this, false, gattCallback)
+        var intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        /*bluetoothGatt?.setCharacteristicNotification(characteristic, enabled)
+        descriptor = characteristic.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
+        descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+        bluetoothGatt?.writeDescriptor(descriptor)*/
+    }
+
+    // Various callback methods defined by the BLE API.
+    private val gattCallback = object : BluetoothGattCallback() {
+        override fun onConnectionStateChange(
+            gatt: BluetoothGatt,
+            status: Int,
+            newState: Int
+        ) {
+            when (newState) {
+                BluetoothProfile.STATE_CONNECTED -> {
+                    println("HEllo Conected")
+                    connected = true
+                }
+                BluetoothProfile.STATE_DISCONNECTED -> {
+                    println("Hello disconected")
+                    connected = false
+                }
+            }
+        }
+
+        override fun onCharacteristicChanged(
+            gatt: BluetoothGatt,
+            characteristic: BluetoothGattCharacteristic
+        ) {
+            broadcastUpdate(ACTION_DATA_AVAILABLE)
+        }
+    }
+
+    private fun broadcastUpdate(action: String) {
+        val intent = Intent(action)
+        sendBroadcast(intent)
+    }
     private fun sureDialog() {
         builder.setTitle(getResources().getString(R.string.confirm))
         builder.setMessage(resources.getString(R.string.sureStopSearching))
@@ -184,4 +263,5 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             dialog.dismiss()
         }
     }
+
 }
