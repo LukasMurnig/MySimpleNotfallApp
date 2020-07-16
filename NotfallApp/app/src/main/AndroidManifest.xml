@@ -53,7 +53,7 @@
             android:name=".menubar.AlarmsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".menubar.SettingsActivity"
+            android:name=".menubar.settings.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".alarm.CallAlarmActivity"
@@ -65,7 +65,7 @@
         <activity
             android:name=".alarm.AlarmSuccesfulActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".menubar.ChangeProfilActivity" />
+        <activity android:name=".menubar.settings.ChangeProfilActivity" />
         <activity android:name=".connectBracelet.AddBraceletActivity"
             android:screenOrientation="portrait">
         </activity>

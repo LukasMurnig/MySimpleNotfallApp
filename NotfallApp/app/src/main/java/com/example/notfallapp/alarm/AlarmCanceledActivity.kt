@@ -26,8 +26,6 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var btnCancelAlarmOk: Button
     private lateinit var tvCanceledAlarm: TextView
 
-    private val CHANNEL_ID = "144NA"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

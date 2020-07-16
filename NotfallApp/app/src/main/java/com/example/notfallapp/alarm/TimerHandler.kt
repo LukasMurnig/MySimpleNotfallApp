@@ -25,7 +25,7 @@ import java.util.*
 class TimerHandler {
     companion object {
             private lateinit var handler: Handler
-        private const val CHANNEL_ID = "144NA"
+        private const val CHANNEL_ID = "NA12345"
 
             fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
@@ -63,6 +63,7 @@ class TimerHandler {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
+                // TODO get permission for GPS
                 return
             }
             val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)

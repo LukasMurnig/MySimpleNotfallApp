@@ -1,4 +1,4 @@
-package com.example.notfallapp.menubar
+package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
 import android.content.Intent

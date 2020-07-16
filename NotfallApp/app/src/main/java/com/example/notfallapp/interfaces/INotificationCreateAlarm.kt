@@ -50,7 +50,7 @@ interface INotificationCreateAlarm {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.getString(R.string.notificationTitle)
             val descriptionText = context.getString(R.string.notificationTitle)
-            val importance = NotificationManager.IMPORTANCE_LOW
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(channelId, name, importance).apply {
                 description = descriptionText
             }

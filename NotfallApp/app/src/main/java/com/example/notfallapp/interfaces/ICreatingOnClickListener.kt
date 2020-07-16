@@ -2,22 +2,15 @@ package com.example.notfallapp.interfaces
 
 import android.content.Context
 import android.content.Intent
-import android.provider.Settings
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
-import androidx.room.Room
-import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.menubar.AlarmsActivity
-import com.example.notfallapp.menubar.SettingsActivity
+import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.service.ServiceCallAlarm
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.util.*
 
 interface ICreatingOnClickListener {
 
