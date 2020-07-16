@@ -6,6 +6,97 @@
     android:background="@color/colorRed"
     >
 
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/connection" />
+    <TextView
+        android:id="@+id/tvConnection"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="110dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="150dp"
+        android:text="@string/longitude"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="150dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:text="did not get"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="200dp"
+        android:text="@string/latitude"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvLatitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="200dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:text="did not get"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="250dp"
+        android:text="@string/accuracy"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvAccuracy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="250dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:text="did not get"/>
+
     <TextView
         android:id="@+id/tvAlarm"
         android:layout_width="362dp"
@@ -13,10 +104,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="350dp"
         android:text="@string/alarmcalled"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/size30" />
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/btn_cancel_alarm"
@@ -24,6 +115,6 @@
         android:layout_height="78dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="294dp"
+        android:layout_marginTop="500dp"
         android:text="@string/cancel" />
 </RelativeLayout>

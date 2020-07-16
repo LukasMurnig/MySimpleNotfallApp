@@ -38,7 +38,7 @@ class TimerHandler {
                     val intent = Intent(context, AlarmSuccesfulActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, intent, null)
-                }, 10000)
+                }, 30000)
             }
 
             fun deleteTimer(){

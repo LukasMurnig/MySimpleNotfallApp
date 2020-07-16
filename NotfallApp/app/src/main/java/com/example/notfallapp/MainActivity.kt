@@ -1,6 +1,9 @@
 package com.example.notfallapp
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,9 +22,11 @@ class MainActivity : AppCompatActivity(),
     private lateinit var btnAlarms: ImageButton
     private lateinit var btnMap: ImageButton
     private lateinit var btnSettings: ImageButton
+
     private lateinit var btnaddBracelet: ImageButton
     private lateinit var tvStatusbracelet: TextView
     private lateinit var tvaddbracelet: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

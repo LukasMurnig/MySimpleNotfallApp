@@ -53,6 +53,11 @@
     <string name="alarmcanceledok">OK</string>
     <string name="alarmcalledsuccesful">Ihr Alarm wurde erfolgreich an die Zentrale weitergeleitet!
                                         Hilfe ist unterwegs!</string>
+
+    <string name="longitude">Längengrad:</string>
+    <string name="latitude">Breitengrad:</string>
+    <string name="accuracy">Genauigkeit:</string>
+
     <!-- Connect bracelet -->
     <string name="nobraceletconnected">Sie haben kein Armband mit Ihrer App Verbunden</string>
     <string name="braceleteconnected">Ihr Armband: %1$s wurde erfolgreich verbunden.</string>
