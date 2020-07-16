@@ -3,28 +3,29 @@ package com.example.notfallapp.connectBracelet
 import android.Manifest
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothClass
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import android.widget.*
-import androidx.annotation.RequiresApi
+import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.adapter.BluetoothListAdapter
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.google.android.material.snackbar.Snackbar
+import java.lang.reflect.Array
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 class AddBraceletActivity : Activity(), ICreatingOnClickListener {
 
     private lateinit var btnSos: Button
@@ -43,7 +44,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     private lateinit var mReceiver: BroadcastReceiver
     private var context = this
 
-    private var devices = emptyArray<BluetoothDevice>()
+    private var devices = ArrayList<BluetoothDevice>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,11 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             Log.d("ButtonSearch", "Search Button was clicked in AddBraceletActivity")
             searchDevices()
         }
+
+        lvDevices.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+            val device: BluetoothDevice = devices[position]
+            Toast.makeText(this, "SOrry we have not implemented yet to connect to your device:" +device.toString(), Toast.LENGTH_LONG).show()
+        })
         searchDevices()
     }
     private fun configureButtons() {
@@ -90,18 +96,19 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             override fun onReceive(context: Context, intent: Intent) {
                 val action = intent.action
                 if (BluetoothAdapter.ACTION_DISCOVERY_STARTED == action) {
+                    devices = ArrayList<BluetoothDevice>()
                     //discovery starts, we can show progress dialog or perform other tasks
                 } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
-                    //discovery finishes, dismis progress dialog
+                    println("Arraysize: "+devices.size)
+                    val adapter = BluetoothListAdapter(applicationContext, devices)
+                    println(adapter.count.toString())
+                    lvDevices.adapter = adapter
+                    adapter.notifyDataSetChanged()
                 } else if (BluetoothDevice.ACTION_FOUND == action) {
                     //bluetooth device found
                     val device =
                         intent.getParcelableExtra<Parcelable>(BluetoothDevice.EXTRA_DEVICE) as BluetoothDevice
-                    devices.plusElement(device)
-                    lvDevices.adapter = ArrayAdapter<BluetoothDevice>(context, 0, devices)
-                    lvDevices.deferNotifyDataSetChanged()
-                    /*val toast = Toast.makeText(context, "Found device " + device.name, Toast.LENGTH_LONG)
-                    toast.show()*/
+                    devices.add(device)
                 }
             }
         }
@@ -116,12 +123,13 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             startActivity(eintent)
         }
 
-        val discoverableIntent: Intent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
-            putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300)
-        }
+        val discoverableIntent: Intent =
+            Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
+                putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300)
+            }
         startActivity(discoverableIntent)
 
-        if (bAdapter.isDiscovering){
+        if (bAdapter.isDiscovering) {
             bAdapter.cancelDiscovery()
         }
 
@@ -133,15 +141,20 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             }
         }*/
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
 
             Log.i("info", "No fine location permissions")
 
-            ActivityCompat.requestPermissions(this,
+            ActivityCompat.requestPermissions(
+                this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1)
+                1
+            )
         }
         bAdapter.startDiscovery()
 
