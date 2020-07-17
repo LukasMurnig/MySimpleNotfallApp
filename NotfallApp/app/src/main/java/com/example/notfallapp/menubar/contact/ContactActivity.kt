@@ -59,6 +59,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
+        btnContact.setImageResource(R.drawable.contacts_active)
         btnSettings = findViewById(R.id.btnSettings)
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)

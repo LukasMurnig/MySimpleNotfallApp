@@ -96,6 +96,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)
+        btnSettings.setImageResource(R.drawable.settings_active)
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact,  btnSettings)
     }

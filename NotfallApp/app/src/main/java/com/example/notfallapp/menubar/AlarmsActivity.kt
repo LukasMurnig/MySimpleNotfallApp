@@ -76,6 +76,7 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
         // Button bar
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
+        btnAlarms.setImageResource(R.drawable.device_active)
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)
 

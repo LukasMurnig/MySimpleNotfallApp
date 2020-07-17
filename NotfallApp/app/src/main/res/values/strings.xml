@@ -83,4 +83,7 @@
     <string name="alarmWasSuccessful">Der Alarm war erfolgreich!</string>
     <string name="alarmWasCanceled">Der Alarm wurde abgebrochen!</string>
     <string name="title_activity_map">Map</string>
+
+
+    <string name="time">Zeitpunkt:</string>
 </resources>

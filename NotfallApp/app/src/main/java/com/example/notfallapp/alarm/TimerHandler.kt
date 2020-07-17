@@ -52,6 +52,7 @@ class TimerHandler {
         private fun createAlarmInDb(context: Context){
             val androidId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
             val clickedTime: Date = Calendar.getInstance().time
+            val dateFormat = android.text.format.DateFormat.format("dd-MM-yyyy hh:mm:ss a", clickedTime)
 
             val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -68,7 +69,7 @@ class TimerHandler {
             }
             val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
-            val alarm = Alarm(androidId, location.longitude, location.latitude, "nobody now", clickedTime.toString())
+            val alarm = Alarm(androidId, location.longitude, location.latitude, "nobody now", dateFormat.toString())
 
             val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
             try{

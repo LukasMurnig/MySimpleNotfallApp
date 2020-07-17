@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity(),
         // Button bar
         btnSos = findViewById(R.id.btn_sos)
         btnHome = findViewById(R.id.btnHome)
+        btnHome.setImageResource(R.drawable.profil_active)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)

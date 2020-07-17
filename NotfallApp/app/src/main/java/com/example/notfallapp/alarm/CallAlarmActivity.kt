@@ -46,16 +46,16 @@ class CallAlarmActivity : AppCompatActivity(){
 
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        if(activeNetwork?.isConnectedOrConnecting == true){
+        if(activeNetwork?.isConnected == true){
             tvConnectionState.text = "Connected"
         }else{
             tvConnectionState.text = "not Connected"
         }
 
-        setLatestKnownLocation()
+        getLatestKnownLocation()
     }
 
-    private fun setLatestKnownLocation(){
+    private fun getLatestKnownLocation(){
         // get position
         val lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
