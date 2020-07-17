@@ -3,8 +3,9 @@ package com.example.notfallapp.menubar.settings
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
@@ -22,22 +23,16 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var tvTelNr: TextView
     private lateinit var tvEmail: TextView
     private lateinit var btnChangeDate: Button
-    private lateinit var spStartAppSettings: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.settings, SettingsActivity.SettingsFragment())
+            .replace(R.id.settings, SettingsFragment())
             .commit()
 
-        configureButtons()
-
-        tvName = findViewById(R.id.tvName)
-        tvTelNr = findViewById(R.id.tvTelNr)
-        tvEmail = findViewById(R.id.tvEmail)
-        btnChangeDate = findViewById(R.id.btnChangeData)
+        initComponents()
 
         tvName.text = "Maria Musterfrau"
         tvTelNr.text = "0123456789"
@@ -68,6 +63,15 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
                 tvEmail.text = data.getStringExtra("email")
             }
         }
+    }
+
+    private fun initComponents(){
+        configureButtons()
+
+        tvName = findViewById(R.id.tvName)
+        tvTelNr = findViewById(R.id.tvTelNr)
+        tvEmail = findViewById(R.id.tvEmail)
+        btnChangeDate = findViewById(R.id.btnChangeData)
     }
 
     private fun configureButtons() {

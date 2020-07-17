@@ -28,6 +28,7 @@ class CallAlarmActivity : AppCompatActivity(){
     private lateinit var tvLongitude: TextView
     private lateinit var tvLatitude: TextView
     private lateinit var tvAccuracy: TextView
+    private lateinit var tvBattery: TextView
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +54,8 @@ class CallAlarmActivity : AppCompatActivity(){
         }
 
         getLatestKnownLocation()
+
+        tvBattery.text = "N/A"
     }
 
     private fun getLatestKnownLocation(){
@@ -110,5 +113,6 @@ class CallAlarmActivity : AppCompatActivity(){
         tvLongitude = findViewById(R.id.tvLongitude)
         tvLatitude = findViewById(R.id.tvLatitude)
         tvAccuracy = findViewById(R.id.tvAccuracy)
+        tvBattery = findViewById(R.id.tvBattery)
     }
 }

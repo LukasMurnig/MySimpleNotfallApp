@@ -10,6 +10,7 @@ import com.example.notfallapp.R
 
 class ChangeProfilActivity: AppCompatActivity() {
     private lateinit var etName : EditText
+    private lateinit var etAddress: EditText
     private lateinit var etTelNr : EditText
     private lateinit var etEmail : EditText
 
@@ -21,17 +22,9 @@ class ChangeProfilActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_profil)
 
-        etName = findViewById(R.id.input_name)
-        etTelNr = findViewById(R.id.input_telnr)
-        etEmail = findViewById(R.id.input_email)
-        btnUpdateProfil = findViewById(R.id.btn_updateProfil)
-        btnCancelProfil = findViewById(R.id.btn_cancelProfil)
+        initComponents()
 
-        val extras = intent.extras ?: return
 
-        etName.setText(extras.getString("name"))
-        etTelNr.setText(extras.getString("telNr"))
-        etEmail.setText(extras.getString("email"))
 
         btnUpdateProfil.setOnClickListener{
             updateProfil()
@@ -82,5 +75,20 @@ class ChangeProfilActivity: AppCompatActivity() {
         }
 
         return valid
+    }
+
+    private fun initComponents(){
+        etName = findViewById(R.id.input_name)
+        etAddress = findViewById(R.id.input_address)
+        etTelNr = findViewById(R.id.input_telnr)
+        etEmail = findViewById(R.id.input_email)
+        btnUpdateProfil = findViewById(R.id.btn_updateProfil)
+        btnCancelProfil = findViewById(R.id.btn_cancelProfil)
+
+        val extras = intent.extras ?: return
+
+        etName.setText(extras.getString("name"))
+        etTelNr.setText(extras.getString("telNr"))
+        etEmail.setText(extras.getString("email"))
     }
 }

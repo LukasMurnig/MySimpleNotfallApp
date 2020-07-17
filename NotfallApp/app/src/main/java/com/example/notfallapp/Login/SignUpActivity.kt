@@ -10,8 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 
 class SignUpActivity : AppCompatActivity() {
-    // Vorname, Nachname, Geschlecht, Geburtstag, email, tel in der API
+    // Vorname, Nachname, Geschlecht, Geburtstag, adresse email, tel in der API
     private lateinit var etName : EditText
+    private lateinit var etAddress : EditText
     private lateinit var etTelNr : EditText
     private lateinit var etEmail : EditText
     private lateinit var etPassword : EditText
@@ -23,6 +24,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         etName = findViewById(R.id.input_name)
+        etAddress = findViewById(R.id.input_address)
         etTelNr = findViewById(R.id.input_telnr)
         etEmail = findViewById(R.id.input_email)
         etPassword = findViewById(R.id.input_password)
@@ -54,6 +56,7 @@ class SignUpActivity : AppCompatActivity() {
 
     fun valid() : Boolean{
         val name: String? = etName.text.toString()
+        val address: String? = etAddress.text.toString()
         val telnr: String? = etTelNr.text.toString()
         val email: String? = etEmail.text.toString()
         val password: String? = etPassword.text.toString()
@@ -62,6 +65,11 @@ class SignUpActivity : AppCompatActivity() {
 
         if(name?.isEmpty()!!) {
             etName.error = "Name ist nicht ausgefüllt"
+            valid = false
+        }
+
+        if(address?.isEmpty()!!){
+            etAddress.error = "Adresse ist nicht ausgefüllt"
             valid = false
         }
 

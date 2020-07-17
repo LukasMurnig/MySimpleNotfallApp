@@ -3,6 +3,7 @@
 
     <!-- Sign up & Log in-->
     <string name="name">Name</string>
+    <string name="address">Adresse</string>
     <string name="telNr">Telefon Nummer</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -65,6 +66,7 @@
     <string name="latitude">Breitengrad:</string>
     <string name="accuracy">Genauigkeit:</string>
     <string name="errorGeoInfo">konnte kein GPS bekommen</string>
+    <string name="batterie">Batterie Stand:</string>
 
     <!-- Connect bracelet -->
     <string name="nobraceletconnected">Sie haben kein Armband mit Ihrer App Verbunden</string>
