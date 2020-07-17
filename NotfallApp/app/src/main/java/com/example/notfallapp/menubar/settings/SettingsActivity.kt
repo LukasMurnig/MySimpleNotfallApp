@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 
@@ -26,6 +27,10 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.settings, SettingsActivity.SettingsFragment())
+            .commit()
 
         configureButtons()
 
@@ -33,7 +38,6 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
         tvTelNr = findViewById(R.id.tvTelNr)
         tvEmail = findViewById(R.id.tvEmail)
         btnChangeDate = findViewById(R.id.btnChangeData)
-        spStartAppSettings = findViewById(R.id.spinnerAppStart)
 
         tvName.text = "Maria Musterfrau"
         tvTelNr.text = "0123456789"
@@ -46,32 +50,11 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
             intent.putExtra("email", tvEmail.text as String)
             startActivityForResult(intent, 0)
         }
+    }
 
-        // TODO save spinner setting in a database
-        // fills the spinner
-        spStartAppSettings.adapter = ArrayAdapter<String>(
-            this, android.R.layout.simple_spinner_item,
-            arrayListOf("App im Hintergrund geöffnet lassen", "App nur beim Starten öffnen")
-        )
-
-        spStartAppSettings.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                Toast.makeText(
-                    this@SettingsActivity,
-                    "Not implemented yet", Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-                Toast.makeText(
-                    this@SettingsActivity,
-                    "Not implemented yet", Toast.LENGTH_SHORT
-                ).show()
-            }
+    class SettingsFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
     }
 

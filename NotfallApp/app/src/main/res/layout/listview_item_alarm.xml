@@ -52,17 +52,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="110dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="37dp"
         android:maxLines="1"
         android:padding="3dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/AlarmAnswered"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="22dp"
+        android:layout_marginStart="30dp"/>
     <TextView
         android:id="@+id/alertAnswerdContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/size30"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginBottom="19dp"
         android:maxLines="1"
         android:padding="3dp" />
 

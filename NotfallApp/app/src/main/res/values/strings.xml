@@ -35,6 +35,10 @@
                                       Grund dafür ist: %1$s</string>
     <string name="add">Hinzufügen</string>
 
+    <!-- Alarms -->
+    <string name="time">Zeitpunkt:</string>
+    <string name="AlarmAnswered">Wer nahm an:</string>
+
     <!-- Settings -->
     <string name="ChangeProfil">Ändere Daten</string>
     <string name="cancel">Abbrechen</string>
@@ -45,6 +49,9 @@
                                             Kontakt beenden wollen?</string>
     <string name="updateProfil">Aktualisieren</string>
     <string name="cancelProfil">Abbrechen</string>
+    <string name="BackgroundStartTitle">Hintergrund Start</string>
+    <string name="backgroundStart">App im Hintergrund starten?</string>
+    <string name="backgroundStartActive">App startet automatisch im Hintergrund</string>
 
     <!-- Alarm called -->
     <string name="alarmcalled">Ein Alarm wurde ausgelöst!
@@ -85,6 +92,15 @@
     <string name="title_activity_map">Map</string>
 
 
-    <string name="time">Zeitpunkt:</string>
     <string name="logo">Logo</string>
+    <string name="title_activity_settings_test">SettingsTestActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
 </resources>
