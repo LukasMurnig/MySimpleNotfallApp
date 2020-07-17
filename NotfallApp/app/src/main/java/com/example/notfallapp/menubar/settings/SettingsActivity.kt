@@ -81,8 +81,8 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
                 tvName.text = data!!.getStringExtra("name")
-                tvTelNr.text = data!!.getStringExtra("telNr")
-                tvEmail.text = data!!.getStringExtra("email")
+                tvTelNr.text = data.getStringExtra("telNr")
+                tvEmail.text = data.getStringExtra("email")
             }
         }
     }

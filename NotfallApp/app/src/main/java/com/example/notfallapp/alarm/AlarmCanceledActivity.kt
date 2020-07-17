@@ -1,16 +1,12 @@
 package com.example.notfallapp.alarm
 
-import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.RemoteViews
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
@@ -33,7 +29,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener {
         configureButtons()
         initComponents()
 
-        btnCancelAlarmOk.setOnClickListener() {
+        btnCancelAlarmOk.setOnClickListener {
             Log.d("ButtonOk", "Button ok in AlarmCanceledActivity clicked!")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

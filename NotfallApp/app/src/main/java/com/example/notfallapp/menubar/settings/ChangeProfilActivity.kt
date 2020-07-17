@@ -50,7 +50,7 @@ class ChangeProfilActivity: AppCompatActivity() {
             println("Falsch eingetragen")
             return
         }
-        var intent = Intent()
+        val intent = Intent()
         etName.text.toString()
         intent.putExtra("name", etName.text.toString())
         intent.putExtra("telNr", etTelNr.text.toString())
@@ -59,7 +59,7 @@ class ChangeProfilActivity: AppCompatActivity() {
         finish()
     }
 
-    fun valid() : Boolean{
+    private fun valid() : Boolean{
         val name: String? = etName.text.toString()
         val telnr: String? = etTelNr.text.toString()
         val email: String? = etEmail.text.toString()

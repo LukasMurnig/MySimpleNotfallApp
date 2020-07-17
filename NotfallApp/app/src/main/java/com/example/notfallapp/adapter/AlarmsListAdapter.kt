@@ -15,15 +15,6 @@ class AlarmsListAdapter(private var alarms: List<Alarm>) : RecyclerView.Adapter<
     private lateinit var layoutInflater: LayoutInflater
     private lateinit var context: Context
 
-    fun AlarmsListAdapter(
-        alarms: List<Alarm>,
-        context: Context?
-    ) {
-        layoutInflater = LayoutInflater.from(context)
-        this.alarms = alarms
-        this.context = context!!
-    }
-
     @NonNull
     override fun onCreateViewHolder(
         parent: ViewGroup,

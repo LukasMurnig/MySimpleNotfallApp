@@ -1,6 +1,5 @@
 package com.example.notfallapp.menubar
 
-import android.media.Image
 import android.os.AsyncTask
 import android.os.Bundle
 import android.widget.Button

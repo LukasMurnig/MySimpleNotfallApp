@@ -36,7 +36,7 @@ class CallAlarmActivity : AppCompatActivity(){
 
         initComponents()
 
-        btnCancelAlarm.setOnClickListener() {
+        btnCancelAlarm.setOnClickListener {
             Log.d("CancelButtonClicked", "Cancel Button in CallAlarmActivity clicked")
 
             // start service cancel alarm, which also stop the timer;

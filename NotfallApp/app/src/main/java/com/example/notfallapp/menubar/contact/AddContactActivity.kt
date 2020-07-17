@@ -2,7 +2,6 @@ package com.example.notfallapp.menubar.contact
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
-import com.example.notfallapp.database.DatabaseClient
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 
@@ -39,27 +37,27 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         createButtonBar()
 
         initComponents()
-        addpicture.setOnClickListener() {
+        addpicture.setOnClickListener {
             Log.d("AddButton", "Add Button to add picture to Contact were clicked!")
-            var toast = Toast.makeText(this, "Sorry we have not implemented yet!", Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(this, "Sorry we have not implemented yet!", Toast.LENGTH_SHORT)
             toast.show()
         }
 
-        btn_add.setOnClickListener() {
+        btn_add.setOnClickListener {
             Log.d("AddButton", "Add Button to add Contact were clicked!")
 
             // TODO check valid input!
             if(validate()){
-                var contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
+                val contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
                     input_email.text.toString(), input_number.text.toString().toInt(), 0)
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
                 appDb.contactDao().insertContact(contact)
-               var intent = Intent(this, ContactActivity::class.java)
+               val intent = Intent(this, ContactActivity::class.java)
                 startActivity(intent)
             }
         }
 
-        btn_cancel.setOnClickListener() {
+        btn_cancel.setOnClickListener {
             Log.d("CancelButton", "Cancel Button to add Contact were clicked!")
             sureDialog()
             val alert = builder.create()
@@ -92,49 +90,49 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     }
 
     private fun validate(): Boolean {
-        var validate: Boolean = true
+        var validate = true
 
-        var firstname: String? = input_firstname.getText().toString()
-        var lastname: String? = input_lastname.getText().toString()
-        var email: String? = input_email.getText().toString()
+        val firstname: String? = input_firstname.text.toString()
+        val lastname: String? = input_lastname.text.toString()
+        val email: String? = input_email.text.toString()
         try {
             input_number.text.toString().toInt()
         }catch (ex: Exception){
             Log.e("ParseException", ex.toString())
-            input_number.setError("Telefonnummer darf nur Zahlen beinhalten!")
+            input_number.error = "Telefonnummer darf nur Zahlen beinhalten!"
             validate = false
         }
 
         if (firstname?.isEmpty()!!) {
-            input_firstname.setError("Vorname darf nicht leer sein")
+            input_firstname.error = "Vorname darf nicht leer sein"
             validate= false
         }else{
-            input_firstname.setError(null)
+            input_firstname.error = null
         }
 
         if (lastname?.isEmpty()!!){
-            input_lastname.setError("Nachname darf nicht leer sein!")
+            input_lastname.error = "Nachname darf nicht leer sein!"
             validate = false
         }else {
-            input_lastname.setError(null)
+            input_lastname.error = null
         }
 
         if (email?.isEmpty()!! || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            input_email.setError("Email darf nicht leer sein bzw. Email stimmt nicht!")
+            input_email.error = "Email darf nicht leer sein bzw. Email stimmt nicht!"
             validate = false
         }else{
-            input_email.setError(null)
+            input_email.error = null
         }
 
         return validate
     }
 
     private fun sureDialog() {
-        builder.setTitle(getResources().getString(R.string.confirm))
-        builder.setMessage(getResources().getString(R.string.sureStopCreatingContact))
+        builder.setTitle(resources.getString(R.string.confirm))
+        builder.setMessage(resources.getString(R.string.sureStopCreatingContact))
 
         builder.setPositiveButton(getResources().getString(R.string.Yes)) { dialog, which ->
-            var intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             dialog.dismiss()
         }
