@@ -95,13 +95,14 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         val firstname: String? = input_firstname.text.toString()
         val lastname: String? = input_lastname.text.toString()
         val email: String? = input_email.text.toString()
-        try {
+        val telNr: String? = input_number.text.toString()
+        /*try {
             input_number.text.toString().toInt()
         }catch (ex: Exception){
             Log.e("ParseException", ex.toString())
             input_number.error = "Telefonnummer darf nur Zahlen beinhalten!"
             validate = false
-        }
+        }*/
 
         if (firstname?.isEmpty()!!) {
             input_firstname.error = "Vorname darf nicht leer sein"
@@ -122,6 +123,13 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
             validate = false
         }else{
             input_email.error = null
+        }
+
+        if(telNr?.isEmpty()!! || !android.util.Patterns.PHONE.matcher(telNr).matches()){
+            input_number.error = "Telefonnummer darf nur Zahlen beinhalten!"
+            validate = false
+        }else{
+            input_number.error = null
         }
 
         return validate
