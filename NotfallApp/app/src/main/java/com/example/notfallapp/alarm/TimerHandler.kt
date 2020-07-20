@@ -26,7 +26,7 @@ import java.util.*
 class TimerHandler : INotifications {
     companion object {
             private lateinit var handler: Handler
-            private const val CHANNEL_ID = "NA12345"
+            private const val CHANNEL_ID = "dklqneoqod"
 
             fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
@@ -106,7 +106,7 @@ class TimerHandler : INotifications {
                 .setAutoCancel(true)
 
             with(NotificationManagerCompat.from(context)){
-                notify(4444, builder.build())
+                notify(444444, builder.build())
             }
         }
 

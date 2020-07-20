@@ -50,7 +50,7 @@ class CallAlarmActivity : AppCompatActivity(){
         if(activeNetwork?.isConnected == true){
             tvConnectionState.text = "Connected"
         }else{
-            tvConnectionState.text = "not Connected"
+            tvConnectionState.text = resources.getText(R.string.notConnected)
         }
 
         getLatestKnownLocation()
