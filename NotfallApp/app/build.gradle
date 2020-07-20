@@ -62,6 +62,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     testImplementation "androidx.room:room-testing:$room_version"
 
-    // Google Maps
-    implementation 'com.google.android.gms:play-services:12.0.1'
+    // make request permission easier https://github.com/Karumi/Dexter
+    implementation 'com.karumi:dexter:5.0.0'
 }

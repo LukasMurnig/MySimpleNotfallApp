@@ -17,17 +17,16 @@ import androidx.room.Room
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.AlarmDatabase
+import com.example.notfallapp.interfaces.INotifications
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
 
-class TimerHandler {
+class TimerHandler : INotifications {
     companion object {
-            lateinit var handler: Handler
-        private val CHANNEL_ID = "144NA"
             private lateinit var handler: Handler
-        private const val CHANNEL_ID = "NA12345"
+            private const val CHANNEL_ID = "NA12345"
 
             fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
@@ -41,6 +40,7 @@ class TimerHandler {
                     createAlarmInDb(context)
 
                     createSuccessfulNotification(context)
+
                     val intent = Intent(context, AlarmSuccesfulActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, intent, null)
@@ -89,10 +89,10 @@ class TimerHandler {
         private fun createSuccessfulNotification(context: Context){
             val notificationLayout = RemoteViews(context.packageName, R.layout.notification_successful_alarm)
 
-            val intentSuccesful = Intent(context, AlarmSuccesfulActivity::class.java).apply {
+            val intentSuccessful = Intent(context, AlarmSuccesfulActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-            val pendingIntentSuccesful: PendingIntent = PendingIntent.getActivity(context, 0, intentSuccesful, 0)
+            val pendingIntentSuccessful: PendingIntent = PendingIntent.getActivity(context, 0, intentSuccessful, 0)
 
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.notfallapplogo)
@@ -102,7 +102,7 @@ class TimerHandler {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
                 // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntentSuccesful)
+                .setContentIntent(pendingIntentSuccessful)
                 .setAutoCancel(true)
 
             with(NotificationManagerCompat.from(context)){
