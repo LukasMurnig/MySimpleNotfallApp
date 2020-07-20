@@ -8,6 +8,9 @@ interface ContactDao {
     @Query("SELECT * from Contact ORDER BY lastname asc")
     fun getAllContact(): List<Contact>
 
+    @Query("SELECT COUNT(*) FROM Contact")
+    fun getCountOfContact(): Int
+
     @Insert
     fun insertContact(contact: Contact)
 

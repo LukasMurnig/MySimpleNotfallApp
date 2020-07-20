@@ -48,7 +48,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         btn_add.setOnClickListener {
             Log.d("AddButton", "Add Button to add Contact were clicked!")
 
-            // TODO check valid input!
             if(validate()){
                 val contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
                     input_email.text.toString(), input_number.text.toString(), 0)

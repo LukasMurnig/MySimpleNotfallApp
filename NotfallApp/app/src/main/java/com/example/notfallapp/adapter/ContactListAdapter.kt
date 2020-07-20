@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
-import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.bll.Contact
 
 class ContactListAdapter(private var contacts: List<Contact>) :
@@ -25,12 +24,12 @@ class ContactListAdapter(private var contacts: List<Contact>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ContactListAdapter.ContactsViewHolder {
+    ): ContactsViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.listcontact_item, parent, false)
-        return ContactListAdapter.ContactsViewHolder(itemView)
+        return ContactsViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ContactListAdapter.ContactsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {
         val contact: Contact? = contacts[position]
         if(contact!=null){
             holder.bindContact(contact)
