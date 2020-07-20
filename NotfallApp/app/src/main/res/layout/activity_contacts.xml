@@ -34,13 +34,21 @@
         android:text=""
         android:textSize="@dimen/size20"/>
 
-    <ListView
+    <!--<ListView
         android:id="@+id/lvContacts"
         android:layout_width="370dp"
         android:layout_height="336dp"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_marginTop="195dp" />
+        android:layout_marginTop="195dp" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvContacts"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="114dp" />
 
     <ImageButton
         android:id="@+id/addButton"

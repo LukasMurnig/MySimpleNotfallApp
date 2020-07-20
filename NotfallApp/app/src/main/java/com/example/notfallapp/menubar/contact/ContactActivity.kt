@@ -1,20 +1,20 @@
 package com.example.notfallapp.menubar.contact
 
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
@@ -26,7 +26,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
     private lateinit var lbMessageContacts: TextView
     private lateinit var lbMessageNoContacts: TextView
-    private lateinit var lvContacts: ListView
+    private lateinit var rvContacts: RecyclerView
     private lateinit var addButton: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +37,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         initComponents()
 
         addButton.setOnClickListener {
-            Log.d("AddButton", "Add Button to add contacts were clicked!")
-            val intent = Intent(this, AddContactActivity::class.java)
-            startActivity( intent, null)
+            countContacts()
         }
 
         try{
@@ -66,28 +64,61 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     private fun initComponents(){
         lbMessageContacts = findViewById(R.id.lbMessageContacts)
         lbMessageNoContacts = findViewById(R.id.lbMessageNoContacts)
-        lvContacts = findViewById(R.id.lvContacts)
+        rvContacts = findViewById(R.id.rvContacts)
         addButton = findViewById(R.id.addButton)
+
+        rvContacts.setHasFixedSize(false)
+        rvContacts.layoutManager = LinearLayoutManager(this)
     }
 
     private fun getAllContacts(){
-        val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
-        GlobalScope.launch {
-            println("HELLO 1")
-            val data  = appDb.contactDao().getAllContact()
-            if(data.isEmpty()) {
-                lbMessageNoContacts.text = resources.getString(R.string.noContacts)
-            }else{
-                println("HELLO 2")
-                setAdapter(data)
+        class GetData : AsyncTask<Unit, Unit, List<Contact>>() {
+
+            override fun doInBackground(vararg p0: Unit?): List<Contact> {
+                val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this@ContactActivity)
+                return appDb.contactDao().getAllContact()
             }
 
+            override fun onPostExecute(result: List<Contact>?) {
+                if(result != null){
+                    if(result.isEmpty()){
+                        lbMessageNoContacts.text = resources.getString(R.string.noContacts)
+                    }else{
+                        val adapter = ContactListAdapter(result)
+                        rvContacts.adapter = adapter
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            }
         }
+
+        val gd = GetData()
+        gd.execute()
     }
 
-    private fun setAdapter(data: List<Contact>){
-        println("HELLO 3")
-        val adapter = ContactListAdapter(this, data as ArrayList<Contact>)
-        lvContacts.adapter = adapter
+    private fun countContacts(){
+        class GetCount : AsyncTask<Unit, Unit, Int?>() {
+
+            override fun doInBackground(vararg p0: Unit?): Int? {
+                val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this@ContactActivity)
+                return appDb.contactDao().getCountOfContact()
+            }
+
+            override fun onPostExecute(result: Int?) {
+                if(result != null){
+                    if(result >= 3){
+                        //lbMessageNoContacts.text = resources.getString(R.string.noContacts)
+                        lbMessageNoContacts.text = "only 3 contacts allowed"
+                    }else{
+                        Log.d("AddButton", "Add Button to add contacts were clicked!")
+                        val intent = Intent(this@ContactActivity, AddContactActivity::class.java)
+                        startActivity( intent, null)
+                    }
+                }
+            }
+        }
+
+        val gc = GetCount()
+        gc.execute()
     }
 }

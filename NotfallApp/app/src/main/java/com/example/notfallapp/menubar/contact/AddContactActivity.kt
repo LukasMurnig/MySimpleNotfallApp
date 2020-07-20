@@ -14,6 +14,8 @@ import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
@@ -46,12 +48,15 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         btn_add.setOnClickListener {
             Log.d("AddButton", "Add Button to add Contact were clicked!")
 
-            // TODO check valid input!
             if(validate()){
                 val contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
-                    input_email.text.toString(), input_number.text.toString().toInt(), 0)
+                    input_email.text.toString(), input_number.text.toString(), 0)
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
-                appDb.contactDao().insertContact(contact)
+                GlobalScope.launch {
+                    appDb.contactDao().deleteAll()
+                    appDb.contactDao().insertContact(contact)
+                }
+
                val intent = Intent(this, ContactActivity::class.java)
                 startActivity(intent)
             }
@@ -95,13 +100,14 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         val firstname: String? = input_firstname.text.toString()
         val lastname: String? = input_lastname.text.toString()
         val email: String? = input_email.text.toString()
-        try {
+        val telNr: String? = input_number.text.toString()
+        /*try {
             input_number.text.toString().toInt()
         }catch (ex: Exception){
             Log.e("ParseException", ex.toString())
             input_number.error = "Telefonnummer darf nur Zahlen beinhalten!"
             validate = false
-        }
+        }*/
 
         if (firstname?.isEmpty()!!) {
             input_firstname.error = "Vorname darf nicht leer sein"
@@ -122,6 +128,13 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
             validate = false
         }else{
             input_email.error = null
+        }
+
+        if(telNr?.isEmpty()!! || !android.util.Patterns.PHONE.matcher(telNr).matches()){
+            input_number.error = "Telefonnummer darf nur Zahlen beinhalten!"
+            validate = false
+        }else{
+            input_number.error = null
         }
 
         return validate
