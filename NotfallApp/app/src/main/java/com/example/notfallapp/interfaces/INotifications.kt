@@ -19,16 +19,17 @@ import com.example.notfallapp.service.ServiceCancelAlarm
 interface INotifications {
 
     val channelIdLowPriority: String
-        get() = "NA12345"
+        get() = "fkaieoweonfa"
 
     val channelIdHighPriority: String
-        get() = "NA54321"
+        get() = "dklqneoqod"
 
     private val notificationId: Int
-        get() = 4444
+        get() = 444444
 
     fun createNotificationCreateAlarm(context: Context){
         createLowNotificationChannel(context)
+        //createHighNotificationChannel(context)
 
         val builder = createBasicNotification(context, channelIdLowPriority, false)
 
@@ -108,7 +109,7 @@ interface INotifications {
                 .setAutoCancel(true)
         }else{
             builder
-                .setPriority(NotificationCompat.PRIORITY_MIN)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setOngoing(true)
         }
 
@@ -127,7 +128,7 @@ interface INotifications {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.getString(R.string.notificationTitle)
             val descriptionText = context.getString(R.string.notificationTitle)
-            val importance = NotificationManager.IMPORTANCE_LOW
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(channelIdLowPriority, name, importance).apply {
                 description = descriptionText
             }
@@ -142,6 +143,7 @@ interface INotifications {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.getString(R.string.notificationTitle)
             val descriptionText = context.getString(R.string.notificationTitle)
+
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(channelIdHighPriority, name, importance).apply {
                 description = descriptionText
