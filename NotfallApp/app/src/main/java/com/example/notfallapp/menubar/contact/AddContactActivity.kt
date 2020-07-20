@@ -54,6 +54,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
                     input_email.text.toString(), input_number.text.toString(), 0)
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
                 GlobalScope.launch {
+                    appDb.contactDao().deleteAll()
                     appDb.contactDao().insertContact(contact)
                 }
 

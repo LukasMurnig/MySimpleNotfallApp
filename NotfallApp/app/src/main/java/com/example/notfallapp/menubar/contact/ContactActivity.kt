@@ -1,6 +1,7 @@
 package com.example.notfallapp.menubar.contact
 
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -9,8 +10,11 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.adapter.ContactListAdapter
+import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.bll.Contact
+import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
@@ -71,7 +75,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     }
 
     private fun getAllContacts(){
-        val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
+        /*val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
         GlobalScope.launch {
             println("HELLO 1")
             val data  = appDb.contactDao().getAllContact()
@@ -81,8 +85,29 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
                 println("HELLO 2")
                 setAdapter(data)
             }
+        }*/
+        class GetData : AsyncTask<Unit, Unit, List<Contact>>() {
 
+            override fun doInBackground(vararg p0: Unit?): List<Contact> {
+                val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this@ContactActivity)
+                return appDb.contactDao().getAllContact()
+            }
+
+            override fun onPostExecute(result: List<Contact>?) {
+                if(result != null){
+                    if(result.isEmpty()){
+                        lbMessageNoContacts.text = resources.getString(R.string.noContacts)
+                    }else{
+                        val adapter = ContactListAdapter(this@ContactActivity, result as ArrayList<Contact>)
+                        lvContacts.adapter = adapter
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            }
         }
+
+        val gd = GetData()
+        gd.execute()
     }
 
     private fun setAdapter(data: List<Contact>){
