@@ -24,6 +24,8 @@ import java.util.*
 
 class TimerHandler {
     companion object {
+            lateinit var handler: Handler
+        private val CHANNEL_ID = "144NA"
             private lateinit var handler: Handler
         private const val CHANNEL_ID = "NA12345"
 
