@@ -14,6 +14,8 @@ import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
@@ -49,9 +51,12 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
             // TODO check valid input!
             if(validate()){
                 val contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
-                    input_email.text.toString(), input_number.text.toString().toInt(), 0)
+                    input_email.text.toString(), input_number.text.toString(), 0)
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
-                appDb.contactDao().insertContact(contact)
+                GlobalScope.launch {
+                    appDb.contactDao().insertContact(contact)
+                }
+
                val intent = Intent(this, ContactActivity::class.java)
                 startActivity(intent)
             }
