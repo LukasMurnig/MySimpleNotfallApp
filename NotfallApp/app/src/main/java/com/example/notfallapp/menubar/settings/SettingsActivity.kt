@@ -2,12 +2,15 @@ package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 
@@ -45,11 +48,17 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
             intent.putExtra("email", tvEmail.text as String)
             startActivityForResult(intent, 0)
         }
+
+        /* to get the setting from somewhere else
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val set = prefs.getBoolean("attachment", true)
+        Toast.makeText(this, set.toString(), Toast.LENGTH_LONG).show()*/
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+
         }
     }
 

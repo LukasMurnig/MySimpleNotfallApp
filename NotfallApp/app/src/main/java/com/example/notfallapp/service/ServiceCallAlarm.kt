@@ -9,7 +9,6 @@ import com.example.notfallapp.interfaces.INotifications
 
 // open Call Alarm Activity
 class ServiceCallAlarm: Service(), INotifications {
-    private val CHANNEL_ID = "NA12345"
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
