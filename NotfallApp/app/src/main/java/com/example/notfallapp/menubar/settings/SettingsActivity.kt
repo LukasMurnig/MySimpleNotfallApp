@@ -1,11 +1,13 @@
-package com.example.notfallapp.menubar
+package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 
@@ -21,19 +23,16 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var tvTelNr: TextView
     private lateinit var tvEmail: TextView
     private lateinit var btnChangeDate: Button
-    private lateinit var spStartAppSettings: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.settings, SettingsFragment())
+            .commit()
 
-        configureButtons()
-
-        tvName = findViewById(R.id.tvName)
-        tvTelNr = findViewById(R.id.tvTelNr)
-        tvEmail = findViewById(R.id.tvEmail)
-        btnChangeDate = findViewById(R.id.btnChangeData)
-        spStartAppSettings = findViewById(R.id.spinnerAppStart)
+        initComponents()
 
         tvName.text = "Maria Musterfrau"
         tvTelNr.text = "0123456789"
@@ -46,32 +45,11 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
             intent.putExtra("email", tvEmail.text as String)
             startActivityForResult(intent, 0)
         }
+    }
 
-        // TODO save spinner setting in a database
-        // fills the spinner
-        spStartAppSettings.adapter = ArrayAdapter<String>(
-            this, android.R.layout.simple_spinner_item,
-            arrayListOf("App im Hintergrund geöffnet lassen", "App nur beim Starten öffnen")
-        )
-
-        spStartAppSettings.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                Toast.makeText(
-                    this@SettingsActivity,
-                    "Not implemented yet", Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-                Toast.makeText(
-                    this@SettingsActivity,
-                    "Not implemented yet", Toast.LENGTH_SHORT
-                ).show()
-            }
+    class SettingsFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
     }
 
@@ -81,10 +59,19 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
                 tvName.text = data!!.getStringExtra("name")
-                tvTelNr.text = data!!.getStringExtra("telNr")
-                tvEmail.text = data!!.getStringExtra("email")
+                tvTelNr.text = data.getStringExtra("telNr")
+                tvEmail.text = data.getStringExtra("email")
             }
         }
+    }
+
+    private fun initComponents(){
+        configureButtons()
+
+        tvName = findViewById(R.id.tvName)
+        tvTelNr = findViewById(R.id.tvTelNr)
+        tvEmail = findViewById(R.id.tvEmail)
+        btnChangeDate = findViewById(R.id.btnChangeData)
     }
 
     private fun configureButtons() {
@@ -96,6 +83,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)
+        btnSettings.setImageResource(R.drawable.settings_active)
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact,  btnSettings)
     }

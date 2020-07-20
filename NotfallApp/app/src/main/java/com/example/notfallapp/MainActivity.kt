@@ -1,15 +1,13 @@
 package com.example.notfallapp
 
-import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.example.notfallapp.Login.SignUpActivity
@@ -38,11 +36,12 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
         configureButtons()
         initComponents()
+
         checkState()
 
-        btnaddBracelet.setOnClickListener() {
+        btnaddBracelet.setOnClickListener {
             Log.d("ButtonAdd", "Button Add bracelet was clicked in MainActivity")
-            var intent = Intent(this, AddBraceletActivity::class.java)
+            val intent = Intent(this, AddBraceletActivity::class.java)
             startActivity(intent)
         }
     }
@@ -51,6 +50,7 @@ class MainActivity : AppCompatActivity(),
         // Button bar
         btnSos = findViewById(R.id.btn_sos)
         btnHome = findViewById(R.id.btnHome)
+        btnHome.setImageResource(R.drawable.profil_active)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)

@@ -1,52 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:orientation="vertical">
 
+    <!-- Device Id -->
     <TextView
         android:id="@+id/alertId"
-        android:layout_marginStart="@dimen/size30"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:padding="3dp"
-        android:visibility="visible"/>
+        android:textStyle="bold"
+        android:visibility="visible"
+        android:layout_marginStart="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Longitude -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/longitude" />
     <TextView
         android:id="@+id/alertLongitude"
-        android:layout_marginStart="@dimen/size30"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="17dp"
         android:maxLines="1"
-        android:padding="3dp"/>
+        android:padding="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Latitude -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/latitude" />
     <TextView
         android:id="@+id/alertLatitude"
-        android:layout_marginStart="@dimen/size30"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="110dp"
+        android:layout_marginBottom="37dp"
         android:maxLines="1"
-        android:padding="3dp"/>
+        android:padding="3dp" />
 
+    <!-- Wer nahm an -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/AlarmAnswered"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="22dp"
+        android:layout_marginStart="30dp"/>
     <TextView
         android:id="@+id/alertAnswerdContact"
-        android:layout_marginStart="@dimen/size30"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="120dp"
+        android:layout_marginBottom="19dp"
         android:maxLines="1"
-        android:padding="3dp"/>
+        android:padding="3dp" />
 
+    <!-- Zeitstempel -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="3dp"
+        android:text="@string/time" />
     <TextView
         android:id="@+id/alertTime"
-        android:layout_marginStart="@dimen/size30"
+        android:layout_marginStart="100dp"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:maxLines="2"
         android:padding="3dp"/>
 
-</LinearLayout>
+</RelativeLayout>

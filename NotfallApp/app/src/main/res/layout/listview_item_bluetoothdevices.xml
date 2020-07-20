@@ -9,9 +9,8 @@
         android:layout_width="220dp"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="@dimen/size30"
-        android:layout_weight="100"
-        android:textSize="@dimen/size30"
+        android:layout_marginStart="30sp"
+        android:textSize="30sp"
         android:maxLines="1"
         android:padding="3dp" />
 

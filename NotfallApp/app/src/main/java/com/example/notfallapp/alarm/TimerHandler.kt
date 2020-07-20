@@ -27,7 +27,7 @@ class TimerHandler {
             lateinit var handler: Handler
         private val CHANNEL_ID = "144NA"
             private lateinit var handler: Handler
-        private const val CHANNEL_ID = "144NA"
+        private const val CHANNEL_ID = "NA12345"
 
             fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
@@ -54,6 +54,7 @@ class TimerHandler {
         private fun createAlarmInDb(context: Context){
             val androidId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
             val clickedTime: Date = Calendar.getInstance().time
+            val dateFormat = android.text.format.DateFormat.format("dd-MM-yyyy hh:mm:ss a", clickedTime)
 
             val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -65,11 +66,12 @@ class TimerHandler {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
+                // TODO get permission for GPS
                 return
             }
             val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
-            val alarm = Alarm(androidId, location.longitude, location.latitude, "nobody now", clickedTime.toString())
+            val alarm = Alarm(androidId, location.longitude, location.latitude, "nobody now", dateFormat.toString())
 
             val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
             try{

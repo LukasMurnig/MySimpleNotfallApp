@@ -18,7 +18,8 @@
             android:layout_height="218dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:src="@drawable/notfallapplogo" />
+            android:src="@drawable/notfallapplogo"
+            android:contentDescription="@string/logo" />
 
         <!-- Email Label -->
         <com.google.android.material.textfield.TextInputLayout
@@ -31,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="@string/emailUser" />
+                android:hint="@string/emailUser"
+                android:autofillHints="" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Label -->
@@ -45,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="@string/password"/>
+                android:hint="@string/password"
+                android:autofillHints="" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -64,7 +67,7 @@
             android:layout_marginBottom="24dp"
             android:gravity="center"
             android:text="@string/noUser"
-            android:textSize="16dip" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 </ScrollView>

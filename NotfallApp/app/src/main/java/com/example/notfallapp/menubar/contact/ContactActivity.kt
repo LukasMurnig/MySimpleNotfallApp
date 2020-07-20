@@ -8,11 +8,9 @@ import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
-import com.example.notfallapp.database.DatabaseClient
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
@@ -38,9 +36,9 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
         initComponents()
 
-        addButton.setOnClickListener() {
+        addButton.setOnClickListener {
             Log.d("AddButton", "Add Button to add contacts were clicked!")
-            var intent = Intent(this, AddContactActivity::class.java)
+            val intent = Intent(this, AddContactActivity::class.java)
             startActivity( intent, null)
         }
 
@@ -59,6 +57,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
         btnContact = findViewById(R.id.btnContact)
+        btnContact.setImageResource(R.drawable.contacts_active)
         btnSettings = findViewById(R.id.btnSettings)
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
@@ -74,23 +73,21 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     private fun getAllContacts(){
         val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
         GlobalScope.launch {
-            System.out.println("HELLO 1")
+            println("HELLO 1")
             val data  = appDb.contactDao().getAllContact()
-            if (data != null) {
-                if(data.isEmpty()) {
-                    lbMessageNoContacts.setText(getResources().getString(R.string.noContacts))
-                }else{
-                    System.out.println("HELLO 2")
-                    setAdapter(data)
-                }
+            if(data.isEmpty()) {
+                lbMessageNoContacts.text = resources.getString(R.string.noContacts)
+            }else{
+                println("HELLO 2")
+                setAdapter(data)
             }
 
         }
     }
 
     private fun setAdapter(data: List<Contact>){
-        System.out.println("HELLO 3")
+        println("HELLO 3")
         val adapter = ContactListAdapter(this, data as ArrayList<Contact>)
-        lvContacts.adapter = adapter;
+        lvContacts.adapter = adapter
     }
 }
