@@ -7,6 +7,7 @@ import android.os.IBinder
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.alarm.AlarmCanceledActivity
 import com.example.notfallapp.alarm.TimerHandler
@@ -34,7 +35,10 @@ class ServiceCancelAlarm: Service() {
     private fun createCanceledAlarmNotification(){
         val notificationLayout = RemoteViews(packageName, R.layout.notification_alarm_canceled)
 
-        val intent = Intent(this, AlarmCanceledActivity::class.java).apply {
+        /*val intent = Intent(this, AlarmCanceledActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }*/
+        val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)

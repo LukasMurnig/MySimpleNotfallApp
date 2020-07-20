@@ -19,8 +19,7 @@ interface INotificationCreateAlarm {
         get() = "NA12345"
 
     fun createNotificationCreateAlarm(context: Context){
-
-        createNotificationChannel(context)
+        createLowNotificationChannel(context)
 
         // when user click on button "SOS", call service call alarm, which call alarm
         val intentCallAlarm=Intent(context, ServiceCallAlarm::class.java).apply {
@@ -44,9 +43,36 @@ interface INotificationCreateAlarm {
         }
     }
 
-    private fun createNotificationChannel(context: Context) {
+    fun createNotificationSuccessfulAlarm(context: Context){
+        createHighNotificationChannel(context)
+    }
+
+    fun createNotificationCancelledAlarm(context: Context){
+        createHighNotificationChannel(context)
+    }
+
+    fun createNotification(){
+
+    }
+
+    private fun createLowNotificationChannel(context: Context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = context.getString(R.string.notificationTitle)
+            val descriptionText = context.getString(R.string.notificationTitle)
+            val importance = NotificationManager.IMPORTANCE_LOW
+            val channel = NotificationChannel(channelId, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager = context.
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun createHighNotificationChannel(context: Context){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.getString(R.string.notificationTitle)
             val descriptionText = context.getString(R.string.notificationTitle)
@@ -55,8 +81,8 @@ interface INotificationCreateAlarm {
                 description = descriptionText
             }
             // Register the channel with the system
-            val notificationManager: NotificationManager =context.
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager: NotificationManager = context.
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }

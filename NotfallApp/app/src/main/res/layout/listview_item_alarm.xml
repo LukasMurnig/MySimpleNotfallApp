@@ -5,6 +5,7 @@
     android:layout_height="100dp"
     android:orientation="vertical">
 
+    <!-- Device Id -->
     <TextView
         android:id="@+id/alertId"
         android:layout_width="wrap_content"
@@ -16,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Longitude -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +26,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="30dp"
         android:text="@string/longitude" />
-
     <TextView
         android:id="@+id/alertLongitude"
         android:layout_width="wrap_content"
@@ -38,6 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Latitude -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,6 +58,7 @@
         android:maxLines="1"
         android:padding="3dp" />
 
+    <!-- Wer nahm an -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,6 +76,7 @@
         android:maxLines="1"
         android:padding="3dp" />
 
+    <!-- Zeitstempel -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,7 +85,6 @@
         android:layout_marginStart="30dp"
         android:layout_marginBottom="3dp"
         android:text="@string/time" />
-
     <TextView
         android:id="@+id/alertTime"
         android:layout_marginStart="100dp"
