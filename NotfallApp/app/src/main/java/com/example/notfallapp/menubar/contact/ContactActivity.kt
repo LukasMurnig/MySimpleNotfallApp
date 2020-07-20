@@ -9,16 +9,13 @@ import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
-import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.adapter.ContactListAdapter
-import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.bll.Contact
-import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
@@ -30,7 +27,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
     private lateinit var lbMessageContacts: TextView
     private lateinit var lbMessageNoContacts: TextView
-    private lateinit var lvContacts: ListView
+    private lateinit var rvContacts: RecyclerView
     private lateinit var addButton: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,8 +67,11 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     private fun initComponents(){
         lbMessageContacts = findViewById(R.id.lbMessageContacts)
         lbMessageNoContacts = findViewById(R.id.lbMessageNoContacts)
-        lvContacts = findViewById(R.id.lvContacts)
+        rvContacts = findViewById(R.id.rvContacts)
         addButton = findViewById(R.id.addButton)
+
+        rvContacts.setHasFixedSize(false)
+        rvContacts.layoutManager = LinearLayoutManager(this)
     }
 
     private fun getAllContacts(){
@@ -98,8 +98,8 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
                     if(result.isEmpty()){
                         lbMessageNoContacts.text = resources.getString(R.string.noContacts)
                     }else{
-                        val adapter = ContactListAdapter(this@ContactActivity, result as ArrayList<Contact>)
-                        lvContacts.adapter = adapter
+                        val adapter = ContactListAdapter(result)
+                        rvContacts.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }
                 }
@@ -108,11 +108,5 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
         val gd = GetData()
         gd.execute()
-    }
-
-    private fun setAdapter(data: List<Contact>){
-        println("HELLO 3")
-        val adapter = ContactListAdapter(this, data as ArrayList<Contact>)
-        lvContacts.adapter = adapter
     }
 }
