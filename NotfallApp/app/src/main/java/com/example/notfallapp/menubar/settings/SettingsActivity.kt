@@ -2,17 +2,21 @@ package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import java.io.File
+import java.io.IOException
 
 class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
@@ -26,6 +30,10 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var tvTelNr: TextView
     private lateinit var tvEmail: TextView
     private lateinit var btnChangeDate: Button
+    private lateinit var imageProfilPicture: ImageView
+    private lateinit var btnProfilPicture: ImageButton
+
+    private val IMAGE_DIRECTORY = "/profilPicture"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +44,8 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
             .commit()
 
         initComponents()
+
+        updateProfilPicture()
 
         tvName.text = "Maria Musterfrau"
         tvTelNr.text = "0123456789"
@@ -49,6 +59,11 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
             startActivityForResult(intent, 0)
         }
 
+        btnProfilPicture.setOnClickListener{
+            val intent = Intent(this, SelectProfilPictureActivity::class.java)
+            startActivityForResult(intent, 2)
+        }
+
         /* to get the setting from somewhere else
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val set = prefs.getBoolean("attachment", true)
@@ -58,19 +73,44 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
-
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        println(" Result: $resultCode")
         if (requestCode == 0) {
-            if (resultCode == Activity.RESULT_OK) {
-                tvName.text = data!!.getStringExtra("name")
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                tvName.text = data.getStringExtra("name")
                 tvTelNr.text = data.getStringExtra("telNr")
                 tvEmail.text = data.getStringExtra("email")
             }
+        }
+        if(resultCode == 2){
+            updateProfilPicture()
+        }
+    }
+
+    private fun updateProfilPicture(){
+        val wallpaperDirectory = File(
+            Environment.getExternalStorageDirectory().toString() + IMAGE_DIRECTORY
+        )
+
+        try {
+            val f = File(
+                wallpaperDirectory, "ProfilePicture.jpg"
+            )
+            if(f.exists()){
+                val options = BitmapFactory.Options()
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888
+                val bitmap = BitmapFactory.decodeFile(f.absolutePath, options)
+                imageProfilPicture.setImageBitmap(bitmap)
+                Log.d("TAG", "File Read::--->" + f.absolutePath)
+            }
+
+        } catch (e1: IOException) {
+            e1.printStackTrace()
         }
     }
 
@@ -81,6 +121,8 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
         tvTelNr = findViewById(R.id.tvTelNr)
         tvEmail = findViewById(R.id.tvEmail)
         btnChangeDate = findViewById(R.id.btnChangeData)
+        imageProfilPicture = findViewById(R.id.imageProfilPicture)
+        btnProfilPicture = findViewById(R.id.iBtnProfilPicture)
     }
 
     private fun configureButtons() {

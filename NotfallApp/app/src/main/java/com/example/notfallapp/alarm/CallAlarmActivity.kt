@@ -54,8 +54,6 @@ class CallAlarmActivity : AppCompatActivity(){
         }
 
         getLatestKnownLocation()
-
-        tvBattery.text = "N/A"
     }
 
     private fun getLatestKnownLocation(){

@@ -115,7 +115,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="160dp"
         android:layout_marginTop="300dp"
-        android:text="N/A"
+        android:text="@string/notConnected"
         android:textSize="20sp"
         android:textColor="@color/colorWhite"/>
 

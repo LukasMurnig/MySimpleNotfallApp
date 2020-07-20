@@ -16,6 +16,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -26,9 +29,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:ignore="HardcodedDebugMode">
+        <activity android:name=".menubar.settings.SelectProfilPictureActivity"></activity>
         <activity
             android:name=".menubar.settings.SettingsTestActivity"
-            android:label="@string/title_activity_settings_test"></activity>
+            android:label="@string/title_activity_settings_test" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -74,7 +78,7 @@
         <activity android:name=".menubar.settings.ChangeProfilActivity" />
         <activity
             android:name=".connectBracelet.AddBraceletActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".receiver.BootUpReceiver">
             <intent-filter>

@@ -67,6 +67,7 @@
     <string name="accuracy">Genauigkeit:</string>
     <string name="errorGeoInfo">konnte kein GPS bekommen</string>
     <string name="batterie">Batterie Stand:</string>
+    <string name="notConnected">nicht verbunden</string>
 
     <!-- Connect bracelet -->
     <string name="nobraceletconnected">Sie haben kein Armband mit Ihrer App Verbunden</string>
