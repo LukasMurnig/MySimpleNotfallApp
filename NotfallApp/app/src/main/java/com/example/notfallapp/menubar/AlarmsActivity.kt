@@ -1,6 +1,5 @@
 package com.example.notfallapp.menubar
 
-import android.media.Image
 import android.os.AsyncTask
 import android.os.Bundle
 import android.widget.Button
@@ -76,6 +75,7 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
         // Button bar
         btnHome = findViewById(R.id.btnHome)
         btnAlarms = findViewById(R.id.btnAlarms)
+        btnAlarms.setImageResource(R.drawable.device_active)
         btnContact = findViewById(R.id.btnContact)
         btnSettings = findViewById(R.id.btnSettings)
 

@@ -17,15 +17,16 @@ import androidx.room.Room
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.AlarmDatabase
+import com.example.notfallapp.interfaces.INotifications
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
 
-class TimerHandler {
+class TimerHandler : INotifications {
     companion object {
             private lateinit var handler: Handler
-        private const val CHANNEL_ID = "144NA"
+            private const val CHANNEL_ID = "NA12345"
 
             fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
@@ -39,6 +40,7 @@ class TimerHandler {
                     createAlarmInDb(context)
 
                     createSuccessfulNotification(context)
+
                     val intent = Intent(context, AlarmSuccesfulActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, intent, null)
@@ -52,6 +54,7 @@ class TimerHandler {
         private fun createAlarmInDb(context: Context){
             val androidId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
             val clickedTime: Date = Calendar.getInstance().time
+            val dateFormat = android.text.format.DateFormat.format("dd-MM-yyyy hh:mm:ss a", clickedTime)
 
             val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -63,11 +66,12 @@ class TimerHandler {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
+                // TODO get permission for GPS
                 return
             }
             val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
-            val alarm = Alarm(androidId, location.longitude, location.latitude, "nobody now", clickedTime.toString())
+            val alarm = Alarm(androidId, location.longitude, location.latitude, "nobody now", dateFormat.toString())
 
             val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
             try{
@@ -85,10 +89,10 @@ class TimerHandler {
         private fun createSuccessfulNotification(context: Context){
             val notificationLayout = RemoteViews(context.packageName, R.layout.notification_successful_alarm)
 
-            val intentSuccesful = Intent(context, AlarmSuccesfulActivity::class.java).apply {
+            val intentSuccessful = Intent(context, AlarmSuccesfulActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-            val pendingIntentSuccesful: PendingIntent = PendingIntent.getActivity(context, 0, intentSuccesful, 0)
+            val pendingIntentSuccessful: PendingIntent = PendingIntent.getActivity(context, 0, intentSuccessful, 0)
 
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.notfallapplogo)
@@ -98,7 +102,7 @@ class TimerHandler {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
                 // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntentSuccesful)
+                .setContentIntent(pendingIntentSuccessful)
                 .setAutoCancel(true)
 
             with(NotificationManagerCompat.from(context)){

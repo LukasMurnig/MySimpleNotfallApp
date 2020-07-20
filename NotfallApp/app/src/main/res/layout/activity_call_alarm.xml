@@ -98,6 +98,28 @@
         android:text="@string/errorGeoInfo"/>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/batterie"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="300dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/tvBattery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="300dp"
+        android:text="@string/notConnected"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"/>
+
+    <TextView
         android:id="@+id/tvAlarm"
         android:layout_width="362dp"
         android:layout_height="174dp"

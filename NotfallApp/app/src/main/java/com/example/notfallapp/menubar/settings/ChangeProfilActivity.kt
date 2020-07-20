@@ -1,17 +1,16 @@
-package com.example.notfallapp.menubar
+package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 
 class ChangeProfilActivity: AppCompatActivity() {
     private lateinit var etName : EditText
+    private lateinit var etAddress: EditText
     private lateinit var etTelNr : EditText
     private lateinit var etEmail : EditText
 
@@ -23,17 +22,9 @@ class ChangeProfilActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_profil)
 
-        etName = findViewById(R.id.input_name)
-        etTelNr = findViewById(R.id.input_telnr)
-        etEmail = findViewById(R.id.input_email)
-        btnUpdateProfil = findViewById(R.id.btn_updateProfil)
-        btnCancelProfil = findViewById(R.id.btn_cancelProfil)
+        initComponents()
 
-        val extras = intent.extras ?: return
 
-        etName.setText(extras.getString("name"))
-        etTelNr.setText(extras.getString("telNr"))
-        etEmail.setText(extras.getString("email"))
 
         btnUpdateProfil.setOnClickListener{
             updateProfil()
@@ -52,7 +43,7 @@ class ChangeProfilActivity: AppCompatActivity() {
             println("Falsch eingetragen")
             return
         }
-        var intent = Intent()
+        val intent = Intent()
         etName.text.toString()
         intent.putExtra("name", etName.text.toString())
         intent.putExtra("telNr", etTelNr.text.toString())
@@ -61,7 +52,7 @@ class ChangeProfilActivity: AppCompatActivity() {
         finish()
     }
 
-    fun valid() : Boolean{
+    private fun valid() : Boolean{
         val name: String? = etName.text.toString()
         val telnr: String? = etTelNr.text.toString()
         val email: String? = etEmail.text.toString()
@@ -84,5 +75,20 @@ class ChangeProfilActivity: AppCompatActivity() {
         }
 
         return valid
+    }
+
+    private fun initComponents(){
+        etName = findViewById(R.id.input_name)
+        etAddress = findViewById(R.id.input_address)
+        etTelNr = findViewById(R.id.input_telnr)
+        etEmail = findViewById(R.id.input_email)
+        btnUpdateProfil = findViewById(R.id.btn_updateProfil)
+        btnCancelProfil = findViewById(R.id.btn_cancelProfil)
+
+        val extras = intent.extras ?: return
+
+        etName.setText(extras.getString("name"))
+        etTelNr.setText(extras.getString("telNr"))
+        etEmail.setText(extras.getString("email"))
     }
 }

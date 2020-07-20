@@ -14,7 +14,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.notfallapp.R
@@ -29,6 +28,7 @@ class CallAlarmActivity : AppCompatActivity(){
     private lateinit var tvLongitude: TextView
     private lateinit var tvLatitude: TextView
     private lateinit var tvAccuracy: TextView
+    private lateinit var tvBattery: TextView
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class CallAlarmActivity : AppCompatActivity(){
 
         initComponents()
 
-        btnCancelAlarm.setOnClickListener() {
+        btnCancelAlarm.setOnClickListener {
             Log.d("CancelButtonClicked", "Cancel Button in CallAlarmActivity clicked")
 
             // start service cancel alarm, which also stop the timer;
@@ -47,16 +47,16 @@ class CallAlarmActivity : AppCompatActivity(){
 
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        if(activeNetwork?.isConnectedOrConnecting == true){
+        if(activeNetwork?.isConnected == true){
             tvConnectionState.text = "Connected"
         }else{
             tvConnectionState.text = "not Connected"
         }
 
-        setLatestKnownLocation()
+        getLatestKnownLocation()
     }
 
-    private fun setLatestKnownLocation(){
+    private fun getLatestKnownLocation(){
         // get position
         val lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -111,5 +111,6 @@ class CallAlarmActivity : AppCompatActivity(){
         tvLongitude = findViewById(R.id.tvLongitude)
         tvLatitude = findViewById(R.id.tvLatitude)
         tvAccuracy = findViewById(R.id.tvAccuracy)
+        tvBattery = findViewById(R.id.tvBattery)
     }
 }
