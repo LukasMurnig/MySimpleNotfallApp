@@ -5,9 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.preference.PreferenceManager
 import com.example.notfallapp.MainActivity
-import com.example.notfallapp.R
-import com.example.notfallapp.interfaces.INotificationCreateAlarm
-import com.example.notfallapp.menubar.settings.SettingsActivity
 
 class BootUpReceiver : BroadcastReceiver() {
 

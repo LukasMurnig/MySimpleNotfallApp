@@ -8,17 +8,12 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.*
-import androidx.core.content.ContextCompat
-import com.example.notfallapp.Login.SignUpActivity
-import com.example.notfallapp.alarm.AlarmSuccesfulActivity
-import com.example.notfallapp.alarm.TimerHandler
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.INotificationCreateAlarm
+import com.example.notfallapp.interfaces.INotifications
 
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener, INotificationCreateAlarm {
+    ICreatingOnClickListener, INotifications {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
