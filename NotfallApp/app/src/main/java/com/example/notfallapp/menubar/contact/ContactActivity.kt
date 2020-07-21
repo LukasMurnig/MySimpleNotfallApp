@@ -37,7 +37,14 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         initComponents()
 
         addButton.setOnClickListener {
-            countContacts()
+            //countContacts()
+            if(rvContacts.adapter != null && rvContacts.adapter!!.itemCount >= 3){
+                lbMessageNoContacts.text = resources.getString(R.string.allowedContacts)
+                return@setOnClickListener
+            }
+            Log.d("AddButton", "Add Button to add contacts were clicked!")
+            val intent = Intent(this@ContactActivity, AddContactActivity::class.java)
+            startActivity( intent, null)
         }
 
         try{
