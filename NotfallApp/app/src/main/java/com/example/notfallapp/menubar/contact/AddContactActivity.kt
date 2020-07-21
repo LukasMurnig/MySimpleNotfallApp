@@ -1,12 +1,13 @@
 package com.example.notfallapp.menubar.contact
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.MainActivity
@@ -16,6 +17,7 @@ import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
@@ -33,6 +35,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var input_email: EditText
     private lateinit var input_number: EditText
     private lateinit var builder: AlertDialog.Builder
+    private var path: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addcontact)
@@ -41,16 +44,20 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         initComponents()
         addpicture.setOnClickListener {
             Log.d("AddButton", "Add Button to add picture to Contact were clicked!")
-            val toast = Toast.makeText(this, "Sorry we have not implemented yet!", Toast.LENGTH_SHORT)
-            toast.show()
+            val intent = Intent(this, SelectContactPictureActivity::class.java)
+            startActivityForResult(intent, 1)
         }
 
         btn_add.setOnClickListener {
             Log.d("AddButton", "Add Button to add Contact were clicked!")
 
             if(validate()){
+                if(path == null){
+                    path = ""
+                }
                 val contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
-                    input_email.text.toString(), input_number.text.toString(), 0)
+                    input_email.text.toString(), input_number.text.toString(), path!!
+                )
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
                 GlobalScope.launch {
                     appDb.contactDao().deleteAll()
@@ -83,6 +90,26 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_CANCELED) {
+            return
+        }
+        if(requestCode== 1 && data != null){
+            path =  "content://media" + data.getStringExtra("path")
+            if(path != null){
+                try{
+                    val uri = Uri.parse(path)
+                    val bitmap =
+                        MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, uri)
+                    addpicture.setImageBitmap(bitmap)
+                }catch (e: IOException){
+                    Log.e("image", e.printStackTrace().toString())
+                }
+            }
+        }
+    }
+
     private fun initComponents() {
         addpicture = findViewById(R.id.addpicture)
         btn_add = findViewById(R.id.btn_add)
@@ -101,13 +128,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         val lastname: String? = input_lastname.text.toString()
         val email: String? = input_email.text.toString()
         val telNr: String? = input_number.text.toString()
-        /*try {
-            input_number.text.toString().toInt()
-        }catch (ex: Exception){
-            Log.e("ParseException", ex.toString())
-            input_number.error = "Telefonnummer darf nur Zahlen beinhalten!"
-            validate = false
-        }*/
 
         if (firstname?.isEmpty()!!) {
             input_firstname.error = "Vorname darf nicht leer sein"

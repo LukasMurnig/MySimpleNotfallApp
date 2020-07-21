@@ -37,6 +37,7 @@ class SelectProfilPictureActivity : AppCompatActivity() {
     private lateinit var imageUpload: ImageView
     private lateinit var btnSelectPicture: Button
     private lateinit var btnSavePicture: Button
+    private lateinit var btnCancelProfilPicture: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +53,11 @@ class SelectProfilPictureActivity : AppCompatActivity() {
 
         btnSavePicture.setOnClickListener{
             setResult(2)
+            finish()
+        }
+
+        btnCancelProfilPicture.setOnClickListener{
+            setResult(Activity.RESULT_CANCELED)
             finish()
         }
     }
@@ -185,5 +191,6 @@ class SelectProfilPictureActivity : AppCompatActivity() {
         imageUpload = findViewById(R.id.imageUpload)
         btnSelectPicture = findViewById(R.id.btnSelectPicture)
         btnSavePicture = findViewById(R.id.btnSavePicture)
+        btnCancelProfilPicture = findViewById(R.id.btnCancelProfilPicture)
     }
 }

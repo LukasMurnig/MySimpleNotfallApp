@@ -29,7 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".menubar.settings.SelectProfilPictureActivity"></activity>
+        <activity android:name=".menubar.contact.SelectContactPictureActivity"></activity>
+        <activity android:name=".menubar.settings.SelectProfilPictureActivity" />
         <activity
             android:name=".menubar.settings.SettingsTestActivity"
             android:label="@string/title_activity_settings_test" />
