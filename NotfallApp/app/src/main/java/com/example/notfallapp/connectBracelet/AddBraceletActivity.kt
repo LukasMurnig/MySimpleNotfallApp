@@ -10,10 +10,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
 import android.os.Parcelable
 import android.util.Log
-import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -50,7 +54,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     val ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE"
     private lateinit var characteristic: BluetoothGattCharacteristic
     private lateinit var descriptor: BluetoothGattDescriptor
-    private var device: BluetoothDevice? = null
     var enabled: Boolean = true
     var process = ProcessQueueExecutor()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +83,10 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             //characteristic = BluetoothGattCharacteristic(UUID.fromString(uuidExtra.toString()), 1, 3)
             connect(device)
         })
+        //To execute the read and write operation in a queue.
+       if (!process.isAlive()) {
+            process.start()
+        }
         searchDevices()
     }
     private fun configureButtons() {
@@ -112,7 +119,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
                         tvConnectBracelet.text = getResources().getString(R.string.nobluetoothdevicesfound)
                     }else {
                         val adapter = BluetoothListAdapter(applicationContext, devices)
-                        println(adapter.count.toString())
                         lvDevices.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }
@@ -195,6 +201,10 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         onFoundFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
         registerReceiver(mReceiver, onFoundFilter)
         bAdapter.startDiscovery()
+        if(bluetoothGatt != null){
+            bluetoothGatt!!.disconnect()
+            bluetoothGatt!!.close()
+        }
     }
 
     override fun onDestroy() {
@@ -205,8 +215,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
 
     private fun connect(device: BluetoothDevice){
         bluetoothGatt = device.connectGatt(this, false, gattCallback)
-        this.device = device
-        characteristic = BluetoothGattCharacteristic(Constants.CLIENT_CHARACTERISTIC_CONFIG, 3, 0)
+        /*characteristic = BluetoothGattCharacteristic(Constants.CLIENT_CHARACTERISTIC_CONFIG, 3, 0)
         val initdescriptor = BluetoothGattDescriptor(Constants.CLIENT_CHARACTERISTIC_CONFIG, 16)
         characteristic.addDescriptor(initdescriptor)
         bluetoothGatt?.setCharacteristicNotification(characteristic, enabled)
@@ -214,7 +223,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         descriptor = characteristic.getDescriptor(uuid).apply {
             value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
         }
-        bluetoothGatt?.writeDescriptor(descriptor)
+        bluetoothGatt?.writeDescriptor(descriptor)*/
         var intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
@@ -235,15 +244,13 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
                 BluetoothProfile.STATE_DISCONNECTED -> {
                     println("Hello disconected")
                     connected = false
-                    device = null
+                    batteryState = " "
                     close()
                 }
             }
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
-            val device = gatt.device
-            val deviceAddress = device.address
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 // Do APP verification as soon as service discovered.
                 for (service in gatt.services) {
@@ -291,20 +298,24 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             val keyValue =
                 characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0).toString()
             if (characteristic.uuid == Constants.CHAR_DETECTION_NOTIFY) {
-                if (keyValue === "1") {
+                if (keyValue == "1") {
                     println("Single press")
-                } else if (keyValue === "0") {
+                    val intent = Intent(applicationContext, CallAlarmActivity::class.java)
+                    startActivity(intent)
+                } else if (keyValue == "0") {
                     println("single release")
-                } else if (keyValue === "3") {
+                    val intent = Intent(applicationContext, CallAlarmActivity::class.java)
+                    startActivity(intent)
+                } else if (keyValue == "3") {
                     println("2-10 second press release")
-                } else if (keyValue === "4") {
+                } else if (keyValue == "4") {
                     val intent = Intent(applicationContext, CallAlarmActivity::class.java)
                     startActivity(intent)
                     println("fallevent")
-                } else if (keyValue === "5") {
+                } else if (keyValue == "5") {
                     println("high g event")
                 } else {
-                    println(keyValue)
+                    println("pressValue: "+ keyValue)
                 }
             }
         }
@@ -315,7 +326,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             characteristic: BluetoothGattCharacteristic?,
             status: Int
         ) {
-            println("HEllo CharacteristicRead")
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 // Display received battery value.
                 if (characteristic != null) {
@@ -323,7 +333,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
                         batteryState =
                             characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0)
                                 .toString()
-                            println("BatteryState: "+batteryState)
                     } else {
                         if (characteristic != null) {
                             Log.i(
@@ -405,17 +414,13 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         if (ch != null) {
             writeCharacteristic(mGatt, ch, value)
         }
-        callAlarm()
-    }
-
-    fun callAlarm(){
-        //val intent = Intent(applicationContext, )
     }
 
     fun close() {
         bluetoothGatt?.disconnect()
         bluetoothGatt?.close()
         bluetoothGatt = null
+        process.interrupt()
     }
     private fun sureDialog() {
         builder.setTitle(getResources().getString(R.string.confirm))

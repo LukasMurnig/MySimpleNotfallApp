@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.notfallapp.R
+import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.service.ServiceCancelAlarm
 import kotlin.math.roundToInt
 
@@ -53,6 +54,12 @@ class CallAlarmActivity : AppCompatActivity(){
             tvConnectionState.text = "not Connected"
         }
 
+        val batteryState = AddBraceletActivity.batteryState
+        if(batteryState.equals(" ")){
+            tvBattery.text = "nicht verbunden."
+        }else{
+            tvBattery.text = batteryState + "%"
+        }
         getLatestKnownLocation()
     }
 

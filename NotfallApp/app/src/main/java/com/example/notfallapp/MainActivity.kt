@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(),
             if (state){
                 tvStatusbracelet.text = getResources().getString(R.string.braceleteconnected)
             }
-
+            checkState()
         }, 2000)
     }
 }
