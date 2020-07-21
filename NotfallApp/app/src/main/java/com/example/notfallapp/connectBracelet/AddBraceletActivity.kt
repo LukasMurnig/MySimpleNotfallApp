@@ -27,6 +27,7 @@ import com.example.notfallapp.adapter.BluetoothListAdapter
 import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.bll.ReadWriteCharacteristic
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.service.ServiceCallAlarm
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -51,10 +52,9 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     private lateinit var mReceiver: BroadcastReceiver
     private var devices = ArrayList<BluetoothDevice>()
     private var bluetoothGatt: BluetoothGatt? = null
-    val ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE"
+    private lateinit var context: Context
     private lateinit var characteristic: BluetoothGattCharacteristic
     private lateinit var descriptor: BluetoothGattDescriptor
-    var enabled: Boolean = true
     var process = ProcessQueueExecutor()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +108,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         tvConnectBracelet = findViewById(R.id.tvConnectBracelet)
         lvDevices = findViewById(R.id.lvDevices)
         builder = AlertDialog.Builder(this)
+        context = this
         mReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 val action = intent.action
@@ -298,24 +299,28 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             val keyValue =
                 characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0).toString()
             if (characteristic.uuid == Constants.CHAR_DETECTION_NOTIFY) {
-                if (keyValue == "1") {
+                var number = 0
+                try {
+                    number = keyValue.toInt()
+                }catch (ex: Exception){
+                    Log.d(TAG, ex.toString())
+                }
+                if (number == 1) {
                     println("Single press")
-                    val intent = Intent(applicationContext, CallAlarmActivity::class.java)
-                    startActivity(intent)
-                } else if (keyValue == "0") {
+                    val intent = Intent(context, ServiceCallAlarm::class.java)
+                    context.startService(intent)
+                } else if (number == 0) {
                     println("single release")
-                    val intent = Intent(applicationContext, CallAlarmActivity::class.java)
-                    startActivity(intent)
-                } else if (keyValue == "3") {
+                } else if (number == 3) {
                     println("2-10 second press release")
-                } else if (keyValue == "4") {
-                    val intent = Intent(applicationContext, CallAlarmActivity::class.java)
-                    startActivity(intent)
+                } else if (number == 4) {
+                    val intent = Intent(context, ServiceCallAlarm::class.java)
+                    context.startService(intent)
                     println("fallevent")
-                } else if (keyValue == "5") {
+                } else if (number == 5) {
                     println("high g event")
                 } else {
-                    println("pressValue: "+ keyValue)
+                    println("pressValue: "+ number)
                 }
             }
         }
