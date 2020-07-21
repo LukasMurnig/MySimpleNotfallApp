@@ -31,7 +31,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAlarms"
         android:layout_width="413dp"
-        android:layout_height="518dp"
+        android:layout_height="420dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/include"
         app:layout_constraintEnd_toEndOf="parent"

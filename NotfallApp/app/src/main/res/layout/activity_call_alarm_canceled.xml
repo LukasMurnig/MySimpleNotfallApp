@@ -35,7 +35,7 @@
     <include
         layout="@layout/layout_button_sos"
         android:layout_width="match_parent"
-        android:layout_height="108dp"
+        android:layout_height="200dp"
         android:layout_below="@+id/btn_cancel"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
