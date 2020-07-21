@@ -1,6 +1,5 @@
 package com.example.notfallapp.menubar.contact
 
-import android.app.Activity
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
@@ -20,7 +19,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
-
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
@@ -38,12 +36,17 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         initComponents()
 
         addButton.setOnClickListener {
-            if(rvContacts.adapter != null && rvContacts.adapter!!.itemCount >= 3){
-                lbMessageNoContacts.text = resources.getString(R.string.allowedContacts)
-                return@setOnClickListener
-            }
             Log.d("AddButton", "Add Button to add contacts were clicked!")
             val intent = Intent(this@ContactActivity, AddContactActivity::class.java)
+            if(rvContacts.adapter != null){
+                if(rvContacts.adapter!!.itemCount >= 3){
+                    lbMessageNoContacts.text = resources.getString(R.string.allowedContacts)
+                    return@setOnClickListener
+                }
+                intent.putExtra("prio", (rvContacts.adapter!!.itemCount))
+            }else{
+                intent.putExtra("prio", 0)
+            }
             startActivity( intent, null)
         }
 
@@ -87,6 +90,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
             override fun doInBackground(vararg p0: Unit?): List<Contact> {
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this@ContactActivity)
+                //appDb.contactDao().deleteAll()
                 return appDb.contactDao().getAllContact()
             }
 
@@ -96,6 +100,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
                         lbMessageNoContacts.text = resources.getString(R.string.noContacts)
                     }else{
                         val adapter = ContactListAdapter(result)
+                        ContactListAdapter.setAdapter(adapter)
                         rvContacts.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }

@@ -17,8 +17,7 @@
         android:layout_height="119dp"
         android:layout_below="@+id/button_bar"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/addprofilepicture"
-        android:gravity="center_vertical|center_horizontal" />
+        android:background="@drawable/addprofilepicture" />
 
     <EditText
         android:id="@+id/input_firstname"

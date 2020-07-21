@@ -24,8 +24,6 @@ class ChangeProfilActivity: AppCompatActivity() {
 
         initComponents()
 
-
-
         btnUpdateProfil.setOnClickListener{
             updateProfil()
         }

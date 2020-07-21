@@ -36,6 +36,8 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var input_number: EditText
     private lateinit var builder: AlertDialog.Builder
     private var path: String? = null
+    private var prio: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addcontact)
@@ -56,11 +58,10 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
                     path = ""
                 }
                 val contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
-                    input_email.text.toString(), input_number.text.toString(), path!!
+                    input_email.text.toString(), input_number.text.toString(), prio!!,  path!!
                 )
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
                 GlobalScope.launch {
-                    appDb.contactDao().deleteAll()
                     appDb.contactDao().insertContact(contact)
                 }
 
@@ -75,6 +76,10 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
             val alert = builder.create()
             alert.show()
         }
+
+        val extras = intent.extras ?: return
+        prio = extras.getInt("prio")
+
     }
     private fun createButtonBar() {
         // SOS Button
