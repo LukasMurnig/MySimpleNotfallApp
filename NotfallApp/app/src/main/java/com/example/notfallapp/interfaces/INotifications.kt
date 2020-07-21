@@ -11,7 +11,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.alarm.AlarmCanceledActivity
+import com.example.notfallapp.alarm.AlarmSuccesfulActivity
 import com.example.notfallapp.alarm.CallAlarmActivity
+import com.example.notfallapp.alarm.TimerHandler
 import com.example.notfallapp.service.ServiceCallAlarm
 import com.example.notfallapp.service.ServiceCancelAlarm
 
@@ -47,10 +49,25 @@ interface INotifications {
         showNotification(context, builder)
     }
 
-    /* Could not be implemented, because class TimerHandler is a companionObject(similar to static class) and therefore it cannot use a interface properly
     fun createNotificationSuccessfulAlarm(context: Context){
+        val builder = createBasicNotification(context, channelIdHighPriority, true)
 
-    }*/
+        val notificationLayout = RemoteViews(context.packageName, R.layout.notification_successful_alarm)
+        builder
+            .setCustomContentView(notificationLayout)
+            .setCustomBigContentView(notificationLayout)
+
+        // Set the intent that will fire when the user taps the notification
+        val intentSuccessful = Intent(context, AlarmSuccesfulActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntentSuccessful: PendingIntent = PendingIntent.getActivity(context, 0, intentSuccessful, 0)
+        builder.setContentIntent(pendingIntentSuccessful)
+
+        with(NotificationManagerCompat.from(context)){
+            notify(444444, builder.build())
+        }
+    }
 
     fun createNotificationCancelledAlarm(context: Context){
         val builder = createBasicNotification(context, channelIdHighPriority, true)

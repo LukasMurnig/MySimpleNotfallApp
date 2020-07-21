@@ -5,11 +5,14 @@ import com.example.notfallapp.bll.Contact
 
 @Dao
 interface ContactDao {
-    @Query("SELECT * from Contact ORDER BY lastname asc")
+    @Query("SELECT * from Contact ORDER BY priority asc")
     fun getAllContact(): List<Contact>
 
     @Query("SELECT COUNT(*) FROM Contact")
     fun getCountOfContact(): Int
+
+    @Query("SELECT * FROM Contact WHERE priority = :prio")
+    fun getContactByPriority(prio: Int): Contact
 
     @Insert
     fun insertContact(contact: Contact)
