@@ -29,10 +29,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".menubar.settings.SelectProfilPictureActivity"></activity>
-        <activity
-            android:name=".menubar.settings.SettingsTestActivity"
-            android:label="@string/title_activity_settings_test" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -79,6 +75,8 @@
         <activity
             android:name=".connectBracelet.AddBraceletActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".menubar.contact.SelectContactPictureActivity"></activity>
+        <activity android:name=".menubar.settings.SelectProfilPictureActivity" />
 
         <receiver android:name=".receiver.BootUpReceiver">
             <intent-filter>

@@ -1,5 +1,6 @@
 package com.example.notfallapp.menubar.contact
 
+import android.app.Activity
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
@@ -15,6 +16,8 @@ import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
@@ -32,18 +35,24 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
 
-        createButtonBar()
-
         initComponents()
 
         addButton.setOnClickListener {
-            countContacts()
+            if(rvContacts.adapter != null && rvContacts.adapter!!.itemCount >= 3){
+                lbMessageNoContacts.text = resources.getString(R.string.allowedContacts)
+                return@setOnClickListener
+            }
+            Log.d("AddButton", "Add Button to add contacts were clicked!")
+            val intent = Intent(this@ContactActivity, AddContactActivity::class.java)
+            startActivity( intent, null)
         }
 
-        try{
-            getAllContacts()
-        }catch (ex: Exception){
-            Log.e("ExceptionDatabase", ex.toString())
+        GlobalScope.launch {
+            try{
+                getAllContacts()
+            }catch (ex: Exception){
+                Log.e("ExceptionDatabase", ex.toString())
+            }
         }
     }
 
@@ -69,6 +78,8 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
         rvContacts.setHasFixedSize(false)
         rvContacts.layoutManager = LinearLayoutManager(this)
+
+        createButtonBar()
     }
 
     private fun getAllContacts(){
@@ -94,31 +105,5 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
         val gd = GetData()
         gd.execute()
-    }
-
-    private fun countContacts(){
-        class GetCount : AsyncTask<Unit, Unit, Int?>() {
-
-            override fun doInBackground(vararg p0: Unit?): Int? {
-                val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this@ContactActivity)
-                return appDb.contactDao().getCountOfContact()
-            }
-
-            override fun onPostExecute(result: Int?) {
-                if(result != null){
-                    if(result >= 3){
-                        //lbMessageNoContacts.text = resources.getString(R.string.noContacts)
-                        lbMessageNoContacts.text = "only 3 contacts allowed"
-                    }else{
-                        Log.d("AddButton", "Add Button to add contacts were clicked!")
-                        val intent = Intent(this@ContactActivity, AddContactActivity::class.java)
-                        startActivity( intent, null)
-                    }
-                }
-            }
-        }
-
-        val gc = GetCount()
-        gc.execute()
     }
 }

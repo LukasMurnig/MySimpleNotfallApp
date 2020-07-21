@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.service.ServiceCancelAlarm
+import java.lang.Exception
 import kotlin.math.roundToInt
 
 
@@ -49,9 +50,9 @@ class CallAlarmActivity : AppCompatActivity(){
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         if(activeNetwork?.isConnected == true){
-            tvConnectionState.text = "Connected"
+            tvConnectionState.text = resources.getText(R.string.connected)
         }else{
-            tvConnectionState.text = "not Connected"
+            tvConnectionState.text = resources.getText(R.string.notConnected)
         }
 
         val batteryState = AddBraceletActivity.batteryState
@@ -85,18 +86,29 @@ class CallAlarmActivity : AppCompatActivity(){
             return
         }
         val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        val longitude = location.longitude
-        val latitude = location.latitude
-        val accuracy = location.accuracy
-        val verticalAccuracyMeters = getVerticalAccuracyMeters(location)
+        var longitude: String?
+        var latitude: String?
+        var accuracy: Float?
+        try{
+            longitude = location.longitude.toString()
+            latitude = location.latitude.toString()
+            accuracy = location.accuracy
+        }catch (e: Exception){
+            longitude = "N/A"
+            latitude = "N/A"
+            accuracy = 0.0F
+        }
+        //val verticalAccuracyMeters = getVerticalAccuracyMeters(location)
 
         tvLongitude.text = longitude.toString()
         tvLatitude.text = latitude.toString()
 
-        if(accuracy.roundToInt()<accuracy){
-            tvAccuracy.text = (accuracy.roundToInt()+1).toString()
-        }else{
-            tvAccuracy.text = accuracy.roundToInt().toString()
+        if (accuracy != null) {
+            if(accuracy.roundToInt()< accuracy){
+                tvAccuracy.text = (accuracy.roundToInt()+1).toString()
+            }else{
+                tvAccuracy.text = accuracy.roundToInt().toString()
+            }
         }
 
         tvAccuracy.text = tvAccuracy.text as String + " m"
