@@ -11,7 +11,7 @@ class ServiceShowSOSNotification: Service(), INotifications {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        createNotificationCreateAlarm(this)
+        createNotificationCreateAlarm(applicationContext)
 
         // evtl. Activity wechseln
         return super.onStartCommand(intent, flags, startId)

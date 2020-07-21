@@ -71,7 +71,13 @@ class TimerHandler : INotifications {
             }
             val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
-            val alarm = Alarm(androidId, location.longitude, location.latitude, "nobody now", dateFormat.toString())
+            val alarm: Alarm?
+
+            alarm = try{
+                Alarm(androidId, location.longitude, location.latitude, "nobody now", dateFormat.toString())
+            }catch (ex: java.lang.Exception){
+                Alarm(androidId, 0.0, 0.0, "nobody now", dateFormat.toString())
+            }
 
             val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
             try{
