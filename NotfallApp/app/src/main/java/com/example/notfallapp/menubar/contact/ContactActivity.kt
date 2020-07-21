@@ -16,6 +16,8 @@ import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
@@ -33,8 +35,6 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
 
-        createButtonBar()
-
         initComponents()
 
         addButton.setOnClickListener {
@@ -47,10 +47,12 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
             startActivity( intent, null)
         }
 
-        try{
-            getAllContacts()
-        }catch (ex: Exception){
-            Log.e("ExceptionDatabase", ex.toString())
+        GlobalScope.launch {
+            try{
+                getAllContacts()
+            }catch (ex: Exception){
+                Log.e("ExceptionDatabase", ex.toString())
+            }
         }
     }
 
@@ -76,6 +78,8 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
         rvContacts.setHasFixedSize(false)
         rvContacts.layoutManager = LinearLayoutManager(this)
+
+        createButtonBar()
     }
 
     private fun getAllContacts(){

@@ -1,5 +1,6 @@
 package com.example.notfallapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -7,10 +8,17 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
 class MainActivity : AppCompatActivity(),
     ICreatingOnClickListener, INotifications {
@@ -34,11 +42,47 @@ class MainActivity : AppCompatActivity(),
 
         checkState()
 
+        checkGPSPermission()
+
         btnaddBracelet.setOnClickListener {
             Log.d("ButtonAdd", "Button Add bracelet was clicked in MainActivity")
             val intent = Intent(this, AddBraceletActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun checkGPSPermission(){
+        Dexter.withActivity(this)
+            .withPermissions(
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                    // check if all permissions are granted
+                    if (report.areAllPermissionsGranted()) {
+                        Log.i("UserPermission", "All permissions for getting GPS are granted by user!")
+                    }
+
+                    // check for permanent denial of any permission
+                    if (report.isAnyPermissionPermanentlyDenied) {
+                        // show alert dialog navigating to Settings
+                        //openSettingsDialog();
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: List<PermissionRequest?>?,
+                    token: PermissionToken
+                ) {
+                    token.continuePermissionRequest()
+                }
+            }).withErrorListener {
+                Toast.makeText(applicationContext, "Some Error! ", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            .onSameThread()
+            .check()
     }
 
     private fun configureButtons(){

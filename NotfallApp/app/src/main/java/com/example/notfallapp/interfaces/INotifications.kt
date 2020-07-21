@@ -47,7 +47,7 @@ interface INotifications {
         showNotification(context, builder)
     }
 
-    /* Could not be implemented, because class TimerHandler is a companionObject(similar to static class)
+    /* Could not be implemented, because class TimerHandler is a companionObject(similar to static class) and therefore it cannot use a interface properly
     fun createNotificationSuccessfulAlarm(context: Context){
 
     }*/

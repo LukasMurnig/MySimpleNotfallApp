@@ -13,6 +13,8 @@ import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
@@ -29,15 +31,18 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarms)
 
-        // fill ListView with Alerts
+        // set button bar and sos button
+        configureButtons()
+
+        // fill RecyclerView with Alerts
         rvAlarms = findViewById(R.id.rvAlarms)
         rvAlarms.setHasFixedSize(false)
         rvAlarms.layoutManager = LinearLayoutManager(this)
         lbMessageNoAlarms = findViewById(R.id.lbMessageNoAlarms)
-        getData()
 
-        // set button bar and sos button
-        configureButtons()
+        GlobalScope.launch {
+            getData()
+        }
     }
 
     private fun getData(){

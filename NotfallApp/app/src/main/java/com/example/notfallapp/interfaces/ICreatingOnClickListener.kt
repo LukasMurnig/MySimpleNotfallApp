@@ -31,21 +31,18 @@ interface ICreatingOnClickListener {
         }
 
         btnAlarms.setOnClickListener{
-            // TODO Open register with alarms from Database
             Log.d("MenuItemClicked", "Alarmregister were clicked in MainActivity")
             val intent = Intent(context, AlarmsActivity::class.java)
             startActivity(context, intent, null)
         }
 
         btnContact.setOnClickListener(){
-            // TODO open ContactActivity
             Log.d("MenuItemClicked", "Contacts were clicked")
             val intent = Intent(context, ContactActivity::class.java)
             startActivity(context, intent, null)
         }
 
         btnSettings.setOnClickListener(){
-            // TODO open settingsActivity
             Log.d("MenuItemClicked", "Settings were clicked")
             val intent = Intent(context, SettingsActivity::class.java)
             startActivity(context, intent, null)

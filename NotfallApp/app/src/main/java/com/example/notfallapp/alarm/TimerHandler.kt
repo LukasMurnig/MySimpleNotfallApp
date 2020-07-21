@@ -17,13 +17,12 @@ import androidx.room.Room
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.AlarmDatabase
-import com.example.notfallapp.interfaces.INotifications
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
 
-class TimerHandler : INotifications {
+class TimerHandler {
     companion object {
             private lateinit var handler: Handler
             private const val CHANNEL_ID = "dklqneoqod"
@@ -71,7 +70,13 @@ class TimerHandler : INotifications {
             }
             val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
-            val alarm = Alarm(androidId, location.longitude, location.latitude, "nobody now", dateFormat.toString())
+            val alarm: Alarm?
+
+            alarm = try{
+                Alarm(androidId, location.longitude, location.latitude, "nobody now", dateFormat.toString())
+            }catch (ex: java.lang.Exception){
+                Alarm(androidId, 0.0, 0.0, "nobody now", dateFormat.toString())
+            }
 
             val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
             try{
