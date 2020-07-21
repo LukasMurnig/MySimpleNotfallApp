@@ -17,13 +17,12 @@ import androidx.room.Room
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.AlarmDatabase
-import com.example.notfallapp.interfaces.INotifications
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
 
-class TimerHandler : INotifications {
+class TimerHandler {
     companion object {
             private lateinit var handler: Handler
             private const val CHANNEL_ID = "dklqneoqod"

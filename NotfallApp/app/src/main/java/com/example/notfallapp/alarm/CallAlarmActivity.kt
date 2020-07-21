@@ -49,7 +49,7 @@ class CallAlarmActivity : AppCompatActivity(){
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         if(activeNetwork?.isConnected == true){
-            tvConnectionState.text = "Connected"
+            tvConnectionState.text = resources.getText(R.string.connected)
         }else{
             tvConnectionState.text = resources.getText(R.string.notConnected)
         }

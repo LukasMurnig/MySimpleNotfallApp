@@ -10,10 +10,10 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.R
+import com.example.notfallapp.alarm.AlarmCanceledActivity
 import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 import com.example.notfallapp.service.ServiceCancelAlarm
-import com.example.notfallapp.service.ServiceShowSOSNotification
 
 // create a notification with a sos button to send a alarm
 interface INotifications {
@@ -61,16 +61,10 @@ interface INotifications {
             .setCustomBigContentView(notificationLayout)
 
         // Set the intent that will fire when the user taps the notification
-        /*val intent = Intent(context, AlarmCanceledActivity::class.java).apply {
+        val intent = Intent(context, AlarmCanceledActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-        builder.setContentIntent(pendingIntent)*/
-
-        val intent = Intent(context, ServiceShowSOSNotification::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getService(context, 444, intent, PendingIntent.FLAG_CANCEL_CURRENT)
         builder.setContentIntent(pendingIntent)
 
         showNotification(context, builder)
