@@ -13,17 +13,16 @@ import com.example.notfallapp.R
 import com.example.notfallapp.alarm.AlarmCanceledActivity
 import com.example.notfallapp.alarm.AlarmSuccesfulActivity
 import com.example.notfallapp.alarm.CallAlarmActivity
-import com.example.notfallapp.alarm.TimerHandler
 import com.example.notfallapp.service.ServiceCallAlarm
 import com.example.notfallapp.service.ServiceCancelAlarm
 
 // create a notification with a sos button to send a alarm
 interface INotifications {
 
-    val channelIdLowPriority: String
+    private val channelIdLowPriority: String
         get() = "fkaieoweonfa"
 
-    val channelIdHighPriority: String
+    private val channelIdHighPriority: String
         get() = "dklqneoqod"
 
     private val notificationId: Int

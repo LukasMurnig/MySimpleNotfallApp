@@ -1,8 +1,8 @@
 package com.example.notfallapp.adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.net.Uri
-import android.os.AsyncTask
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -14,21 +14,18 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
-import com.example.notfallapp.database.EmergencyAppDatabase
+import com.example.notfallapp.interfaces.IAlarmDatabase
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
-class ContactListAdapter(private var contacts: List<Contact>) :
-    RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder>() {
+class ContactListAdapter(var contacts: List<Contact>) :
+    RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder>(){
 
     private lateinit var layoutInflater: LayoutInflater
     private lateinit var context: Context
 
     companion object {
         private val LOG_TAG: String? = ContactListAdapter::class.simpleName
-        private var adapter: ContactListAdapter? = null
-
-        fun setAdapter(adapter: ContactListAdapter){
-            this.adapter = adapter
-        }
     }
 
     @NonNull
@@ -51,74 +48,73 @@ class ContactListAdapter(private var contacts: List<Contact>) :
         return contacts.size
     }
 
-    class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private lateinit var ibtnArrowUp: ImageButton
-        private lateinit var ibtnArrowDown: ImageButton
+    class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), IAlarmDatabase {
+        private lateinit var iBtnArrowUp: ImageButton
+        private lateinit var iBtnArrowDown: ImageButton
         private lateinit var imageContact: ImageView
         private lateinit var contactName: TextView
         private lateinit var contactEmail: TextView
 
+        private lateinit var contactMenu: ImageButton
+        private lateinit var tvActive: TextView
+
         fun bindContact(contact: Contact){
-            ibtnArrowUp = itemView.findViewById(R.id.ibtnArrowUp)
-            ibtnArrowDown = itemView.findViewById(R.id.ibtnArrowDown)
+            iBtnArrowUp = itemView.findViewById(R.id.ibtnArrowUp)
+            iBtnArrowDown = itemView.findViewById(R.id.ibtnArrowDown)
             imageContact = itemView.findViewById(R.id.contact_item_icon)
             contactName = itemView.findViewById(R.id.contact_name)
             contactEmail = itemView.findViewById(R.id.contact_email)
+            contactMenu = itemView.findViewById(R.id.iBtnContactMenu)
+            tvActive = itemView.findViewById(R.id.tvActive)
 
-            if(contact.pathToImage.isNotEmpty()){
-                val bitmap =
-                    MediaStore.Images.Media.getBitmap(itemView.context.contentResolver, Uri.parse(contact.pathToImage))
-                imageContact.setImageBitmap(bitmap)
+            MainScope().launch {
+                if(contact.pathToImage.isNotEmpty()){
+                    val bitmap =
+                        MediaStore.Images.Media.getBitmap(itemView.context.contentResolver, Uri.parse(contact.pathToImage))
+                    imageContact.setImageBitmap(bitmap)
+                }
             }
+
             contactName.text = contact.lastname + " " + contact.firstname + " " + contact.priority
             contactEmail.text = contact.e_mail
+            tvActive.text = contact.active.toString()
 
-            ibtnArrowUp.setOnClickListener{
+            iBtnArrowUp.setOnClickListener{
                 if(contact.priority==0){
                     return@setOnClickListener
                 }
+
                 switchContact(contact, itemView, true)
             }
 
-            ibtnArrowDown.setOnClickListener{
+            iBtnArrowDown.setOnClickListener{
                 if(contact.priority == 2){
                     return@setOnClickListener
                 }
                 switchContact(contact, itemView, false)
             }
+
+            contactMenu.setOnClickListener{
+                showPictureDialog(contact, itemView)
+            }
         }
 
-        private fun switchContact(clickedContact: Contact, itemView: View, upClicked: Boolean){
-            class SwitchContact : AsyncTask<Unit, Unit, List<Contact>>() {
-
-                override fun doInBackground(vararg p0: Unit?): List<Contact> {
-                    val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(itemView.context)
-
-                    val res = if(upClicked){
-                        appDb.contactDao().getContactByPriority((clickedContact.priority-1))
-                    }else{
-                        appDb.contactDao().getContactByPriority((clickedContact.priority+1))
-                    }
-
-                    res.priority = clickedContact.priority.also { clickedContact.priority = res.priority }
-                    appDb.contactDao().updateContact(res)
-                    appDb.contactDao().updateContact(clickedContact)
-
-                    return appDb.contactDao().getAllContact()
-                }
-
-                override fun onPostExecute(result: List<Contact>?) {
-                    if(result != null){
-                        if(adapter != null){
-                            adapter?.contacts = result
-                            adapter?.notifyDataSetChanged()
-                        }
-                    }
+        private fun showPictureDialog(contact: Contact, itemView: View) {
+            val pictureDialog: AlertDialog.Builder = AlertDialog.Builder(itemView.context)
+            val pictureDialogItems = arrayOf(
+                "Daten Ändern",
+                "Entfernen",
+                "Aktivieren/Deaktivieren"
+            )
+            pictureDialog.setItems(pictureDialogItems
+            ) { _, which ->
+                when (which) {
+                    0 -> updateContact(contact, itemView)
+                    1 -> deleteContact(contact, itemView)
+                    2 -> activateContact(contact, itemView)
                 }
             }
-
-            val gd = SwitchContact()
-            gd.execute()
+            pictureDialog.show()
         }
     }
 }

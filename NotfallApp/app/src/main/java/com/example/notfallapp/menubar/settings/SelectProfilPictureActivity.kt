@@ -139,8 +139,8 @@ class SelectProfilPictureActivity : AppCompatActivity() {
         val pictureDialog: AlertDialog.Builder = AlertDialog.Builder(this)
         pictureDialog.setTitle("Wähle aus")
         val pictureDialogItems = arrayOf(
-            "Select photo from gallery",
-            "Capture photo from camera"
+            "Wähle Fote von Gallerie aus",
+            "Mach ein Foto"
         )
         pictureDialog.setItems(pictureDialogItems
         ) { dialog, which ->

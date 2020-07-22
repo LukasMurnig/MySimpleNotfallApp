@@ -14,9 +14,12 @@ import com.example.notfallapp.R
 import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
+import com.example.notfallapp.interfaces.IAlarmDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
+// TODO: update, delete, deactivate/activate contact; evtl AddContact anstatt startActivity -> finish() mit startActivityForResult in ContactActivity
 
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var btnSos: Button
@@ -100,7 +103,8 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
                         lbMessageNoContacts.text = resources.getString(R.string.noContacts)
                     }else{
                         val adapter = ContactListAdapter(result)
-                        ContactListAdapter.setAdapter(adapter)
+                        IAlarmDatabase.setAdapter(adapter)
+                        //ContactListAdapter.setAdapter(adapter)
                         rvContacts.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }
