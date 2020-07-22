@@ -2,7 +2,6 @@ package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Instrumentation
 import android.content.Intent
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
@@ -25,7 +24,6 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
 
 
 class SelectProfilPictureActivity : AppCompatActivity() {
@@ -64,10 +62,10 @@ class SelectProfilPictureActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode === RESULT_CANCELED) {
+        if (resultCode == RESULT_CANCELED) {
             return
         }
-        if (requestCode === GALLERY) {
+        if (requestCode == GALLERY) {
             if (data != null) {
                 val contentURI: Uri? = data.data
                 try {
@@ -81,7 +79,7 @@ class SelectProfilPictureActivity : AppCompatActivity() {
                     Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show()
                 }
             }
-        } else if (requestCode === CAMERA && data != null) {
+        } else if (requestCode == CAMERA && data != null) {
             val thumbnail: Bitmap = data.extras.get("data") as Bitmap
             imageUpload.setImageBitmap(thumbnail)
             saveImage(thumbnail)
@@ -122,7 +120,7 @@ class SelectProfilPictureActivity : AppCompatActivity() {
         return ""
     }
 
-    private fun choosePhotoFromGallary() {
+    private fun choosePhotoFromGallery() {
         val galleryIntent = Intent(
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -139,13 +137,13 @@ class SelectProfilPictureActivity : AppCompatActivity() {
         val pictureDialog: AlertDialog.Builder = AlertDialog.Builder(this)
         pictureDialog.setTitle("Wähle aus")
         val pictureDialogItems = arrayOf(
-            "Select photo from gallery",
-            "Capture photo from camera"
+            "Wähle Fote von Gallerie aus",
+            "Mach ein Foto"
         )
         pictureDialog.setItems(pictureDialogItems
-        ) { dialog, which ->
+        ) { _, which ->
             when (which) {
-                0 -> choosePhotoFromGallary()
+                0 -> choosePhotoFromGallery()
                 1 -> takePhotoFromCamera()
             }
         }

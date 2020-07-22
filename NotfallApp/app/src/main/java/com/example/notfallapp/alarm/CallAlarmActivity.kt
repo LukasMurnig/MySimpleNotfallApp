@@ -56,7 +56,7 @@ class CallAlarmActivity : AppCompatActivity(){
         }
 
         val batteryState = AddBraceletActivity.batteryState
-        if(batteryState.equals(" ")){
+        if(batteryState == " "){
             tvBattery.text = "nicht verbunden."
         }else{
             tvBattery.text = batteryState + "%"
