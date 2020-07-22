@@ -19,8 +19,6 @@ import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-// TODO: update, delete, deactivate/activate contact; evtl AddContact anstatt startActivity -> finish() mit startActivityForResult in ContactActivity
-
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
