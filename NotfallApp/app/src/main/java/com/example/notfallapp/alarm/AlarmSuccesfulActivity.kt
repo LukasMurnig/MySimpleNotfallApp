@@ -25,7 +25,9 @@ class AlarmSuccesfulActivity : AppCompatActivity(), checkPermission {
         initComponents()
 
         buttonsuccesfulOk.setOnClickListener {
-            Log.d("ButtonOk", "Button Ok was clicked in AlarmSuccesfulActivity")
+            Log.d(resources.getString(R.string.SOSButton),
+                  String.format(resources.getString(R.string.SOSButtonClicked),
+                                resources.getString(R.string.AlarmSuccessful)))
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

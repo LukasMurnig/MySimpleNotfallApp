@@ -1,7 +1,6 @@
 package com.example.notfallapp.alarm
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -34,7 +33,6 @@ class CallAlarmActivity : AppCompatActivity(), checkPermission {
     private lateinit var tvAccuracy: TextView
     private lateinit var tvBattery: TextView
 
-    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call_alarm)
@@ -42,7 +40,9 @@ class CallAlarmActivity : AppCompatActivity(), checkPermission {
         initComponents()
 
         btnCancelAlarm.setOnClickListener {
-            Log.d("CancelButtonClicked", "Cancel Button in CallAlarmActivity clicked")
+            Log.d(resources.getString(R.string.CancelButton),
+                  String.format(resources.getString(R.string.CancelButtonClicked),
+                                resources.getString(R.string.CallAlarm)))
 
             // start service cancel alarm, which also stop the timer;
             val intent = Intent(this, ServiceCancelAlarm::class.java)
@@ -59,7 +59,7 @@ class CallAlarmActivity : AppCompatActivity(), checkPermission {
 
         val batteryState = AddBraceletActivity.batteryState
         if(batteryState == " "){
-            tvBattery.text = "nicht verbunden."
+            tvBattery.text = resources.getText(R.string.notConnected)
         }else{
             tvBattery.text = batteryState + "%"
         }

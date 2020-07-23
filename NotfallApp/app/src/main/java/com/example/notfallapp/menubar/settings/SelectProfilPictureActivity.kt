@@ -77,18 +77,18 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
                     val bitmap =
                         MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
                     val path: String? = saveImage(bitmap)
-                    Toast.makeText(this, "Image Saved!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, resources.getString(R.string.Imagesaved), Toast.LENGTH_SHORT).show()
                     imageUpload.setImageBitmap(bitmap)
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, resources.getString(R.string.Failed), Toast.LENGTH_SHORT).show()
                 }
             }
         } else if (requestCode == CAMERA && data != null) {
-            val thumbnail: Bitmap = data.extras.get("data") as Bitmap
+            val thumbnail: Bitmap = data.extras.get(resources.getString(R.string.data)) as Bitmap
             imageUpload.setImageBitmap(thumbnail)
             saveImage(thumbnail)
-            Toast.makeText(this, "Image Saved!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, resources.getString(R.string.Imagesaved), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -105,7 +105,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
         wallpaperDirectory.mkdirs()
         try {
             val f = File(
-                wallpaperDirectory, "ProfilePicture.jpg"
+                wallpaperDirectory, resources.getString(R.string.namePicture)
             )
             f.createNewFile()
             val fo = FileOutputStream(f)
@@ -113,11 +113,12 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
             MediaScannerConnection.scanFile(
                 this,
                 arrayOf<String>(f.path),
-                arrayOf("image/jpeg"),
+                arrayOf(resources.getString(R.string.PictureType)),
                 null
             )
             fo.close()
-            Log.d("TAG", "File Saved::--->" + f.absolutePath)
+            Log.d(resources.getString(R.string.savePicture),
+                  String.format(resources.getString(R.string.savePicturePath),f.absolutePath))
             return f.absolutePath
         } catch (e1: IOException) {
             e1.printStackTrace()
@@ -140,10 +141,10 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
 
     private fun showPictureDialog() {
         val pictureDialog: AlertDialog.Builder = AlertDialog.Builder(this)
-        pictureDialog.setTitle("Wähle aus")
+        pictureDialog.setTitle(resources.getString(R.string.decide))
         val pictureDialogItems = arrayOf(
-            "Wähle Fote von Gallerie aus",
-            "Mach ein Foto"
+            resources.getString(R.string.pictureGalerie),
+            resources.getString(R.string.takePicture)
         )
         pictureDialog.setItems(pictureDialogItems
         ) { _, which ->
@@ -166,7 +167,8 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     // check if all permissions are granted
                     if (report.areAllPermissionsGranted()) {
-                        Log.i("UserPermission", "All permissions for changing profile picture are granted by user!")
+                        Log.i(resources.getString(R.string.UserPermission),
+                              resources.getString(R.string.UserPermissionGranted))
                     }
 
                     // check for permanent denial of any permission
@@ -183,7 +185,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
                     token.continuePermissionRequest()
                 }
             }).withErrorListener {
-                Toast.makeText(applicationContext, "Some Error! ", Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext, resources.getString(R.string.someError), Toast.LENGTH_SHORT)
                     .show()
             }
             .onSameThread()

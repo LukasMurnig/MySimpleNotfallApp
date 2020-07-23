@@ -51,15 +51,15 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, checkPer
 
         updateProfilPicture()
 
-        tvName.text = "Maria Musterfrau"
-        tvTelNr.text = "0123456789"
-        tvEmail.text = "maria.musterfrau@mail.com"
+        tvName.text = resources.getString(R.string.sampleName)
+        tvTelNr.text = resources.getString(R.string.sampleNumber)
+        tvEmail.text = resources.getString(R.string.sampleEmail)
 
         btnChangeDate.setOnClickListener {
             val intent = Intent(this, ChangeProfilActivity::class.java)
-            intent.putExtra("name", tvName.text as String)
-            intent.putExtra("telNr", tvTelNr.text as String)
-            intent.putExtra("email", tvEmail.text as String)
+            intent.putExtra(resources.getString(R.string.numberAlarmDatabas), tvName.text as String)
+            intent.putExtra(resources.getString(R.string.telNr), tvTelNr.text as String)
+            intent.putExtra(resources.getString(R.string.emailAlarmDatabase), tvEmail.text as String)
             startActivityForResult(intent, 0)
         }
 
@@ -86,9 +86,9 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, checkPer
         println(" Result: $resultCode")
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK && data != null) {
-                tvName.text = data.getStringExtra("name")
-                tvTelNr.text = data.getStringExtra("telNr")
-                tvEmail.text = data.getStringExtra("email")
+                tvName.text = data.getStringExtra(resources.getString(R.string.numberAlarmDatabas))
+                tvTelNr.text = data.getStringExtra(resources.getString(R.string.telNr))
+                tvEmail.text = data.getStringExtra(resources.getString(R.string.emailAlarmDatabase))
             }
         }
         if(resultCode == 2){
@@ -103,14 +103,15 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, checkPer
 
         try {
             val f = File(
-                wallpaperDirectory, "ProfilePicture.jpg"
+                wallpaperDirectory, resources.getString(R.string.namePicture)
             )
             if(f.exists()){
                 val options = BitmapFactory.Options()
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888
                 val bitmap = BitmapFactory.decodeFile(f.absolutePath, options)
                 imageProfilPicture.setImageBitmap(bitmap)
-                Log.d("TAG", "File Read::--->" + f.absolutePath)
+                Log.d(resources.getString(R.string.ReadFile),
+                      String.format(resources.getString(R.string.ReadFilePath), f.absolutePath))
             }
 
         } catch (e1: IOException) {

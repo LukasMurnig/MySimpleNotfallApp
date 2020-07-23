@@ -42,14 +42,13 @@ class ChangeProfilActivity: AppCompatActivity(), checkPermission {
 
         // check if all fields are correct
         if(!valid()){
-            println("Falsch eingetragen")
             return
         }
         val intent = Intent()
         etName.text.toString()
-        intent.putExtra("name", etName.text.toString())
-        intent.putExtra("telNr", etTelNr.text.toString())
-        intent.putExtra("email", etEmail.text.toString())
+        intent.putExtra(resources.getString(R.string.nameSettings), etName.text.toString())
+        intent.putExtra(resources.getString(R.string.numberSettings), etTelNr.text.toString())
+        intent.putExtra(resources.getString(R.string.emailAlarmDatabase), etEmail.text.toString())
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -62,17 +61,17 @@ class ChangeProfilActivity: AppCompatActivity(), checkPermission {
         var valid = true
 
         if(name?.isEmpty()!!) {
-            etName.error = "Name ist nicht ausgefüllt"
+            etName.error = resources.getString(R.string.nameNotFilled)
             valid = false
         }
 
         if(telnr?.isEmpty()!! || !android.util.Patterns.PHONE.matcher(telnr).matches()) {
-            etTelNr.error = "Keine gültige Telefon Nummer eingegeben"
+            etTelNr.error = resources.getString(R.string.noValidnumber)
             valid = false
         }
 
         if(email?.isEmpty()!! || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            etEmail.error = "Keine gültige E-mail eingegeben"
+            etEmail.error = resources.getString(R.string.noValidemail)
             valid = false
         }
 
@@ -89,9 +88,9 @@ class ChangeProfilActivity: AppCompatActivity(), checkPermission {
 
         val extras = intent.extras ?: return
 
-        etName.setText(extras.getString("name"))
-        etTelNr.setText(extras.getString("telNr"))
-        etEmail.setText(extras.getString("email"))
+        etName.setText(extras.getString(resources.getString(R.string.nameSettings)))
+        etTelNr.setText(extras.getString(resources.getString(R.string.numberSettings)))
+        etEmail.setText(extras.getString(resources.getString(R.string.emailAlarmDatabase)))
 
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

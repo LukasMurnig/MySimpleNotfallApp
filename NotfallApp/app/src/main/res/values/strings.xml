@@ -12,7 +12,13 @@
     <string name="loginbutton">Einloggen</string>
     <string name="alreadyMember">Bereits einen Benutzer? Login</string>
     <string name="noUser">Sie haben noch keinen Benutzer? Registrieren Sie sich!</string>
+    <string name="Authenticate">Verifizieren....</string>
+    <string name="LoginFailed">Login fehlgeschlagen</string>
+    <string name="emailTooShort">Feld für Email und Benutzer darf nicht leer sein!</string>
+    <string name="passwordTooShort">Kennwort muss mindestens 4 Zeichen lang sein.</string>
 
+    <!-- Database -->
+    <string name="Database">alarms.db</string>
     <!-- Button SOS -->
     <string name="sos">SOS</string>
 
@@ -36,10 +42,26 @@
                                       Grund dafür ist: %1$s</string>
     <string name="add">Hinzufügen</string>
     <string name="allowedContacts">Es sind nur höchstens drei Notfallkontakte möglich</string>
+    <string name="changeValue">"Daten Ändern"</string>
+    <string name="delete">Entfernen</string>
+    <string name="activate_deaktivate">"Aktivieren/Deaktivieren"</string>
+    <string name="firstnameEmpty">Vorname darf nicht leer sein</string>
+    <string name="lastnameEmpty">Nachname darf nicht leer sein!</string>
+    <string name="emailEmpty">Email darf nicht leer sein bzw. Email stimmt nicht!</string>
+    <string name="numberWrongType">Telefonnummer darf nur Zahlen beinhalten!</string>
 
     <!-- Alarms -->
     <string name="time">Zeitpunkt:</string>
     <string name="AlarmAnswered">Wer nahm an:</string>
+    <string name="AlarmAccepted">Derzeit niemand!</string>
+    <string name="numberAlarmDatabas">number</string>
+    <string name="firstnameAlarmDatabase">firstname</string>
+    <string name="lastnameAlarmDatabase">lastname</string>
+    <string name="emailAlarmDatabase">email</string>
+    <string name="image">image</string>
+    <string name="priority">priority</string>
+    <string name="active">active</string>
+    <string name="prio">prio</string>
 
     <!-- Settings -->
     <string name="ChangeProfil">Ändere Daten</string>
@@ -54,6 +76,16 @@
     <string name="BackgroundStartTitle">Hintergrund Start</string>
     <string name="backgroundStart">App im Hintergrund starten?</string>
     <string name="backgroundStartActive">App startet automatisch im Hintergrund</string>
+    <string name="nameSettings">name</string>
+    <string name="numberSettings">telNr</string>
+    <string name="nameNotFilled">Name ist nicht ausgefüllt!</string>
+    <string name="noValidnumber">Keine gültige Telefon Nummer eingegeben!</string>
+    <string name="noValidemail">Keine gültige E-mail eingegeben!</string>
+    <string name="sampleName">Maria Musterfrau</string>
+    <string name="sampleNumber">0123456789</string>
+    <string name="sampleEmail">maria.musterfrau@mail.com</string>
+    <string name="ReadFile">ReadFile</string>
+    <string name="ReadFilePath">File Read::---> $1§s</string>
 
     <!-- Alarm called -->
     <string name="alarmcalled">Ein Alarm wurde ausgelöst!
@@ -70,6 +102,13 @@
     <string name="batterie">Batterie Stand:</string>
     <string name="notConnected">nicht Verbunden</string>
     <string name="connected">Verbunden</string>
+
+    <!-- Profil -->
+    <string name="Imagesaved">Bild gespeichert!</string>
+    <string name="Failed">Bild speichern fehlgeschlagen!</string>
+    <string name="data">data</string>
+    <string name="namePicture">ProfilePicture.jpg</string>
+    <string name="PictureType">image/jpeg</string>
 
     <!-- Connect bracelet -->
     <string name="nobraceletconnected">Sie haben kein Armband mit Ihrer App Verbunden</string>
@@ -107,9 +146,58 @@
     <string name="alarmWasCanceled">Der Alarm wurde abgebrochen!</string>
     <string name="title_activity_map">Map</string>
 
-
+    <!-- LOGS -->
+    <string name="userpermission">UserPermission</string>
+    <string name="GPSPermissionGranted">All permissions for getting GPS are granted by user!</string>
     <string name="logo">Logo</string>
     <string name="title_activity_settings_test">SettingsTestActivity</string>
+    <string name="buttonOk">ButtonOk</string>
+    <string name="buttonOkClicked">Button ok was clicked in %1$s!</string>
+    <string name="SOSButton">SOSButton</string>
+    <string name="SOSButtonClicked">SOS Button was clicked in %1$s!</string>
+    <string name="MenuItem">MenuItem</string>
+    <string name="HomeRegister">Homeregister was clicked in %1$s!</string>
+    <string name="AlarmRegister">Alarmregister was clicked in %1$s!</string>
+    <string name="ContactRegister">Contactregister was clicked in %1$s!</string>
+    <string name="SettingsRegister">Settingsregister was clicked in %1$s!</string>
+    <string name="CancelButton">CancelButton</string>
+    <string name="CancelButtonClicked">Cancel Button was clicked in %1$s!</string>
+    <string name="ErrorHandler">TimerHandler</string>
+    <string name="ErrorHandlerMessage">There was an error in %1$s with the message: %2$s</string>
+    <string name="ErrorBluetooth">Bluetooth</string>
+    <string name="ErrorBluetoothMessage">There was an error in %1$s with the message: %2$s</string>
+    <string name="AddButton">AddButton</string>
+    <string name="AddButtonPictureMessage">Add Button to add picture to Contact was clicked in %1$s!</string>
+    <string name="AddButtonContactMessage">Add Button to add Contact was clicked in %1$s!</string>
+    <string name="Image">There was an error in %1$s with the message: %2$s</string>
+    <string name="path">path</string>
+    <string name="ExceptionDatabase">Database</string>
+    <string name="ExceptionDatabaseMessage">There was an Error in %1$s with the message: %2$s</string>
+    <string name="ContactPicture">ContactPicture</string>
+    <string name="SelectContactPictureMessage">SelectContactPicture was clicked in %1$s!</string>
+    <string name="SaveContactPicture">SaveContactPicture</string>
+    <string name="SaveContactPictureMessage">SaveContactPicture was clicked in %1$s!</string>
+    <string name="CancelContactPicture">CancelContactPicture</string>
+    <string name="CancelContactPictureMessage">CancelContactPicture was clicked in %1$s!</string>
+    <string name="UserPermission">UserPermission</string>
+    <string name="UserPermissionGranted">External Storage permission for changing contact picture is granted by user!</string>
+    <string name="someError">Ein Fehler ist aufgetretten!</string>
+    <string name="savePicture">savePicture</string>
+    <string name="savePicturePath">File Saved::---> %1$s</string>
+    <string name="decide">Wähle aus:</string>
+    <string name="pictureGalerie">Wähle Foto von Gallerie aus</string>
+    <string name="takePicture">Mach ein Foto</string>
+    <!-- Classes -->
+    <string name="AlarmCanceled">AlarmCanceledActivity</string>
+    <string name="AlarmSuccessful">AlarmSuccessfulActivity</string>
+    <string name="CallAlarm">CallAlarmActivity</string>
+    <string name="TimerHandler">TimerHandler</string>
+    <string name="Login">LoginActivity</string>
+    <string name="AddContact">AddContactActivity</string>
+    <string name="Contact">ContactActivity</string>
+    <string name="SelectContactPicture">SelectContactPictureActivity</string>
+
+    <!-- Constants Bracelet-->
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
