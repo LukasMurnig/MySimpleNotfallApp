@@ -28,8 +28,6 @@ class ChangeProfilActivity: AppCompatActivity(), checkPermission {
 
         initComponents()
 
-
-
         btnUpdateProfil.setOnClickListener{
             updateProfil()
         }

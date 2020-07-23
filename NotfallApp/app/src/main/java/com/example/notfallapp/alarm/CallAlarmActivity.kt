@@ -58,7 +58,7 @@ class CallAlarmActivity : AppCompatActivity(), checkPermission {
         }
 
         val batteryState = AddBraceletActivity.batteryState
-        if(batteryState.equals(" ")){
+        if(batteryState == " "){
             tvBattery.text = "nicht verbunden."
         }else{
             tvBattery.text = batteryState + "%"

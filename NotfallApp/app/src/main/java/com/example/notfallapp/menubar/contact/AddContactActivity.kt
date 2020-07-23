@@ -36,6 +36,9 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var input_number: EditText
     private lateinit var builder: AlertDialog.Builder
     private var path: String? = null
+    private var prio: Int? = null
+    private var toUpdateContact: Contact? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addcontact)
@@ -55,17 +58,20 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
                 if(path == null){
                     path = ""
                 }
-                val contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
-                    input_email.text.toString(), input_number.text.toString(), path!!
-                )
-                val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
-                GlobalScope.launch {
-                    appDb.contactDao().deleteAll()
-                    appDb.contactDao().insertContact(contact)
-                }
+                if(toUpdateContact==null){
+                    val contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
+                        input_email.text.toString(), input_number.text.toString(), prio!!,  path!!, true
+                    )
 
-               val intent = Intent(this, ContactActivity::class.java)
-                startActivity(intent)
+                    installContact(contact, false)
+                }else{
+                    toUpdateContact!!.firstname = input_firstname.text.toString()
+                    toUpdateContact!!.lastname = input_lastname.text.toString()
+                    toUpdateContact!!.e_mail = input_email.text.toString()
+                    toUpdateContact!!.number = input_number.text.toString()
+                    toUpdateContact!!.pathToImage = path as String
+                    installContact(toUpdateContact!!, true)
+                }
             }
         }
 
@@ -75,7 +81,43 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener {
             val alert = builder.create()
             alert.show()
         }
+
+        val extras = intent.extras ?: return
+        prio = extras.getInt("prio")
+        if(extras.getString("firstname")!=null){
+            toUpdateContact = Contact(extras.getString("firstname"), extras.getString("lastname"),
+                extras.getString("e_mail"), extras.getString("number"), extras.getInt("prio"),
+                extras.getString("image"), extras.getBoolean("active")
+            )
+
+            if(toUpdateContact!!.pathToImage.isNotEmpty()){
+                val bitmap =
+                    MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(toUpdateContact!!.pathToImage))
+                addpicture.setImageBitmap(bitmap)
+            }
+
+            input_firstname.setText(toUpdateContact!!.firstname)
+            input_lastname.setText(toUpdateContact!!.lastname)
+            input_email.setText(toUpdateContact!!.e_mail)
+            input_number.setText(toUpdateContact!!.number)
+        }
     }
+
+    private fun installContact(contact: Contact, update: Boolean){
+        val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
+        if(update){
+            GlobalScope.launch {
+                appDb.contactDao().updateContact(contact!!)
+            }
+        }else{
+            GlobalScope.launch {
+                appDb.contactDao().insertContact(contact)
+            }
+        }
+        val intent = Intent(this, ContactActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun createButtonBar() {
         // SOS Button
         btnSos = findViewById(R.id.btn_sos)

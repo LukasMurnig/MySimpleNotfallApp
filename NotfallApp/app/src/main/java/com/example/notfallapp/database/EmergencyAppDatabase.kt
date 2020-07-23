@@ -9,7 +9,7 @@ import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.dao.AlarmsDao
 import com.example.notfallapp.dao.ContactDao
 
-@Database(entities = [Contact::class, Alarm::class], version = 7)
+@Database(entities = [Contact::class, Alarm::class], version = 9)
 abstract class EmergencyAppDatabase : RoomDatabase(){
     abstract fun contactDao(): ContactDao
     abstract fun alarmsDao(): AlarmsDao
