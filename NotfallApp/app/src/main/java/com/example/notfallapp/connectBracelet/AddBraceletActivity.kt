@@ -29,8 +29,6 @@ import com.example.notfallapp.bll.ReadWriteCharacteristic
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.checkPermission
 import com.example.notfallapp.service.ServiceCallAlarm
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermission {
@@ -56,6 +54,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermissio
     private lateinit var context: Context
     private lateinit var characteristic: BluetoothGattCharacteristic
     private lateinit var descriptor: BluetoothGattDescriptor
+    private var address = "D0:39:72:C4:FD:DC"
     var process = ProcessQueueExecutor()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,13 +81,13 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermissio
             Log.d("ListViewClicked", "List View in Add BraceletActivity was clicked")
             val device: BluetoothDevice = devices[position]
             //characteristic = BluetoothGattCharacteristic(UUID.fromString(uuidExtra.toString()), 1, 3)
-            connect(device)
+            //connect(device)
         })
         //To execute the read and write operation in a queue.
        if (!process.isAlive()) {
             process.start()
         }
-        searchDevices()
+        connect()
     }
     private fun configureButtons() {
         // SOS Button
@@ -185,8 +184,11 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermissio
         super.onDestroy()
     }
 
-    private fun connect(device: BluetoothDevice){
-        bluetoothGatt = device.connectGatt(this, false, gattCallback)
+    private fun connect(){
+        val device: BluetoothDevice =
+            BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address)
+        println("Connnect to device")
+
         /*characteristic = BluetoothGattCharacteristic(Constants.CLIENT_CHARACTERISTIC_CONFIG, 3, 0)
         val initdescriptor = BluetoothGattDescriptor(Constants.CLIENT_CHARACTERISTIC_CONFIG, 16)
         characteristic.addDescriptor(initdescriptor)
@@ -199,104 +201,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermissio
         var intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
-
-    // Various callback methods defined by the BLE API.
-    private val gattCallback = object : BluetoothGattCallback() {
-        override fun onConnectionStateChange(
-            gatt: BluetoothGatt,
-            status: Int,
-            newState: Int
-        ) {
-            when (newState) {
-                BluetoothProfile.STATE_CONNECTED -> {
-                    println("HEllo Conected")
-                    gatt.discoverServices()
-                    connected = true
-                }
-                BluetoothProfile.STATE_DISCONNECTED -> {
-                    println("Hello disconected")
-                    connected = false
-                    batteryState = " "
-                    close()
-                }
-            }
-        }
-
-        override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                // Do APP verification as soon as service discovered.
-                for (service in gatt.services) {
-                    if (service == null || service.uuid == null) {
-                        continue
-                    }
-                    if (Constants.SERVICE_BATTERY_LEVEL.equals(service.uuid)) {
-                        //Read the device battery percentage
-                        readCharacteristic(
-                            gatt,
-                            service.getCharacteristic(Constants.CHAR_BATTERY_LEVEL)
-                        )
-                    }
-                }
-            } else {
-                // Service discovery failed close and disconnect the GATT object of the device.
-                gatt.disconnect()
-                gatt.close()
-            }
-        }
-
-        // CallBack when the response available for registered the notification( Battery Status, Fall Detect, Key Press)
-        override fun onCharacteristicChanged(
-            gatt: BluetoothGatt?,
-            characteristic: BluetoothGattCharacteristic
-        ) {
-            val keyValue = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0).toString()
-            if (characteristic.uuid == Constants.CHAR_DETECTION_NOTIFY) {
-                var number = 0
-                try {
-                    number = keyValue.toInt()
-                }catch (ex: Exception){
-                    Log.d(TAG, ex.toString())
-                }
-                if (number == 1) {
-                    println("Single press")
-                    val intent = Intent(context, ServiceCallAlarm::class.java)
-                    context.startService(intent)
-                } else if (number == 0) {
-                    println("single release")
-                }else if (number == 4) {
-                    val intent = Intent(context, ServiceCallAlarm::class.java)
-                    context.startService(intent)
-                    println("fallevent")
-                }
-            }
-        }
-
-        // Callback when the response available for Read Characteristic Request
-        override fun onCharacteristicRead(
-            gatt: BluetoothGatt?,
-            characteristic: BluetoothGattCharacteristic?,
-            status: Int
-        ) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                // Display received battery value.
-                if (characteristic != null) {
-                    if (Constants.CHAR_BATTERY_LEVEL.equals(characteristic.uuid)) {
-                        batteryState =
-                            characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0)
-                                .toString()
-                    } else {
-                        if (characteristic != null) {
-                            Log.i(
-                                TAG,
-                                "received characteristic read:" + characteristic.uuid.toString()
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private fun checkPermissions(): Boolean{
         var success = false
         if (bAdapter.isDiscovering) {
@@ -326,49 +230,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermissio
         }
         success = true
         return success
-    }
-    //Read the value of the BLE device
-    fun readCharacteristic(
-        mGatt: BluetoothGatt?,
-        characteristic: BluetoothGattCharacteristic
-    ) {
-        if (connected == false) {
-            return
-        }
-        val readWriteCharacteristic = ReadWriteCharacteristic(
-            ProcessQueueExecutor.REQUEST_TYPE_READ_CHAR,
-            mGatt!!,
-            characteristic!!
-        )
-        process.addProcess(readWriteCharacteristic)
-    }
-    //To write the value to the BLE device.
-    fun writeCharacteristic(
-        mGatt: BluetoothGatt?,
-        characteristic: BluetoothGattCharacteristic,
-        b: ByteArray?
-    ) {
-        if (connected == false) {
-            return
-        }
-        characteristic.value = b
-        val readWriteCharacteristic = mGatt?.let {
-            ReadWriteCharacteristic(
-                ProcessQueueExecutor.REQUEST_TYPE_WRITE_CHAR,
-                it,
-                characteristic
-            )
-        }
-        if (readWriteCharacteristic != null) {
-            process.addProcess(readWriteCharacteristic)
-        }
-    }
-
-    fun close() {
-        bluetoothGatt?.disconnect()
-        bluetoothGatt?.close()
-        bluetoothGatt = null
-        process.interrupt()
     }
     private fun sureDialog() {
         builder.setTitle(getResources().getString(R.string.confirm))

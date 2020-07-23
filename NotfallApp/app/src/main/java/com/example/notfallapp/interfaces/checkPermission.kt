@@ -9,6 +9,7 @@ import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Handler
 import androidx.core.content.ContextCompat.startActivity
+import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import java.util.*
 
@@ -20,7 +21,7 @@ interface checkPermission {
     }
 
     fun checkInternetAccess(context: Context, connectivityManager: ConnectivityManager?, wifi: WifiManager){
-        var builder: AlertDialog.Builder = AlertDialog.Builder(context)
+       /* var builder: AlertDialog.Builder = AlertDialog.Builder(context)
         var handler = Handler(context.mainLooper)
         var timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
@@ -34,7 +35,7 @@ interface checkPermission {
                     })
                 }
             }
-        }, 0, 3000)
+        }, 0, 3000)*/
     }
 
 
@@ -46,7 +47,6 @@ interface checkPermission {
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 var success = isBluetoothEnabled(bluetoothAdapter)
-                println(success)
                 if(success == false){
                     timer.cancel()
                     handler.post{
