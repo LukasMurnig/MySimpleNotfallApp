@@ -8,15 +8,15 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.server.ServerApi
 
 class LoginActivity : AppCompatActivity() {
     companion object{
-        private val TAG :String = "LoginActivity"
+        private const val TAG :String = "LoginActivity"
         private const val REQUEST_SIGNUP :Int = 0
     }
-    private lateinit var emailText: EditText
+    private lateinit var usernameText: EditText
     private lateinit var passwordText: EditText
     private lateinit var signupText: TextView
     private lateinit var loginButton: Button
@@ -33,65 +33,71 @@ class LoginActivity : AppCompatActivity() {
 
         signupText.setOnClickListener{
             //start the signup activity
-            val intent: Intent = Intent(this, SignUpActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
     }
 
-    fun login() {
+    private fun login() {
         if (!validate()){
             onLoginFailed()
             return
         }
 
-        loginButton.setEnabled(true)
+        loginButton.isEnabled = true
 
         val progressDialog = ProgressDialog(this,
             R.style.ProgressdialogLogin
         )
-        progressDialog.setIndeterminate(true)
+        progressDialog.isIndeterminate = true
         progressDialog.setMessage("Authentifizieren ...")
         progressDialog.show();
 
-        var email: String? = emailText.getText().toString()
-        var password: String? = passwordText.getText().toString()
+        val username: String? = usernameText.text.toString()
+        val password: String? = passwordText.text.toString()
 
         //Todo: Implementation of the authentication  methode.
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
 
-    fun onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show()
-
-        loginButton.setEnabled(true)
-    }
-
-    fun validate(): Boolean {
-        var validate: Boolean = true
-
-        var email: String? = emailText.getText().toString()
-        var password: String? = passwordText.getText().toString()
-
-        if (email?.isEmpty()!!) {
-            emailText.setError("Feld für Email und Benutzer darf nicht leer sein!")
-            validate = false
-        }else{
-            emailText.setError(null)
+        ServerApi.setContext(applicationContext)
+        if (username != null && password != null) {
+            ServerApi.SendLogInDataToServer(username, password)
         }
 
-        if (password?.isEmpty()!! || password?.length < 4) {
-            passwordText.setError("Kennwort muss mindestens 4 Zeichen lang sein.");
-            validate = false;
+        /*val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)*/
+    }
+
+    private fun onLoginFailed() {
+        Toast.makeText(baseContext, "Login failed", Toast.LENGTH_LONG).show()
+
+        loginButton.isEnabled = true
+    }
+
+    private fun validate(): Boolean {
+        var validate = true
+
+        val username: String? = usernameText.text.toString()
+        val password: String? = passwordText.text.toString()
+
+        if (username?.isEmpty()!!) {
+            usernameText.error = "Feld für Email und Benutzer darf nicht leer sein!"
+            validate = false
         }else{
-            passwordText.setError(null)
+            usernameText.error = null
+        }
+
+        if (password?.isEmpty()!! || password.length < 4) {
+            passwordText.error = "Kennwort muss mindestens 4 Zeichen lang sein."
+            validate = false
+        }else{
+            passwordText.error = null
         }
 
         return validate
     }
 
-    fun setLoginControls() {
-        emailText = findViewById(R.id.input_email)
+    private fun setLoginControls() {
+        usernameText = findViewById(R.id.input_username)
         passwordText = findViewById(R.id.input_password)
         signupText = findViewById(R.id.link_signup)
         loginButton = findViewById(R.id.btn_login)

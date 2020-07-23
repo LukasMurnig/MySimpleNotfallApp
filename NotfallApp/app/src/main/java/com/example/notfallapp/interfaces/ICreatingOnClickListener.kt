@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat.startActivity
+import com.example.notfallapp.Login.LoginActivity
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.menubar.AlarmsActivity
@@ -44,7 +45,8 @@ interface ICreatingOnClickListener {
 
         btnSettings.setOnClickListener(){
             Log.d("MenuItemClicked", "Settings were clicked")
-            val intent = Intent(context, SettingsActivity::class.java)
+            //val intent = Intent(context, SettingsActivity::class.java)
+            val intent = Intent(context, LoginActivity::class.java)
             startActivity(context, intent, null)
         }
     }
