@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(),
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     // check if all permissions are granted
                     if (report.areAllPermissionsGranted()) {
-                        Log.i("UserPermission", "All permissions for getting GPS are granted by user!")
+                        Log.i(resources.getString(R.string.userpermission), resources.getString(R.string.GPSPermissionGranted))
                     }
 
                     // check for permanent denial of any permission

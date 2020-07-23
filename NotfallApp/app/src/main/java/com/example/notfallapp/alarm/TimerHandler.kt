@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Handler
 import android.provider.Settings
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -73,12 +74,15 @@ class TimerHandler {
             val alarm: Alarm?
 
             alarm = try{
-                Alarm(androidId, location.longitude, location.latitude, "nobody now", dateFormat.toString())
+                Alarm(androidId, location.longitude, location.latitude,
+                      context.resources.getString(R.string.AlarmAccepted), dateFormat.toString())
             }catch (ex: java.lang.Exception){
-                Alarm(androidId, 0.0, 0.0, "nobody now", dateFormat.toString())
+                Alarm(androidId, 0.0, 0.0,
+                      context.resources.getString(R.string.AlarmAccepted), dateFormat.toString())
             }
 
-            val db = Room.databaseBuilder(context, AlarmDatabase::class.java, "alarms.db").fallbackToDestructiveMigration().build()
+            val db = Room.databaseBuilder(context, AlarmDatabase::class.java,
+                     context.resources.getString(R.string.Database)).fallbackToDestructiveMigration().build()
             try{
                 GlobalScope.launch {
                     // zum Testen
@@ -87,7 +91,9 @@ class TimerHandler {
                     db.alarmsDao().insertAlarm(alarm)
                 }
             }catch (ex: Exception){
-                println("Konnte Alarm nicht speichern. Grund: $ex")
+                Log.e(context.resources.getString(R.string.ErrorHandler),
+                      String.format(context.resources.getString(R.string.ErrorHandlerMessage),
+                                    context.resources.getString(R.string.TimerHandler), ex.toString()))
             }
         }
     }

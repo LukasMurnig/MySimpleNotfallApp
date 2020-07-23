@@ -41,7 +41,9 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
         initComponents()
 
         btnCancelAlarmOk.setOnClickListener {
-            Log.d("ButtonOk", "Button ok in AlarmCanceledActivity clicked!")
+            Log.d(resources.getString(R.string.buttonOk),
+                String.format(resources.getString(R.string.buttonOkClicked),
+                              resources.getString(R.string.AlarmCanceled)))
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -80,36 +82,45 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
         btnSettings: ImageButton
     ) {
         btnSos.setOnClickListener{
-            Log.d("SOSButtonClicked", "SOS Button were clicked!")
-
+            Log.d(resources.getString(R.string.SOSButton),
+                  String.format(resources.getString(R.string.SOSButtonClicked),
+                                resources.getString(R.string.AlarmCanceled)))
             // Service open Call Alarm Activity
             val intent = Intent(context, ServiceCallAlarm::class.java)
             context.startService(intent)
         }
 
         btnHome.setOnClickListener{
-            Log.d("MenuItemClicked", "Homeregister were clicked in MainActivity")
+            Log.d(resources.getString(R.string.MenuItem),
+                  String.format(resources.getString(R.string.HomeRegister),
+                                resources.getString(R.string.AlarmCanceled)))
             createNotificationCreateAlarm(context)
             val intent = Intent(context, MainActivity::class.java)
             ContextCompat.startActivity(context, intent, null)
         }
 
         btnAlarms.setOnClickListener{
-            Log.d("MenuItemClicked", "Alarmregister were clicked in MainActivity")
+            Log.d(resources.getString(R.string.MenuItem),
+                  String.format(resources.getString(R.string.AlarmRegister),
+                                resources.getString(R.string.AlarmCanceled)))
             createNotificationCreateAlarm(context)
             val intent = Intent(context, AlarmsActivity::class.java)
             ContextCompat.startActivity(context, intent, null)
         }
 
         btnContact.setOnClickListener(){
-            Log.d("MenuItemClicked", "Contacts were clicked")
+            Log.d(resources.getString(R.string.MenuItem),
+                  String.format(resources.getString(R.string.ContactRegister),
+                                resources.getString(R.string.AlarmCanceled)))
             createNotificationCreateAlarm(context)
             val intent = Intent(context, ContactActivity::class.java)
             ContextCompat.startActivity(context, intent, null)
         }
 
         btnSettings.setOnClickListener(){
-            Log.d("MenuItemClicked", "Settings were clicked")
+            Log.d(resources.getString(R.string.MenuItem),
+                  String.format(resources.getString(R.string.SettingsRegister),
+                                resources.getString(R.string.AlarmCanceled)))
             createNotificationCreateAlarm(context)
             val intent = Intent(context, SettingsActivity::class.java)
             ContextCompat.startActivity(context, intent, null)

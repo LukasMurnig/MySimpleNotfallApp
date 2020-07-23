@@ -53,8 +53,8 @@ class LoginActivity : AppCompatActivity(), checkPermission {
         val progressDialog = ProgressDialog(this,
             R.style.ProgressdialogLogin
         )
-        progressDialog.isIndeterminate = true
-        progressDialog.setMessage("Authentifizieren ...")
+        progressDialog.setIndeterminate(false)
+        progressDialog.setMessage(resources.getString(R.string.Authenticate))
         progressDialog.show();
 
         val username: String? = usernameText.text.toString()
@@ -71,9 +71,9 @@ class LoginActivity : AppCompatActivity(), checkPermission {
         startActivity(intent)*/
     }
 
-    private fun onLoginFailed() {
-        Toast.makeText(baseContext, "Login failed", Toast.LENGTH_LONG).show()
 
+    private fun onLoginFailed() {
+        Toast.makeText(getBaseContext(), resources.getString(R.string.LoginFailed), Toast.LENGTH_LONG).show()
         loginButton.isEnabled = true
     }
 
@@ -84,15 +84,15 @@ class LoginActivity : AppCompatActivity(), checkPermission {
         val password: String? = passwordText.text.toString()
 
         if (username?.isEmpty()!!) {
-            usernameText.error = "Feld für Email und Benutzer darf nicht leer sein!"
+            usernameText.setError(resources.getString(R.string.emailTooShort))
             validate = false
         }else{
             usernameText.error = null
         }
 
-        if (password?.isEmpty()!! || password.length < 4) {
-            passwordText.error = "Kennwort muss mindestens 4 Zeichen lang sein."
-            validate = false
+        if (password?.isEmpty()!! || password?.length < 4) {
+            passwordText.setError(resources.getString(R.string.passwordTooShort));
+            validate = false;
         }else{
             passwordText.error = null
         }

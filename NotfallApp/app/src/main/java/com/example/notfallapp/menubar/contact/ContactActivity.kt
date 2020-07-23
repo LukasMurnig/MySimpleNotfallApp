@@ -41,16 +41,18 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPermi
         initComponents()
 
         addButton.setOnClickListener {
-            Log.d("AddButton", "Add Button to add contacts were clicked!")
+            Log.d(resources.getString(R.string.AddButton),
+                  String.format(resources.getString(R.string.AddButtonContactMessage),
+                    resources.getString(R.string.Contact)))
             val intent = Intent(this@ContactActivity, AddContactActivity::class.java)
             if(rvContacts.adapter != null){
                 if(rvContacts.adapter!!.itemCount >= 3){
                     lbMessageNoContacts.text = resources.getString(R.string.allowedContacts)
                     return@setOnClickListener
                 }
-                intent.putExtra("prio", (rvContacts.adapter!!.itemCount))
+                intent.putExtra(resources.getString(R.string.prio), (rvContacts.adapter!!.itemCount))
             }else{
-                intent.putExtra("prio", 0)
+                intent.putExtra(resources.getString(R.string.prio), 0)
             }
             startActivity( intent, null)
         }
@@ -59,7 +61,9 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPermi
             try{
                 getAllContacts()
             }catch (ex: Exception){
-                Log.e("ExceptionDatabase", ex.toString())
+                Log.e(resources.getString(R.string.ExceptionDatabase),
+                      String.format(resources.getString(R.string.ExceptionDatabaseMessage),
+                                    resources.getString(R.string.Contact), ex.toString()))
             }
         }
     }

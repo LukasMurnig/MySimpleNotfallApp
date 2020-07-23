@@ -41,10 +41,16 @@ class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
         requestPermission()
 
         btnSelectContactPicture.setOnClickListener{
+            Log.d(resources.getString(R.string.ContactPicture),
+                  String.format(resources.getString(R.string.SelectContactPictureMessage),
+                                resources.getString(R.string.SelectContactPicture)))
             choosePhotoFromGallary()
         }
 
         btnSaveContactPicture.setOnClickListener{
+            Log.d(resources.getString(R.string.SaveContactPicture),
+                  String.format(resources.getString(R.string.SaveContactPictureMessage),
+                                resources.getString(R.string.SelectContactPicture)))
             if(responseIntent != null){
                 setResult(1, responseIntent)
             }else{
@@ -54,6 +60,9 @@ class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
         }
 
         btnCancelContactPicture.setOnClickListener{
+            Log.d(resources.getString(R.string.CancelContactPicture),
+                  String.format(resources.getString(R.string.CancelContactPictureMessage),
+                                resources.getString(R.string.SelectContactPicture)))
             setResult(Activity.RESULT_CANCELED)
             finish()
         }
@@ -73,10 +82,12 @@ class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
                         val bitmap =
                             MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, contentURI)
                         image.setImageBitmap(bitmap)
-                        responseIntent!!.putExtra("path", contentURI.path)
+                        responseIntent!!.putExtra(resources.getString(R.string.path), contentURI.path)
                     }
                 }catch (e: IOException){
-                    Log.e("image", e.printStackTrace().toString())
+                    Log.e(resources.getString(R.string.image),
+                          String.format(resources.getString(R.string.Image),
+                                        resources.getString(R.string.SelectContactPicture), e.toString()))
                 }
             }
         }
@@ -97,7 +108,8 @@ class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
             )
             .withListener(object : PermissionListener {
                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    Log.i("UserPermission", "External Storage permission for changing contact picture is granted by user!")
+                    Log.i(resources.getString(R.string.UserPermission),
+                          resources.getString(R.string.UserPermissionGranted))
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
@@ -111,7 +123,7 @@ class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
                     TODO("Not yet implemented")
                 }
             }).withErrorListener {
-                Toast.makeText(applicationContext, "Some Error! ", Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext, resources.getString(R.string.someError), Toast.LENGTH_SHORT)
                     .show()
             }
             .onSameThread()

@@ -54,13 +54,17 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
 
         initComponents()
         addpicture.setOnClickListener {
-            Log.d("AddButton", "Add Button to add picture to Contact were clicked!")
+            Log.d(resources.getString(R.string.AddButton),
+                  String.format(resources.getString(R.string.AddButtonPictureMessage),
+                                resources.getString(R.string.AddContact)))
             val intent = Intent(this, SelectContactPictureActivity::class.java)
             startActivityForResult(intent, 1)
         }
 
         btn_add.setOnClickListener {
-            Log.d("AddButton", "Add Button to add Contact were clicked!")
+            Log.d(resources.getString(R.string.AddButton),
+                  String.format(resources.getString(R.string.AddButtonContactMessage),
+                                resources.getString(R.string.AddContact)))
 
             if(validate()){
                 if(path == null){
@@ -84,18 +88,24 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
         }
 
         btn_cancel.setOnClickListener {
-            Log.d("CancelButton", "Cancel Button to add Contact were clicked!")
+            Log.d(resources.getString(R.string.CancelButton),
+                String.format(resources.getString(R.string.CancelButtonClicked),
+                    resources.getString(R.string.AddContact)))
             sureDialog()
             val alert = builder.create()
             alert.show()
         }
 
         val extras = intent.extras ?: return
-        prio = extras.getInt("prio")
-        if(extras.getString("firstname")!=null){
-            toUpdateContact = Contact(extras.getString("firstname"), extras.getString("lastname"),
-                extras.getString("e_mail"), extras.getString("number"), extras.getInt("prio"),
-                extras.getString("image"), extras.getBoolean("active")
+        prio = extras.getInt(resources.getString(R.string.prio))
+        if(extras.getString(resources.getString(R.string.firstnameAlarmDatabase))!=null){
+            toUpdateContact = Contact(extras.getString(resources.getString(R.string.firstnameAlarmDatabase)),
+                                      extras.getString(resources.getString(R.string.lastnameAlarmDatabase)),
+                                      extras.getString(resources.getString(R.string.emailAlarmDatabase)),
+                                      extras.getString(resources.getString(R.string.numberAlarmDatabas)),
+                                      extras.getInt(resources.getString(R.string.prio)),
+                                      extras.getString(resources.getString(R.string.image)),
+                                      extras.getBoolean(resources.getString(R.string.active))
             )
 
             if(toUpdateContact!!.pathToImage.isNotEmpty()){
@@ -154,7 +164,9 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
                         MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, uri)
                     addpicture.setImageBitmap(bitmap)
                 }catch (e: IOException){
-                    Log.e("image", e.printStackTrace().toString())
+                    Log.e(resources.getString(R.string.image),
+                          String.format(resources.getString(R.string.Image),
+                                        resources.getString(R.string.AddContact), e.toString()))
                 }
             }
         }
@@ -199,28 +211,28 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
         val telNr: String? = input_number.text.toString()
 
         if (firstname?.isEmpty()!!) {
-            input_firstname.error = "Vorname darf nicht leer sein"
+            input_firstname.error = resources.getString(R.string.firstnameEmpty)
             validate= false
         }else{
             input_firstname.error = null
         }
 
         if (lastname?.isEmpty()!!){
-            input_lastname.error = "Nachname darf nicht leer sein!"
+            input_lastname.error = resources.getString(R.string.lastnameEmpty)
             validate = false
         }else {
             input_lastname.error = null
         }
 
         if (email?.isEmpty()!! || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            input_email.error = "Email darf nicht leer sein bzw. Email stimmt nicht!"
+            input_email.error = resources.getString(R.string.emailEmpty)
             validate = false
         }else{
             input_email.error = null
         }
 
         if(telNr?.isEmpty()!! || !android.util.Patterns.PHONE.matcher(telNr).matches()){
-            input_number.error = "Telefonnummer darf nur Zahlen beinhalten!"
+            input_number.error = resources.getString(R.string.numberWrongType)
             validate = false
         }else{
             input_number.error = null

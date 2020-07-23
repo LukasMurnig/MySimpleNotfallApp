@@ -3,6 +3,7 @@ package com.example.notfallapp.interfaces
 import android.content.Intent
 import android.os.AsyncTask
 import android.view.View
+import com.example.notfallapp.R
 import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
@@ -84,13 +85,13 @@ interface IAlarmDatabase {
 
     fun updateContact(contact: Contact, itemView: View){
         val intent = Intent(itemView.context, AddContactActivity::class.java)
-        intent.putExtra("number", contact.number)
-        intent.putExtra("firstname", contact.firstname)
-        intent.putExtra("lastname", contact.lastname)
-        intent.putExtra("e_mail", contact.e_mail)
-        intent.putExtra("image", contact.pathToImage)
-        intent.putExtra("priority", contact.priority)
-        intent.putExtra("active", contact.active)
+        intent.putExtra(itemView.context.getString(R.string.numberAlarmDatabas), contact.number)
+        intent.putExtra(itemView.context.getString(R.string.firstnameAlarmDatabase), contact.firstname)
+        intent.putExtra(itemView.context.getString(R.string.lastnameAlarmDatabase), contact.lastname)
+        intent.putExtra(itemView.context.getString(R.string.emailAlarmDatabase), contact.e_mail)
+        intent.putExtra(itemView.context.getString(R.string.image), contact.pathToImage)
+        intent.putExtra(itemView.context.getString(R.string.priority), contact.priority)
+        intent.putExtra(itemView.context.getString(R.string.active), contact.active)
         itemView.context.startActivity(intent)
     }
 

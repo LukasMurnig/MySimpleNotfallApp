@@ -102,9 +102,9 @@ class ContactListAdapter(var contacts: List<Contact>) :
         private fun showPictureDialog(contact: Contact, itemView: View) {
             val pictureDialog: AlertDialog.Builder = AlertDialog.Builder(itemView.context)
             val pictureDialogItems = arrayOf(
-                "Daten Ändern",
-                "Entfernen",
-                "Aktivieren/Deaktivieren"
+                itemView.context.resources.getString(R.string.changeValue),
+                itemView.context.resources.getString(R.string.delete),
+                itemView.context.resources.getString(R.string.activate_deaktivate)
             )
             pictureDialog.setItems(pictureDialogItems
             ) { _, which ->
