@@ -100,11 +100,22 @@
     <string name="nobluetoothdevicesfound">Wir haben leider keine Bluetoothgeräte in Ihrer nähe gefunden.
                                             Bitte versuchen Sie es erneut!</string>
     <string name="error">Hoppla, da ist wohl etwas schiefgelaufen bitte versuchen Sie es nochmal!</string>
+    <!-- DIALOG -->
     <!-- Sure dialog -->
     <string name="confirm">Bestätigen</string>
     <string name="Yes">JA</string>
     <string name="No">NEIN</string>
-
+    <!--OK dialog -->
+    <string name="noPermission">Fehlende Berechtigungen</string>
+    <string name="noPermissionText">Leider konnten wir nicht die notwendigen Berechtigungen von Ihnen erhalten.
+                                    Deshalb können Sie die App nur eingeschränkt nutzen!</string>
+    <string name="OK">OK</string>
+    <!--Internet Access -->
+    <string name="access">Zulassen</string>
+    <string name="noInternetAccess">Damit Sie die App Einwandfrei nutzen können benötigen wir
+                                    Internetzugang!</string>
+    <!-- Bluetooth Required -->
+    <string name="noBluetooth">Damit Sie die App Einwandfrei nutzen können benötigen wir Bluetooth!</string>
     <!-- Notification -->
     <string name="notificationTitle">Notfall App</string>
     <string name="alarmWasCalled">Ein Alarm wurde ausgelöst!</string>

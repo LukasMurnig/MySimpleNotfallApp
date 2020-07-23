@@ -1,6 +1,9 @@
 package com.example.notfallapp.menubar.contact
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -16,10 +19,11 @@ import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.IAlarmDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.interfaces.checkPermission
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
+class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPermission {
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
@@ -82,7 +86,11 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener {
 
         rvContacts.setHasFixedSize(false)
         rvContacts.layoutManager = LinearLayoutManager(this)
-
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
         createButtonBar()
     }
 

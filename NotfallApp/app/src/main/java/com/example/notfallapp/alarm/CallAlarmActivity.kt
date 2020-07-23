@@ -9,6 +9,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -18,12 +19,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
+import com.example.notfallapp.interfaces.checkPermission
 import com.example.notfallapp.service.ServiceCancelAlarm
 import java.lang.Exception
 import kotlin.math.roundToInt
 
 
-class CallAlarmActivity : AppCompatActivity(){
+class CallAlarmActivity : AppCompatActivity(), checkPermission {
     private lateinit var btnCancelAlarm: Button
     private lateinit var tvAlarm: TextView
     private lateinit var tvConnectionState: TextView
@@ -131,5 +133,10 @@ class CallAlarmActivity : AppCompatActivity(){
         tvLatitude = findViewById(R.id.tvLatitude)
         tvAccuracy = findViewById(R.id.tvAccuracy)
         tvBattery = findViewById(R.id.tvBattery)
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
     }
 }

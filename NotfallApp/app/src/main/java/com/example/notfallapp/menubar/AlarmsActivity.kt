@@ -1,5 +1,8 @@
 package com.example.notfallapp.menubar
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.widget.Button
@@ -13,10 +16,11 @@ import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.interfaces.checkPermission
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
+class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, checkPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -85,5 +89,10 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
         btnSettings = findViewById(R.id.btnSettings)
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
     }
 }

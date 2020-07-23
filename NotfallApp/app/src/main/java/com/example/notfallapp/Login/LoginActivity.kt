@@ -1,7 +1,10 @@
 package com.example.notfallapp.Login
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -10,8 +13,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.interfaces.checkPermission
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), checkPermission {
     companion object{
         private val TAG :String = "LoginActivity"
         private const val REQUEST_SIGNUP :Int = 0
@@ -95,5 +99,10 @@ class LoginActivity : AppCompatActivity() {
         passwordText = findViewById(R.id.input_password)
         signupText = findViewById(R.id.link_signup)
         loginButton = findViewById(R.id.btn_login)
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
     }
 }
