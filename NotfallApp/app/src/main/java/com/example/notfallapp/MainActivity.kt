@@ -2,6 +2,9 @@ package com.example.notfallapp
 
 import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -10,18 +13,19 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
+import com.example.notfallapp.interfaces.checkPermission
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
+
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener, INotifications {
+    ICreatingOnClickListener, INotifications, checkPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -102,6 +106,11 @@ class MainActivity : AppCompatActivity(),
         btnaddBracelet = findViewById(R.id.btn_add_bracelet)
         tvStatusbracelet = findViewById(R.id.tvStatusbracelet)
         tvaddbracelet = findViewById(R.id.tvaddbracelet)
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
         handler = Handler()
     }
 

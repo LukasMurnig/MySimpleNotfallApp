@@ -1,14 +1,18 @@
 package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.interfaces.checkPermission
 
-class ChangeProfilActivity: AppCompatActivity() {
+class ChangeProfilActivity: AppCompatActivity(), checkPermission {
     private lateinit var etName : EditText
     private lateinit var etAddress: EditText
     private lateinit var etTelNr : EditText
@@ -90,5 +94,11 @@ class ChangeProfilActivity: AppCompatActivity() {
         etName.setText(extras.getString("name"))
         etTelNr.setText(extras.getString("telNr"))
         etEmail.setText(extras.getString("email"))
+
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
     }
 }

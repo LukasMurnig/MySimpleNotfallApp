@@ -1,9 +1,12 @@
 package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -15,10 +18,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.interfaces.checkPermission
 import java.io.File
 import java.io.IOException
 
-class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
+class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, checkPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -123,6 +127,11 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener {
         btnChangeDate = findViewById(R.id.btnChangeData)
         imageProfilPicture = findViewById(R.id.imageProfilPicture)
         btnProfilPicture = findViewById(R.id.iBtnProfilPicture)
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
     }
 
     private fun configureButtons() {

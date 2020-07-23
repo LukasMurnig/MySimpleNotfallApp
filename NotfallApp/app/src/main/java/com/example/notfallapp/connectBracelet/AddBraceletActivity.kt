@@ -10,7 +10,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Handler
 import android.os.Parcelable
 import android.util.Log
 import android.widget.AdapterView.OnItemClickListener
@@ -24,7 +23,6 @@ import androidx.core.content.ContextCompat
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
-import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.bll.ReadWriteCharacteristic
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.service.ServiceCallAlarm
@@ -155,44 +153,9 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
     private fun searchDevices() {
         //TODO search for Bluetooth devices.
         Log.d("SearchDevices", "SearchDevices was called in AddBraceletActivity")
-
-        if (!bAdapter.isEnabled) {
-            val eintent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            startActivity(eintent)
-        }
-
-        val discoverableIntent: Intent =
-            Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
-                putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300)
-            }
-        startActivity(discoverableIntent)
-
-        if (bAdapter.isDiscovering) {
-            bAdapter.cancelDiscovery()
-        }
-
-        /*val pairedDevices = bAdapter.bondedDevices
-        if (pairedDevices.size > 0) {
-            // There are paired devices. Get the name and address of each paired device.
-            for (device in pairedDevices) {
-                System.out.println(device.address)
-            }
-        }*/
-
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            Log.i("info", "No fine location permissions")
-
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1
-            )
+        var success = checkPermissions()
+        if (success == false){
+            return
         }
         this.devices = ArrayList<BluetoothDevice>()
         val adapter = BluetoothListAdapter(applicationContext, devices)
@@ -258,23 +221,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
                     if (service == null || service.uuid == null) {
                         continue
                     }
-                    if (Constants.SERVICE_VSN_SIMPLE_SERVICE.equals(service.uuid)) {
-                       characteristic =
-                            service.getCharacteristic(Constants.CHAR_APP_VERIFICATION)
-                        // Write Emergency key press
-                        enableForDetect(
-                            gatt,
-                            service.getCharacteristic(Constants.CHAR_DETECTION_CONFIG),
-                            Constants.ENABLE_KEY_DETECTION_VALUE
-                        )
-
-                        // Set notification for emergency key press and fall detection
-                        setCharacteristicNotification(
-                            gatt,
-                            service.getCharacteristic(Constants.CHAR_DETECTION_NOTIFY),
-                            true
-                        )
-                    }
                     if (Constants.SERVICE_BATTERY_LEVEL.equals(service.uuid)) {
                         //Read the device battery percentage
                         readCharacteristic(
@@ -295,9 +241,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             gatt: BluetoothGatt?,
             characteristic: BluetoothGattCharacteristic
         ) {
-//			Intent i = new Intent(Intent.ACTION_CAMERA_BUTTON);
-            val keyValue =
-                characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0).toString()
+            val keyValue = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0).toString()
             if (characteristic.uuid == Constants.CHAR_DETECTION_NOTIFY) {
                 var number = 0
                 try {
@@ -311,16 +255,10 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
                     context.startService(intent)
                 } else if (number == 0) {
                     println("single release")
-                } else if (number == 3) {
-                    println("2-10 second press release")
-                } else if (number == 4) {
+                }else if (number == 4) {
                     val intent = Intent(context, ServiceCallAlarm::class.java)
                     context.startService(intent)
                     println("fallevent")
-                } else if (number == 5) {
-                    println("high g event")
-                } else {
-                    println("pressValue: "+ number)
                 }
             }
         }
@@ -351,28 +289,35 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         }
     }
 
-    fun setCharacteristicNotification(
-        mGatt: BluetoothGatt,
-        characteristic: BluetoothGattCharacteristic,
-        enabled: Boolean
-    ) {
-        if (connected == false) {
-            return
+    private fun checkPermissions(): Boolean{
+        var success = false
+        if (bAdapter.isDiscovering) {
+            bAdapter.cancelDiscovery()
         }
-        if (!mGatt.setCharacteristicNotification(characteristic, enabled)) {
-            return
+
+        val discoverableIntent: Intent =
+            Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
+                putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300)
+            }
+        startActivity(discoverableIntent)
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            Log.i("info", "No fine location permissions")
+
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1
+            )
         }
-        val clientConfig =
-            characteristic.getDescriptor(Constants.CLIENT_CHARACTERISTIC_CONFIG)
-                ?: return
-        clientConfig.value =
-            if (enabled) Constants.ENABLE_NOTIFICATION_VALUE else Constants.DISABLE_NOTIFICATION_VALUE
-        val readWriteCharacteristic = ReadWriteCharacteristic(
-            ProcessQueueExecutor.REQUEST_TYPE_WRITE_DESCRIPTOR,
-            mGatt,
-            clientConfig
-        )
-        process.addProcess(readWriteCharacteristic)
+        success = true
+        return success
     }
     //Read the value of the BLE device
     fun readCharacteristic(
@@ -410,16 +355,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             process.addProcess(readWriteCharacteristic)
         }
     }
-    //To write the value to BLE Device for Emergency / Fall alert
-    fun enableForDetect(
-        mGatt: BluetoothGatt?,
-        ch: BluetoothGattCharacteristic,
-        value: ByteArray?
-    ) {
-        if (ch != null) {
-            writeCharacteristic(mGatt, ch, value)
-        }
-    }
 
     fun close() {
         bluetoothGatt?.disconnect()
@@ -441,5 +376,4 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
             dialog.dismiss()
         }
     }
-
 }
