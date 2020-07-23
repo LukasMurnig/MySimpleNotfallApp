@@ -2,10 +2,14 @@ package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Instrumentation
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
+import android.net.ConnectivityManager
 import android.net.Uri
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -15,6 +19,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.interfaces.checkPermission
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -26,7 +31,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 
-class SelectProfilPictureActivity : AppCompatActivity() {
+class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
 
     private val IMAGE_DIRECTORY = "/profilPicture"
     private val GALLERY = 1
@@ -190,5 +195,10 @@ class SelectProfilPictureActivity : AppCompatActivity() {
         btnSelectPicture = findViewById(R.id.btnSelectPicture)
         btnSavePicture = findViewById(R.id.btnSavePicture)
         btnCancelProfilPicture = findViewById(R.id.btnCancelProfilPicture)
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
     }
 }

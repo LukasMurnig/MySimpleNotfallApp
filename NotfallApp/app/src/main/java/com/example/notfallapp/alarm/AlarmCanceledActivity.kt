@@ -2,6 +2,8 @@ package com.example.notfallapp.alarm
 
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -13,12 +15,14 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
+import com.example.notfallapp.interfaces.checkPermission
 import com.example.notfallapp.menubar.AlarmsActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 
-class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INotifications {
+class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INotifications,
+    checkPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -46,6 +50,11 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
     private fun initComponents() {
         btnCancelAlarmOk = findViewById(R.id.btn_cancel_alarm_ok)
         tvCanceledAlarm = findViewById(R.id.tvCanceledAlarm)
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
     }
 
     private fun configureButtons() {
