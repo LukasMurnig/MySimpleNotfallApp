@@ -18,14 +18,14 @@ import java.util.concurrent.TimeUnit
 class ServerApi {
     companion object{
         private lateinit var context: Context
-        private var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
+        var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
         val TAG = "ServerApi"
         var volleyRequestQueue: RequestQueue? = null
 
         private var timeTokenCome: Long? = null
 
         // login response data
-        private var accessToken: String? = null
+        var accessToken: String? = null
         private var refreshToken: String? = null
         private var multiFactorToken: String? = null
         private var tokenExpiresInSeconds: Int? = null

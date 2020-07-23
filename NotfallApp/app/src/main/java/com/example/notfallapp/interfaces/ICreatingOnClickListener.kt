@@ -45,8 +45,8 @@ interface ICreatingOnClickListener {
 
         btnSettings.setOnClickListener(){
             Log.d("MenuItemClicked", "Settings were clicked")
-            //val intent = Intent(context, SettingsActivity::class.java)
-            val intent = Intent(context, LoginActivity::class.java)
+            val intent = Intent(context, SettingsActivity::class.java)
+            //val intent = Intent(context, LoginActivity::class.java)
             startActivity(context, intent, null)
         }
     }

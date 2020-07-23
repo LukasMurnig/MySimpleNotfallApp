@@ -13,6 +13,8 @@ import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.AlarmDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.server.ServerAlarm
+import com.example.notfallapp.server.ServerApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -42,6 +44,10 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener {
 
         GlobalScope.launch {
             getData()
+
+            /*
+            ServerAlarm.getAllAlerts(rvAlarms, lbMessageNoAlarms)
+             */
         }
     }
 
