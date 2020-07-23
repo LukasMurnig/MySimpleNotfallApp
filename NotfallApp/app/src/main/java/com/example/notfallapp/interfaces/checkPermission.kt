@@ -29,12 +29,12 @@ interface checkPermission {
                 if (result == false){
                     timer.cancel()
                     handler.post( Runnable {
-                        builder = enableInternetAccess(context, wifi)
+                        builder = enableInternetAccess(context, connectivityManager, wifi)
                         showAccess(builder)
                     })
                 }
             }
-        }, 0, 1000)
+        }, 0, 3000)
     }
 
 
@@ -46,6 +46,7 @@ interface checkPermission {
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 var success = isBluetoothEnabled(bluetoothAdapter)
+                println(success)
                 if(success == false){
                     timer.cancel()
                     handler.post{
@@ -55,7 +56,7 @@ interface checkPermission {
 
                 }
             }
-        }, 0, 1000)
+        }, 0, 5000)
 
     }
     private fun isNetworkAvailable(connectivityManager: ConnectivityManager?): Boolean {
@@ -71,15 +72,20 @@ interface checkPermission {
         return success
     }
 
-    private fun enableInternetAccess(context: Context, wifi: WifiManager): AlertDialog.Builder{
+    private fun enableInternetAccess(context: Context, connectivityManager: ConnectivityManager?, wifi: WifiManager): AlertDialog.Builder{
         var builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setTitle(context.resources.getString(R.string.confirm))
         builder.setMessage(context.resources.getString(R.string.noInternetAccess))
         builder.setPositiveButton(context.resources.getString(R.string.access)){dialog, which ->
             wifi.setWifiEnabled(true)
+            checkInternetAccess(context, connectivityManager, wifi)
         }
         builder.setNegativeButton(context.resources.getString(R.string.cancel)){dialog, which ->
-           noInternetAccess(context, wifi)
+            var result = isNetworkAvailable(connectivityManager)
+            if (result == false) {
+                noInternetAccess(context, connectivityManager, wifi)
+            }
+            dialog.dismiss()
         }
         return builder
     }
@@ -87,19 +93,24 @@ interface checkPermission {
     private fun enableBluetooth(context: Context, bluetoothAdapter: BluetoothAdapter): AlertDialog.Builder{
         var builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setTitle(context.resources.getString(R.string.confirm))
-        builder.setMessage(context.resources.getString(R.string.noInternetAccess))
+        builder.setMessage(context.resources.getString(R.string.noBluetooth))
         builder.setPositiveButton(context.resources.getString(R.string.access)){dialog, which ->
             bluetoothAdapter.enable()
+            checkBluetoothEnabled(context)
         }
         builder.setNegativeButton(context.resources.getString(R.string.cancel)){dialog, which ->
+            var success = isBluetoothEnabled(bluetoothAdapter)
+            if (success == false){
             noBluetoothEnabled(context, bluetoothAdapter)
+            }
+            dialog.dismiss()
         }
         return builder
     }
 
-    private fun noInternetAccess(context: Context, wifi: WifiManager){
+    private fun noInternetAccess(context: Context, connectivityManager: ConnectivityManager?, wifi: WifiManager){
         var builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        builder = enableInternetAccess(context, wifi)
+        builder = enableInternetAccess(context, connectivityManager, wifi)
         showAccess(builder)
     }
 

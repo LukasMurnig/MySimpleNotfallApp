@@ -98,8 +98,8 @@
     <string name="access">Zulassen</string>
     <string name="noInternetAccess">Damit Sie die App Einwandfrei nutzen können benötigen wir
                                     Internetzugang!</string>
-    <!-- GPS Required -->
-    <string name="noGPS">Damit Sie die App Einwandfrei nutzen können benötigen wir GPS!</string>
+    <!-- Bluetooth Required -->
+    <string name="noBluetooth">Damit Sie die App Einwandfrei nutzen können benötigen wir Bluetooth!</string>
     <!-- Notification -->
     <string name="notificationTitle">Notfall App</string>
     <string name="alarmWasCalled">Ein Alarm wurde ausgelöst!</string>

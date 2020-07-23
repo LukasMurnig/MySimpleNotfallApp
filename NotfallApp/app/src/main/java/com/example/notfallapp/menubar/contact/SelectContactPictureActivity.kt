@@ -1,8 +1,11 @@
 package com.example.notfallapp.menubar.contact
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.net.Uri
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -11,6 +14,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.interfaces.checkPermission
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -19,7 +23,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import java.io.IOException
 
-class SelectContactPictureActivity : AppCompatActivity() {
+class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
 
     private lateinit var image: ImageView
     private lateinit var btnSelectContactPicture: Button
@@ -119,5 +123,10 @@ class SelectContactPictureActivity : AppCompatActivity() {
         btnSelectContactPicture = findViewById(R.id.btnSelectContactPicture)
         btnSaveContactPicture = findViewById(R.id.btnSaveContactPicture)
         btnCancelContactPicture = findViewById(R.id.btnCancelContactPicture)
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
     }
 }

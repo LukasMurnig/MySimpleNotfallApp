@@ -9,6 +9,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -25,12 +27,13 @@ import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
 import com.example.notfallapp.bll.ReadWriteCharacteristic
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.interfaces.checkPermission
 import com.example.notfallapp.service.ServiceCallAlarm
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AddBraceletActivity : Activity(), ICreatingOnClickListener {
+class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermission {
     companion object{
         var connected: Boolean = false
         var batteryState: String = " "
@@ -107,6 +110,11 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener {
         lvDevices = findViewById(R.id.lvDevices)
         builder = AlertDialog.Builder(this)
         context = this
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkPermissions(this, connectivityManager, wifi)
         mReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 val action = intent.action
