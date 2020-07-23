@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat.startActivity
+import com.example.notfallapp.Login.LoginActivity
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.menubar.contact.ContactActivity
@@ -41,6 +42,7 @@ interface ICreatingOnClickListener {
 
         btnSettings.setOnClickListener(){
             val intent = Intent(context, SettingsActivity::class.java)
+            //val intent = Intent(context, LoginActivity::class.java)
             startActivity(context, intent, null)
         }
     }
