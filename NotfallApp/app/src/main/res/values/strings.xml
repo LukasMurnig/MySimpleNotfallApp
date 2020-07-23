@@ -30,7 +30,6 @@
 
     <!-- Contacts -->
     <string name="noContacts">Sie besitzen leider noch keine Kontakte!</string>
-    <string name="noAlarms">Gottseidank besitzen Sie noch keine Alarme!</string>
     <string name="createContact">Glückwunsch! Sie haben erfolgreich einen neuen Kontakt hinzugefügt.</string>
     <string name="updateContact">Ihr Kontakt wurde erfolgreich aktualisiert.</string>
     <string name="deleteContact">Ihr Kontakt wurde erfolgreich gelöscht.</string>
@@ -50,7 +49,24 @@
     <string name="emailEmpty">Email darf nicht leer sein bzw. Email stimmt nicht!</string>
     <string name="numberWrongType">Telefonnummer darf nur Zahlen beinhalten!</string>
 
+    <!-- Add contact -->
+    <string name="contact_gender">Anrede(*)</string>
+    <string name="contact_firstname">Vorname(*)</string>
+    <string name="contact_lastname">Nachname(*)</string>
+    <string name="contact_email">Email(*)</string>
+    <string name="TelNr">Vorwahl(*)</string>
+    <string name="contact_telNr">Telefonnummer(*)</string>
+    <string name="language">Sprache(*)</string>
+    <string name="timezone">Zeitzone(*)</string>
+    <string name="message">Wie benachrichtigen?(*)</string>
+    <string name="street">Straße</string>
+    <string name="housenumber">Hausnummer</string>
+    <string name="postcode">Postleitzahl</string>
+    <string name="place">Ort</string>
+    <string name="country">Staat</string>
+
     <!-- Alarms -->
+    <string name="noAlarms">Gottseidank besitzen Sie noch keine Alarme!</string>
     <string name="time">Zeitpunkt:</string>
     <string name="AlarmAnswered">Wer nahm an:</string>
     <string name="AlarmAccepted">Derzeit niemand!</string>

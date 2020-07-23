@@ -8,9 +8,7 @@ import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.MainActivity
@@ -34,10 +32,16 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
     private lateinit var addpicture: ImageButton
     private lateinit var btn_add: Button
     private lateinit var btn_cancel: Button
+    private lateinit var spinnerGender: Spinner
     private lateinit var input_firstname: EditText
     private lateinit var input_lastname: EditText
     private lateinit var input_email: EditText
+    private lateinit var spinnerTelNr: Spinner
     private lateinit var input_number: EditText
+    private lateinit var spinnerLanguage: Spinner
+    private lateinit var spinnerTimezone: Spinner
+    private lateinit var spinnerMessage: Spinner
+
     private lateinit var builder: AlertDialog.Builder
     private var path: String? = null
     private var prio: Int? = null
@@ -172,11 +176,25 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
         addpicture = findViewById(R.id.addpicture)
         btn_add = findViewById(R.id.btn_add)
         btn_cancel = findViewById(R.id.btn_cancel)
+        spinnerGender = findViewById(R.id.spinnerGender)
         input_firstname = findViewById(R.id.input_firstname)
         input_lastname = findViewById(R.id.input_lastname)
         input_email = findViewById(R.id.input_email)
+        spinnerTelNr = findViewById(R.id.spinnerTelNr)
         input_number = findViewById(R.id.input_number)
+        spinnerLanguage = findViewById(R.id.spinnerLanguage)
+        spinnerGender = findViewById(R.id.spinnerGender)
+        spinnerMessage = findViewById(R.id.spinnerMessage)
+
         builder = AlertDialog.Builder(this)
+
+        spinnerGender.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Herr", "Frau"))
+        spinnerMessage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Anruf", "SMS", "Email"))
+
+        // TODO get date vom Server Page 111 OrgUnitsItems
+        // spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
+        // spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
+        // spinnerGender.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
