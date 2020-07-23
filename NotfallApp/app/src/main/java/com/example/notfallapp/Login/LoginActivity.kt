@@ -11,16 +11,16 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.server.ServerApi
 
 class LoginActivity : AppCompatActivity(), checkPermission {
     companion object{
-        private val TAG :String = "LoginActivity"
+        private const val TAG :String = "LoginActivity"
         private const val REQUEST_SIGNUP :Int = 0
     }
-    private lateinit var emailText: EditText
+    private lateinit var usernameText: EditText
     private lateinit var passwordText: EditText
     private lateinit var signupText: TextView
     private lateinit var loginButton: Button
@@ -37,18 +37,18 @@ class LoginActivity : AppCompatActivity(), checkPermission {
 
         signupText.setOnClickListener{
             //start the signup activity
-            val intent: Intent = Intent(this, SignUpActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
     }
 
-    fun login() {
+    private fun login() {
         if (!validate()){
             onLoginFailed()
             return
         }
 
-        loginButton.setEnabled(true)
+        loginButton.isEnabled = true
 
         val progressDialog = ProgressDialog(this,
             R.style.ProgressdialogLogin
@@ -57,45 +57,51 @@ class LoginActivity : AppCompatActivity(), checkPermission {
         progressDialog.setMessage(resources.getString(R.string.Authenticate))
         progressDialog.show();
 
-        var email: String? = emailText.getText().toString()
-        var password: String? = passwordText.getText().toString()
+        val username: String? = usernameText.text.toString()
+        val password: String? = passwordText.text.toString()
 
         //Todo: Implementation of the authentication  methode.
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+
+        ServerApi.setContext(applicationContext)
+        if (username != null && password != null) {
+            ServerApi.SendLogInDataToServer(username, password)
+        }
+
+        /*val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)*/
     }
 
-    fun onLoginFailed() {
+
+    private fun onLoginFailed() {
         Toast.makeText(getBaseContext(), resources.getString(R.string.LoginFailed), Toast.LENGTH_LONG).show()
-
-        loginButton.setEnabled(true)
+        loginButton.isEnabled = true
     }
 
-    fun validate(): Boolean {
-        var validate: Boolean = true
+    private fun validate(): Boolean {
+        var validate = true
 
-        var email: String? = emailText.getText().toString()
-        var password: String? = passwordText.getText().toString()
+        val username: String? = usernameText.text.toString()
+        val password: String? = passwordText.text.toString()
 
-        if (email?.isEmpty()!!) {
-            emailText.setError(resources.getString(R.string.emailTooShort))
+        if (username?.isEmpty()!!) {
+            usernameText.setError(resources.getString(R.string.emailTooShort))
             validate = false
         }else{
-            emailText.setError(null)
+            usernameText.error = null
         }
 
         if (password?.isEmpty()!! || password?.length < 4) {
             passwordText.setError(resources.getString(R.string.passwordTooShort));
             validate = false;
         }else{
-            passwordText.setError(null)
+            passwordText.error = null
         }
 
         return validate
     }
 
-    fun setLoginControls() {
-        emailText = findViewById(R.id.input_email)
+    private fun setLoginControls() {
+        usernameText = findViewById(R.id.input_username)
         passwordText = findViewById(R.id.input_password)
         signupText = findViewById(R.id.link_signup)
         loginButton = findViewById(R.id.btn_login)
