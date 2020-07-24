@@ -7,13 +7,47 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlertsListAdapter
 import com.example.notfallapp.bll.Alert
+import com.example.notfallapp.bll.User
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.HashMap
 
 class ServerAlarm {
+
+    fun getAllAlerts(rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
+        ServerApi.createCall(Request.Method.GET, "/alerts", null) { response ->
+            if (response.has("data")) {
+                val data = response.get("data") as Array<JSONObject>
+                if(data.isEmpty()){
+                    //lbMessageNoAlarms.text = resources.getString(R.string.noAlarms)
+                }else{
+                    val result: List<Alert> = mutableListOf()
+                    for(json: JSONObject in data){
+                        result.plus(Alert(
+                            json.get("ID") as Long,
+                            json.get("Date") as Date,
+                            json.get("Type") as Byte,
+                            json.get("State") as Byte,
+                            json.get("ClientId") as UUID,
+                            json.get("HelperId") as UUID?,
+                            json.get("DeviceId") as UUID?,
+                            json.get("TriggeringPositionLatitude") as Double?,
+                            json.get("TriggeringPositionLongitude") as Double?,
+                            json.get("TriggeringPositionTime") as Date?,
+                            json.get("CanBeForwarded") as Boolean
+                        ))
+                    }
+                    /*val adapter = AlertsListAdapter(result)
+                    rvAlarms.adapter = adapter
+                    adapter.notifyDataSetChanged()*/
+                }
+            }
+        }
+    }
+
     companion object{
         fun getAllAlerts(rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
             ServerApi.controlToken()

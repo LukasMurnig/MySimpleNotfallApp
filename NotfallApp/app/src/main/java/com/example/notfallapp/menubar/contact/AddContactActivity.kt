@@ -47,6 +47,13 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
     private var prio: Int? = null
     private var toUpdateContact: Contact? = null
 
+    companion object{
+        val phoneAreaCodes: MutableMap<String, String>? = null
+        val timezones: MutableMap<String, String>? = null
+        val countries: MutableMap<String, String>? = null
+        val languages: MutableMap<String, String>? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addcontact)
@@ -194,7 +201,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
         // TODO get date vom Server Page 111 OrgUnitsItems
         // spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
         // spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
-        // spinnerGender.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
+        // spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
