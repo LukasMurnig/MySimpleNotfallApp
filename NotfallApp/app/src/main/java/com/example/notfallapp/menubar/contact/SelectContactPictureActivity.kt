@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.service.ServiceCallAlarm
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -29,6 +30,7 @@ class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
     private lateinit var btnSelectContactPicture: Button
     private lateinit var btnSaveContactPicture: Button
     private lateinit var btnCancelContactPicture: Button
+    private lateinit var btnSos: Button
 
     private var responseIntent: Intent? = null
 
@@ -135,10 +137,15 @@ class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
         btnSelectContactPicture = findViewById(R.id.btnSelectContactPicture)
         btnSaveContactPicture = findViewById(R.id.btnSaveContactPicture)
         btnCancelContactPicture = findViewById(R.id.btnCancelContactPicture)
+        btnSos = findViewById(R.id.btn_sos)
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
             getSystemService(Context.WIFI_SERVICE) as WifiManager
         checkInternetAccess(this, connectivityManager, wifi)
+        btnSos.setOnClickListener{
+            val intent = Intent(this, ServiceCallAlarm::class.java)
+            this.startService(intent)
+        }
     }
 }

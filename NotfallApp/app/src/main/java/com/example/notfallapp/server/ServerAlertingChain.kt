@@ -107,8 +107,9 @@ class ServerAlertingChain {
                 override fun getHeaders(): Map<String, String> {
                     var params: MutableMap<String, String>? = super.getHeaders()
                     if (params == null) params = HashMap()
-                    params["Authorization"] = ServerApi.accessToken.toString()
-                    //..add other headers
+                    if(ServerApi.accessToken!=null){
+                        params["Authorization"] = ServerApi.accessToken.toString()
+                    }
                     return params
                 }
             }

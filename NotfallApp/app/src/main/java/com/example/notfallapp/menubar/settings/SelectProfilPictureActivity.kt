@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.service.ServiceCallAlarm
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -41,6 +42,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
     private lateinit var btnSelectPicture: Button
     private lateinit var btnSavePicture: Button
     private lateinit var btnCancelProfilPicture: Button
+    private lateinit var btnSos: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -197,10 +199,16 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
         btnSelectPicture = findViewById(R.id.btnSelectPicture)
         btnSavePicture = findViewById(R.id.btnSavePicture)
         btnCancelProfilPicture = findViewById(R.id.btnCancelProfilPicture)
+        btnSos = findViewById(R.id.btn_sos)
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
             getSystemService(Context.WIFI_SERVICE) as WifiManager
         checkInternetAccess(this, connectivityManager, wifi)
+
+        btnSos.setOnClickListener{
+            val intent = Intent(this, ServiceCallAlarm::class.java)
+            this.startService(intent)
+        }
     }
 }

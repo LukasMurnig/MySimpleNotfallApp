@@ -40,8 +40,10 @@ class ServerApi {
         }
 
         fun controlToken(){
-            if((timeTokenCome!! + tokenExpiresInSeconds!! - 10) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
-                refreshToken()
+            if(timeTokenCome!=null && tokenExpiresInSeconds!=null){
+                if((timeTokenCome!! + tokenExpiresInSeconds!! - 10) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
+                    refreshToken()
+                }
             }
         }
 
