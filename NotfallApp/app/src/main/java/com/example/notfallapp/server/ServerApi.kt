@@ -1,7 +1,6 @@
 package com.example.notfallapp.server
 
 import android.content.Context
-import android.content.Intent
 import android.provider.Settings
 import android.util.Log
 import com.android.volley.AuthFailureError
@@ -10,7 +9,6 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.notfallapp.MainActivity
 import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -197,7 +195,9 @@ class ServerApi {
                 override fun getHeaders(): Map<String, String> {
                     var params: MutableMap<String, String>? = super.getHeaders()
                     if (params == null) params = HashMap()
-                    params["Authorization"] = accessToken.toString()
+                    if(accessToken != null){
+                        params["Authorization"] = accessToken.toString()
+                    }
                     return params
                 }
             }

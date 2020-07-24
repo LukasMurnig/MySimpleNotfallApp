@@ -11,17 +11,11 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.menubar.settings.SelectProfilPictureActivity
 import com.example.notfallapp.service.ServiceCallAlarm
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
 import java.io.IOException
 
 class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
@@ -40,7 +34,7 @@ class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
 
         initComponents()
 
-        requestPermission()
+        SelectProfilPictureActivity.checkGalleryPermission(this, this)
 
         btnSelectContactPicture.setOnClickListener{
             Log.d(resources.getString(R.string.ContactPicture),
@@ -101,35 +95,6 @@ class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
         startActivityForResult(galleryIntent, 2)
-    }
-
-    private fun requestPermission(){
-        Dexter.withActivity(this)
-            .withPermission(
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    Log.i(resources.getString(R.string.UserPermission),
-                          resources.getString(R.string.UserPermissionGranted))
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permission: PermissionRequest?,
-                    token: PermissionToken
-                ) {
-                    token.continuePermissionRequest()
-                }
-
-                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                    TODO("Not yet implemented")
-                }
-            }).withErrorListener {
-                Toast.makeText(applicationContext, resources.getString(R.string.someError), Toast.LENGTH_SHORT)
-                    .show()
-            }
-            .onSameThread()
-            .check()
     }
 
     private fun initComponents(){

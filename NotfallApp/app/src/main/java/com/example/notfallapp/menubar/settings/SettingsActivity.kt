@@ -19,6 +19,9 @@ import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.server.ServerUser
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 
@@ -51,9 +54,12 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, checkPer
 
         updateProfilPicture()
 
-        tvName.text = resources.getString(R.string.sampleName)
-        tvTelNr.text = resources.getString(R.string.sampleNumber)
-        tvEmail.text = resources.getString(R.string.sampleEmail)
+        GlobalScope.launch {
+            ServerUser().getUserInfo()
+            tvName.text = resources.getString(R.string.sampleName)
+            tvTelNr.text = resources.getString(R.string.sampleNumber)
+            tvEmail.text = resources.getString(R.string.sampleEmail)
+        }
 
         btnChangeDate.setOnClickListener {
             val intent = Intent(this, ChangeProfilActivity::class.java)

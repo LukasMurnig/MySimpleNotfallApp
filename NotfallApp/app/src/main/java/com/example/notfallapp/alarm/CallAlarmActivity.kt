@@ -100,7 +100,7 @@ class CallAlarmActivity : AppCompatActivity(), checkPermission {
             latitude = "N/A"
             accuracy = 0.0F
         }
-        //val verticalAccuracyMeters = getVerticalAccuracyMeters(location)
+        val verticalAccuracyMeters = getVerticalAccuracyMeters(location)
 
         tvLongitude.text = longitude.toString()
         tvLatitude.text = latitude.toString()

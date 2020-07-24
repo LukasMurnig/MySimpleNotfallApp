@@ -7,16 +7,13 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlertsListAdapter
 import com.example.notfallapp.bll.Alert
-import com.example.notfallapp.bll.User
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.HashMap
 
 class ServerAlarm {
-
     fun getAllAlerts(rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
         ServerApi.createCall(Request.Method.GET, "/alerts", null) { response ->
             if (response.has("data")) {
@@ -40,9 +37,9 @@ class ServerAlarm {
                             json.get("CanBeForwarded") as Boolean
                         ))
                     }
-                    /*val adapter = AlertsListAdapter(result)
+                    val adapter = AlertsListAdapter(result)
                     rvAlarms.adapter = adapter
-                    adapter.notifyDataSetChanged()*/
+                    adapter.notifyDataSetChanged()
                 }
             }
         }
