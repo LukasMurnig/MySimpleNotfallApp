@@ -55,7 +55,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, checkPer
         updateProfilPicture()
 
         GlobalScope.launch {
-            ServerUser().getUserInfo()
+            ServerUser().getUserInfo(application)
             tvName.text = resources.getString(R.string.sampleName)
             tvTelNr.text = resources.getString(R.string.sampleNumber)
             tvEmail.text = resources.getString(R.string.sampleEmail)

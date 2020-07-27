@@ -6,6 +6,7 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.example.notfallapp.R
 import com.example.notfallapp.bll.User
 import com.example.notfallapp.server.ServerApi.Companion.createCall
 import org.json.JSONObject
@@ -14,8 +15,8 @@ import kotlin.collections.HashMap
 
 class ServerUser {
 
-    fun getUserInfo(){
-        createCall(Request.Method.GET, "/users/me", null ){ response ->
+    fun getUserInfo(context: Context){
+        createCall(Request.Method.GET, context.getString(R.string.UserMe), null ){ response ->
             if (response.has("data")) {
                 val data = response.getJSONObject("data")
                 User(
@@ -39,20 +40,23 @@ class ServerUser {
         }
     }
 
-    fun getUserInfo(context: Context): User? {
+    /*fun getUserInfo(context: Context): User? {
+
         ServerApi.controlToken()
 
         val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
-            Method.GET, ServerApi.serverAPIURL+"/users/me", null,
+            Method.GET, ServerApi.serverAPIURL+context.getString(R.string.UserMe), null,
             Response.Listener<JSONObject> { response ->
-                Log.e(ServerApi.TAG, "response: $response")
+                Log.e(ServerApi.TAG,
+                      String.format(context.getString(R.string.responseMessage), response.toString()))
                 try {
                     val isSuccess = response.getBoolean("isSuccess")
                     val code = response.getInt("code")
                     val message = response.getString("message")
                     if (response.has("data")) {
+                        // array of json?
                         val data = response.getJSONObject("data")
-                        User(
+                        val user = User(
                             data.get("ID") as UUID,
                             data.get("ForeignId") as String?,
                             data.get("Title") as String?,
@@ -94,5 +98,5 @@ class ServerUser {
         ServerApi.volleyRequestQueue?.add(jsonObjectRequest)
 
         return null
-    }
+    }*/
 }

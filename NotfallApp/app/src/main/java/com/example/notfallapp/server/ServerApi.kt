@@ -96,7 +96,6 @@ class ServerApi {
                 }else{
                     Log.e(TAG, "problem occurred, volley error: " + error.message)
                 }
-
             }
             )
 

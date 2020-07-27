@@ -17,12 +17,14 @@ import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.connectBracelet
 import com.example.notfallapp.server.ServerApi
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(),
@@ -38,7 +40,7 @@ class MainActivity : AppCompatActivity(),
     private lateinit var tvStatusbracelet: TextView
     private lateinit var tvaddbracelet: TextView
 
-    private lateinit var handler: Handler
+    private var timer = Timer()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -115,18 +117,19 @@ class MainActivity : AppCompatActivity(),
         val wifi =
             getSystemService(Context.WIFI_SERVICE) as WifiManager
         checkInternetAccess(this, connectivityManager, wifi)
-        handler = Handler()
     }
 
     private fun checkState(){
-        handler.postDelayed({ //Do something after 2000ms
-            // here check if Bracelet is connected
-            var state: Boolean = AddBraceletActivity.connected
-            if (state){
-                tvStatusbracelet.text = getResources().getString(R.string.braceleteconnected)
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                var state: Boolean = connectBracelet.connected
+                if (state){
+                    tvStatusbracelet.text = getResources().getString(R.string.braceleteconnected)
+                }else{
+                    tvStatusbracelet.text = getResources().getString(R.string.nobraceletconnected)
+                }
             }
-            checkState()
-        }, 2000)
+        }, 0, 2000)
     }
 }
 

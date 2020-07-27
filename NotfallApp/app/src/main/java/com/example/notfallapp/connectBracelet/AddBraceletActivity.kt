@@ -2,16 +2,15 @@ package com.example.notfallapp.connectBracelet
 
 import android.Manifest
 import android.app.Activity
-import android.bluetooth.*
-import android.content.BroadcastReceiver
-import android.content.ContentValues.TAG
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothGatt
+import android.content.*
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.os.IBinder
 import android.os.Parcelable
 import android.util.Log
 import android.widget.AdapterView.OnItemClickListener
@@ -25,16 +24,16 @@ import androidx.core.content.ContextCompat
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
-import com.example.notfallapp.bll.ReadWriteCharacteristic
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.checkPermission
-import com.example.notfallapp.service.ServiceCallAlarm
+import com.example.notfallapp.interfaces.connectBracelet
 
 
-class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermission {
+class AddBraceletActivity() : Activity(), ICreatingOnClickListener, checkPermission, connectBracelet {
     companion object{
         var connected: Boolean = false
         var batteryState: String = " "
+        var device: BluetoothDevice? = null
     }
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -52,10 +51,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermissio
     private var devices = ArrayList<BluetoothDevice>()
     private var bluetoothGatt: BluetoothGatt? = null
     private lateinit var context: Context
-    private lateinit var characteristic: BluetoothGattCharacteristic
-    private lateinit var descriptor: BluetoothGattDescriptor
     private var address = "D0:39:72:C4:FD:DC"
-    var process = ProcessQueueExecutor()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -79,15 +75,11 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermissio
 
         lvDevices.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
             Log.d("ListViewClicked", "List View in Add BraceletActivity was clicked")
-            val device: BluetoothDevice = devices[position]
-            //characteristic = BluetoothGattCharacteristic(UUID.fromString(uuidExtra.toString()), 1, 3)
-            //connect(device)
+            var device = devices[position]
+            connect(this, device)
         })
-        //To execute the read and write operation in a queue.
-       if (!process.isAlive()) {
-            process.start()
-        }
-        connect()
+        var intent = Intent(this,connectBracelet::class.java)
+        bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
     }
     private fun configureButtons() {
         // SOS Button
@@ -156,7 +148,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermissio
             }
         }
     }
-
     private fun searchDevices() {
         //TODO search for Bluetooth devices.
         Log.d("SearchDevices", "SearchDevices was called in AddBraceletActivity")
@@ -178,30 +169,28 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, checkPermissio
         }
     }
 
+    // Code to manage Service lifecycle.
+    private val mServiceConnection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
+
+            // Automatically connects to the device upon successful start-up initialization.
+            device?.let { connect(application, it) }
+        }
+
+        override fun onServiceDisconnected(componentName: ComponentName) {
+
+        }
+    }
+
     override fun onDestroy() {
         bAdapter.cancelDiscovery()
         unregisterReceiver(mReceiver)
+        unbindService(mServiceConnection)
         super.onDestroy()
     }
 
-    private fun connect(){
-        val device: BluetoothDevice =
-            BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address)
-        println("Connnect to device")
 
-        /*characteristic = BluetoothGattCharacteristic(Constants.CLIENT_CHARACTERISTIC_CONFIG, 3, 0)
-        val initdescriptor = BluetoothGattDescriptor(Constants.CLIENT_CHARACTERISTIC_CONFIG, 16)
-        characteristic.addDescriptor(initdescriptor)
-        bluetoothGatt?.setCharacteristicNotification(characteristic, enabled)
-        val uuid: UUID = Constants.CLIENT_CHARACTERISTIC_CONFIG
-        descriptor = characteristic.getDescriptor(uuid).apply {
-            value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-        }
-        bluetoothGatt?.writeDescriptor(descriptor)*/
-        var intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
-    private fun checkPermissions(): Boolean{
+        private fun checkPermissions(): Boolean{
         var success = false
         if (bAdapter.isDiscovering) {
             bAdapter.cancelDiscovery()

@@ -16,7 +16,7 @@ public class Constants {
 
         // VSN Simple Service to listen the key press,fall detect and acknowledge and cancel the event.
         val SERVICE_VSN_SIMPLE_SERVICE =
-            UUID.fromString("fffffff0-00f7-4000-b000-000000000000") // 0xFFF0
+            UUID.fromString("fffffff0-02f7-4000-b000-000000000000") // 0xFFF0
 
         // Characteristic UUID for key press and fall detect event.
         val CHAR_KEY_PRESS =
