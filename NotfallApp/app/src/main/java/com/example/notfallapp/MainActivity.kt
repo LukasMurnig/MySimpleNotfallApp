@@ -12,10 +12,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
-import com.example.notfallapp.interfaces.CheckPermission
-import com.example.notfallapp.interfaces.ConnectBracelet
+import com.example.notfallapp.interfaces.connectBracelet
 import com.example.notfallapp.server.ServerApi
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -26,7 +26,7 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener, INotifications, CheckPermission {
+    ICreatingOnClickListener, INotifications, ICheckPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -77,12 +77,6 @@ class MainActivity : AppCompatActivity(),
                     if (report.areAllPermissionsGranted()) {
                         Log.i(resources.getString(R.string.userpermission), resources.getString(R.string.GPSPermissionGranted))
                     }
-
-                    // check for permanent denial of any permission
-                    if (report.isAnyPermissionPermanentlyDenied) {
-                        // show alert dialog navigating to Settings
-                        //openSettingsDialog();
-                    }
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
@@ -130,9 +124,9 @@ class MainActivity : AppCompatActivity(),
             override fun run() {
                 var state: Boolean = ConnectBracelet.connected
                 if (state){
-                    tvStatusbracelet.text = getResources().getString(R.string.braceleteconnected)
+                    tvStatusbracelet.text = resources.getString(R.string.braceleteconnected)
                 }else{
-                    tvStatusbracelet.text = getResources().getString(R.string.nobraceletconnected)
+                    tvStatusbracelet.text = resources.getString(R.string.nobraceletconnected)
                 }
             }
         }, 0, 2000)

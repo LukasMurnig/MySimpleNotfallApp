@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.example.notfallapp.MainActivity
+import com.example.notfallapp.bll.Device
 import com.example.notfallapp.bll.ReadWriteCharacteristic
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.connectBracelet.Constants
 import com.example.notfallapp.connectBracelet.ProcessQueueExecutor
+import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.example.notfallapp.service.ServiceCallAlarm
 import java.util.*
@@ -46,6 +48,9 @@ interface ConnectBracelet {
                         BluetoothProfile.STATE_CONNECTED -> {
                             //start service discovery
                             connected = true
+                            EmergencyAppDatabase.getInstance(context).deviceDao().insertDevice(
+                                Device(deviceAddress)
+                            )
                             gatt.discoverServices()
                         }
                         BluetoothProfile.STATE_DISCONNECTED -> {

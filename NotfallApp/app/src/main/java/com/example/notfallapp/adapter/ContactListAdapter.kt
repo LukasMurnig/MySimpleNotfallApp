@@ -3,6 +3,7 @@ package com.example.notfallapp.adapter
 import android.app.AlertDialog
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -95,6 +96,7 @@ class ContactListAdapter(var contacts: List<Contact>) :
             }
 
             contactMenu.setOnClickListener{
+                Log.i(LOG_TAG, "Contact Menu clicked")
                 showPictureDialog(contact, itemView)
             }
         }

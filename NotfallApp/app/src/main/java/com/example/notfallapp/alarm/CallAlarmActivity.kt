@@ -18,13 +18,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
-import com.example.notfallapp.interfaces.CheckPermission
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.service.ServiceCancelAlarm
 import java.lang.Exception
 import kotlin.math.roundToInt
 
 
-class CallAlarmActivity : AppCompatActivity(), CheckPermission {
+class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
     private lateinit var btnCancelAlarm: Button
     private lateinit var tvAlarm: TextView
     private lateinit var tvConnectionState: TextView

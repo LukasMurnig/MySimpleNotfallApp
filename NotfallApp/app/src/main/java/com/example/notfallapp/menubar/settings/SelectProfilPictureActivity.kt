@@ -18,7 +18,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.interfaces.CheckPermission
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.service.ServiceCallAlarm
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -31,9 +31,9 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 
-class SelectProfilPictureActivity : AppCompatActivity(), CheckPermission {
+class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
 
-    private val IMAGE_DIRECTORY = "/profilPicture"
+    private val _IMAGE_DIRECTORY = "/profilPicture"
     private val GALLERY = 1
     private val CAMERA = 2
 

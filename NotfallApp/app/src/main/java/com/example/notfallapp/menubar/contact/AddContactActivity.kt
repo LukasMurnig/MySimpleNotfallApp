@@ -16,12 +16,12 @@ import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.CheckPermission
+import com.example.notfallapp.interfaces.ICheckPermission
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, CheckPermission {
+class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
