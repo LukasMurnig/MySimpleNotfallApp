@@ -13,12 +13,12 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.CheckPermission
 import com.example.notfallapp.menubar.settings.SelectProfilPictureActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 import java.io.IOException
 
-class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
+class SelectContactPictureActivity : AppCompatActivity(), CheckPermission {
 
     private lateinit var image: ImageView
     private lateinit var btnSelectContactPicture: Button

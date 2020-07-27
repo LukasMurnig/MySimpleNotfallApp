@@ -12,10 +12,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.CheckPermission
 import com.example.notfallapp.server.ServerApi
 
-class LoginActivity : AppCompatActivity(), checkPermission {
+class LoginActivity : AppCompatActivity(), CheckPermission {
     companion object{
         private const val TAG :String = "LoginActivity"
         private const val REQUEST_SIGNUP :Int = 0

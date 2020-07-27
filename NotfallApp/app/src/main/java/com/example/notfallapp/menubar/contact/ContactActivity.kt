@@ -19,11 +19,11 @@ import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.IAlarmDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.CheckPermission
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPermission {
+class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, CheckPermission {
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton

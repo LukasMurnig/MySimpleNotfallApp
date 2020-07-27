@@ -14,7 +14,7 @@ import com.example.notfallapp.R
 import java.util.*
 
 
-interface checkPermission {
+interface CheckPermission {
     fun checkPermissions(context: Context, connectivityManager: ConnectivityManager?, wifi: WifiManager){
         checkInternetAccess(context, connectivityManager, wifi)
         checkBluetoothEnabled(context)

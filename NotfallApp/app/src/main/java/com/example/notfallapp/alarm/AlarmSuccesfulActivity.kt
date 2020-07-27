@@ -11,9 +11,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.CheckPermission
 
-class AlarmSuccesfulActivity : AppCompatActivity(), checkPermission {
+class AlarmSuccesfulActivity : AppCompatActivity(), CheckPermission {
 
     private lateinit var tvAlarm: TextView
     private lateinit var buttonsuccesfulOk: Button

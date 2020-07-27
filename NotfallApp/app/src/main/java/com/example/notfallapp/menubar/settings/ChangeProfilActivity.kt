@@ -10,9 +10,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.CheckPermission
 
-class ChangeProfilActivity: AppCompatActivity(), checkPermission {
+class ChangeProfilActivity: AppCompatActivity(), CheckPermission {
     private lateinit var etName : EditText
     private lateinit var etAddress: EditText
     private lateinit var etTelNr : EditText

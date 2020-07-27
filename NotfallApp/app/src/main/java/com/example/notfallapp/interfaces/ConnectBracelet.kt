@@ -13,7 +13,7 @@ import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.example.notfallapp.service.ServiceCallAlarm
 import java.util.*
 
-interface connectBracelet {
+interface ConnectBracelet {
 
     companion object{
         private var batteryState: String = " "
@@ -31,7 +31,7 @@ interface connectBracelet {
         if (!process.isAlive()) {
             process.start()
         }
-        connectBracelet.context = context
+        ConnectBracelet.context = context
         gattBluetooth = device.connectGatt(context, false, mGattCallbacks)
         mGattCallbacks = object : BluetoothGattCallback() {
             override fun onConnectionStateChange(
