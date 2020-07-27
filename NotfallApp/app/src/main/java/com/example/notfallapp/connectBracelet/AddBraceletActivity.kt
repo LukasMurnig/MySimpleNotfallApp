@@ -33,6 +33,7 @@ class AddBraceletActivity() : Activity(), ICreatingOnClickListener, checkPermiss
     companion object{
         var connected: Boolean = false
         var batteryState: String = " "
+        var device: BluetoothDevice? = null
     }
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -77,6 +78,8 @@ class AddBraceletActivity() : Activity(), ICreatingOnClickListener, checkPermiss
             var device = devices[position]
             connect(this, device)
         })
+        var intent = Intent(this,connectBracelet::class.java)
+        bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
     }
     private fun configureButtons() {
         // SOS Button
@@ -166,9 +169,23 @@ class AddBraceletActivity() : Activity(), ICreatingOnClickListener, checkPermiss
         }
     }
 
+    // Code to manage Service lifecycle.
+    private val mServiceConnection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
+
+            // Automatically connects to the device upon successful start-up initialization.
+            device?.let { connect(application, it) }
+        }
+
+        override fun onServiceDisconnected(componentName: ComponentName) {
+
+        }
+    }
+
     override fun onDestroy() {
         bAdapter.cancelDiscovery()
         unregisterReceiver(mReceiver)
+        unbindService(mServiceConnection)
         super.onDestroy()
     }
 

@@ -90,8 +90,8 @@ class ServerApi {
                 }
             },
             Response.ErrorListener { error ->
-                val resErrorBody = JSONObject(String(error.networkResponse.data))
-                Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                /*val resErrorBody = JSONObject(String(error.networkResponse.data))
+                Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))*/
             }
             )
 

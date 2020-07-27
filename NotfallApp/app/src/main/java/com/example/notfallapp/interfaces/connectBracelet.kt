@@ -11,15 +11,18 @@ import com.example.notfallapp.connectBracelet.Constants
 import com.example.notfallapp.connectBracelet.ProcessQueueExecutor
 import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.example.notfallapp.service.ServiceCallAlarm
+import java.util.*
 
 interface connectBracelet {
 
     companion object{
         private var batteryState: String = " "
+        var connected = false
         private var context: Context? = null
         var gattBluetooth: BluetoothGatt? = null
         var process: ProcessQueueExecutor = ProcessQueueExecutor()
         var mGattCallbacks: BluetoothGattCallback = object : BluetoothGattCallback(){}
+        private var gattService: BluetoothGattService? = null
     }
 
     fun connect(context: Context, device: BluetoothDevice){
@@ -40,12 +43,15 @@ interface connectBracelet {
                 val deviceAddress = device.address
                 try {
                     when (newState) {
-                        BluetoothProfile.STATE_CONNECTED ->                    //start service discovery
+                        BluetoothProfile.STATE_CONNECTED -> {
+                            //start service discovery
+                            connected = true
                             gatt.discoverServices()
+                        }
                         BluetoothProfile.STATE_DISCONNECTED -> {
+                            connected = false
                             try {
-                                gatt.disconnect()
-                                gatt.close()
+                                close()
                             } catch (e: Exception) {
                                 Log.e(TAG, e.message)
                             }
@@ -62,6 +68,21 @@ interface connectBracelet {
                 val device = gatt.device
                 val deviceAddress = device.address
                 if (status == BluetoothGatt.GATT_SUCCESS) {
+                    // Do APP verification as soon as service discovered.
+                    // Do APP verification as soon as service discovered.
+                    try {
+                        appVerification(
+                            gatt,
+                            getGattChar(
+                                gatt,
+                                Constants.SERVICE_VSN_SIMPLE_SERVICE,
+                                Constants.CHAR_APP_VERIFICATION
+                            ),
+                            Constants.NEW_APP_VERIFICATION_VALUE
+                        )
+                    } catch (e: java.lang.Exception) {
+                        Log.e(TAG, "exception with app verify:" + e.message)
+                    }
                     for (service in gatt.services) {
                         if (service == null || service.uuid == null) {
                             continue
@@ -92,9 +113,6 @@ interface connectBracelet {
                     characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0).toString()
                 if (characteristic.uuid == Constants.CHAR_DETECTION_NOTIFY) {
                     if (keyValue == "1") {
-                        var intent = Intent(Companion.context, ServiceCallAlarm::class.java)
-                        Companion.context?.startActivity(intent)
-                    } else if (keyValue == "0") {
                         var intent = Intent(Companion.context, ServiceCallAlarm::class.java)
                         Companion.context?.startActivity(intent)
                     } else if (keyValue == "3") {
@@ -201,6 +219,36 @@ interface connectBracelet {
         if (readWriteCharacteristic != null) {
             process.addProcess(readWriteCharacteristic)
         }
+    }
+
+    /**
+     * To write the value to BLE Device for APP verification
+     * @param BluetoothGatt object of the device.
+     * @param BluetoothGattCharacteristic of the device.
+     */
+    fun appVerification(
+        mGatt: BluetoothGatt?,
+        ch: BluetoothGattCharacteristic?,
+        value: ByteArray?
+    ) {
+        writeCharacteristic(mGatt, ch!!, value)
+    }
+
+    /**
+     * To get the characteristic of the corresponding BluetoothGatt object and
+     * service UUID and Characteristic UUID.
+     * @param BluetoothGatt object of the device.
+     * @param Service UUID.
+     * @param Characteristic UUID.
+     * @return BluetoothGattCharacteristic of the given service and Characteristic UUID.
+     */
+    fun getGattChar(
+        mGatt: BluetoothGatt,
+        serviceuuid: UUID?,
+        charectersticuuid: UUID?
+    ): BluetoothGattCharacteristic? {
+        gattService = mGatt.getService(serviceuuid)
+        return gattService?.getCharacteristic(charectersticuuid)
     }
 
     fun close() {
