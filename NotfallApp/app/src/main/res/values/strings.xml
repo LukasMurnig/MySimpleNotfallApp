@@ -162,6 +162,30 @@
     <string name="alarmWasCanceled">Der Alarm wurde abgebrochen!</string>
     <string name="title_activity_map">Map</string>
 
+    <!-- Server -->
+    <!--ServerUser-->
+    <string name="UserMe">/users/me</string>
+    <string name="isSuccess">isSuccess</string>
+    <string name="code">code</string>
+    <string name="messageServer">message</string>
+    <string name="dataServer">data</string>
+    <string name="id">ID</string>
+    <string name="foreignId">ForeignId</string>
+    <string name="title">Title</string>
+    <string name="Forename">Forename</string>
+    <string name="Surename">Surename</string>
+    <string name="usernameServer">Username</string>
+    <string name="activeServer">Active</string>
+    <string name="roleServer">Role</string>
+    <string name="genderServer">Gender</string>
+    <string name="photoSetServer">PhotoSet</string>
+    <string name="birthdayServer">BirthDay</string>
+    <string name="emailAddressServer">EmailAddress</string>
+    <string name="phoneFixedServer">PhoneFixed</string>
+    <string name="OrgUnitSever">OrgUnit</string>
+    <string name="LanguageServer">Language</string>
+    <string name="TimezoneServer">Timezone</string>
+    <string name="authorizationServer">Authorization</string>
     <!-- LOGS -->
     <string name="userpermission">UserPermission</string>
     <string name="GPSPermissionGranted">All permissions for getting GPS are granted by user!</string>
@@ -203,6 +227,9 @@
     <string name="decide">Wähle aus:</string>
     <string name="pictureGalerie">Wähle Foto von Gallerie aus</string>
     <string name="takePicture">Mach ein Foto</string>
+    <string name="responseMessage">Response: %1$s</string>
+    <string name="ErrorServerUserMessage">There was an Error in %1$s with the message: %2$s</string>
+    <string name="ErrorServerUserResponseMessage">problem occurred, volley error: %1$s %2$s</string>
     <!-- Classes -->
     <string name="AlarmCanceled">AlarmCanceledActivity</string>
     <string name="AlarmSuccessful">AlarmSuccessfulActivity</string>
@@ -212,8 +239,7 @@
     <string name="AddContact">AddContactActivity</string>
     <string name="Contact">ContactActivity</string>
     <string name="SelectContactPicture">SelectContactPictureActivity</string>
-
-    <!-- Constants Bracelet-->
+    <string name="ServerUser">ServerUser</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
