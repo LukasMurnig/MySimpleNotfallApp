@@ -103,17 +103,17 @@ interface IAlarmDatabase {
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(itemView.context)
 
                 // change priority
-                if(contact.priority!=2){
-                    val c  =appDb.contactDao().getContactByPriority(contact.priority +1 )
-                    if(c!=null){
-                        c.priority = c.priority-1
+                if(contact.priority != 2){
+                    val c = appDb.contactDao().getContactByPriority(contact.priority + 1)
+                    if(c != null){
+                        c.priority = c.priority - 1
                         appDb.contactDao().updateContact(c)
                     }
 
-                    if(contact.priority!=1){
-                        val c2 = appDb.contactDao().getContactByPriority(contact.priority+2)
+                    if(contact.priority != 1){
+                        val c2 = appDb.contactDao().getContactByPriority(contact.priority + 2)
                         if(c2 != null){
-                            c2.priority = c2.priority-1
+                            c2.priority = c2.priority - 1
                             appDb.contactDao().updateContact(c2)
                         }
                     }

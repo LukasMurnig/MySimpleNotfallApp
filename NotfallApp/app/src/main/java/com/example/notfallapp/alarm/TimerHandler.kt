@@ -28,7 +28,8 @@ class TimerHandler {
                 handler = Handler()
                 handler.postDelayed({ //Do something after 10000ms
                     // here must the alarm send to the server
-
+                    /*ServerAlarm().sendAlert()
+                    ServerAlarm().sendPosition(context)*/
 
                     // create alarm in DB
                     createAlarmInDb(context)
@@ -60,7 +61,6 @@ class TimerHandler {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO get permission for GPS
                 return
             }
             val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
@@ -79,9 +79,6 @@ class TimerHandler {
 
             try{
                 GlobalScope.launch {
-                    // zum Testen
-                    //db.alarmsDao().deleteAll()
-
                     db.alarmsDao().insertAlarm(alarm)
                 }
             }catch (ex: Exception){

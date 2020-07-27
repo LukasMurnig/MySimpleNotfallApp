@@ -32,7 +32,7 @@ interface connectBracelet {
     fun connect(context: Context, device: BluetoothDevice){
         process = ProcessQueueExecutor()
         //To execute the read and write operation in a queue.
-        if (!process.isAlive()) {
+        if (!process.isAlive) {
             process.start()
         }
         connectBracelet.context = context

@@ -17,7 +17,6 @@ import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.server.ServerAlertingChain.Companion.getAlertingChain
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -38,8 +37,6 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
 
         // set button bar and sos button
         configureButtons()
-
-        getAlertingChain()
 
         // fill RecyclerView with Alerts
         rvAlarms = findViewById(R.id.rvAlarms)
