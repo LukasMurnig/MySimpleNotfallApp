@@ -84,7 +84,6 @@ class ContactListAdapter(var contacts: List<Contact>) :
                 if(contact.priority==0){
                     return@setOnClickListener
                 }
-
                 switchContact(contact, itemView, true)
             }
 

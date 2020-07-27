@@ -1,17 +1,11 @@
 package com.example.notfallapp.server
 
 import android.content.Context
-import android.util.Log
-import com.android.volley.AuthFailureError
 import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.User
 import com.example.notfallapp.server.ServerApi.Companion.createCall
-import org.json.JSONObject
 import java.util.*
-import kotlin.collections.HashMap
 
 class ServerUser {
 

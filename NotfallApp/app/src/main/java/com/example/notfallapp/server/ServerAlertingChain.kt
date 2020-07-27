@@ -7,7 +7,6 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
-import com.example.notfallapp.bll.User
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.HashMap
