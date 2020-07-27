@@ -30,7 +30,7 @@
         android:layout_height="60dp"
         android:contentDescription="@string/btnContact"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="60dp"/>
+        android:layout_marginStart="45dp"/>
 
     <TextView
         android:id="@+id/contact_name"
@@ -38,8 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="5dp"
         android:layout_weight="1" />
 
     <TextView
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="60dp"/>
 
     <TextView
@@ -57,8 +57,28 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="25dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/contact_telNr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="45dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/contact_messageType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="65dp"
         android:layout_weight="1" />
 
     <ImageButton
@@ -68,6 +88,6 @@
         android:src="@drawable/contact_menu"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginTop="10dp"/>
 </RelativeLayout>

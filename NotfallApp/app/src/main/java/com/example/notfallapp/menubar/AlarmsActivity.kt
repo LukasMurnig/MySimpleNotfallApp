@@ -57,9 +57,6 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     }
 
     private fun getData(){
-        // val db = Room.databaseBuilder(applicationContext, AlarmDatabase::class.java, "alarms.db").build()
-        // oder
-        // val db2 = AlarmDatabase(this)
         class GetData : AsyncTask<Unit, Unit, List<Alarm>>() {
 
             override fun doInBackground(vararg p0: Unit?): List<Alarm> {

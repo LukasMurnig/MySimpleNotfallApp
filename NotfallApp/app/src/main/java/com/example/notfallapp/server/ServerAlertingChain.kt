@@ -19,12 +19,12 @@ class ServerAlertingChain {
                 val data = response.getJSONObject("data")
                 val alertingChainMembers = data.get("Helpers") as Array<JSONObject>
 
-                var alerChM: Array<AlertingChainMember>? = arrayOf()
+                var alertChM: Array<AlertingChainMember>? = arrayOf()
                 if(alertingChainMembers.isEmpty()){
-                    alerChM = null
+                    alertChM = null
                 }else{
                     for(json: JSONObject in alertingChainMembers){
-                        alerChM?.plus(
+                        alertChM?.plus(
                             AlertingChainMember(
                                 json.get("AlertingChainId") as UUID,
                                 json.get("HelperId") as UUID,
@@ -44,7 +44,7 @@ class ServerAlertingChain {
                     data.get("UserId") as UUID,
                     data.get("Name") as String?,
                     data.get("Description") as String?,
-                    alerChM
+                    alertChM
                 )
             }
         }
@@ -66,12 +66,12 @@ class ServerAlertingChain {
                             val data = response.getJSONObject("data")
                             val alertingChainMembers = data.get("Helpers") as Array<JSONObject>
 
-                            var alerChM: Array<AlertingChainMember>? = arrayOf()
+                            var alertChM: Array<AlertingChainMember>? = arrayOf()
                             if(alertingChainMembers.isEmpty()){
-                                alerChM = null
+                                alertChM = null
                             }else{
                                 for(json: JSONObject in alertingChainMembers){
-                                    alerChM?.plus(
+                                    alertChM?.plus(
                                         AlertingChainMember(
                                             json.get("AlertingChainId") as UUID,
                                             json.get("HelperId") as UUID,
@@ -91,7 +91,7 @@ class ServerAlertingChain {
                                 data.get("UserId") as UUID,
                                 data.get("Name") as String?,
                                 data.get("Description") as String?,
-                                alerChM
+                                alertChM
                             )
                         }
                     } catch (e: Exception) { // caught while parsing the response

@@ -19,7 +19,6 @@ interface ICreatingOnClickListener {
     fun createOnClickListener(context: Context,btnSos: Button,  btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
 
         btnSos.setOnClickListener{
-
             // Service open Call Alarm Activity
             val intent = Intent(context, ServiceCallAlarm::class.java)
             context.startService(intent)

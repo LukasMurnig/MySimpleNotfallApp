@@ -13,6 +13,8 @@ import com.example.notfallapp.connectBracelet.ProcessQueueExecutor
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.example.notfallapp.service.ServiceCallAlarm
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 interface connectBracelet {
@@ -48,9 +50,11 @@ interface connectBracelet {
                         BluetoothProfile.STATE_CONNECTED -> {
                             //start service discovery
                             connected = true
-                            EmergencyAppDatabase.getInstance(context).deviceDao().insertDevice(
-                                Device(deviceAddress)
-                            )
+                            GlobalScope.launch {
+                                EmergencyAppDatabase.getInstance(context).deviceDao().insertDevice(
+                                    Device(deviceAddress)
+                                )
+                            }
                             gatt.discoverServices()
                         }
                         BluetoothProfile.STATE_DISCONNECTED -> {
