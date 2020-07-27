@@ -10,10 +10,9 @@ import android.provider.Settings
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.startActivity
-import androidx.room.Room
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.database.AlarmDatabase
+import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.INotifications
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -77,8 +76,8 @@ class TimerHandler {
                       context.resources.getString(R.string.AlarmAccepted), dateFormat.toString())
             }
 
-            val db = Room.databaseBuilder(context, AlarmDatabase::class.java,
-                     context.resources.getString(R.string.Database)).fallbackToDestructiveMigration().build()
+            val db = EmergencyAppDatabase.getInstance(context)
+
             try{
                 GlobalScope.launch {
                     // zum Testen

@@ -65,10 +65,12 @@ class ContactListAdapter(var contacts: List<Contact>) :
 
             MainScope().launch {
                 if(contact.photoSet){
-                    if(contact.pathToImage?.isNotEmpty()!!){
-                        val bitmap =
-                            MediaStore.Images.Media.getBitmap(itemView.context.contentResolver, Uri.parse(contact.pathToImage))
-                        imageContact.setImageBitmap(bitmap)
+                    if(contact.pathToImage!=null){
+                        if(contact.pathToImage!!.isNotEmpty()){
+                            val bitmap =
+                                MediaStore.Images.Media.getBitmap(itemView.context.contentResolver, Uri.parse(contact.pathToImage))
+                            imageContact.setImageBitmap(bitmap)
+                        }
                     }
                 }
             }

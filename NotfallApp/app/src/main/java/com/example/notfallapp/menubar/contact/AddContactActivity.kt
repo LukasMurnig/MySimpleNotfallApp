@@ -104,6 +104,9 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
                     toUpdateContact!!.e_mail = input_email.text.toString()
                     toUpdateContact!!.phoneFixed = input_number.text.toString()
                     toUpdateContact!!.messageType = spinnerMessage.selectedItem.toString()
+                    if(path!=null){
+                        toUpdateContact!!.photoSet=true
+                    }
                     toUpdateContact!!.pathToImage = path
                     installContact(toUpdateContact!!, true)
                 }
@@ -144,6 +147,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
             )
 
             if(toUpdateContact!!.pathToImage != null){
+                toUpdateContact!!.photoSet=true
                 val bitmap =
                     MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(toUpdateContact!!.pathToImage))
                 addpicture.setImageBitmap(bitmap)
@@ -154,7 +158,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
             input_email.setText(toUpdateContact!!.e_mail)
             input_number.setText(toUpdateContact!!.phoneFixed)
             spinnerGender.setSelection(toUpdateContact!!.gender)
-            spinnerGender.setSelection(toUpdateContact!!.gender)
+
             when (toUpdateContact!!.messageType){
                 spinnerMessage.getItemAtPosition(0) -> spinnerMessage.setSelection(0)
                 spinnerMessage.getItemAtPosition(1) -> spinnerMessage.setSelection(1)
