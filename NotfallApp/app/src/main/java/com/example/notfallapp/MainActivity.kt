@@ -17,6 +17,7 @@ import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.server.ServerApi
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -43,6 +44,9 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
         configureButtons()
         initComponents()
+
+        ServerApi.setContext(applicationContext)
+        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
 
         checkState()
 

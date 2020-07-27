@@ -53,18 +53,18 @@ class LoginActivity : AppCompatActivity(), checkPermission {
         val progressDialog = ProgressDialog(this,
             R.style.ProgressdialogLogin
         )
-        progressDialog.setIndeterminate(false)
+        progressDialog.isIndeterminate = false
         progressDialog.setMessage(resources.getString(R.string.Authenticate))
         progressDialog.show();
 
         val username: String? = usernameText.text.toString()
         val password: String? = passwordText.text.toString()
 
-        //Todo: Implementation of the authentication  methode.
+        //Todo: Implementation of the authentication methode.
 
         ServerApi.setContext(applicationContext)
         if (username != null && password != null) {
-            ServerApi.SendLogInDataToServer(username, password)
+            ServerApi.sendLogInDataToServer(username, password)
         }
 
         /*val intent = Intent(this, MainActivity::class.java)

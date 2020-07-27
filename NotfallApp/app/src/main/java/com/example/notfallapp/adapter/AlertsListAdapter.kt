@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alert
-import org.w3c.dom.Text
 
 class AlertsListAdapter(private var alerts: List<Alert>) : RecyclerView.Adapter<AlertsListAdapter.AlertsViewHolder>(){
     private lateinit var layoutInflater: LayoutInflater
@@ -17,7 +16,7 @@ class AlertsListAdapter(private var alerts: List<Alert>) : RecyclerView.Adapter<
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AlertsListAdapter.AlertsViewHolder {
+    ): AlertsViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item_alert, parent, false)
         return AlertsViewHolder(itemView)
     }
