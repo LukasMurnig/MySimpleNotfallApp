@@ -190,12 +190,6 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
                             Log.i(context.resources.getString(R.string.UserPermission),
                                 context.resources.getString(R.string.UserPermissionGranted))
                         }
-
-                        // check for permanent denial of any permission
-                        if (report.isAnyPermissionPermanentlyDenied) {
-                            // show alert dialog navigating to Settings
-                            //openSettingsDialog();
-                        }
                     }
 
                     override fun onPermissionRationaleShouldBeShown(

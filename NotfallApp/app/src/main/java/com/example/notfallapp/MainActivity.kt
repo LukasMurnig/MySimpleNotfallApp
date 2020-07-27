@@ -2,11 +2,9 @@ package com.example.notfallapp
 
 import android.content.Context
 import android.content.Intent
-import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
@@ -73,12 +71,6 @@ class MainActivity : AppCompatActivity(),
                     if (report.areAllPermissionsGranted()) {
                         Log.i(resources.getString(R.string.userpermission), resources.getString(R.string.GPSPermissionGranted))
                     }
-
-                    // check for permanent denial of any permission
-                    if (report.isAnyPermissionPermanentlyDenied) {
-                        // show alert dialog navigating to Settings
-                        //openSettingsDialog();
-                    }
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
@@ -122,11 +114,11 @@ class MainActivity : AppCompatActivity(),
     private fun checkState(){
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                var state: Boolean = connectBracelet.connected
+                val state: Boolean = connectBracelet.connected
                 if (state){
-                    tvStatusbracelet.text = getResources().getString(R.string.braceleteconnected)
+                    tvStatusbracelet.text = resources.getString(R.string.braceleteconnected)
                 }else{
-                    tvStatusbracelet.text = getResources().getString(R.string.nobraceletconnected)
+                    tvStatusbracelet.text = resources.getString(R.string.nobraceletconnected)
                 }
             }
         }, 0, 2000)
