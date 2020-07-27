@@ -1,7 +1,6 @@
 package com.example.notfallapp.adapter
 
 import android.app.AlertDialog
-import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -20,9 +19,6 @@ import kotlinx.coroutines.launch
 
 class ContactListAdapter(var contacts: List<Contact>) :
     RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder>(){
-
-    private lateinit var layoutInflater: LayoutInflater
-    private lateinit var context: Context
 
     companion object {
         private val LOG_TAG: String? = ContactListAdapter::class.simpleName
@@ -68,14 +64,18 @@ class ContactListAdapter(var contacts: List<Contact>) :
             tvActive = itemView.findViewById(R.id.tvActive)
 
             MainScope().launch {
-                if(contact.pathToImage.isNotEmpty()){
-                    val bitmap =
-                        MediaStore.Images.Media.getBitmap(itemView.context.contentResolver, Uri.parse(contact.pathToImage))
-                    imageContact.setImageBitmap(bitmap)
+                if(contact.photoSet){
+                    if(contact.pathToImage!=null){
+                        if(contact.pathToImage!!.isNotEmpty()){
+                            val bitmap =
+                                MediaStore.Images.Media.getBitmap(itemView.context.contentResolver, Uri.parse(contact.pathToImage))
+                            imageContact.setImageBitmap(bitmap)
+                        }
+                    }
                 }
             }
 
-            contactName.text = contact.lastname + " " + contact.firstname + " " + contact.priority
+            contactName.text = contact.surname + " " + contact.forename + " " + contact.priority
             contactEmail.text = contact.e_mail
             tvActive.text = contact.active.toString()
 
