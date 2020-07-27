@@ -1,16 +1,14 @@
 package com.example.notfallapp.server
 
 import android.content.Context
-import android.content.Intent
 import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
+import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.notfallapp.MainActivity
 import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -19,7 +17,8 @@ class ServerApi {
     companion object{
         private lateinit var context: Context
         var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
-        val TAG = "ServerApi"
+        //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
+        const val TAG = "ServerApi"
         var volleyRequestQueue: RequestQueue? = null
 
         private var timeTokenCome: Long? = null
@@ -31,7 +30,7 @@ class ServerApi {
         private var tokenExpiresInSeconds: Int? = null
         private var multiFactorAuth: Boolean? = null
         private var username: String? = null
-        private var userId: UUID? = null
+        var userId: UUID? = null
 
 
         fun setContext(context: Context){
@@ -39,18 +38,20 @@ class ServerApi {
         }
 
         fun controlToken(){
-            if((timeTokenCome!! + tokenExpiresInSeconds!! - 10) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
-                refreshToken()
+            if(timeTokenCome!=null && tokenExpiresInSeconds!=null){
+                if((timeTokenCome!! + tokenExpiresInSeconds!! - 10) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
+                    refreshToken()
+                }
             }
         }
 
-        fun SendLogInDataToServer(username: String, password: String){
+        fun sendLogInDataToServer(username: String, password: String){
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             // Add your parameters in HashMap
             reqBody.put("Username", username)
             reqBody.put("Password", password)
-            reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
+            reqBody.put("ClientId", null/*Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)*/)
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login", reqBody,
@@ -76,13 +77,12 @@ class ServerApi {
                         this.username = data.getString("Username")
                         userId = data.get("UserId") as UUID?
 
-                        println("userId: $userId")
                     }
-                    Toast.makeText(context,"Erfolgreich eingelogt",Toast.LENGTH_LONG).show()
-                    Toast.makeText(context,message,Toast.LENGTH_LONG).show()
+                    Log.e(TAG, "Erfolgreich eingelogt")
+                    Log.e(TAG, message)
 
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
+                    /*val intent = Intent(context, MainActivity::class.java)
+                    context.startActivity(intent)*/
 
                 } catch (e: Exception) { // caught while parsing the response
                     Log.e(TAG, "problem occurred")
@@ -135,5 +135,74 @@ class ServerApi {
             )
             volleyRequestQueue?.add(jsonObjectRequest)
         }
+
+        fun createGetCall(extraUrl: String, toDo: (response: JSONObject) -> Unit ) {
+            controlToken()
+
+            val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
+                Method.GET, serverAPIURL + extraUrl, null,
+                Response.Listener<JSONObject> { response ->
+                    Log.e(TAG, "response: $response")
+                    try {
+                        val isSuccess = response.getBoolean("isSuccess")
+                        val code = response.getInt("code")
+                        val message = response.getString("message")
+
+                        toDo(response)
+
+                    } catch (e: Exception) { // caught while parsing the response
+                        Log.e(TAG, "problem occurred")
+                        e.printStackTrace()
+                    }
+                }, Response.ErrorListener { error ->
+                    val resErrorBody = JSONObject(String(error.networkResponse.data))
+                    Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    var params: MutableMap<String, String>? = super.getHeaders()
+                    if (params == null) params = HashMap()
+                    params["Authorization"] = accessToken.toString()
+                    return params
+                }
+            }
+            volleyRequestQueue?.add(jsonObjectRequest)
+        }
+
+        fun createCall(method: Int, extraUrl: String, reqBody: JSONObject?, toDo: (response: JSONObject) -> Unit ) {
+            controlToken()
+
+            val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
+                method, serverAPIURL + extraUrl, reqBody,
+                Response.Listener<JSONObject> { response ->
+                    Log.e(TAG, "response: $response")
+                    try {
+                        val isSuccess = response.getBoolean("isSuccess")
+                        val code = response.getInt("code")
+                        val message = response.getString("message")
+
+                        toDo(response)
+
+                    } catch (e: Exception) { // caught while parsing the response
+                        Log.e(TAG, "problem occurred")
+                        e.printStackTrace()
+                    }
+                }, Response.ErrorListener { error ->
+                    val resErrorBody = JSONObject(String(error.networkResponse.data))
+                    Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    var params: MutableMap<String, String>? = super.getHeaders()
+                    if (params == null) params = HashMap()
+                    if(accessToken != null){
+                        params["Authorization"] = accessToken.toString()
+                    }
+                    return params
+                }
+            }
+            volleyRequestQueue?.add(jsonObjectRequest)
+        }
+
     }
 }

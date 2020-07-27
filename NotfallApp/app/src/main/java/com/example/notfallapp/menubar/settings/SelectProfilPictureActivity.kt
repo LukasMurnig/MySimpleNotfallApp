@@ -2,7 +2,6 @@ package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Instrumentation
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.service.ServiceCallAlarm
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -41,6 +41,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
     private lateinit var btnSelectPicture: Button
     private lateinit var btnSavePicture: Button
     private lateinit var btnCancelProfilPicture: Button
+    private lateinit var btnSos: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +49,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
 
         initComponents()
 
-        requestMultiplePermissions()
+        checkGalleryPermission(this, this)
 
         btnSelectPicture.setOnClickListener{
             showPictureDialog()
@@ -156,51 +157,59 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
         pictureDialog.show()
     }
 
-    private fun requestMultiplePermissions(){
-        Dexter.withActivity(this)
-            .withPermissions(
-                android.Manifest.permission.CAMERA,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
-                    // check if all permissions are granted
-                    if (report.areAllPermissionsGranted()) {
-                        Log.i(resources.getString(R.string.UserPermission),
-                              resources.getString(R.string.UserPermissionGranted))
-                    }
-
-                    // check for permanent denial of any permission
-                    if (report.isAnyPermissionPermanentlyDenied) {
-                        // show alert dialog navigating to Settings
-                        //openSettingsDialog();
-                    }
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permissions: List<PermissionRequest?>?,
-                    token: PermissionToken
-                ) {
-                    token.continuePermissionRequest()
-                }
-            }).withErrorListener {
-                Toast.makeText(applicationContext, resources.getString(R.string.someError), Toast.LENGTH_SHORT)
-                    .show()
-            }
-            .onSameThread()
-            .check()
-    }
-
     private fun initComponents(){
         imageUpload = findViewById(R.id.imageUpload)
         btnSelectPicture = findViewById(R.id.btnSelectPicture)
         btnSavePicture = findViewById(R.id.btnSavePicture)
         btnCancelProfilPicture = findViewById(R.id.btnCancelProfilPicture)
+        btnSos = findViewById(R.id.btn_sos)
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
             getSystemService(Context.WIFI_SERVICE) as WifiManager
         checkInternetAccess(this, connectivityManager, wifi)
+
+        btnSos.setOnClickListener{
+            val intent = Intent(this, ServiceCallAlarm::class.java)
+            this.startService(intent)
+        }
+    }
+
+    companion object{
+        fun checkGalleryPermission(context: Context, activity: Activity){
+            Dexter.withActivity(activity)
+                .withPermissions(
+                    android.Manifest.permission.CAMERA,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                        // check if all permissions are granted
+                        if (report.areAllPermissionsGranted()) {
+                            Log.i(context.resources.getString(R.string.UserPermission),
+                                context.resources.getString(R.string.UserPermissionGranted))
+                        }
+
+                        // check for permanent denial of any permission
+                        if (report.isAnyPermissionPermanentlyDenied) {
+                            // show alert dialog navigating to Settings
+                            //openSettingsDialog();
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permissions: List<PermissionRequest?>?,
+                        token: PermissionToken
+                    ) {
+                        token.continuePermissionRequest()
+                    }
+                }).withErrorListener {
+                    Toast.makeText(context.applicationContext, context.resources.getString(R.string.someError), Toast.LENGTH_SHORT)
+                        .show()
+                }
+                .onSameThread()
+                .check()
+        }
     }
 }
