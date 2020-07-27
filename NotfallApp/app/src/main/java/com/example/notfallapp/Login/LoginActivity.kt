@@ -12,10 +12,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.server.ServerApi
 
-class LoginActivity : AppCompatActivity(), checkPermission {
+class LoginActivity : AppCompatActivity(), ICheckPermission {
     companion object{
         private const val TAG :String = "LoginActivity"
         private const val REQUEST_SIGNUP :Int = 0
@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity(), checkPermission {
         )
         progressDialog.isIndeterminate = false
         progressDialog.setMessage(resources.getString(R.string.Authenticate))
-        progressDialog.show();
+        progressDialog.show()
 
         val username: String? = usernameText.text.toString()
         val password: String? = passwordText.text.toString()
@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity(), checkPermission {
 
 
     private fun onLoginFailed() {
-        Toast.makeText(getBaseContext(), resources.getString(R.string.LoginFailed), Toast.LENGTH_LONG).show()
+        Toast.makeText(baseContext, resources.getString(R.string.LoginFailed), Toast.LENGTH_LONG).show()
         loginButton.isEnabled = true
     }
 
@@ -84,15 +84,15 @@ class LoginActivity : AppCompatActivity(), checkPermission {
         val password: String? = passwordText.text.toString()
 
         if (username?.isEmpty()!!) {
-            usernameText.setError(resources.getString(R.string.emailTooShort))
+            usernameText.error = resources.getString(R.string.emailTooShort)
             validate = false
         }else{
             usernameText.error = null
         }
 
-        if (password?.isEmpty()!! || password?.length < 4) {
-            passwordText.setError(resources.getString(R.string.passwordTooShort));
-            validate = false;
+        if (password?.isEmpty()!! || password.length < 4) {
+            passwordText.error = resources.getString(R.string.passwordTooShort)
+            validate = false
         }else{
             passwordText.error = null
         }

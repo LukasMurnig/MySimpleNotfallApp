@@ -18,14 +18,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.server.ServerUser
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 
-class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, checkPermission {
+class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton

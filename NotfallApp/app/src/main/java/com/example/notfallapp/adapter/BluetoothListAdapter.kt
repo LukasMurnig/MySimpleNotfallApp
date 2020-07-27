@@ -14,9 +14,9 @@ class BluetoothListAdapter(context: Context?, devices: List<BluetoothDevice>) : 
     private lateinit var inflater: LayoutInflater
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        var rowView: View = inflater.inflate(R.layout.listview_item_bluetoothdevices, parent, false)
-        var name: TextView = rowView.findViewById(R.id.deviceName)
-        var device: BluetoothDevice = getItem(position)
+        val rowView: View = inflater.inflate(R.layout.listview_item_bluetoothdevices, parent, false)
+        val name: TextView = rowView.findViewById(R.id.deviceName)
+        val device: BluetoothDevice = getItem(position)
         name.text = device.name.toString()
         return rowView
     }

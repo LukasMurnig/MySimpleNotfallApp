@@ -1,6 +1,5 @@
 package com.example.notfallapp.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,6 @@ import com.example.notfallapp.bll.Alarm
 
 
 class AlarmsListAdapter(private var alarms: List<Alarm>) : RecyclerView.Adapter<AlarmsListAdapter.AlarmsViewHolder>(){
-    private lateinit var layoutInflater: LayoutInflater
-    private lateinit var context: Context
 
     @NonNull
     override fun onCreateViewHolder(

@@ -16,12 +16,12 @@ import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.ICheckPermission
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPermission {
+class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -126,17 +126,17 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
         prio = extras.getInt(resources.getString(R.string.prio))
         if(extras.getString(resources.getString(R.string.firstnameAlarmDatabase))!=null){
             toUpdateContact = Contact(null,
-                extras.getString(resources.getString(R.string.firstnameAlarmDatabase)),
-                extras.getString(resources.getString(R.string.lastnameAlarmDatabase)),
+                extras.getString(resources.getString(R.string.firstnameAlarmDatabase)) as String,
+                extras.getString(resources.getString(R.string.lastnameAlarmDatabase)) as String,
                 extras.getBoolean(resources.getString(R.string.active)),
                 "not implemented",
                 extras.getInt("gender"),
                 false,
-                extras.getString(resources.getString(R.string.emailAlarmDatabase)),
-                extras.getString(resources.getString(R.string.numberAlarmDatabas)),
+                extras.getString(resources.getString(R.string.emailAlarmDatabase)) as String,
+                extras.getString(resources.getString(R.string.numberAlarmDatabas)) as String,
                 null,
                 null,
-                extras.getString("messageType"),
+                extras.getString("messageType") as String,
                 extras.getInt(resources.getString(R.string.prio)),
                 extras.getString(resources.getString(R.string.image)),
                 null,

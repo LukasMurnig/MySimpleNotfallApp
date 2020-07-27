@@ -15,14 +15,14 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.menubar.AlarmsActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 
 class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INotifications,
-    checkPermission {
+    ICheckPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -108,7 +108,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
             ContextCompat.startActivity(context, intent, null)
         }
 
-        btnContact.setOnClickListener(){
+        btnContact.setOnClickListener {
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.ContactRegister),
                                 resources.getString(R.string.AlarmCanceled)))
@@ -117,7 +117,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
             ContextCompat.startActivity(context, intent, null)
         }
 
-        btnSettings.setOnClickListener(){
+        btnSettings.setOnClickListener {
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.SettingsRegister),
                                 resources.getString(R.string.AlarmCanceled)))

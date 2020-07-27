@@ -13,12 +13,12 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.menubar.settings.SelectProfilPictureActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 import java.io.IOException
 
-class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
+class SelectContactPictureActivity : AppCompatActivity(), ICheckPermission {
 
     private lateinit var image: ImageView
     private lateinit var btnSelectContactPicture: Button
@@ -66,10 +66,10 @@ class SelectContactPictureActivity : AppCompatActivity(), checkPermission {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode === RESULT_CANCELED) {
+        if (resultCode == RESULT_CANCELED) {
             return
         }
-        if (requestCode === 2) {
+        if (requestCode == 2) {
             if (data != null) {
                 val contentURI: Uri? = data.data
                 responseIntent = Intent()
