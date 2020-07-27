@@ -58,12 +58,12 @@ interface IAlarmDatabase {
                 }
 
                 return run {
-                    // switch priority of the Contacts
-                    res.priority = clickedContact.priority.also { clickedContact.priority = res.priority }
-                    appDb.contactDao().updateContact(res)
-                    appDb.contactDao().updateContact(clickedContact)
-                    Log.i(LOG_TAG, "contact switch priority with other contact")
-                    // get new order of Contacts
+                    if(res != null){
+                        res.priority = clickedContact.priority.also { clickedContact.priority = res.priority }
+                        appDb.contactDao().updateContact(res)
+                        appDb.contactDao().updateContact(clickedContact)
+                        Log.i(LOG_TAG, "contact switch priority with other contact")
+                    }
                     appDb.contactDao().getAllContact()
                 }
             }

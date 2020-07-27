@@ -22,7 +22,6 @@ import java.util.*
 class TimerHandler {
     companion object : INotifications {
             private lateinit var handler: Handler
-
             fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
                 //handler = Handler(Looper.getMainLooper())
