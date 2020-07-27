@@ -85,11 +85,13 @@ interface IAlarmDatabase {
 
     fun updateContact(contact: Contact, itemView: View){
         val intent = Intent(itemView.context, AddContactActivity::class.java)
-        intent.putExtra(itemView.context.getString(R.string.numberAlarmDatabas), contact.number)
-        intent.putExtra(itemView.context.getString(R.string.firstnameAlarmDatabase), contact.firstname)
-        intent.putExtra(itemView.context.getString(R.string.lastnameAlarmDatabase), contact.lastname)
+        intent.putExtra(itemView.context.getString(R.string.numberAlarmDatabas), contact.phoneFixed)
+        intent.putExtra(itemView.context.getString(R.string.firstnameAlarmDatabase), contact.forename)
+        intent.putExtra(itemView.context.getString(R.string.lastnameAlarmDatabase), contact.surname)
+        intent.putExtra("gender", contact.gender)
         intent.putExtra(itemView.context.getString(R.string.emailAlarmDatabase), contact.e_mail)
         intent.putExtra(itemView.context.getString(R.string.image), contact.pathToImage)
+        intent.putExtra("messageType", contact.messageType)
         intent.putExtra(itemView.context.getString(R.string.priority), contact.priority)
         intent.putExtra(itemView.context.getString(R.string.active), contact.active)
         itemView.context.startActivity(intent)

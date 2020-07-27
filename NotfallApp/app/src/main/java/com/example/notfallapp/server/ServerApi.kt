@@ -51,7 +51,7 @@ class ServerApi {
             // Add your parameters in HashMap
             reqBody.put("Username", username)
             reqBody.put("Password", password)
-            reqBody.put("ClientId", null/*Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)*/)
+            reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login", reqBody,

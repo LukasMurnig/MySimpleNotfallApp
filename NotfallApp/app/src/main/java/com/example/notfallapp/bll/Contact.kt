@@ -3,6 +3,7 @@ package com.example.notfallapp.bll
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.sql.Date
 
 /*
 Anrede (Herr, Frau) => entspricht Geschlecht/Gender in der API
@@ -20,7 +21,30 @@ Optional: Adresse: Straße, Hausnummer, Postleitzahl, Ort, Land (List der mögli
 */
 
 @Entity(tableName = "Contact")
-class Contact constructor(var firstname: String, var lastname: String, var e_mail: String, var number: String, var priority: Int, var pathToImage: String, var active: Boolean) {
+class Contact constructor(
+    var id: Long?,
+    var forename: String,
+    var surname: String,
+    /*var username: String,*/
+    var active: Boolean,
+    var role: String,
+    var gender: Int,
+    var photoSet: Boolean,
+    /*var birthDay: java.sql.Date?,*/
+    var e_mail: String,
+    var phoneFixed: String,
+    var language: String?,
+    var timezone: String?,
+    var messageType: String,
+    var priority: Int,
+    var pathToImage: String?,
+    var street: String?,
+    var houseNumber: String?,
+    var postAreaCode: Int?,
+    var place: String?,
+    var country: String?
+    ) {
+
     @PrimaryKey
     @ColumnInfo(name = "email")
     var email: String = e_mail

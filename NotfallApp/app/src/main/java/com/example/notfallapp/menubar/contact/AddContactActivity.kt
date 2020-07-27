@@ -74,21 +74,37 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
                                 resources.getString(R.string.AddContact)))
 
             if(validate()){
-                if(path == null){
-                    path = ""
+                var photoSet = false
+                if(path != null){
+                    photoSet = true
                 }
+
                 if(toUpdateContact==null){
-                    val contact = Contact(input_firstname.text.toString(), input_lastname.text.toString(),
-                        input_email.text.toString(), input_number.text.toString(), prio!!,  path!!, true
-                    )
+                    val gender: Int = if(spinnerGender.selectedItem == "Herr"){
+                        1
+                    }else{
+                        0
+                    }
+                    val contact = Contact(null, input_firstname.text.toString(), input_lastname.text.toString(), true,
+                    "not implemented", gender, photoSet, input_email.text.toString(), input_number.text.toString(),
+                        null, null, spinnerMessage.selectedItem.toString(), prio!!, path,
+                        "not implemented", "not implemented", 1111, "not implemented", "not implemented"
+                        )
 
                     installContact(contact, false)
                 }else{
-                    toUpdateContact!!.firstname = input_firstname.text.toString()
-                    toUpdateContact!!.lastname = input_lastname.text.toString()
+                    val gender: Int = if(spinnerGender.selectedItem == "Herr"){
+                        1
+                    }else{
+                        0
+                    }
+                    toUpdateContact!!.forename = input_firstname.text.toString()
+                    toUpdateContact!!.surname = input_lastname.text.toString()
+                    toUpdateContact!!.gender = gender
                     toUpdateContact!!.e_mail = input_email.text.toString()
-                    toUpdateContact!!.number = input_number.text.toString()
-                    toUpdateContact!!.pathToImage = path as String
+                    toUpdateContact!!.phoneFixed = input_number.text.toString()
+                    toUpdateContact!!.messageType = spinnerMessage.selectedItem.toString()
+                    toUpdateContact!!.pathToImage = path
                     installContact(toUpdateContact!!, true)
                 }
             }
@@ -106,25 +122,44 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
         val extras = intent.extras ?: return
         prio = extras.getInt(resources.getString(R.string.prio))
         if(extras.getString(resources.getString(R.string.firstnameAlarmDatabase))!=null){
-            toUpdateContact = Contact(extras.getString(resources.getString(R.string.firstnameAlarmDatabase)),
-                                      extras.getString(resources.getString(R.string.lastnameAlarmDatabase)),
-                                      extras.getString(resources.getString(R.string.emailAlarmDatabase)),
-                                      extras.getString(resources.getString(R.string.numberAlarmDatabas)),
-                                      extras.getInt(resources.getString(R.string.prio)),
-                                      extras.getString(resources.getString(R.string.image)),
-                                      extras.getBoolean(resources.getString(R.string.active))
+            toUpdateContact = Contact(null,
+                extras.getString(resources.getString(R.string.firstnameAlarmDatabase)),
+                extras.getString(resources.getString(R.string.lastnameAlarmDatabase)),
+                extras.getBoolean(resources.getString(R.string.active)),
+                "not implemented",
+                extras.getInt("gender"),
+                false,
+                extras.getString(resources.getString(R.string.emailAlarmDatabase)),
+                extras.getString(resources.getString(R.string.numberAlarmDatabas)),
+                null,
+                null,
+                extras.getString("messageType"),
+                extras.getInt(resources.getString(R.string.prio)),
+                extras.getString(resources.getString(R.string.image)),
+                null,
+                null,
+                null,
+                null,
+                null
             )
 
-            if(toUpdateContact!!.pathToImage.isNotEmpty()){
+            if(toUpdateContact!!.pathToImage != null){
                 val bitmap =
                     MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(toUpdateContact!!.pathToImage))
                 addpicture.setImageBitmap(bitmap)
             }
 
-            input_firstname.setText(toUpdateContact!!.firstname)
-            input_lastname.setText(toUpdateContact!!.lastname)
+            input_firstname.setText(toUpdateContact!!.forename)
+            input_lastname.setText(toUpdateContact!!.surname)
             input_email.setText(toUpdateContact!!.e_mail)
-            input_number.setText(toUpdateContact!!.number)
+            input_number.setText(toUpdateContact!!.phoneFixed)
+            spinnerGender.setSelection(toUpdateContact!!.gender)
+            spinnerGender.setSelection(toUpdateContact!!.gender)
+            when (toUpdateContact!!.messageType){
+                spinnerMessage.getItemAtPosition(0) -> spinnerMessage.setSelection(0)
+                spinnerMessage.getItemAtPosition(1) -> spinnerMessage.setSelection(1)
+                spinnerMessage.getItemAtPosition(2) -> spinnerMessage.setSelection(2)
+            }
         }
     }
 
@@ -132,7 +167,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
         val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
         if(update){
             GlobalScope.launch {
-                appDb.contactDao().updateContact(contact!!)
+                appDb.contactDao().updateContact(contact)
             }
         }else{
             GlobalScope.launch {
@@ -195,7 +230,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
 
         builder = AlertDialog.Builder(this)
 
-        spinnerGender.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Herr", "Frau"))
+        spinnerGender.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Frau", "Herr"))
         spinnerMessage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Anruf", "SMS", "Email"))
 
         // TODO get date vom Server Page 111 OrgUnitsItems
@@ -252,13 +287,13 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, checkPe
         builder.setTitle(resources.getString(R.string.confirm))
         builder.setMessage(resources.getString(R.string.sureStopCreatingContact))
 
-        builder.setPositiveButton(getResources().getString(R.string.Yes)) { dialog, which ->
+        builder.setPositiveButton(resources.getString(R.string.Yes)) { dialog, _ ->
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             dialog.dismiss()
         }
 
-        builder.setNegativeButton(getResources().getString(R.string.No)) {dialog, which ->
+        builder.setNegativeButton(resources.getString(R.string.No)) { dialog, _ ->
             dialog.dismiss()
         }
     }
