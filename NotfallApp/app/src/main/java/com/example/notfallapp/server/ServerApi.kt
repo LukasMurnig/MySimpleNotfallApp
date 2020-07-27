@@ -51,7 +51,7 @@ class ServerApi {
             // Add your parameters in HashMap
             reqBody.put("Username", username)
             reqBody.put("Password", password)
-            reqBody.put("ClientId", null/*Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)*/)
+            reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login", reqBody,
@@ -90,8 +90,12 @@ class ServerApi {
                 }
             },
             Response.ErrorListener { error ->
-                /*val resErrorBody = JSONObject(String(error.networkResponse.data))
-                Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))*/
+                if(error.networkResponse != null){
+                    val resErrorBody = JSONObject(String(error.networkResponse.data))
+                    Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                }else{
+                    Log.e(TAG, "problem occurred, volley error: " + error.message)
+                }
             }
             )
 
@@ -203,6 +207,5 @@ class ServerApi {
             }
             volleyRequestQueue?.add(jsonObjectRequest)
         }
-
     }
 }

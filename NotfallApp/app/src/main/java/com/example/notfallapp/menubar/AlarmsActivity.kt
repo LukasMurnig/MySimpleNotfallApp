@@ -14,13 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.database.AlarmDatabase
+import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.checkPermission
-import com.example.notfallapp.server.ServerAlarm
-import com.example.notfallapp.server.ServerAlertingChain
 import com.example.notfallapp.server.ServerAlertingChain.Companion.getAlertingChain
-import com.example.notfallapp.server.ServerApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -66,7 +63,7 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, checkPermi
         class GetData : AsyncTask<Unit, Unit, List<Alarm>>() {
 
             override fun doInBackground(vararg p0: Unit?): List<Alarm> {
-                val db = AlarmDatabase(this@AlarmsActivity)
+                val db = EmergencyAppDatabase.getInstance(this@AlarmsActivity)
                 return db.alarmsDao().getAllAlarms()
             }
 
