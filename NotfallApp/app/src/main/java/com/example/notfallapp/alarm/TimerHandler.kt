@@ -1,7 +1,6 @@
 package com.example.notfallapp.alarm
 
 import android.Manifest
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,10 +8,7 @@ import android.location.LocationManager
 import android.os.Handler
 import android.provider.Settings
 import android.util.Log
-import android.widget.RemoteViews
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.room.Room
 import com.example.notfallapp.R

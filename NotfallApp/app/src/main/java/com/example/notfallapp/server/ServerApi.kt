@@ -90,8 +90,13 @@ class ServerApi {
                 }
             },
             Response.ErrorListener { error ->
-                val resErrorBody = JSONObject(String(error.networkResponse.data))
-                Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                if(error.networkResponse != null){
+                    val resErrorBody = JSONObject(String(error.networkResponse.data))
+                    Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                }else{
+                    Log.e(TAG, "problem occurred, volley error: " + error.message)
+                }
+
             }
             )
 
@@ -203,6 +208,5 @@ class ServerApi {
             }
             volleyRequestQueue?.add(jsonObjectRequest)
         }
-
     }
 }

@@ -1,7 +1,13 @@
 package com.example.notfallapp.server
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.util.Log
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -42,6 +48,72 @@ class ServerAlarm {
                     adapter.notifyDataSetChanged()
                 }
             }
+        }
+    }
+
+    fun sendAlert(){
+        val reqBody = JSONObject()
+        // type from alert model: 0 -> SOS
+        reqBody.put("Type", 0)
+        reqBody.put("Battery", null)
+
+        ServerApi.createCall(Request.Method.POST, "/users/${ServerApi.userId}/alert", reqBody) { response ->
+            if (response.has("data")) {
+                val data = response.get("data")
+
+            }
+        }
+    }
+
+    fun sendPosition(context: Context){
+        val reqBody = JSONObject()
+
+        val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        val location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        val positions = JSONObject()
+        val timestamp = Calendar.getInstance().time
+        positions.put("Timestamp", timestamp)
+        positions.put("Longitude", location.longitude)
+        positions.put("Latitude", location.latitude)
+        positions.put("Accuracy", location.accuracy)
+        positions.put("Source", location.provider)
+        reqBody.put("Positions", positions)
+
+        val beacons = JSONObject()
+        val connManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connManager.activeNetworkInfo
+        var type: Int?
+        type = when(networkInfo.typeName.toUpperCase(Locale.ROOT)) {
+            "WIFI" -> 0
+            "BLUETOOTH" -> 1
+            else -> 0
+        }
+        beacons.put("Timestamp", timestamp)
+        beacons.put("Type", type)
+        beacons.put("Identifier", null)
+        beacons.put("Mac", null)
+        beacons.put("SignalStrength", null)
+        reqBody.put("Beacons", beacons)
+
+        ServerApi.createCall(Request.Method.POST, "/users/${ServerApi.userId}/positions", reqBody) { response ->
         }
     }
 

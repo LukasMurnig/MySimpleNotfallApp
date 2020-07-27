@@ -1,7 +1,6 @@
 package com.example.notfallapp.adapter
 
 import android.app.AlertDialog
-import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -20,9 +19,6 @@ import kotlinx.coroutines.launch
 
 class ContactListAdapter(var contacts: List<Contact>) :
     RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder>(){
-
-    private lateinit var layoutInflater: LayoutInflater
-    private lateinit var context: Context
 
     companion object {
         private val LOG_TAG: String? = ContactListAdapter::class.simpleName
