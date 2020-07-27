@@ -18,7 +18,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.service.ServiceCallAlarm
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -31,9 +31,9 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 
-class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
+class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
 
-    private val IMAGE_DIRECTORY = "/profilPicture"
+    private val _IMAGE_DIRECTORY = "/profilPicture"
     private val GALLERY = 1
     private val CAMERA = 2
 
@@ -77,7 +77,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
                 try {
                     val bitmap =
                         MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
-                    val path: String? = saveImage(bitmap)
+                    saveImage(bitmap)
                     Toast.makeText(this, resources.getString(R.string.Imagesaved), Toast.LENGTH_SHORT).show()
                     imageUpload.setImageBitmap(bitmap)
                 } catch (e: IOException) {
@@ -97,7 +97,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), checkPermission {
         val bytes = ByteArrayOutputStream()
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
         val wallpaperDirectory = File(
-            Environment.getExternalStorageDirectory().toString() + IMAGE_DIRECTORY
+            Environment.getExternalStorageDirectory().toString() + _IMAGE_DIRECTORY
         )
         // have the object build the directory structure, if needed.
         if (wallpaperDirectory.exists()) {

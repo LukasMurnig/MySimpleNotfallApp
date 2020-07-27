@@ -2,6 +2,7 @@ package com.example.notfallapp.interfaces
 
 import android.content.Intent
 import android.os.AsyncTask
+import android.util.Log
 import android.view.View
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.ContactListAdapter
@@ -24,6 +25,7 @@ interface IAlarmDatabase {
             override fun doInBackground(vararg p0: Unit?): List<Contact> {
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(itemView.context)
                 contact.active = !contact.active
+                Log.i(LOG_TAG, "contact become ${contact.active}")
                 appDb.contactDao().updateContact(contact)
                 return appDb.contactDao().getAllContact()
             }
@@ -55,16 +57,14 @@ interface IAlarmDatabase {
                     appDb.contactDao().getContactByPriority((clickedContact.priority+1))
                 }
 
-                if(res != null){
+                return run {
                     // switch priority of the Contacts
                     res.priority = clickedContact.priority.also { clickedContact.priority = res.priority }
                     appDb.contactDao().updateContact(res)
                     appDb.contactDao().updateContact(clickedContact)
-
+                    Log.i(LOG_TAG, "contact switch priority with other contact")
                     // get new order of Contacts
-                    return appDb.contactDao().getAllContact()
-                }else{
-                    return null
+                    appDb.contactDao().getAllContact()
                 }
             }
 
@@ -102,7 +102,6 @@ interface IAlarmDatabase {
             override fun doInBackground(vararg p0: Unit?): List<Contact> {
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(itemView.context)
 
-
                 // change priority
                 if(contact.priority!=2){
                     val c  =appDb.contactDao().getContactByPriority(contact.priority +1 )
@@ -125,11 +124,12 @@ interface IAlarmDatabase {
             }
 
             override fun onPostExecute(result: List<Contact>?) {
-                if(result!=null)
-                    if(adapter != null){
+                if (result != null)
+                    if (adapter != null) {
                         adapter?.contacts = result
                         adapter?.notifyDataSetChanged()
                     }
+                Log.i(LOG_TAG, "contact deleted")
             }
         }
         val dc = DeleteContact()

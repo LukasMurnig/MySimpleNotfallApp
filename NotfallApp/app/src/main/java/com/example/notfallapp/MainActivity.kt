@@ -14,9 +14,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
-import com.example.notfallapp.interfaces.checkPermission
 import com.example.notfallapp.interfaces.connectBracelet
 import com.example.notfallapp.server.ServerApi
 import com.karumi.dexter.Dexter
@@ -28,7 +28,7 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener, INotifications, checkPermission {
+    ICreatingOnClickListener, INotifications, ICheckPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton

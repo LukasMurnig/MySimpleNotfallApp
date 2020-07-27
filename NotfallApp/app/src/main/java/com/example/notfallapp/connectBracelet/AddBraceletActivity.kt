@@ -25,11 +25,11 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.checkPermission
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.connectBracelet
 
 
-class AddBraceletActivity() : Activity(), ICreatingOnClickListener, checkPermission, connectBracelet {
+class AddBraceletActivity() : Activity(), ICreatingOnClickListener, ICheckPermission, connectBracelet {
     companion object{
         var connected: Boolean = false
         var batteryState: String = " "
