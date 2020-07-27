@@ -85,7 +85,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
             Log.d(resources.getString(R.string.SOSButton),
                   String.format(resources.getString(R.string.SOSButtonClicked),
                                 resources.getString(R.string.AlarmCanceled)))
-            // Service open Call Alarm Activity
+            // Service opens Call Alarm Activity
             val intent = Intent(context, ServiceCallAlarm::class.java)
             context.startService(intent)
         }

@@ -58,12 +58,12 @@ interface IAlarmDatabase {
                 }
 
                 return run {
-                    // switch priority of the Contacts
-                    res.priority = clickedContact.priority.also { clickedContact.priority = res.priority }
-                    appDb.contactDao().updateContact(res)
-                    appDb.contactDao().updateContact(clickedContact)
-                    Log.i(LOG_TAG, "contact switch priority with other contact")
-                    // get new order of Contacts
+                    if(res != null){
+                        res.priority = clickedContact.priority.also { clickedContact.priority = res.priority }
+                        appDb.contactDao().updateContact(res)
+                        appDb.contactDao().updateContact(clickedContact)
+                        Log.i(LOG_TAG, "contact switch priority with other contact")
+                    }
                     appDb.contactDao().getAllContact()
                 }
             }
@@ -103,17 +103,17 @@ interface IAlarmDatabase {
                 val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(itemView.context)
 
                 // change priority
-                if(contact.priority!=2){
-                    val c  =appDb.contactDao().getContactByPriority(contact.priority +1 )
-                    if(c!=null){
-                        c.priority = c.priority-1
+                if(contact.priority != 2){
+                    val c = appDb.contactDao().getContactByPriority(contact.priority + 1)
+                    if(c != null){
+                        c.priority = c.priority - 1
                         appDb.contactDao().updateContact(c)
                     }
 
-                    if(contact.priority!=1){
-                        val c2 = appDb.contactDao().getContactByPriority(contact.priority+2)
+                    if(contact.priority != 1){
+                        val c2 = appDb.contactDao().getContactByPriority(contact.priority + 2)
                         if(c2 != null){
-                            c2.priority = c2.priority-1
+                            c2.priority = c2.priority - 1
                             appDb.contactDao().updateContact(c2)
                         }
                     }

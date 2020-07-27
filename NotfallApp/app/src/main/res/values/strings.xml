@@ -50,15 +50,15 @@
     <string name="numberWrongType">Telefonnummer darf nur Zahlen beinhalten!</string>
 
     <!-- Add contact -->
-    <string name="contact_gender">Anrede(*)</string>
-    <string name="contact_firstname">Vorname(*)</string>
-    <string name="contact_lastname">Nachname(*)</string>
-    <string name="contact_email">Email(*)</string>
-    <string name="TelNr">Vorwahl(*)</string>
-    <string name="contact_telNr">Telefonnummer(*)</string>
-    <string name="language">Sprache(*)</string>
-    <string name="timezone">Zeitzone(*)</string>
-    <string name="message">Wie benachrichtigen?(*)</string>
+    <string name="contact_gender">Anrede (*)</string>
+    <string name="contact_firstname">Vorname (*)</string>
+    <string name="contact_lastname">Nachname (*)</string>
+    <string name="contact_email">Email (*)</string>
+    <string name="TelNr">Vorwahl (*)</string>
+    <string name="contact_telNr">Telefonnummer (*)</string>
+    <string name="language">Sprache (*)</string>
+    <string name="timezone">Zeitzone (*)</string>
+    <string name="message">Wie benachrichtigen? (*)</string>
     <string name="street">Straße</string>
     <string name="housenumber">Hausnummer</string>
     <string name="postcode">Postleitzahl</string>

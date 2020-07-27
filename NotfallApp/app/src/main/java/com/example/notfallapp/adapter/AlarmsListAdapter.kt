@@ -23,7 +23,7 @@ class AlarmsListAdapter(private var alarms: List<Alarm>) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: AlarmsViewHolder, position: Int) {
         val alarm: Alarm? = alarms[position]
-        if(alarm!=null){
+        if(alarm != null){
             holder.bindAlarm(alarm)
         }
     }

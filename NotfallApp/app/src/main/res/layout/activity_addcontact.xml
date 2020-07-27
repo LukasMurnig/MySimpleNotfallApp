@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
         android:layout_height="fill_parent">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -75,7 +76,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
                 android:hint="@string/contact_email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:autofillHints="@string/contact_email" />
 
             <Spinner
                 android:id="@+id/spinnerLanguage"
@@ -110,7 +112,8 @@
                 android:layout_below="@+id/spinnerMessage"
                 android:layout_marginTop="10dp"
                 android:inputType="text"
-                android:hint="@string/street"/>
+                android:hint="@string/street"
+                android:autofillHints="@string/street" />
             <EditText
                 android:id="@+id/tvHouseNumber"
                 android:layout_width="80dp"
@@ -119,7 +122,9 @@
                 android:layout_toEndOf="@+id/tvStreet"
                 android:layout_marginTop="10dp"
                 android:inputType="text"
-                android:hint="@string/housenumber"/>
+                android:hint="@string/housenumber"
+                android:autofillHints="@string/housenumber"
+                tools:ignore="TextFields" />
             <EditText
                 android:id="@+id/tvPostcode"
                 android:layout_width="150dp"
@@ -127,7 +132,8 @@
                 android:layout_below="@+id/tvStreet"
                 android:inputType="text"
                 android:hint="@string/postcode"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:autofillHints="@string/postcode" />
             <EditText
                 android:id="@+id/tvPlace"
                 android:layout_width="230dp"
@@ -135,8 +141,8 @@
                 android:layout_below="@+id/tvStreet"
                 android:layout_toEndOf="@+id/tvPostcode"
                 android:inputType="number"
-                android:hint="@string/place"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:autofillHints="@string/place" />
 
             <Spinner
                 android:id="@+id/spinnerCountry"

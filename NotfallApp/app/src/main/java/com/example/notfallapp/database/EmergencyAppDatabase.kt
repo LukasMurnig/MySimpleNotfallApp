@@ -11,7 +11,7 @@ import com.example.notfallapp.dao.AlarmsDao
 import com.example.notfallapp.dao.ContactDao
 import com.example.notfallapp.dao.DeviceDao
 
-@Database(entities = [Contact::class, Alarm::class, Device::class], version = 10)
+@Database(entities = [Contact::class, Alarm::class, Device::class], version = 11)
 abstract class EmergencyAppDatabase : RoomDatabase(){
     abstract fun contactDao(): ContactDao
     abstract fun alarmsDao(): AlarmsDao
@@ -26,46 +26,10 @@ abstract class EmergencyAppDatabase : RoomDatabase(){
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         EmergencyAppDatabase::class.java, DB_NAME
-                    )
-                        .fallbackToDestructiveMigration()
-                        .build()
+                        ).fallbackToDestructiveMigration()
+                         .build()
             }
             return INSTANCE as EmergencyAppDatabase
         }
-
-        /*private fun buildDatabase(context: Context) = Room.databaseBuilder(context,
-                EmergencyAppDatabase::class.java, "emergency.db")
-                .build()
-
-
-        fun getDatabase(context: Context): EmergencyAppDatabase? {
-            if (INSTANCE == null){
-                synchronized(EmergencyAppDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        System.out.println(context.applicationContext)
-                        INSTANCE == Room.databaseBuilder(context.applicationContext, EmergencyAppDatabase::class.java, DB_NAME)
-                            .build()
-                    }
-                }
-            }
-            return INSTANCE
-        }
-    }
-    private class PopulateDbAsync(instance: com.example.notfallapp.database.EmergencyAppDatabase) :
-        AsyncTask<Void?, Void?, Void?>() {
-        private lateinit var alarmsDAO: AlarmsDao;
-        protected override fun doInBackground(vararg p0: Void?): Void? {
-            alarmsDAO.deleteAll()
-            val g1 = Alarm("1", "Test", "zero")
-            val g2 = Alarm("2", "Test", "zero")
-            val g3 = Alarm("3", "Test", "zero")
-            alarmsDAO.insertAlarm(g1, g2, g3)
-            return null
-        }
-
-        init {
-            alarmsDAO = INSTANCE?.alarmsDao()!!
-        }
-    }*/
     }
 }

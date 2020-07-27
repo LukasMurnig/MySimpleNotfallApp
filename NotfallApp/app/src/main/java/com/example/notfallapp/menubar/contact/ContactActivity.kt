@@ -114,7 +114,6 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
                     }else{
                         val adapter = ContactListAdapter(result)
                         IAlarmDatabase.setAdapter(adapter)
-                        //ContactListAdapter.setAdapter(adapter)
                         rvContacts.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }
