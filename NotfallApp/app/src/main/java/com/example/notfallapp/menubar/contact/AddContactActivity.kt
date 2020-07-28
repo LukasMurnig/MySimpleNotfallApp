@@ -2,6 +2,7 @@ package com.example.notfallapp.menubar.contact
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.net.wifi.WifiManager
@@ -151,7 +152,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                 path = toUpdateContact!!.pathToImage
                 val bitmap =
                     MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(toUpdateContact!!.pathToImage))
-                addpicture.setImageBitmap(bitmap)
+                addpicture.background = BitmapDrawable(resources, bitmap)
             }
 
             input_firstname.setText(toUpdateContact!!.forename)
@@ -213,7 +214,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                     val uri = Uri.parse(path)
                     val bitmap =
                         MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, uri)
-                    addpicture.setImageBitmap(bitmap)
+                    addpicture.background = BitmapDrawable(resources, bitmap)
                 }catch (e: IOException){
                     Log.e(resources.getString(R.string.image),
                           String.format(resources.getString(R.string.Image),

@@ -14,11 +14,13 @@
 
             <ImageButton
                 android:id="@+id/addpicture"
-                android:layout_width="132dp"
-                android:layout_height="119dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_below="@+id/button_bar"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/addprofilepicture" />
+                android:background="@drawable/addprofilepicture"
+                android:layout_marginTop="10dp"
+                android:rotation="360"/>
 
             <Spinner
                 android:id="@+id/spinnerGender"

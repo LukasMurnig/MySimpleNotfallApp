@@ -30,6 +30,8 @@
 
     <!-- Contacts -->
     <string name="noContacts">Sie besitzen leider noch keine Kontakte!</string>
+    <string name="contactName">Name</string>
+    <string name="contactActive">Aktiv</string>
     <string name="createContact">Glückwunsch! Sie haben erfolgreich einen neuen Kontakt hinzugefügt.</string>
     <string name="updateContact">Ihr Kontakt wurde erfolgreich aktualisiert.</string>
     <string name="deleteContact">Ihr Kontakt wurde erfolgreich gelöscht.</string>

@@ -17,9 +17,9 @@ import com.example.notfallapp.R
 import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.interfaces.IAlarmDatabase
-import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
+import com.example.notfallapp.interfaces.IContactDatabase
+import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -30,7 +30,6 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     private lateinit var btnAlarms: ImageButton
     private lateinit var btnSettings: ImageButton
 
-    private lateinit var lbMessageContacts: TextView
     private lateinit var lbMessageNoContacts: TextView
     private lateinit var rvContacts: RecyclerView
     private lateinit var addButton: ImageButton
@@ -83,13 +82,13 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     }
 
     private fun initComponents(){
-        lbMessageContacts = findViewById(R.id.lbMessageContacts)
         lbMessageNoContacts = findViewById(R.id.lbMessageNoContacts)
         rvContacts = findViewById(R.id.rvContacts)
         addButton = findViewById(R.id.addButton)
 
         rvContacts.setHasFixedSize(false)
         rvContacts.layoutManager = LinearLayoutManager(this)
+
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
@@ -113,7 +112,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
                         lbMessageNoContacts.text = resources.getString(R.string.noContacts)
                     }else{
                         val adapter = ContactListAdapter(result)
-                        IAlarmDatabase.setAdapter(adapter)
+                        IContactDatabase.setAdapter(adapter)
                         rvContacts.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }

@@ -10,9 +10,9 @@ import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.menubar.contact.AddContactActivity
 
-interface IAlarmDatabase {
+interface IContactDatabase {
     companion object{
-        private val LOG_TAG: String? = IAlarmDatabase::class.simpleName
+        private val LOG_TAG: String? = IContactDatabase::class.simpleName
         private var adapter: ContactListAdapter? = null
 
         fun setAdapter(adapter: ContactListAdapter){
@@ -34,8 +34,8 @@ interface IAlarmDatabase {
                 if(result != null){
                     // update Contacts adapter
                     if(adapter != null){
-                        adapter?.contacts = result
-                        adapter?.notifyDataSetChanged()
+                        adapter!!.contacts = result
+                        adapter!!.notifyDataSetChanged()
                     }
                 }
             }
@@ -44,7 +44,7 @@ interface IAlarmDatabase {
         ua.execute()
     }
 
-    fun switchContact(clickedContact: Contact, itemView: View, upClicked: Boolean){
+    /*fun switchContact(clickedContact: Contact, itemView: View, upClicked: Boolean){
         class SwitchContact : AsyncTask<Unit, Unit, List<Contact>>() {
 
             override fun doInBackground(vararg p0: Unit?): List<Contact>? {
@@ -81,7 +81,7 @@ interface IAlarmDatabase {
 
         val gd = SwitchContact()
         gd.execute()
-    }
+    }*/
 
     fun updateContact(contact: Contact, itemView: View){
         val intent = Intent(itemView.context, AddContactActivity::class.java)
