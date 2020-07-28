@@ -2,7 +2,7 @@ package com.example.notfallapp.interfaces
 
 import android.content.Context
 
-interface GetLastBracelet {
+interface IGetLastBracelet {
 
     fun getBracelet(context: Context){
 

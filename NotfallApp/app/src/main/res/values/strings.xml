@@ -231,6 +231,9 @@
     <string name="responseMessage">Response: %1$s</string>
     <string name="ErrorServerUserMessage">There was an Error in %1$s with the message: %2$s</string>
     <string name="ErrorServerUserResponseMessage">problem occurred, volley error: %1$s %2$s</string>
+    <string name="ErrorVerification">There was an Error in App Verification in %1$s with the message: %2$s</string>
+    <string name="CharacteristicReadMessage">Achieved Characteristic Read: %1$s</string>
+    <string name="DescriptorReadMessage">Recieved descriptor Read: %1$s</string>
     <!-- Classes -->
     <string name="AlarmCanceled">AlarmCanceledActivity</string>
     <string name="AlarmSuccessful">AlarmSuccessfulActivity</string>
@@ -241,6 +244,7 @@
     <string name="Contact">ContactActivity</string>
     <string name="SelectContactPicture">SelectContactPictureActivity</string>
     <string name="ServerUser">ServerUser</string>
+    <string name="ConnectBracelet">ConnectBracelet</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

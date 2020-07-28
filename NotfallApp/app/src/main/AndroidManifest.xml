@@ -38,10 +38,10 @@
             android:required="false" />
 
         <activity
-            android:name=".Login.LoginActivity"
+            android:name=".login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Login.SignUpActivity"
+            android:name=".login.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
@@ -76,7 +76,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".menubar.settings.ChangeProfilActivity" />
         <activity
-            android:name=".connectBracelet.AddBraceletActivity"
+            android:name=".connectBracelet.AddBraceletActivityI"
             android:screenOrientation="portrait" />
         <activity android:name=".menubar.contact.SelectContactPictureActivity"></activity>
         <activity android:name=".menubar.settings.SelectProfilPictureActivity" />

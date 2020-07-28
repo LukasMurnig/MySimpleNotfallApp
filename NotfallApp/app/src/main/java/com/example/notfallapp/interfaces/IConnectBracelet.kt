@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.example.notfallapp.MainActivity
+import com.example.notfallapp.R
 import com.example.notfallapp.bll.Device
 import com.example.notfallapp.bll.ReadWriteCharacteristic
 import com.example.notfallapp.connectBracelet.Constants
@@ -16,7 +17,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
-interface ConnectBracelet {
+interface IConnectBracelet {
 
     companion object{
         private var batteryState: String = " "
@@ -35,7 +36,7 @@ interface ConnectBracelet {
         if (!process.isAlive) {
             process.start()
         }
-        ConnectBracelet.context = context
+        IConnectBracelet.context = context
         mGattCallbacks = object : BluetoothGattCallback() {
             override fun onConnectionStateChange(
                 gatt: BluetoothGatt,
@@ -75,7 +76,6 @@ interface ConnectBracelet {
                 val deviceAddress = device.address
                 if (status == BluetoothGatt.GATT_SUCCESS) {
                     // Do APP verification as soon as service discovered.
-                    // Do APP verification as soon as service discovered.
                     try {
                         appVerification(
                             gatt,
@@ -87,7 +87,9 @@ interface ConnectBracelet {
                             Constants.NEW_APP_VERIFICATION_VALUE
                         )
                     } catch (e: java.lang.Exception) {
-                        Log.e(TAG, "exception with app verify:" + e.message)
+                        Log.e(TAG,
+                              String.format(context.getString(R.string.ErrorVerification),
+                                            context.getString(R.string.ConnectBracelet), e.message))
                     }
                     for (service in gatt.services) {
                         if (service == null || service.uuid == null) {
@@ -136,9 +138,8 @@ interface ConnectBracelet {
                     characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0).toString().toInt()
                 if (characteristic.uuid == Constants.CHAR_DETECTION_NOTIFY) {
                     if (keyValue == 1) {
-                        println("Try ")
                         var intent = Intent(Companion.context, ServiceCallAlarm::class.java)
-                        Companion.context?.startActivity(intent)
+                        Companion.context?.startService(intent)
                     } else if (keyValue == 3) {
                         println("2-10 second press release")
                     } else if (keyValue == 4) {
@@ -166,7 +167,7 @@ interface ConnectBracelet {
                     } else {
                         Log.i(
                             TAG,
-                            "received characteristic read:" + characteristic.uuid.toString()
+                            String.format(context.getString(R.string.CharacteristicReadMessage),characteristic.uuid.toString())
                         )
                     }
                 }
@@ -186,7 +187,8 @@ interface ConnectBracelet {
                 descriptor: BluetoothGattDescriptor,
                 status: Int
             ) {
-                Log.i(TAG, "received descriptor read:" + descriptor.uuid.toString())
+                Log.i(TAG,
+                    String.format(context.getString(R.string.DescriptorReadMessage), descriptor.uuid.toString()))
             }
         }
         gattBluetooth = device.connectGatt(context, false, mGattCallbacks)
@@ -215,12 +217,10 @@ interface ConnectBracelet {
         characteristic: BluetoothGattCharacteristic,
         b: ByteArray?
     ) {
-        println("Before Connect")
         if (connected == false) {
             return
         }
         characteristic.value = b
-        println("Before readWriteCharacteristic")
         val readWriteCharacteristic = ReadWriteCharacteristic(
             ProcessQueueExecutor.REQUEST_TYPE_WRITE_CHAR,
             mGatt!!,
@@ -283,9 +283,6 @@ interface ConnectBracelet {
         ch: BluetoothGattCharacteristic?,
         value: ByteArray?
     ) {
-        println("MGATT:" +mGatt)
-        println("CHaracteristic: "+ch)
-        println("value: "+value)
         if (ch != null) {
             writeCharacteristic(mGatt, ch, value)
         }

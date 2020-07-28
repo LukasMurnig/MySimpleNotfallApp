@@ -13,8 +13,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notfallapp.connectBracelet.AddBraceletActivity
-import com.example.notfallapp.interfaces.ConnectBracelet
+import com.example.notfallapp.connectBracelet.AddBraceletActivityI
+import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(),
 
         btnaddBracelet.setOnClickListener {
             Log.d("ButtonAdd", "Button Add bracelet was clicked in MainActivity")
-            val intent = Intent(this, AddBraceletActivity::class.java)
+            val intent = Intent(this, AddBraceletActivityI::class.java)
             startActivity(intent)
         }
 
@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun checkConnected(){
-        var state: Boolean = ConnectBracelet.connected
+        var state: Boolean = IConnectBracelet.connected
         if (state){
             tvStatusbracelet.text = resources.getString(R.string.braceleteconnected)
             btnBracelet.visibility = View.VISIBLE
