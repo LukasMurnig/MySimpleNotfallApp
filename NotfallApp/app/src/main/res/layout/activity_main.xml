@@ -25,39 +25,40 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
+        app:layout_constraintVertical_bias="0.497" />
 
     <ImageButton
         android:id="@+id/btn_add_bracelet"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/round_button"
         android:contentDescription="@string/add"
         android:gravity="center_vertical|center_horizontal"
-        android:src="@drawable/add_button"
+        android:background="@drawable/round_button"
+        android:src="@drawable/add_button_vector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.794"
+        app:layout_constraintHorizontal_bias="0.812"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.58" />
+        app:layout_constraintVertical_bias="0.62" />
 
     <ImageButton
         android:id="@+id/btn_bracelet"
-        android:layout_width="215dp"
-        android:layout_height="169dp"
+        android:layout_width="218dp"
+        android:layout_height="183dp"
         android:background="@drawable/addprofilepicture"
         android:contentDescription="@string/add"
         android:gravity="center_vertical|center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.339" />
+        app:layout_constraintVertical_bias="0.390" />
 
     <ImageButton
         android:id="@+id/btn_pair_bracelet"
@@ -74,37 +75,37 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.58" />
+        app:layout_constraintVertical_bias="0.62" />
 
     <TextView
         android:id="@+id/tvaddbracelet"
-        android:layout_width="108dp"
-        android:layout_height="60dp"
+        android:layout_width="115dp"
+        android:layout_height="29dp"
         android:text="@string/add"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.844"
+        app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.682" />
+        app:layout_constraintVertical_bias="0.699" />
 
     <TextView
         android:id="@+id/tvpairbracelet"
-        android:layout_width="108dp"
-        android:layout_height="60dp"
+        android:layout_width="101dp"
+        android:layout_height="27dp"
         android:text="@string/pair"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.211"
+        app:layout_constraintHorizontal_bias="0.203"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.682" />
+        app:layout_constraintVertical_bias="0.697" />
 
     <include
         layout="@layout/layout_button_sos"

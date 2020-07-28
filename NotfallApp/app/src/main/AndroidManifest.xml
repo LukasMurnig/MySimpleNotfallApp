@@ -33,6 +33,18 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:ignore="HardcodedDebugMode">
 
+        <receiver android:enabled="true" android:directBootAware="true"
+            android:name=".receiver.BootUpReceiver" android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            >
+            <intent-filter android:directBootAware="true">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.REBOOT"/>
+            </intent-filter>
+        </receiver>
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -81,11 +93,6 @@
         <activity android:name=".menubar.contact.SelectContactPictureActivity"></activity>
         <activity android:name=".menubar.settings.SelectProfilPictureActivity" />
 
-        <receiver android:name=".receiver.BootUpReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
         <service android:name=".service.ServiceCallAlarm" />
         <service android:name=".service.ServiceCancelAlarm" />
