@@ -1,20 +1,17 @@
 package com.example.notfallapp.server
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.widget.TextView
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.example.notfallapp.adapter.AlertsListAdapter
 import com.example.notfallapp.bll.Alert
+import com.example.notfallapp.interfaces.ICurrentLocation
 import org.json.JSONObject
 import java.util.*
 
-class ServerAlarm {
+class ServerAlarm : ICurrentLocation {
     fun getAllAlerts(rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
         ServerApi.createCall(Request.Method.GET, "/alerts", null) { response ->
             if (response.has("data")) {
@@ -63,25 +60,17 @@ class ServerAlarm {
     fun sendPosition(context: Context){
         val reqBody = JSONObject()
 
-        val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        val location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        val location = getCurrentLocation(context)
         val positions = JSONObject()
         val timestamp = Calendar.getInstance().time
-        positions.put("Timestamp", timestamp)
-        positions.put("Longitude", location.longitude)
-        positions.put("Latitude", location.latitude)
-        positions.put("Accuracy", location.accuracy)
-        positions.put("Source", location.provider)
+        if(location != null){
+            positions.put("Timestamp", timestamp)
+            positions.put("Longitude", location.longitude)
+            positions.put("Latitude", location.latitude)
+            positions.put("Accuracy", location.accuracy)
+            positions.put("Source", location.provider)
+        }
+
         reqBody.put("Positions", positions)
 
         val beacons = JSONObject()

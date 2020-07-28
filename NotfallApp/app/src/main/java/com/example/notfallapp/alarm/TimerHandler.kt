@@ -1,18 +1,15 @@
 package com.example.notfallapp.alarm
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Handler
 import android.provider.Settings
 import android.util.Log
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.EmergencyAppDatabase
+import com.example.notfallapp.interfaces.ICurrentLocation
 import com.example.notfallapp.interfaces.INotifications
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -20,7 +17,7 @@ import java.util.*
 
 
 class TimerHandler {
-    companion object : INotifications {
+    companion object : INotifications, ICurrentLocation {
             private lateinit var handler: Handler
             fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
@@ -51,28 +48,18 @@ class TimerHandler {
             val clickedTime: Date = Calendar.getInstance().time
             val dateFormat = android.text.format.DateFormat.format("dd-MM-yyyy hh:mm:ss a", clickedTime)
 
-            val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val location = getCurrentLocation(context)
 
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
-            val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            var alarm: Alarm? = null
 
-            val alarm: Alarm?
-
-            alarm = try{
-                Alarm(androidId, location.longitude, location.latitude,
-                      context.resources.getString(R.string.AlarmAccepted), dateFormat.toString())
-            }catch (ex: java.lang.Exception){
-                Alarm(androidId, 0.0, 0.0,
-                      context.resources.getString(R.string.AlarmAccepted), dateFormat.toString())
+            if (location != null) {
+                alarm = try{
+                    Alarm(androidId, location.longitude, location.latitude,
+                        context.resources.getString(R.string.AlarmAccepted), dateFormat.toString())
+                }catch (ex: java.lang.Exception){
+                    Alarm(androidId, 0.0, 0.0,
+                        context.resources.getString(R.string.AlarmAccepted), dateFormat.toString())
+                }
             }
 
             val db = EmergencyAppDatabase.getInstance(context)
