@@ -28,7 +28,7 @@ class TimerHandler {
                     /*ServerAlarm().sendAlert()
                     ServerAlarm().sendPosition(context)*/
 
-                    // create alarm in DB
+                    // meanwhile create alarm in DB
                     createAlarmInDb(context)
 
                     createNotificationSuccessfulAlarm(context)

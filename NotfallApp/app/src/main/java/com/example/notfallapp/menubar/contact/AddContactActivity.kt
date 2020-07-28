@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.net.wifi.WifiManager
+import android.nfc.Tag
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -181,6 +182,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                         appDb.contactDao().insertContact(contact)
                     }catch (ex: Exception){
                         // when unique constraint
+                        Log.e("Database", "unique constraint, this email already exist")
                     }
                 }
         }

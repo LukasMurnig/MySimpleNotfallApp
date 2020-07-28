@@ -87,7 +87,7 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
             }
         }
 
-        tvAccuracy.text = tvAccuracy.text as String + " m"
+        tvAccuracy.text = "${tvAccuracy.text} m"
     }
 
     private fun initComponents(){
