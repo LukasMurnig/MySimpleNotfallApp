@@ -30,10 +30,10 @@ class CurrentLocation {
             var location: Location? = null
 
             if(lm.isProviderEnabled( LocationManager.GPS_PROVIDER ) ){
-                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 100.0F, this)
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 200.0F, this)
                 location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             }else if( lm.isProviderEnabled( LocationManager.NETWORK_PROVIDER )) {
-                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 100.0F, this)
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 200.0F, this)
                 location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
             }
 
