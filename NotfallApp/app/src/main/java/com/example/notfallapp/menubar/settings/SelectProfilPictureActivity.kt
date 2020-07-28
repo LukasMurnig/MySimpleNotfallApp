@@ -97,7 +97,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
         val bytes = ByteArrayOutputStream()
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
         val wallpaperDirectory = File(
-            Environment.getExternalStorageDirectory().toString() + IMAGE_DIRECTORY
+            Environment.getExternalStorageDirectory().toString() + _IMAGE_DIRECTORY
         )
         // have the object build the directory structure, if needed.
         if (wallpaperDirectory.exists()) {
