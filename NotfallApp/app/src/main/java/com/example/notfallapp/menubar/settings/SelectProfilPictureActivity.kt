@@ -77,7 +77,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
                 try {
                     val bitmap =
                         MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
-                    saveImage(bitmap)
+                    val path: String? = saveImage(bitmap)
                     Toast.makeText(this, resources.getString(R.string.Imagesaved), Toast.LENGTH_SHORT).show()
                     imageUpload.setImageBitmap(bitmap)
                 } catch (e: IOException) {
@@ -189,6 +189,12 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
                         if (report.areAllPermissionsGranted()) {
                             Log.i(context.resources.getString(R.string.UserPermission),
                                 context.resources.getString(R.string.UserPermissionGranted))
+                        }
+
+                        // check for permanent denial of any permission
+                        if (report.isAnyPermissionPermanentlyDenied) {
+                            // show alert dialog navigating to Settings
+                            //openSettingsDialog();
                         }
                     }
 

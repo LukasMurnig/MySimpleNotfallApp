@@ -26,10 +26,10 @@ import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.connectBracelet
+import com.example.notfallapp.interfaces.IConnectBracelet
 
 
-class AddBraceletActivity() : Activity(), ICreatingOnClickListener, ICheckPermission, connectBracelet {
+class AddBraceletActivityI() : Activity(), ICreatingOnClickListener, ICheckPermission, IConnectBracelet {
     companion object{
         var connected: Boolean = false
         var batteryState: String = " "
@@ -78,7 +78,9 @@ class AddBraceletActivity() : Activity(), ICreatingOnClickListener, ICheckPermis
             var device = devices[position]
             connect(this, device)
         })
-        var intent = Intent(this,connectBracelet::class.java)
+
+        searchDevices()
+        var intent = Intent(this,IConnectBracelet::class.java)
         bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
     }
     private fun configureButtons() {

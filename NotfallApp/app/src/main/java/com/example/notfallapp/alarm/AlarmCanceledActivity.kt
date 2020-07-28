@@ -108,7 +108,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
             ContextCompat.startActivity(context, intent, null)
         }
 
-        btnContact.setOnClickListener {
+        btnContact.setOnClickListener(){
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.ContactRegister),
                                 resources.getString(R.string.AlarmCanceled)))
@@ -117,7 +117,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
             ContextCompat.startActivity(context, intent, null)
         }
 
-        btnSettings.setOnClickListener {
+        btnSettings.setOnClickListener(){
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.SettingsRegister),
                                 resources.getString(R.string.AlarmCanceled)))

@@ -5,17 +5,19 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notfallapp.connectBracelet.AddBraceletActivity
+import com.example.notfallapp.connectBracelet.AddBraceletActivityI
+import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
-import com.example.notfallapp.interfaces.connectBracelet
 import com.example.notfallapp.server.ServerApi
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -35,16 +37,20 @@ class MainActivity : AppCompatActivity(),
     private lateinit var btnSettings: ImageButton
 
     private lateinit var btnaddBracelet: ImageButton
+    private lateinit var btnpairBracelet: ImageButton
+    private lateinit var btnBracelet: ImageButton
     private lateinit var tvStatusbracelet: TextView
     private lateinit var tvaddbracelet: TextView
+    private lateinit var tvpairbracelet: TextView
 
     private var timer = Timer()
+    private lateinit var handler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureButtons()
         initComponents()
-
+        checkConnected()
         ServerApi.setContext(applicationContext)
         ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
 
@@ -54,8 +60,12 @@ class MainActivity : AppCompatActivity(),
 
         btnaddBracelet.setOnClickListener {
             Log.d("ButtonAdd", "Button Add bracelet was clicked in MainActivity")
-            val intent = Intent(this, AddBraceletActivity::class.java)
+            val intent = Intent(this, AddBraceletActivityI::class.java)
             startActivity(intent)
+        }
+
+        btnpairBracelet.setOnClickListener{
+
         }
     }
 
@@ -102,8 +112,12 @@ class MainActivity : AppCompatActivity(),
 
     private fun initComponents(){
         btnaddBracelet = findViewById(R.id.btn_add_bracelet)
+        btnpairBracelet = findViewById(R.id.btn_pair_bracelet)
+        btnBracelet = findViewById(R.id.btn_bracelet)
         tvStatusbracelet = findViewById(R.id.tvStatusbracelet)
         tvaddbracelet = findViewById(R.id.tvaddbracelet)
+        tvpairbracelet = findViewById(R.id.tvpairbracelet)
+        handler = Handler(this.mainLooper)
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
@@ -111,14 +125,22 @@ class MainActivity : AppCompatActivity(),
         checkInternetAccess(this, connectivityManager, wifi)
     }
 
+    private fun checkConnected(){
+        var state: Boolean = IConnectBracelet.connected
+        if (state){
+            tvStatusbracelet.text = resources.getString(R.string.braceleteconnected)
+            btnBracelet.visibility = View.VISIBLE
+        }else{
+            tvStatusbracelet.text = resources.getString(R.string.nobraceletconnected)
+            btnBracelet.visibility = View.GONE
+        }
+    }
+
     private fun checkState(){
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                val state: Boolean = connectBracelet.connected
-                if (state){
-                    tvStatusbracelet.text = resources.getString(R.string.braceleteconnected)
-                }else{
-                    tvStatusbracelet.text = resources.getString(R.string.nobraceletconnected)
+                handler.post {
+                    checkConnected()
                 }
             }
         }, 0, 2000)

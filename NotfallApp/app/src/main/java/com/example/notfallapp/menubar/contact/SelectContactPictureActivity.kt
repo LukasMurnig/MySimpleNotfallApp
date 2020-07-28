@@ -66,10 +66,10 @@ class SelectContactPictureActivity : AppCompatActivity(), ICheckPermission {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_CANCELED) {
+        if (resultCode === RESULT_CANCELED) {
             return
         }
-        if (requestCode == 2) {
+        if (requestCode === 2) {
             if (data != null) {
                 val contentURI: Uri? = data.data
                 responseIntent = Intent()
