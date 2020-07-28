@@ -28,6 +28,17 @@ interface INotifications {
     private val notificationId: Int
         get() = 444444
 
+    fun createNotificationNoInternet(context: Context){
+        createHighNotificationChannel(context)
+
+        val builder = createBasicNotification(context, channelIdHighPriority, true)
+
+        builder.setContentTitle("Kein Internet")
+            .setContentText("Bitte schalten sie Internet an, damit die App funktioniert!")
+
+        showNotification(context, builder)
+    }
+
     fun createNotificationCreateAlarm(context: Context){
         createLowNotificationChannel(context)
         //createHighNotificationChannel(context)

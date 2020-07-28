@@ -11,6 +11,9 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
+import com.example.notfallapp.server.ServerUser
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
     private lateinit var etName : EditText
@@ -18,8 +21,8 @@ class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
     private lateinit var etTelNr : EditText
     private lateinit var etEmail : EditText
 
-    private lateinit var btnUpdateProfil : Button
-    private lateinit var btnCancelProfil : Button
+    private lateinit var btnUpdateProfile : Button
+    private lateinit var btnCancelProfile : Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,11 +31,11 @@ class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
 
         initComponents()
 
-        btnUpdateProfil.setOnClickListener{
+        btnUpdateProfile.setOnClickListener{
             updateProfil()
         }
 
-        btnCancelProfil.setOnClickListener {
+        btnCancelProfile.setOnClickListener {
             setResult(Activity.RESULT_CANCELED, null)
             finish()
         }
@@ -49,6 +52,20 @@ class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
         intent.putExtra(resources.getString(R.string.nameSettings), etName.text.toString())
         intent.putExtra(resources.getString(R.string.numberSettings), etTelNr.text.toString())
         intent.putExtra(resources.getString(R.string.emailAlarmDatabase), etEmail.text.toString())
+
+        val loginUser = SettingsActivity.logInUser
+        if(loginUser!=null){
+            loginUser.emailAddress = etEmail.text.toString()
+
+            GlobalScope.launch {
+                ServerUser().updateUserInfo(loginUser)
+            }
+        }
+
+
+
+
+
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -83,8 +100,8 @@ class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
         etAddress = findViewById(R.id.input_address)
         etTelNr = findViewById(R.id.input_telnr)
         etEmail = findViewById(R.id.input_email)
-        btnUpdateProfil = findViewById(R.id.btn_updateProfil)
-        btnCancelProfil = findViewById(R.id.btn_cancelProfil)
+        btnUpdateProfile = findViewById(R.id.btn_updateProfil)
+        btnCancelProfile = findViewById(R.id.btn_cancelProfil)
 
         val extras = intent.extras ?: return
 

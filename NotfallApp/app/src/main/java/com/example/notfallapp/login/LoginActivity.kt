@@ -18,7 +18,6 @@ import com.example.notfallapp.server.ServerApi
 class LoginActivity : AppCompatActivity(), ICheckPermission {
     companion object{
         private const val TAG :String = "LoginActivity"
-        private const val REQUEST_SIGNUP :Int = 0
     }
     private lateinit var usernameText: EditText
     private lateinit var passwordText: EditText
@@ -55,7 +54,7 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         )
         progressDialog.isIndeterminate = false
         progressDialog.setMessage(resources.getString(R.string.Authenticate))
-        progressDialog.show();
+        progressDialog.show()
 
         val username: String? = usernameText.text.toString()
         val password: String? = passwordText.text.toString()
@@ -73,7 +72,7 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
 
 
     private fun onLoginFailed() {
-        Toast.makeText(getBaseContext(), resources.getString(R.string.LoginFailed), Toast.LENGTH_LONG).show()
+        Toast.makeText(baseContext, resources.getString(R.string.LoginFailed), Toast.LENGTH_LONG).show()
         loginButton.isEnabled = true
     }
 
@@ -84,15 +83,15 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         val password: String? = passwordText.text.toString()
 
         if (username?.isEmpty()!!) {
-            usernameText.setError(resources.getString(R.string.emailTooShort))
+            usernameText.error = resources.getString(R.string.emailTooShort)
             validate = false
         }else{
             usernameText.error = null
         }
 
-        if (password?.isEmpty()!! || password?.length < 4) {
-            passwordText.setError(resources.getString(R.string.passwordTooShort));
-            validate = false;
+        if (password?.isEmpty()!! || password.length < 4) {
+            passwordText.error = resources.getString(R.string.passwordTooShort)
+            validate = false
         }else{
             passwordText.error = null
         }

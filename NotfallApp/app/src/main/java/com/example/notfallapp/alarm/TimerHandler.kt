@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.interfaces.ICurrentLocation
+import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.interfaces.INotifications
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ import java.util.*
 
 
 class TimerHandler {
-    companion object : INotifications, ICurrentLocation {
+    companion object : INotifications {
             private lateinit var handler: Handler
             fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
@@ -28,7 +28,7 @@ class TimerHandler {
                     /*ServerAlarm().sendAlert()
                     ServerAlarm().sendPosition(context)*/
 
-                    // create alarm in DB
+                    // meanwhile create alarm in DB
                     createAlarmInDb(context)
 
                     createNotificationSuccessfulAlarm(context)
@@ -48,7 +48,7 @@ class TimerHandler {
             val clickedTime: Date = Calendar.getInstance().time
             val dateFormat = android.text.format.DateFormat.format("dd-MM-yyyy hh:mm:ss a", clickedTime)
 
-            val location = getCurrentLocation(context)
+            val location = CurrentLocation.getCurrentLocation(context)
 
             var alarm: Alarm? = null
 
