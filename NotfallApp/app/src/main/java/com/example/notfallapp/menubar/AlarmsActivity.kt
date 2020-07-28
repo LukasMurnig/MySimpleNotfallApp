@@ -17,7 +17,6 @@ import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.server.ServerAlertingChain.Companion.getAlertingChain
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -39,8 +38,6 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         // set button bar and sos button
         configureButtons()
 
-        getAlertingChain()
-
         // fill RecyclerView with Alerts
         rvAlarms = findViewById(R.id.rvAlarms)
         rvAlarms.setHasFixedSize(false)
@@ -57,9 +54,6 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     }
 
     private fun getData(){
-        // val db = Room.databaseBuilder(applicationContext, AlarmDatabase::class.java, "alarms.db").build()
-        // oder
-        // val db2 = AlarmDatabase(this)
         class GetData : AsyncTask<Unit, Unit, List<Alarm>>() {
 
             override fun doInBackground(vararg p0: Unit?): List<Alarm> {

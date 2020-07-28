@@ -51,6 +51,8 @@ class ContactListAdapter(var contacts: List<Contact>) :
         private lateinit var imageContact: ImageView
         private lateinit var contactName: TextView
         private lateinit var contactEmail: TextView
+        private lateinit var contactTelNr: TextView
+        private lateinit var contactMessageType: TextView
 
         private lateinit var contactMenu: ImageButton
         private lateinit var tvActive: TextView
@@ -61,12 +63,14 @@ class ContactListAdapter(var contacts: List<Contact>) :
             imageContact = itemView.findViewById(R.id.contact_item_icon)
             contactName = itemView.findViewById(R.id.contact_name)
             contactEmail = itemView.findViewById(R.id.contact_email)
+            contactTelNr = itemView.findViewById(R.id.contact_telNr)
+            contactMessageType = itemView.findViewById(R.id.contact_messageType)
             contactMenu = itemView.findViewById(R.id.iBtnContactMenu)
             tvActive = itemView.findViewById(R.id.tvActive)
 
             MainScope().launch {
                 if(contact.photoSet){
-                    if(contact.pathToImage!=null){
+                    if(contact.pathToImage != null){
                         if(contact.pathToImage!!.isNotEmpty()){
                             val bitmap =
                                 MediaStore.Images.Media.getBitmap(itemView.context.contentResolver, Uri.parse(contact.pathToImage))
@@ -76,15 +80,17 @@ class ContactListAdapter(var contacts: List<Contact>) :
                 }
             }
 
-            contactName.text = contact.surname + " " + contact.forename + " " + contact.priority
+            contactName.text = contact.surname + " " + contact.forename
             contactEmail.text = contact.e_mail
+            contactTelNr.text = contact.phoneFixed
+            contactMessageType.text = "Kontaktieren mit " + contact.messageType
+
             tvActive.text = contact.active.toString()
 
             iBtnArrowUp.setOnClickListener{
-                if(contact.priority==0){
+                if(contact.priority == 0){
                     return@setOnClickListener
                 }
-
                 switchContact(contact, itemView, true)
             }
 

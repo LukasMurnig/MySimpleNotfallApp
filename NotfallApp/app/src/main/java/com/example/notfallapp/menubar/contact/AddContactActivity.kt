@@ -48,7 +48,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
     private var toUpdateContact: Contact? = null
 
     companion object{
-        val phoneAreaCodes: MutableMap<String, String>? = null
+        var phoneAreaCodes: MutableMap<String, String>? = null
         val timezones: MutableMap<String, String>? = null
         val countries: MutableMap<String, String>? = null
         val languages: MutableMap<String, String>? = null
@@ -79,7 +79,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                     photoSet = true
                 }
 
-                if(toUpdateContact==null){
+                if(toUpdateContact == null){
                     val gender: Int = if(spinnerGender.selectedItem == "Herr"){
                         1
                     }else{
@@ -104,8 +104,8 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                     toUpdateContact!!.e_mail = input_email.text.toString()
                     toUpdateContact!!.phoneFixed = input_number.text.toString()
                     toUpdateContact!!.messageType = spinnerMessage.selectedItem.toString()
-                    if(path!=null){
-                        toUpdateContact!!.photoSet=true
+                    if(toUpdateContact!!.pathToImage != null){
+                        toUpdateContact!!.photoSet = true
                     }
                     toUpdateContact!!.pathToImage = path
                     installContact(toUpdateContact!!, true)
@@ -124,7 +124,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
 
         val extras = intent.extras ?: return
         prio = extras.getInt(resources.getString(R.string.prio))
-        if(extras.getString(resources.getString(R.string.firstnameAlarmDatabase))!=null){
+        if(extras.getString(resources.getString(R.string.firstnameAlarmDatabase)) != null){
             toUpdateContact = Contact(null,
                 extras.getString(resources.getString(R.string.firstnameAlarmDatabase)),
                 extras.getString(resources.getString(R.string.lastnameAlarmDatabase)),
@@ -147,7 +147,8 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
             )
 
             if(toUpdateContact!!.pathToImage != null){
-                toUpdateContact!!.photoSet=true
+                toUpdateContact!!.photoSet = true
+                path = toUpdateContact!!.pathToImage
                 val bitmap =
                     MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(toUpdateContact!!.pathToImage))
                 addpicture.setImageBitmap(bitmap)
@@ -174,9 +175,13 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                 appDb.contactDao().updateContact(contact)
             }
         }else{
-            GlobalScope.launch {
-                appDb.contactDao().insertContact(contact)
-            }
+                GlobalScope.launch {
+                    try{
+                        appDb.contactDao().insertContact(contact)
+                    }catch (ex: Exception){
+                        // when unique constraint
+                    }
+                }
         }
         val intent = Intent(this, ContactActivity::class.java)
         startActivity(intent)
@@ -201,7 +206,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         if (resultCode == RESULT_CANCELED) {
             return
         }
-        if(requestCode== 1 && data != null){
+        if(requestCode == 1 && data != null){
             path =  "content://media" + data.getStringExtra("path")
             if(path != null){
                 try{

@@ -74,7 +74,7 @@ class SelectContactPictureActivity : AppCompatActivity(), ICheckPermission {
                 val contentURI: Uri? = data.data
                 responseIntent = Intent()
                 try{
-                    if(contentURI!=null){
+                    if(contentURI != null){
                         val bitmap =
                             MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, contentURI)
                         image.setImageBitmap(bitmap)

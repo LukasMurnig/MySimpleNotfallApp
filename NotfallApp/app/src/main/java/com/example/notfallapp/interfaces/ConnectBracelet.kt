@@ -12,6 +12,8 @@ import com.example.notfallapp.connectBracelet.ProcessQueueExecutor
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.example.notfallapp.service.ServiceCallAlarm
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 interface ConnectBracelet {
@@ -30,7 +32,7 @@ interface ConnectBracelet {
     fun connect(context: Context, device: BluetoothDevice){
         process = ProcessQueueExecutor()
         //To execute the read and write operation in a queue.
-        if (!process.isAlive()) {
+        if (!process.isAlive) {
             process.start()
         }
         ConnectBracelet.context = context
@@ -46,12 +48,12 @@ interface ConnectBracelet {
                     when (newState) {
                         BluetoothProfile.STATE_CONNECTED -> {
                             //start service discovery
-                            println("1")
                             connected = true
-                            EmergencyAppDatabase.getInstance(context).deviceDao().insertDevice(
-                                Device(deviceAddress)
-                            )
-                            println("2")
+                            GlobalScope.launch {
+                                EmergencyAppDatabase.getInstance(context).deviceDao().insertDevice(
+                                    Device(deviceAddress)
+                                )
+                            }
                             gatt.discoverServices()
                         }
                         BluetoothProfile.STATE_DISCONNECTED -> {
@@ -69,11 +71,10 @@ interface ConnectBracelet {
             }
 
             override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
-                println("HELLO SERVICE DISCOVERED")
                 val device = gatt.device
                 val deviceAddress = device.address
                 if (status == BluetoothGatt.GATT_SUCCESS) {
-                    println("Succesfull discover device")
+                    // Do APP verification as soon as service discovered.
                     // Do APP verification as soon as service discovered.
                     try {
                         appVerification(
