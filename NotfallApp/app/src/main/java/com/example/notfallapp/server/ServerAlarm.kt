@@ -5,19 +5,20 @@ import android.net.ConnectivityManager
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
+import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlertsListAdapter
 import com.example.notfallapp.bll.Alert
-import com.example.notfallapp.interfaces.ICurrentLocation
+import com.example.notfallapp.interfaces.CurrentLocation
 import org.json.JSONObject
 import java.util.*
 
-class ServerAlarm : ICurrentLocation {
-    fun getAllAlerts(rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
+class ServerAlarm {
+    fun getAllAlerts(context: Context, rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
         ServerApi.createCall(Request.Method.GET, "/alerts", null) { response ->
             if (response.has("data")) {
                 val data = response.get("data") as Array<JSONObject>
                 if(data.isEmpty()){
-                    //lbMessageNoAlarms.text = resources.getString(R.string.noAlarms)
+                    lbMessageNoAlarms.text = context.resources.getString(R.string.noAlarms)
                 }else{
                     val result: List<Alert> = mutableListOf()
                     for(json: JSONObject in data){
@@ -60,7 +61,7 @@ class ServerAlarm : ICurrentLocation {
     fun sendPosition(context: Context){
         val reqBody = JSONObject()
 
-        val location = getCurrentLocation(context)
+        val location = CurrentLocation.getCurrentLocation(context)
         val positions = JSONObject()
         val timestamp = Calendar.getInstance().time
         if(location != null){

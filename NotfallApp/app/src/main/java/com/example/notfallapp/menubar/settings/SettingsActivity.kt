@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
+import com.example.notfallapp.bll.User
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.server.ServerUser
@@ -42,6 +43,10 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
 
     private val IMAGE_DIRECTORY = "/profilPicture"
 
+    companion object{
+        var logInUser: User? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -55,7 +60,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         updateProfilPicture()
 
         GlobalScope.launch {
-            ServerUser().getUserInfo(application)
+            ServerUser().getUserInfo(applicationContext)
             tvName.text = resources.getString(R.string.sampleName)
             tvTelNr.text = resources.getString(R.string.sampleNumber)
             tvEmail.text = resources.getString(R.string.sampleEmail)

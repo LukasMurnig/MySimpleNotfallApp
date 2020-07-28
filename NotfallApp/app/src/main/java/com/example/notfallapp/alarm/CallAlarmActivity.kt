@@ -12,13 +12,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.connectBracelet.AddBraceletActivityI
+import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.ICurrentLocation
 import com.example.notfallapp.service.ServiceCancelAlarm
 import kotlin.math.roundToInt
 
 
-class CallAlarmActivity : AppCompatActivity(), ICheckPermission, ICurrentLocation {
+class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
     private lateinit var btnCancelAlarm: Button
     private lateinit var tvAlarm: TextView
     private lateinit var tvConnectionState: TextView
@@ -61,7 +61,7 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission, ICurrentLocatio
     }
 
     private fun getLatestKnownLocation(){
-        val location = getCurrentLocation(applicationContext)
+        val location = CurrentLocation.getCurrentLocation(applicationContext)
         var longitude: String?
         var latitude: String?
         var accuracy: Float?

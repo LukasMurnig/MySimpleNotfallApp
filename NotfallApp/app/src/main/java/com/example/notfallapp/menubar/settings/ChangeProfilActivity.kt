@@ -10,7 +10,12 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.bll.User
 import com.example.notfallapp.interfaces.ICheckPermission
+import com.example.notfallapp.server.ServerUser
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
 
 class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
     private lateinit var etName : EditText
@@ -49,6 +54,20 @@ class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
         intent.putExtra(resources.getString(R.string.nameSettings), etName.text.toString())
         intent.putExtra(resources.getString(R.string.numberSettings), etTelNr.text.toString())
         intent.putExtra(resources.getString(R.string.emailAlarmDatabase), etEmail.text.toString())
+
+        val loginUser = SettingsActivity.logInUser
+        if(loginUser!=null){
+            loginUser.emailAddress = etEmail.text.toString()
+
+            GlobalScope.launch {
+                ServerUser().updateUserInfo(loginUser)
+            }
+        }
+
+
+
+
+
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
