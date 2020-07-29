@@ -138,7 +138,7 @@
                                             kein Bluetooth!</string>
     <string name="nobluetoothdevicesfound">Wir haben leider keine Bluetoothgeräte in Ihrer nähe gefunden.
                                             Bitte versuchen Sie es erneut!</string>
-    <string name="error">Hoppla, da ist wohl etwas schiefgelaufen bitte versuchen Sie es nochmal!</string>
+    <string name="braceleterror">Hoppla, da ist wohl etwas schiefgelaufen bitte versuchen Sie es nochmal!</string>
     <string name="pair">Koppeln</string>
     <!-- DIALOG -->
     <!-- Sure dialog -->

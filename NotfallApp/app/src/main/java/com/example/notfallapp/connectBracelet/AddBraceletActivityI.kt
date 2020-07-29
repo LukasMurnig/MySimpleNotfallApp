@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.content.*
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
@@ -51,7 +52,6 @@ class AddBraceletActivityI() : Activity(), ICreatingOnClickListener, ICheckPermi
     private var devices = ArrayList<BluetoothDevice>()
     private var bluetoothGatt: BluetoothGatt? = null
     private lateinit var context: Context
-    private var address = "D0:39:72:C4:FD:DC"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -75,8 +75,15 @@ class AddBraceletActivityI() : Activity(), ICreatingOnClickListener, ICheckPermi
 
         lvDevices.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
             Log.d("ListViewClicked", "List View in Add BraceletActivity was clicked")
-            var device = devices[position]
-            connect(this, device)
+            if(devices.size != 0) {
+                var device = devices[position]
+                connect(this, device, false)
+            }else{
+                tvConnectBracelet.text = context.getString(R.string.braceleterror)
+                val adapter = BluetoothListAdapter(applicationContext, devices)
+                lvDevices.adapter = adapter
+                adapter.notifyDataSetChanged()
+            }
         })
 
         searchDevices()
@@ -113,8 +120,12 @@ class AddBraceletActivityI() : Activity(), ICreatingOnClickListener, ICheckPermi
                 val action = intent.action
                 if (BluetoothAdapter.ACTION_DISCOVERY_STARTED == action) {
                     devices = ArrayList<BluetoothDevice>()
+                    btnRetrySearching.isClickable = false
+                    btnRetrySearching.setTextColor(Color.parseColor("#FF0000"))
                     //discovery starts, we can show progress dialog or perform other tasks
                 } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
+                    btnRetrySearching.isClickable = true
+                    btnRetrySearching.setTextColor(Color.parseColor("#000000"))
                     if(devices.size == 0){
                         tvConnectBracelet.text = getResources().getString(R.string.nobluetoothdevicesfound)
                     }else {
@@ -144,7 +155,7 @@ class AddBraceletActivityI() : Activity(), ICreatingOnClickListener, ICheckPermi
                             }
                         }
                     }catch(ex: Exception){
-                        tvConnectBracelet.text = getResources().getString(R.string.error)
+                        tvConnectBracelet.text = context.getString(R.string.braceleterror)
                     }
                 }
             }
@@ -176,7 +187,7 @@ class AddBraceletActivityI() : Activity(), ICreatingOnClickListener, ICheckPermi
         override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
 
             // Automatically connects to the device upon successful start-up initialization.
-            device?.let { connect(application, it) }
+            device?.let { connect(application, it, false) }
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
