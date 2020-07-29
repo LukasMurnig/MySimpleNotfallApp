@@ -2,6 +2,7 @@ package com.example.notfallapp
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.ColorFilter
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.notfallapp.connectBracelet.AddBraceletActivityI
 import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.interfaces.ICheckPermission
