@@ -12,7 +12,7 @@ interface ContactDao {
     fun getCountOfContact(): Int
 
     @Query("SELECT * FROM Contact WHERE priority = :prio")
-    fun getContactByPriority(prio: Int): Contact
+    fun getContactByPriority(prio: Int): Contact?
 
     @Insert
     fun insertContact(contact: Contact)

@@ -2,9 +2,11 @@ package com.example.notfallapp.menubar.contact
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.net.wifi.WifiManager
+import android.nfc.Tag
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -126,17 +128,17 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         prio = extras.getInt(resources.getString(R.string.prio))
         if(extras.getString(resources.getString(R.string.firstnameAlarmDatabase)) != null){
             toUpdateContact = Contact(null,
-                extras.getString(resources.getString(R.string.firstnameAlarmDatabase)),
-                extras.getString(resources.getString(R.string.lastnameAlarmDatabase)),
+                extras.getString(resources.getString(R.string.firstnameAlarmDatabase)) as String,
+                extras.getString(resources.getString(R.string.lastnameAlarmDatabase)) as String,
                 extras.getBoolean(resources.getString(R.string.active)),
                 "not implemented",
                 extras.getInt("gender"),
                 false,
-                extras.getString(resources.getString(R.string.emailAlarmDatabase)),
-                extras.getString(resources.getString(R.string.numberAlarmDatabas)),
+                extras.getString(resources.getString(R.string.emailAlarmDatabase)) as String,
+                extras.getString(resources.getString(R.string.numberAlarmDatabas)) as String,
                 null,
                 null,
-                extras.getString("messageType"),
+                extras.getString("messageType") as String,
                 extras.getInt(resources.getString(R.string.prio)),
                 extras.getString(resources.getString(R.string.image)),
                 null,
@@ -151,7 +153,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                 path = toUpdateContact!!.pathToImage
                 val bitmap =
                     MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(toUpdateContact!!.pathToImage))
-                addpicture.setImageBitmap(bitmap)
+                addpicture.background = BitmapDrawable(resources, bitmap)
             }
 
             input_firstname.setText(toUpdateContact!!.forename)
@@ -180,6 +182,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                         appDb.contactDao().insertContact(contact)
                     }catch (ex: Exception){
                         // when unique constraint
+                        Log.e("Database", "unique constraint, this email already exist")
                     }
                 }
         }
@@ -199,58 +202,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         btnSettings = findViewById(R.id.btnSettings)
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_CANCELED) {
-            return
-        }
-        if(requestCode == 1 && data != null){
-            path =  "content://media" + data.getStringExtra("path")
-            if(path != null){
-                try{
-                    val uri = Uri.parse(path)
-                    val bitmap =
-                        MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, uri)
-                    addpicture.setImageBitmap(bitmap)
-                }catch (e: IOException){
-                    Log.e(resources.getString(R.string.image),
-                          String.format(resources.getString(R.string.Image),
-                                        resources.getString(R.string.AddContact), e.toString()))
-                }
-            }
-        }
-    }
-
-    private fun initComponents() {
-        addpicture = findViewById(R.id.addpicture)
-        btn_add = findViewById(R.id.btn_add)
-        btn_cancel = findViewById(R.id.btn_cancel)
-        spinnerGender = findViewById(R.id.spinnerGender)
-        input_firstname = findViewById(R.id.input_firstname)
-        input_lastname = findViewById(R.id.input_lastname)
-        input_email = findViewById(R.id.input_email)
-        spinnerTelNr = findViewById(R.id.spinnerTelNr)
-        input_number = findViewById(R.id.input_number)
-        spinnerLanguage = findViewById(R.id.spinnerLanguage)
-        spinnerGender = findViewById(R.id.spinnerGender)
-        spinnerMessage = findViewById(R.id.spinnerMessage)
-
-        builder = AlertDialog.Builder(this)
-
-        spinnerGender.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Frau", "Herr"))
-        spinnerMessage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Anruf", "SMS", "Email"))
-
-        // TODO get date vom Server Page 111 OrgUnitsItems
-        // spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
-        // spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
-        // spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
     }
 
     private fun validate(): Boolean {
@@ -305,5 +256,58 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         builder.setNegativeButton(resources.getString(R.string.No)) { dialog, _ ->
             dialog.dismiss()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_CANCELED) {
+            return
+        }
+        if(requestCode == 1 && data != null){
+            path =  "content://media" + data.getStringExtra("path")
+            if(path != null){
+                try{
+                    val uri = Uri.parse(path)
+                    val bitmap =
+                        MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, uri)
+                    addpicture.background = BitmapDrawable(resources, bitmap)
+                }catch (e: IOException){
+                    Log.e(resources.getString(R.string.image),
+                          String.format(resources.getString(R.string.Image),
+                                        resources.getString(R.string.AddContact), e.toString()))
+                }
+            }
+        }
+    }
+
+    private fun initComponents() {
+        addpicture = findViewById(R.id.addpicture)
+        btn_add = findViewById(R.id.btn_add)
+        btn_cancel = findViewById(R.id.btn_cancel)
+        spinnerGender = findViewById(R.id.spinnerGender)
+        input_firstname = findViewById(R.id.input_firstname)
+        input_lastname = findViewById(R.id.input_lastname)
+        input_email = findViewById(R.id.input_email)
+        spinnerTelNr = findViewById(R.id.spinnerTelNr)
+        input_number = findViewById(R.id.input_number)
+        spinnerLanguage = findViewById(R.id.spinnerLanguage)
+        spinnerGender = findViewById(R.id.spinnerGender)
+        spinnerTimezone = findViewById(R.id.spinnerTimezone)
+        spinnerMessage = findViewById(R.id.spinnerMessage)
+
+        builder = AlertDialog.Builder(this)
+
+        spinnerGender.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Frau", "Herr"))
+        spinnerMessage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Anruf", "SMS", "Email"))
+
+        // TODO get date vom Server Page 111 OrgUnitsItems
+        // spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, phoneAreaCodes)
+        // spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
+        // spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi =
+            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        checkInternetAccess(this, connectivityManager, wifi)
     }
 }

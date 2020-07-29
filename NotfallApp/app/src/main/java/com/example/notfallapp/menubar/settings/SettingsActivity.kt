@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
+import com.example.notfallapp.bll.User
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.server.ServerUser
@@ -37,10 +38,14 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
     private lateinit var tvTelNr: TextView
     private lateinit var tvEmail: TextView
     private lateinit var btnChangeDate: Button
-    private lateinit var imageProfilPicture: ImageView
-    private lateinit var btnProfilPicture: ImageButton
+    private lateinit var imageProfilePicture: ImageView
+    private lateinit var btnProfilePicture: ImageButton
 
     private val IMAGE_DIRECTORY = "/profilPicture"
+
+    companion object{
+        var logInUser: User? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +60,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         updateProfilPicture()
 
         GlobalScope.launch {
-            ServerUser().getUserInfo(application)
+            ServerUser().getUserInfo(applicationContext)
             tvName.text = resources.getString(R.string.sampleName)
             tvTelNr.text = resources.getString(R.string.sampleNumber)
             tvEmail.text = resources.getString(R.string.sampleEmail)
@@ -69,7 +74,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
             startActivityForResult(intent, 0)
         }
 
-        btnProfilPicture.setOnClickListener{
+        btnProfilePicture.setOnClickListener{
             val intent = Intent(this, SelectProfilPictureActivity::class.java)
             startActivityForResult(intent, 2)
         }
@@ -115,7 +120,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
                 val options = BitmapFactory.Options()
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888
                 val bitmap = BitmapFactory.decodeFile(f.absolutePath, options)
-                imageProfilPicture.setImageBitmap(bitmap)
+                imageProfilePicture.setImageBitmap(bitmap)
                 Log.d(resources.getString(R.string.ReadFile),
                       String.format(resources.getString(R.string.ReadFilePath), f.absolutePath))
             }
@@ -132,8 +137,8 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         tvTelNr = findViewById(R.id.tvTelNr)
         tvEmail = findViewById(R.id.tvEmail)
         btnChangeDate = findViewById(R.id.btnChangeData)
-        imageProfilPicture = findViewById(R.id.imageProfilPicture)
-        btnProfilPicture = findViewById(R.id.iBtnProfilPicture)
+        imageProfilePicture = findViewById(R.id.imageProfilPicture)
+        btnProfilePicture = findViewById(R.id.iBtnProfilPicture)
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =

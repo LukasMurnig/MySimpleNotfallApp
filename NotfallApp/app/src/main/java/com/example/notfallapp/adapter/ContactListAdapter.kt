@@ -14,7 +14,8 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
-import com.example.notfallapp.interfaces.IAlarmDatabase
+import com.example.notfallapp.interfaces.IContactDatabase
+import kotlinx.android.synthetic.main.listcontact_item.view.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -45,28 +46,17 @@ class ContactListAdapter(var contacts: List<Contact>) :
         return contacts.size
     }
 
-    class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), IAlarmDatabase {
-        private lateinit var iBtnArrowUp: ImageButton
-        private lateinit var iBtnArrowDown: ImageButton
+    class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), IContactDatabase {
         private lateinit var imageContact: ImageView
         private lateinit var contactName: TextView
-        private lateinit var contactEmail: TextView
-        private lateinit var contactTelNr: TextView
-        private lateinit var contactMessageType: TextView
-
+        private lateinit var contactActive: ImageView
         private lateinit var contactMenu: ImageButton
-        private lateinit var tvActive: TextView
 
         fun bindContact(contact: Contact){
-            iBtnArrowUp = itemView.findViewById(R.id.ibtnArrowUp)
-            iBtnArrowDown = itemView.findViewById(R.id.ibtnArrowDown)
             imageContact = itemView.findViewById(R.id.contact_item_icon)
             contactName = itemView.findViewById(R.id.contact_name)
-            contactEmail = itemView.findViewById(R.id.contact_email)
-            contactTelNr = itemView.findViewById(R.id.contact_telNr)
-            contactMessageType = itemView.findViewById(R.id.contact_messageType)
+            contactActive = itemView.findViewById(R.id.contact_active)
             contactMenu = itemView.findViewById(R.id.iBtnContactMenu)
-            tvActive = itemView.findViewById(R.id.tvActive)
 
             MainScope().launch {
                 if(contact.photoSet){
@@ -80,25 +70,9 @@ class ContactListAdapter(var contacts: List<Contact>) :
                 }
             }
 
-            contactName.text = contact.surname + " " + contact.forename
-            contactEmail.text = contact.e_mail
-            contactTelNr.text = contact.phoneFixed
-            contactMessageType.text = "Kontaktieren mit " + contact.messageType
-
-            tvActive.text = contact.active.toString()
-
-            iBtnArrowUp.setOnClickListener{
-                if(contact.priority == 0){
-                    return@setOnClickListener
-                }
-                switchContact(contact, itemView, true)
-            }
-
-            iBtnArrowDown.setOnClickListener{
-                if(contact.priority == 2){
-                    return@setOnClickListener
-                }
-                switchContact(contact, itemView, false)
+            contactName.text = contact.surname + ", " + contact.forename
+            if(contact.active){
+                contactActive.setImageResource(R.drawable.active)
             }
 
             contactMenu.setOnClickListener{
@@ -119,7 +93,12 @@ class ContactListAdapter(var contacts: List<Contact>) :
                 when (which) {
                     0 -> updateContact(contact, itemView)
                     1 -> deleteContact(contact, itemView)
-                    2 -> activateContact(contact, itemView)
+                    2 -> {
+                        if(contact.active){
+                            itemView.contact_active.setImageDrawable(null)
+                        }
+                        activateContact(contact, itemView)
+                    }
                 }
             }
             pictureDialog.show()

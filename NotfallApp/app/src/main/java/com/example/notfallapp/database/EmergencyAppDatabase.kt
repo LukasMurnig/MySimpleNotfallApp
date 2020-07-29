@@ -19,7 +19,7 @@ abstract class EmergencyAppDatabase : RoomDatabase(){
 
     companion object {
         private var INSTANCE: EmergencyAppDatabase? = null
-        private val DB_NAME: String = "emergency.db"
+        private const val DB_NAME: String = "emergency.db"
 
         fun getInstance(context: Context): EmergencyAppDatabase {
             if (INSTANCE == null) {

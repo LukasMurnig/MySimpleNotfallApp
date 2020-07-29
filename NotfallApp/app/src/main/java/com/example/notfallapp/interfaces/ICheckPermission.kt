@@ -10,7 +10,7 @@ import com.example.notfallapp.R
 import java.util.*
 
 
-interface ICheckPermission {
+interface ICheckPermission : INotifications {
     fun checkPermissions(context: Context, connectivityManager: ConnectivityManager?, wifi: WifiManager){
         checkInternetAccess(context, connectivityManager, wifi)
         checkBluetoothEnabled(context)
@@ -105,6 +105,7 @@ interface ICheckPermission {
     }
 
     private fun noInternetAccess(context: Context, connectivityManager: ConnectivityManager?, wifi: WifiManager){
+        createNotificationNoInternet(context)
         val builder: AlertDialog.Builder = enableInternetAccess(context, connectivityManager, wifi)
         showAccess(builder)
     }

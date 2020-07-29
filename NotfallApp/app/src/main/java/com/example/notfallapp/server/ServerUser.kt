@@ -4,6 +4,7 @@ import android.content.Context
 import com.android.volley.Request
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.User
+import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.server.ServerApi.Companion.createCall
 import org.json.JSONObject
 import java.util.*
@@ -14,7 +15,7 @@ class ServerUser {
         createCall(Request.Method.GET, context.getString(R.string.UserMe), null ){ response ->
             if (response.has("data")) {
                 val data = response.getJSONObject("data")
-                User(
+                SettingsActivity.logInUser = User(
                     data.get("ID") as UUID,
                     data.get("ForeignId") as String?,
                     data.get("Title") as String?,

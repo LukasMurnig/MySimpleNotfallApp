@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity(),
         btnSettings = findViewById(R.id.btnSettings)
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
-        createNotificationCreateAlarm(this)
+        createNotificationCreateAlarm(applicationContext)
     }
 
     private fun initComponents(){
@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun checkConnected(){
-        var state: Boolean = IConnectBracelet.connected
+        val state: Boolean = IConnectBracelet.connected
         if (state){
             tvStatusbracelet.text = resources.getString(R.string.braceleteconnected)
             btnBracelet.visibility = View.VISIBLE

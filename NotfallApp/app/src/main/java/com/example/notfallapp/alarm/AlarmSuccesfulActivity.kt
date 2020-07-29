@@ -16,7 +16,7 @@ import com.example.notfallapp.interfaces.ICheckPermission
 class AlarmSuccesfulActivity : AppCompatActivity(), ICheckPermission {
 
     private lateinit var tvAlarm: TextView
-    private lateinit var buttonsuccesfulOk: Button
+    private lateinit var buttonSuccessfulOk: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ class AlarmSuccesfulActivity : AppCompatActivity(), ICheckPermission {
         setContentView(R.layout.activity_call_alarm_succesful)
         initComponents()
 
-        buttonsuccesfulOk.setOnClickListener {
+        buttonSuccessfulOk.setOnClickListener {
             Log.d(resources.getString(R.string.SOSButton),
                   String.format(resources.getString(R.string.SOSButtonClicked),
                                 resources.getString(R.string.AlarmSuccessful)))
@@ -35,7 +35,7 @@ class AlarmSuccesfulActivity : AppCompatActivity(), ICheckPermission {
 
     private fun initComponents() {
         tvAlarm = findViewById(R.id.tvAlarm)
-        buttonsuccesfulOk = findViewById(R.id.btn_alarm_succesful_ok)
+        buttonSuccessfulOk = findViewById(R.id.btn_alarm_succesful_ok)
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
