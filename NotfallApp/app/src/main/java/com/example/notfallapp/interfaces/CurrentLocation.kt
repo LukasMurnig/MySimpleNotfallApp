@@ -73,10 +73,10 @@ class CurrentLocation {
                         //return null
                     }
                     if(gps == true){
-
+                        locationManager?.removeUpdates(this@Companion)
                         locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 200.0F, this@Companion)
                         currentLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                        println(currentLocation.toString())
+                        println("Location: "+currentLocation.toString())
                     }else{
 
                         locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 200.0F, this@Companion)
