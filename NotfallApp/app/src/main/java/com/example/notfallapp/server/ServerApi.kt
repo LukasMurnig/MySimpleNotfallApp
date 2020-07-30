@@ -29,7 +29,7 @@ class ServerApi {
         var accessToken: String? = null
         private var refreshToken: String? = null
         private var multiFactorToken: String? = null
-        var tokenExpiresInSeconds: Int? = null
+        private var tokenExpiresInSeconds: Int? = null
         private var multiFactorAuth: Boolean? = null
         private var username: String? = null
         var userId: UUID? = null
