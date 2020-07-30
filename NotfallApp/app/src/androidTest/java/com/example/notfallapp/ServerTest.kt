@@ -3,7 +3,7 @@ package com.example.notfallapp
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.notfallapp.menubar.AlarmsActivity
+import com.example.notfallapp.menubar.alert.AlarmsActivity
 import com.example.notfallapp.menubar.contact.AddContactActivity
 import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.server.ServerAlertingChain

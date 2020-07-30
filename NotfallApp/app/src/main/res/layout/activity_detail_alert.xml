@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".menubar.alert.DetailAlertActivity">
+
+    <include
+        android:id="@+id/include4"
+        layout="@layout/menu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+    <!-- Device Id -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/device"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include4" />
+    <TextView
+        android:id="@+id/tvDetailDeviceId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include4"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Longitude -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/longitude"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailDeviceId"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+    <TextView
+        android:id="@+id/tvDetailLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailDeviceId"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Latitude -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/latitude"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailLongitude"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+    <TextView
+        android:id="@+id/tvDetailLatitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailLongitude"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Timestamp -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailLatitude"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+    <TextView
+        android:id="@+id/tvDetailDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailLatitude"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailDate"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+    <TextView
+        android:id="@+id/tvDetailTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailDate"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Wer nahm an -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/AlarmAnswered"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailTime"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+    <TextView
+        android:id="@+id/tvDetailAlarmAccepted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/AlarmAccepted"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailTime"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="10dp"/>
+
+    <include
+        layout="@layout/layout_button_sos"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="530dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

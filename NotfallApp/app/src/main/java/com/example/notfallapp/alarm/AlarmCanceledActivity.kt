@@ -16,7 +16,7 @@ import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.menubar.AlarmsActivity
+import com.example.notfallapp.menubar.alert.AlarmsActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.service.ServiceCallAlarm

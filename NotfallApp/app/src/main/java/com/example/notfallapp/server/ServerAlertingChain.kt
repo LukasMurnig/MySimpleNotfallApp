@@ -3,7 +3,7 @@ package com.example.notfallapp.server
 import com.android.volley.Request
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
-import com.example.notfallapp.menubar.AlarmsActivity
+import com.example.notfallapp.menubar.alert.AlarmsActivity
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*

@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.net.wifi.WifiManager
-import android.nfc.Tag
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -17,8 +16,8 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
+import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
