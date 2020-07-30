@@ -1,13 +1,9 @@
 package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.net.ConnectivityManager
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -119,7 +115,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
                 val options = BitmapFactory.Options()
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888
                 val bitmap = BitmapFactory.decodeFile(f.absolutePath, options)
-                btnProfilePicture.background = BitmapDrawable(resources, bitmap)
+                btnProfilePicture.setImageBitmap(bitmap)
                 Log.d(resources.getString(R.string.ReadFile),
                       String.format(resources.getString(R.string.ReadFilePath), f.absolutePath))
             }
