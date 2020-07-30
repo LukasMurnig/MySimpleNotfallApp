@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.bll.Alarm
+import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
@@ -30,6 +31,10 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
 
     private lateinit var rvAlarms: RecyclerView
     private lateinit var lbMessageNoAlarms: TextView
+
+    companion object{
+        var alertingChain: AlertingChain? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

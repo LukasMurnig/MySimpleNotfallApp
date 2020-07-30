@@ -29,7 +29,7 @@ class ServerApi {
         var accessToken: String? = null
         private var refreshToken: String? = null
         private var multiFactorToken: String? = null
-        private var tokenExpiresInSeconds: Int? = null
+        var tokenExpiresInSeconds: Int? = null
         private var multiFactorAuth: Boolean? = null
         private var username: String? = null
         var userId: UUID? = null
@@ -99,7 +99,7 @@ class ServerApi {
             volleyRequestQueue?.add(jsonObjectRequest)
         }
 
-        private fun refreshToken(){
+        fun refreshToken(){
             val reqBody = JSONObject()
             reqBody.put("RefreshToken", refreshToken)
             reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
