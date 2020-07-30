@@ -109,10 +109,6 @@ class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
         etTelNr.setText(extras.getString(resources.getString(R.string.numberSettings)))
         etEmail.setText(extras.getString(resources.getString(R.string.emailAlarmDatabase)))
 
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
+        checkInternetGPSPermissions(this)
     }
 }

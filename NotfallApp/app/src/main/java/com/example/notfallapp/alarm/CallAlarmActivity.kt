@@ -98,10 +98,6 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
         tvLatitude = findViewById(R.id.tvLatitude)
         tvAccuracy = findViewById(R.id.tvAccuracy)
         tvBattery = findViewById(R.id.tvBattery)
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
+        checkInternetGPSPermissions(this)
     }
 }

@@ -303,6 +303,10 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         spinnerMessage.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, arrayOf("Anruf", "SMS", "Email"))
 
         // TODO get date vom Server Page 111 OrgUnitsItems
+        // spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, phoneAreaCodes)
+        // spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
+        // spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
+
         // Zurzeit hardcodiert bsp. reintun
         val phArray = arrayOf(" +1 ", " +43 ")
         spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, phArray)
@@ -313,5 +317,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         val tiArray = arrayOf("Europe/London", "America/New_York")
         spinnerTimezone.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, tiArray)
 
+        checkInternetGPSPermissions(this)
     }
 }

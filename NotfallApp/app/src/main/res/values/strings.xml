@@ -154,6 +154,7 @@
     <string name="noPermission">Fehlende Berechtigungen</string>
     <string name="noPermissionText">Leider konnten wir nicht die notwendigen Berechtigungen von Ihnen erhalten.
                                     Deshalb können Sie die App nur eingeschränkt nutzen!</string>
+    <string name="noGPS">Leider benötigen wir GPS damit wir im Falle eines Alarms ihr Position kennen.</string>
     <string name="OK">OK</string>
     <!--Internet Access -->
     <string name="access">Zulassen</string>

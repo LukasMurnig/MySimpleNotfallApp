@@ -110,11 +110,7 @@ class AddBraceletActivityI() : Activity(), ICreatingOnClickListener, ICheckPermi
         lvDevices = findViewById(R.id.lvDevices)
         builder = AlertDialog.Builder(this)
         context = this
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkPermissions(this, connectivityManager, wifi)
+        checkPermissions(this)
         mReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 val action = intent.action
