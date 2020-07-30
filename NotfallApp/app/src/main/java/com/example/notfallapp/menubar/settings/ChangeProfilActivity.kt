@@ -1,10 +1,7 @@
 package com.example.notfallapp.menubar.settings
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText

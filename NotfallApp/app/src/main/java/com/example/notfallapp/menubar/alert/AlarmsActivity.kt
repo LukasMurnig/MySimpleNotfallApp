@@ -1,8 +1,5 @@
 package com.example.notfallapp.menubar.alert
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.wifi.WifiManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.widget.Button
@@ -16,8 +13,8 @@ import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
+import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

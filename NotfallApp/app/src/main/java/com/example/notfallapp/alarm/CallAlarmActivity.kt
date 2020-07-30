@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button

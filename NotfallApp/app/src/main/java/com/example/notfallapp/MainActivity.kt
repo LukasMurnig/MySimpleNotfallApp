@@ -2,11 +2,7 @@ package com.example.notfallapp
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.content.Context
 import android.content.Intent
-import android.graphics.ColorFilter
-import android.net.ConnectivityManager
-import android.net.wifi.WifiManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
@@ -17,12 +13,13 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.example.notfallapp.adapter.AlarmsListAdapter
-import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.bll.Device
 import com.example.notfallapp.connectBracelet.AddBraceletActivityI
 import com.example.notfallapp.database.EmergencyAppDatabase
+import com.example.notfallapp.interfaces.ICheckPermission
+import com.example.notfallapp.interfaces.IConnectBracelet
+import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.interfaces.*
 import com.example.notfallapp.server.ServerApi
 import com.karumi.dexter.Dexter
@@ -160,9 +157,9 @@ class MainActivity : AppCompatActivity(),
 
             override fun onPostExecute(result: List<Device>?) {
                 if(result != null){
-                    var mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-                    var device = result[0]
-                    var bluetoothDevice: BluetoothDevice = mBluetoothAdapter.getRemoteDevice(device.macAddress)
+                    val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+                    val device = result[0]
+                    val bluetoothDevice: BluetoothDevice = mBluetoothAdapter.getRemoteDevice(device.macAddress)
                     println("Hello PostExecute")
                     connect(applicationContext, bluetoothDevice, true)
                 }
