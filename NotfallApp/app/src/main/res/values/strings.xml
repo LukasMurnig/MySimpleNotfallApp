@@ -64,8 +64,8 @@
     <string name="street">Straße</string>
     <string name="housenumber">Hausnummer</string>
     <string name="postcode">Postleitzahl</string>
-    <string name="place">Ort</string>
-    <string name="country">Staat</string>
+    <string name="place">Stadt</string>
+    <string name="country">Land:</string>
     <string name="phoneAreaCode">Vorwahl (*):</string>
 
     <!-- Alarms -->
