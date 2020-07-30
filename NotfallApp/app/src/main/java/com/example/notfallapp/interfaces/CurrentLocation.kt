@@ -10,6 +10,8 @@ import android.os.AsyncTask
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import com.example.notfallapp.database.EmergencyAppDatabase
+import com.google.android.gms.tasks.Task
+import java.util.*
 
 class CurrentLocation {
 
@@ -22,20 +24,15 @@ class CurrentLocation {
             CurrentLocation.context = context
             val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             locationManager = lm
-
-            var location: Location? = null
-
             if(lm.isProviderEnabled( LocationManager.GPS_PROVIDER ) ){
                 gps = true
                 getLastKnownLocation()
-                location = currentLocation
             }else if( lm.isProviderEnabled( LocationManager.NETWORK_PROVIDER )) {
                 gps = false
                 getLastKnownLocation()
-                location = currentLocation
             }
 
-            return location
+            return currentLocation
         }
 
         override fun onLocationChanged(p0: Location?) {

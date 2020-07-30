@@ -48,7 +48,7 @@ class TimerHandler {
             val clickedTime: Date = Calendar.getInstance().time
             val dateFormat = android.text.format.DateFormat.format("dd-MM-yyyy kk:mm:ss a", clickedTime)
 
-            val location = CurrentLocation.getCurrentLocation(context)
+            val location = CurrentLocation.currentLocation
 
             var alarm: Alarm? = null
 

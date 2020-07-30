@@ -23,10 +23,7 @@ import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.bll.Device
 import com.example.notfallapp.connectBracelet.AddBraceletActivityI
 import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.interfaces.IConnectBracelet
-import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.INotifications
+import com.example.notfallapp.interfaces.*
 import com.example.notfallapp.server.ServerApi
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -127,6 +124,7 @@ class MainActivity : AppCompatActivity(),
         tvaddbracelet = findViewById(R.id.tvaddbracelet)
         tvpairbracelet = findViewById(R.id.tvpairbracelet)
         handler = Handler(this.mainLooper)
+        CurrentLocation.getCurrentLocation(this)
         checkInternetGPSPermissions(this)
     }
 
