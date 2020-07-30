@@ -46,7 +46,7 @@ class TimerHandler {
         private fun createAlarmInDb(context: Context){
             val androidId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
             val clickedTime: Date = Calendar.getInstance().time
-            val dateFormat = android.text.format.DateFormat.format("dd-MM-yyyy kk:mm:ss a", clickedTime)
+            val dateFormat = android.text.format.DateFormat.format("dd-MM-yyyy kk:mm:ss", clickedTime)
 
             val location = CurrentLocation.getCurrentLocation(context)
 
