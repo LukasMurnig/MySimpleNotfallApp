@@ -3,11 +3,13 @@ package com.example.notfallapp.interfaces
 import android.bluetooth.*
 import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import android.util.Log
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Device
 import com.example.notfallapp.bll.ReadWriteCharacteristic
+import com.example.notfallapp.connectBracelet.AddBraceletActivityI.Companion.device
 import com.example.notfallapp.connectBracelet.Constants
 import com.example.notfallapp.connectBracelet.ProcessQueueExecutor
 import com.example.notfallapp.database.EmergencyAppDatabase
@@ -28,9 +30,10 @@ interface IConnectBracelet {
         var mGattCallbacks: BluetoothGattCallback = object : BluetoothGattCallback(){}
         private var gattService: BluetoothGattService? = null
         private var mCharVerification: BluetoothGattCharacteristic? = null
+        private var device: Device? = null
     }
 
-    fun connect(context: Context, device: BluetoothDevice){
+    fun connect(context: Context, device: BluetoothDevice, pair: Boolean){
         process = ProcessQueueExecutor()
         //To execute the read and write operation in a queue.
         if (!process.isAlive) {
@@ -192,8 +195,12 @@ interface IConnectBracelet {
             }
         }
         gattBluetooth = device.connectGatt(context, false, mGattCallbacks)
-        var intent = Intent(context, MainActivity::class.java)
-        context.startActivity(intent)
+        IConnectBracelet.device = Device(device.address)
+        sendDevice()
+        if(!pair) {
+            var intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 
     //Read the value of the BLE device
@@ -310,5 +317,21 @@ interface IConnectBracelet {
         gattBluetooth?.close()
         gattBluetooth = null
         process.interrupt()
+    }
+
+    fun sendDevice(){
+        class sendData : AsyncTask<Unit, Unit, Unit>() {
+
+            override fun doInBackground(vararg p0: Unit?) {
+                if(context != null) {
+                    val db = EmergencyAppDatabase.getInstance(context!!)
+                    db.deviceDao().deleteAll()
+                    db.deviceDao().insertDevice(device!!)
+                }
+            }
+        }
+
+        val gd = sendData()
+        gd.execute()
     }
 }

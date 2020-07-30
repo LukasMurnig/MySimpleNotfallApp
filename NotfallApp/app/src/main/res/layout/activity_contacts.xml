@@ -67,8 +67,9 @@
         android:layout_marginEnd="161dp"
         android:layout_marginBottom="219dp"
         android:background="@drawable/round_button"
+        android:src="@drawable/add_button_vector"
         android:gravity="center_vertical|center_horizontal"
-        android:src="@drawable/add_button" />
+        />
 
     <include
         layout="@layout/layout_button_sos"
