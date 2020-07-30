@@ -50,7 +50,7 @@ class TimerHandler {
 
             val location = CurrentLocation.getCurrentLocation(context)
 
-            var alarm: Alarm? = null
+            val alarm: Alarm?
 
             if (location != null) {
                 alarm = try{

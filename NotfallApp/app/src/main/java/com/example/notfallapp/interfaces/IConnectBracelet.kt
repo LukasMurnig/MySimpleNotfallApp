@@ -9,7 +9,6 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Device
 import com.example.notfallapp.bll.ReadWriteCharacteristic
-import com.example.notfallapp.connectBracelet.AddBraceletActivityI.Companion.device
 import com.example.notfallapp.connectBracelet.Constants
 import com.example.notfallapp.connectBracelet.ProcessQueueExecutor
 import com.example.notfallapp.database.EmergencyAppDatabase
