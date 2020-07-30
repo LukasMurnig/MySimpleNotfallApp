@@ -304,10 +304,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         // spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, phoneAreaCodes)
         // spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
         // spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
+        checkInternetGPSPermissions(this)
     }
 }

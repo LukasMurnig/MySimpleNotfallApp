@@ -163,11 +163,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
         btnSavePicture = findViewById(R.id.btnSavePicture)
         btnCancelProfilPicture = findViewById(R.id.btnCancelProfilPicture)
         btnSos = findViewById(R.id.btn_sos)
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
+        checkInternetGPSPermissions(this)
 
         btnSos.setOnClickListener{
             val intent = Intent(this, ServiceCallAlarm::class.java)

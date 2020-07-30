@@ -139,11 +139,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         btnChangeDate = findViewById(R.id.btnChangeData)
         imageProfilePicture = findViewById(R.id.imageProfilPicture)
         btnProfilePicture = findViewById(R.id.iBtnProfilPicture)
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
+        checkInternetGPSPermissions(this)
     }
 
     private fun configureButtons() {

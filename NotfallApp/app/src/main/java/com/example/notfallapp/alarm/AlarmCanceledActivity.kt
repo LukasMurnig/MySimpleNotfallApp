@@ -52,11 +52,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
     private fun initComponents() {
         btnCancelAlarmOk = findViewById(R.id.btn_cancel_alarm_ok)
         tvCanceledAlarm = findViewById(R.id.tvCanceledAlarm)
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
+        checkInternetGPSPermissions(this)
     }
 
     private fun configureButtons() {

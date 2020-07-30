@@ -36,10 +36,6 @@ class AlarmSuccesfulActivity : AppCompatActivity(), ICheckPermission {
     private fun initComponents() {
         tvAlarm = findViewById(R.id.tvAlarm)
         buttonSuccessfulOk = findViewById(R.id.btn_alarm_succesful_ok)
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
+        checkInternetGPSPermissions(this)
     }
 }

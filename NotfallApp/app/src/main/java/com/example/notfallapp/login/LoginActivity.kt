@@ -108,6 +108,6 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
             getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
+        checkInternetGPSPermissions(this)
     }
 }

@@ -127,11 +127,7 @@ class MainActivity : AppCompatActivity(),
         tvaddbracelet = findViewById(R.id.tvaddbracelet)
         tvpairbracelet = findViewById(R.id.tvpairbracelet)
         handler = Handler(this.mainLooper)
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
+        checkInternetGPSPermissions(this)
     }
 
     private fun checkConnected(){
