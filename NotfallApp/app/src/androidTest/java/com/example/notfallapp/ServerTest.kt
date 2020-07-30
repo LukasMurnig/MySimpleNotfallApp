@@ -26,19 +26,16 @@ class ServerTest {
     fun setup(){
         testContext = InstrumentationRegistry.getInstrumentation().targetContext
         ServerApi.setContext(testContext)
+        login()
     }
 
     @Test
     fun loginTest(){
-        login()
-
         assertNotNull(ServerApi.accessToken)
     }
     
     @Test
     fun recreateTokenTest(){
-        login()
-        
         val oldAccessToken = ServerApi.accessToken
 
         ServerApi.refreshToken()
@@ -49,8 +46,6 @@ class ServerTest {
 
     @Test
     fun getOrgUnitsItemsTest(){
-        login()
-
         ServerOrgUnitsItems().getOrgUnitItems()
         Thread.sleep(5000)
 
@@ -62,8 +57,6 @@ class ServerTest {
 
     @Test
     fun getUserInfoTest(){
-        login()
-
         ServerUser().getUserInfo(testContext)
         Thread.sleep(5000)
 
@@ -72,8 +65,6 @@ class ServerTest {
 
     @Test
     fun getAlertingChainTest(){
-        login()
-
         ServerAlertingChain().getAlertingChain()
         Thread.sleep(5000)
 
