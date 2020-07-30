@@ -1,11 +1,8 @@
 package com.example.notfallapp.menubar.contact
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
-import android.net.ConnectivityManager
 import android.net.Uri
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -18,7 +15,6 @@ import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import kotlinx.android.synthetic.main.activity_addcontact.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -303,10 +299,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         spinnerMessage.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, arrayOf("Anruf", "SMS", "Email"))
 
         // TODO get date vom Server Page 111 OrgUnitsItems
-        // spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, phoneAreaCodes)
-        // spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
-        // spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
-
         // Zurzeit hardcodiert bsp. reintun
         val phArray = arrayOf(" +1 ", " +43 ")
         spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, phArray)
