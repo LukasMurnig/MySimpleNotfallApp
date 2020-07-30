@@ -313,11 +313,5 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         val tiArray = arrayOf("Europe/London", "America/New_York")
         spinnerTimezone.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, tiArray)
 
-
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
-        checkInternetAccess(this, connectivityManager, wifi)
     }
 }
