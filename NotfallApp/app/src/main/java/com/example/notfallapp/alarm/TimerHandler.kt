@@ -60,6 +60,14 @@ class TimerHandler {
                     Alarm(androidId, 0.0, 0.0,
                         context.resources.getString(R.string.AlarmAccepted), dateFormat.toString())
                 }
+            }else{
+                alarm = try{
+                    Alarm(androidId, 0.0, 0.0,
+                        context.resources.getString(R.string.AlarmAccepted), dateFormat.toString())
+                }catch (ex: java.lang.Exception){
+                    Alarm(androidId, 0.0, 0.0,
+                        context.resources.getString(R.string.AlarmAccepted), dateFormat.toString())
+                }
             }
 
             val db = EmergencyAppDatabase.getInstance(context)
