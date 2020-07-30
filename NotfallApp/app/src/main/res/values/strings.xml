@@ -58,14 +58,15 @@
     <string name="contact_email">Email (*)</string>
     <string name="TelNr">Vorwahl (*)</string>
     <string name="contact_telNr">Telefonnummer (*)</string>
-    <string name="language">Sprache (*)</string>
-    <string name="timezone">Zeitzone (*)</string>
-    <string name="message">Wie benachrichtigen? (*)</string>
+    <string name="language">Sprache (*):</string>
+    <string name="timezone">Zeitzone (*):</string>
+    <string name="message">Wie benachrichtigen? (*):</string>
     <string name="street">Straße</string>
     <string name="housenumber">Hausnummer</string>
     <string name="postcode">Postleitzahl</string>
     <string name="place">Ort</string>
     <string name="country">Staat</string>
+    <string name="phoneAreaCode">Vorwahl (*):</string>
 
     <!-- Alarms -->
     <string name="noAlarms">Gottseidank besitzen Sie noch keine Alarme!</string>
@@ -80,6 +81,8 @@
     <string name="priority">priority</string>
     <string name="active">active</string>
     <string name="prio">prio</string>
+    <string name="device">Gerät:</string>
+    <string name="date">Datum:</string>
 
     <!-- Settings -->
     <string name="ChangeProfil">Ändere Daten</string>

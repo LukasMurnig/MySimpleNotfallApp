@@ -1,4 +1,4 @@
-package com.example.notfallapp.menubar
+package com.example.notfallapp.menubar.alert
 
 import android.content.Context
 import android.net.ConnectivityManager

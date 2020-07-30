@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.MainActivity
-import com.example.notfallapp.menubar.AlarmsActivity
+import com.example.notfallapp.menubar.alert.AlarmsActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.service.ServiceCallAlarm

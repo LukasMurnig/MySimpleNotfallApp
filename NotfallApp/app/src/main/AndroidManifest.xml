@@ -20,8 +20,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -32,16 +32,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:ignore="HardcodedDebugMode">
+        <activity android:name=".menubar.alert.DetailAlertActivity"></activity>
 
-        <receiver android:enabled="true" android:directBootAware="true"
-            android:name=".receiver.BootUpReceiver" android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            >
+        <receiver
+            android:name=".receiver.BootUpReceiver"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE">
             <intent-filter android:directBootAware="true">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="android.intent.action.REBOOT"/>
+                <action android:name="android.intent.action.REBOOT" />
             </intent-filter>
         </receiver>
 
@@ -71,7 +74,7 @@
             android:name=".menubar.contact.AddContactActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".menubar.AlarmsActivity"
+            android:name=".menubar.alert.AlarmsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".menubar.settings.SettingsActivity"
@@ -90,9 +93,8 @@
         <activity
             android:name=".connectBracelet.AddBraceletActivityI"
             android:screenOrientation="portrait" />
-        <activity android:name=".menubar.contact.SelectContactPictureActivity"></activity>
+        <activity android:name=".menubar.contact.SelectContactPictureActivity" />
         <activity android:name=".menubar.settings.SelectProfilPictureActivity" />
-
 
         <service android:name=".service.ServiceCallAlarm" />
         <service android:name=".service.ServiceCancelAlarm" />

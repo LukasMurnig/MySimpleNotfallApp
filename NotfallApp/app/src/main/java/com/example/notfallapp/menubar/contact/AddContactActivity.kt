@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.net.wifi.WifiManager
-import android.nfc.Tag
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -17,8 +16,9 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
+import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import kotlinx.android.synthetic.main.activity_addcontact.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -43,6 +43,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
     private lateinit var spinnerLanguage: Spinner
     private lateinit var spinnerTimezone: Spinner
     private lateinit var spinnerMessage: Spinner
+    private lateinit var spinnerCountries: Spinner
 
     private lateinit var builder: AlertDialog.Builder
     private var path: String? = null
@@ -50,6 +51,8 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
     private var toUpdateContact: Contact? = null
 
     companion object{
+        // TODO evtl. zu list mit deren Value ändern
+        // zurzeit hardcodieren zum Testen
         var phoneAreaCodes: MutableMap<String, String>? = null
         val timezones: MutableMap<String, String>? = null
         val countries: MutableMap<String, String>? = null
@@ -62,6 +65,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         createButtonBar()
 
         initComponents()
+
         addpicture.setOnClickListener {
             Log.d(resources.getString(R.string.AddButton),
                   String.format(resources.getString(R.string.AddButtonPictureMessage),
@@ -260,9 +264,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_CANCELED) {
-            return
-        }
         if(requestCode == 1 && data != null){
             path =  "content://media" + data.getStringExtra("path")
             if(path != null){
@@ -294,16 +295,28 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         spinnerGender = findViewById(R.id.spinnerGender)
         spinnerTimezone = findViewById(R.id.spinnerTimezone)
         spinnerMessage = findViewById(R.id.spinnerMessage)
+        spinnerCountries = findViewById(R.id.spinnerCountry)
 
         builder = AlertDialog.Builder(this)
 
-        spinnerGender.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Frau", "Herr"))
-        spinnerMessage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_dropdown_item, arrayOf("Anruf", "SMS", "Email"))
+        spinnerGender.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, arrayOf("Frau", "Herr"))
+        spinnerMessage.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, arrayOf("Anruf", "SMS", "Email"))
 
         // TODO get date vom Server Page 111 OrgUnitsItems
         // spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, phoneAreaCodes)
         // spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
         // spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, arrayOf())
+
+        // Zurzeit hardcodiert bsp. reintun
+        val phArray = arrayOf(" +1 ", " +43 ")
+        spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, phArray)
+        val laArray = arrayOf("Deutsch (Österreich)", "English (USA)")
+        spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, laArray)
+        val caArray = arrayOf("USA", "Österreich")
+        spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, caArray)
+        val tiArray = arrayOf("Europe/London", "America/New_York")
+        spinnerTimezone.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, tiArray)
+
         checkInternetGPSPermissions(this)
     }
 }
