@@ -1,9 +1,6 @@
 package com.example.notfallapp.alarm
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button

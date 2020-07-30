@@ -10,6 +10,9 @@ import com.example.notfallapp.R
 import com.example.notfallapp.bll.Alert
 import com.example.notfallapp.menubar.alert.DetailAlertActivity
 
+/*
+* Wird später den Alarms List Adapter ersetzen, dann wenn man Daten vom Server bekommt
+ */
 class AlertsListAdapter(private var alerts: List<Alert>) : RecyclerView.Adapter<AlertsListAdapter.AlertsViewHolder>(){
 
     override fun onCreateViewHolder(
