@@ -1,19 +1,20 @@
 package com.example.notfallapp
 
-import android.app.Service
 import android.content.Context
-import android.os.Handler
-import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.example.notfallapp.menubar.AlarmsActivity
+import com.example.notfallapp.menubar.contact.AddContactActivity
+import com.example.notfallapp.menubar.settings.SettingsActivity
+import com.example.notfallapp.server.ServerAlertingChain
 import com.example.notfallapp.server.ServerApi
-import com.google.android.gms.tasks.Tasks.await
+import com.example.notfallapp.server.ServerOrgUnitsItems
+import com.example.notfallapp.server.ServerUser
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.CountDownLatch
-import javax.security.auth.callback.Callback
 
 
 @RunWith(AndroidJUnit4::class)
@@ -29,11 +30,60 @@ class ServerTest {
 
     @Test
     fun loginTest(){
-        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
-
-        // 5 sec, wait that response from server
-        Thread.sleep(5000)
+        login()
 
         assertNotNull(ServerApi.accessToken)
+    }
+    
+    @Test
+    fun recreateTokenTest(){
+        login()
+        
+        val oldAccessToken = ServerApi.accessToken
+
+        ServerApi.refreshToken()
+        Thread.sleep(5000)
+
+        assertNotEquals(oldAccessToken, ServerApi.accessToken)
+    }
+
+    @Test
+    fun getOrgUnitsItemsTest(){
+        login()
+
+        ServerOrgUnitsItems().getOrgUnitItems()
+        Thread.sleep(5000)
+
+        assertNotNull(AddContactActivity.phoneAreaCodes)
+        assertNotNull(AddContactActivity.timezones)
+        assertNotNull(AddContactActivity.countries)
+        assertNotNull(AddContactActivity.languages)
+    }
+
+    @Test
+    fun getUserInfoTest(){
+        login()
+
+        ServerUser().getUserInfo(testContext)
+        Thread.sleep(5000)
+
+        assertNotNull(SettingsActivity.logInUser)
+    }
+
+    @Test
+    fun getAlertingChainTest(){
+        login()
+
+        ServerAlertingChain().getAlertingChain()
+        Thread.sleep(5000)
+
+        assertNotNull(AlarmsActivity.alertingChain)
+    }
+    
+    private fun login(){
+        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
+
+        // 5 sec, wait for the response from server
+        Thread.sleep(5000)
     }
 }
