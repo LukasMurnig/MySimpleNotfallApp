@@ -91,7 +91,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                     "not implemented", "not implemented", 1111, "not implemented", "not implemented"
                 )
 
-                installContact(contact, false)
+                installContact(contact)
             }
         }
 
@@ -108,7 +108,7 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         prio = extras.getInt(resources.getString(R.string.prio))
     }
 
-    private fun installContact(contact: Contact, update: Boolean){
+    private fun installContact(contact: Contact){
         val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
         GlobalScope.launch {
             try{
