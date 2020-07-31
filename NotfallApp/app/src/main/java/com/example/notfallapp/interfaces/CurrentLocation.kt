@@ -1,6 +1,7 @@
 package com.example.notfallapp.interfaces
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -69,6 +70,15 @@ class CurrentLocation {
                     ) {
                         //return null
                     }
+
+                    var permissionGranted: Boolean = context?.let {
+                        ActivityCompat.checkSelfPermission(
+                            it, Manifest.permission.ACCESS_FINE_LOCATION)
+                    } == PackageManager.PERMISSION_GRANTED;
+                    if (!permissionGranted){
+                        ActivityCompat.requestPermissions(context as Activity, Array<String>(3) {Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+                    }
+
                     if(gps == true){
                         locationManager?.removeUpdates(this@Companion)
                         locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 200.0F, this@Companion)
