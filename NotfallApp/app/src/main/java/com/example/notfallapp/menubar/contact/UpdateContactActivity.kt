@@ -9,7 +9,6 @@ import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
@@ -18,7 +17,6 @@ import com.example.notfallapp.interfaces.IContact
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission, IContact {
 
@@ -191,19 +189,7 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 1 && data != null){
-            path =  "content://media" + data.getStringExtra("path")
-            if(path != null){
-                try{
-                    val uri = Uri.parse(path)
-                    val bitmap =
-                        MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, uri)
-                    addpicture.background = BitmapDrawable(resources, bitmap)
-                }catch (e: IOException){
-                    Log.e(resources.getString(R.string.image),
-                        String.format(resources.getString(R.string.Image),
-                            resources.getString(R.string.AddContact), e.toString()))
-                }
-            }
+            path = setImage(data, applicationContext, addpicture)
         }
     }
 
@@ -212,7 +198,7 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
 
         addpicture = findViewById(R.id.addpicture)
         btn_add = findViewById(R.id.btn_add)
-        btn_add.text = "Aktualisieren"
+        btn_add.text = resources.getText(R.string.updateProfil)
         btn_cancel = findViewById(R.id.btn_cancel)
         spinnerGender = findViewById(R.id.spinnerGender)
         input_firstname = findViewById(R.id.input_firstname)

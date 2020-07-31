@@ -2,6 +2,9 @@ package com.example.notfallapp.interfaces
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
@@ -9,8 +12,26 @@ import androidx.appcompat.app.AlertDialog
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.menubar.contact.SelectContactPictureActivity
+import java.io.IOException
 
 interface IContact {
+
+    fun setImage(data: Intent, context: Context, image: ImageButton): String {
+        val path =  "content://media" + data.getStringExtra("path")
+        if(path != null){
+            try{
+                val uri = Uri.parse(path)
+                val bitmap =
+                    MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+                image.background = BitmapDrawable(context.resources, bitmap)
+            }catch (e: IOException){
+                Log.e(context.resources.getString(R.string.image),
+                    String.format(context.resources.getString(R.string.Image),
+                        context.resources.getString(R.string.AddContact), e.toString()))
+            }
+        }
+        return path
+    }
 
     fun initCancelButton(context: Context, btnCancel: Button, builder: AlertDialog.Builder){
         btnCancel.setOnClickListener {
