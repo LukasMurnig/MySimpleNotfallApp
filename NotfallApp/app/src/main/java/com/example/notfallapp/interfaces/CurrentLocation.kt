@@ -25,13 +25,14 @@ class CurrentLocation {
             CurrentLocation.context = context
             val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             locationManager = lm
-            if(lm.isProviderEnabled( LocationManager.GPS_PROVIDER ) ){
-                gps = true
-                getLastKnownLocation()
-            }else if( lm.isProviderEnabled( LocationManager.NETWORK_PROVIDER )) {
-                gps = false
-                getLastKnownLocation()
-            }
+                if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    gps = true
+                    getLastKnownLocation()
+                } else if (lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    gps = false
+                    getLastKnownLocation()
+                }
+
 
             return currentLocation
         }
@@ -76,24 +77,39 @@ class CurrentLocation {
                             it, Manifest.permission.ACCESS_FINE_LOCATION)
                     } == PackageManager.PERMISSION_GRANTED;
                     if (!permissionGranted){
-                        ActivityCompat.requestPermissions(context as Activity, Array<String>(3) {Manifest.permission.ACCESS_FINE_LOCATION}, 200);
-                    }
+                        try{
+                        ActivityCompat.requestPermissions(context as Activity, Array<String>(3) {Manifest.permission.ACCESS_FINE_LOCATION}, 200)
+                        } catch (ex: RuntimeException) {
+                            println("Error")
+                        }
+                    }else {
+                        if (gps == true) {
+                            locationManager?.removeUpdates(this@Companion)
+                            locationManager?.requestLocationUpdates(
+                                LocationManager.GPS_PROVIDER,
+                                0,
+                                200.0F,
+                                this@Companion
+                            )
+                            currentLocation =
+                                locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                            println("Location: " + currentLocation.toString())
+                        } else {
 
-                    if(gps == true){
-                        locationManager?.removeUpdates(this@Companion)
-                        locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 200.0F, this@Companion)
-                        currentLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                        println("Location: "+currentLocation.toString())
-                    }else{
-
-                        locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 200.0F, this@Companion)
-                        currentLocation= locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                            locationManager?.requestLocationUpdates(
+                                LocationManager.NETWORK_PROVIDER,
+                                0,
+                                200.0F,
+                                this@Companion
+                            )
+                            currentLocation =
+                                locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                        }
                     }
                 }
             }
-
-            val gd = findLocation()
-            gd.execute()
+                val gd = findLocation()
+                gd.execute()
         }
     }
 }

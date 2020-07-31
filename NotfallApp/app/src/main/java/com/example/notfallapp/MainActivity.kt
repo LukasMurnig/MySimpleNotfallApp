@@ -2,11 +2,13 @@ package com.example.notfallapp
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -33,6 +35,11 @@ import java.util.*
 class MainActivity : AppCompatActivity(),
     ICreatingOnClickListener, INotifications, ICheckPermission, IConnectBracelet {
 
+    companion object{
+        var context: Context? = null
+        var timer: Timer = Timer()
+    }
+
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
@@ -46,7 +53,6 @@ class MainActivity : AppCompatActivity(),
     private lateinit var tvaddbracelet: TextView
     private lateinit var tvpairbracelet: TextView
 
-    private var timer = Timer()
     private lateinit var handler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +74,7 @@ class MainActivity : AppCompatActivity(),
         }
 
         btnpairBracelet.setOnClickListener{
-            getDevice()
+                getDevice()
         }
     }
 
@@ -121,6 +127,7 @@ class MainActivity : AppCompatActivity(),
         tvaddbracelet = findViewById(R.id.tvaddbracelet)
         tvpairbracelet = findViewById(R.id.tvpairbracelet)
         handler = Handler(this.mainLooper)
+        context = this
         CurrentLocation.getCurrentLocation(this)
         checkInternetGPSPermissions(this)
     }
@@ -151,17 +158,28 @@ class MainActivity : AppCompatActivity(),
 
             override fun doInBackground(vararg p0: Unit?): List<Device> {
                 val db = EmergencyAppDatabase.getInstance(this@MainActivity)
-                println("HEllo Background")
                 return db.deviceDao().getDevice()
             }
 
             override fun onPostExecute(result: List<Device>?) {
                 if(result != null){
                     val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-                    val device = result[0]
-                    val bluetoothDevice: BluetoothDevice = mBluetoothAdapter.getRemoteDevice(device.macAddress)
-                    println("Hello PostExecute")
-                    connect(applicationContext, bluetoothDevice, true)
+                    var device: Device? = null
+                    try {
+                        device = result[0]
+                    }catch(ex: IndexOutOfBoundsException){
+                    }
+                    if (device != null) {
+                        tvStatusbracelet.text = context?.getString(R.string.tryToConnectBracelet)
+                        val bluetoothDevice: BluetoothDevice =
+                            mBluetoothAdapter.getRemoteDevice(device?.macAddress)
+                        connect(applicationContext, bluetoothDevice, true)
+                    }
+                    else{
+                        tvStatusbracelet.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22F)
+                        tvStatusbracelet.text = context?.getString(R.string.noDeviceToPair)
+                        timer.cancel()
+                    }
                 }
             }
         }
