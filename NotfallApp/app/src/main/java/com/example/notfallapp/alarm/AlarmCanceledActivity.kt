@@ -35,7 +35,6 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_call_alarm_canceled)
-        configureButtons()
         initComponents()
 
         btnCancelAlarmOk.setOnClickListener {
@@ -48,6 +47,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
     }
 
     private fun initComponents() {
+        configureButtons()
         btnCancelAlarmOk = findViewById(R.id.btn_cancel_alarm_ok)
         tvCanceledAlarm = findViewById(R.id.tvCanceledAlarm)
         checkInternetGPSPermissions(this)
@@ -64,9 +64,9 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
         btnSettings = findViewById(R.id.btnSettings)
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
-
     }
 
+    // override function, because when user clicked on the menubar the notification with the button sos must be shown
     override fun createOnClickListener(
         context: Context,
         btnSos: Button,

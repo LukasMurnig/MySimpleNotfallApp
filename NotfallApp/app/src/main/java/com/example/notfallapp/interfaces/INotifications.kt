@@ -20,16 +20,16 @@ import com.example.notfallapp.service.ServiceCancelAlarm
 interface INotifications {
 
     private val channelIdLowPriority: String
-        get() = "fkaieoweonfa"
+        get() = "aefewfw32rfsdaf"
 
     private val channelIdHighPriority: String
-        get() = "dklqneoqod"
+        get() = "dafewf23r2"
 
     private val notificationId: Int
-        get() = 444444
+        get() = 444444123
 
     fun createNotificationNoInternet(context: Context){
-        createHighNotificationChannel(context)
+        createNotificationChannel(context, NotificationManager.IMPORTANCE_HIGH, channelIdHighPriority)
 
         val builder = createBasicNotification(context, channelIdHighPriority, true)
 
@@ -40,8 +40,7 @@ interface INotifications {
     }
 
     fun createNotificationCreateAlarm(context: Context){
-        createLowNotificationChannel(context)
-        //createHighNotificationChannel(context)
+        createNotificationChannel(context, NotificationManager.IMPORTANCE_DEFAULT, channelIdLowPriority)
 
         val builder = createBasicNotification(context, channelIdLowPriority, false)
 
@@ -74,9 +73,7 @@ interface INotifications {
         val pendingIntentSuccessful: PendingIntent = PendingIntent.getActivity(context, 0, intentSuccessful, 0)
         builder.setContentIntent(pendingIntentSuccessful)
 
-        with(NotificationManagerCompat.from(context)){
-            notify(444444, builder.build())
-        }
+        showNotification(context, builder)
     }
 
     fun createNotificationCancelledAlarm(context: Context){
@@ -98,7 +95,7 @@ interface INotifications {
     }
 
     fun createNotificationAlarmOnGoing(context: Context){
-        createHighNotificationChannel(context)
+        createNotificationChannel(context, NotificationManager.IMPORTANCE_HIGH, channelIdHighPriority)
 
         val builder = createBasicNotification(context, channelIdHighPriority, true)
         builder
@@ -149,30 +146,12 @@ interface INotifications {
         }
     }
 
-    private fun createLowNotificationChannel(context: Context) {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = context.getString(R.string.notificationTitle)
-            val descriptionText = context.getString(R.string.notificationTitle)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(channelIdLowPriority, name, importance).apply {
-                description = descriptionText
-            }
-            // Register the channel with the system
-            val notificationManager: NotificationManager = context.
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun createHighNotificationChannel(context: Context){
+    private fun createNotificationChannel(context: Context, importance: Int, channelId: String){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.getString(R.string.notificationTitle)
             val descriptionText = context.getString(R.string.notificationTitle)
 
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(channelIdHighPriority, name, importance).apply {
+            val channel = NotificationChannel(channelId, name, importance).apply {
                 description = descriptionText
             }
             // Register the channel with the system

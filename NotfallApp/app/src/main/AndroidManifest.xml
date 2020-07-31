@@ -32,7 +32,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".menubar.alert.DetailAlertActivity"></activity>
 
         <receiver
             android:name=".receiver.BootUpReceiver"
@@ -77,6 +76,9 @@
             android:name=".menubar.alert.AlarmsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".menubar.alert.DetailAlertActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".menubar.settings.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -89,12 +91,15 @@
         <activity
             android:name=".alarm.AlarmSuccesfulActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".menubar.settings.ChangeProfilActivity" />
+        <activity android:name=".menubar.settings.ChangeProfilActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".connectBracelet.AddBraceletActivityI"
             android:screenOrientation="portrait" />
-        <activity android:name=".menubar.contact.SelectContactPictureActivity" />
-        <activity android:name=".menubar.settings.SelectProfilPictureActivity" />
+        <activity android:name=".menubar.contact.SelectContactPictureActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".menubar.settings.SelectProfilPictureActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".service.ServiceCallAlarm" />
         <service android:name=".service.ServiceCancelAlarm" />

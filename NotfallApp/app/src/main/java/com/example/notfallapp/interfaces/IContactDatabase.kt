@@ -44,45 +44,6 @@ interface IContactDatabase {
         ua.execute()
     }
 
-    /*fun switchContact(clickedContact: Contact, itemView: View, upClicked: Boolean){
-        class SwitchContact : AsyncTask<Unit, Unit, List<Contact>>() {
-
-            override fun doInBackground(vararg p0: Unit?): List<Contact>? {
-                val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(itemView.context)
-
-                // get Contact, which will be also switch
-                val res = if(upClicked){
-                    appDb.contactDao().getContactByPriority((clickedContact.priority-1))
-                }else{
-                    appDb.contactDao().getContactByPriority((clickedContact.priority+1))
-                }
-
-                return run {
-                    if(res != null){
-                        res.priority = clickedContact.priority.also { clickedContact.priority = res.priority }
-                        appDb.contactDao().updateContact(res)
-                        appDb.contactDao().updateContact(clickedContact)
-                        Log.i(LOG_TAG, "contact switch priority with other contact")
-                    }
-                    appDb.contactDao().getAllContact()
-                }
-            }
-
-            override fun onPostExecute(result: List<Contact>?) {
-                if(result != null){
-                    // update Contacts adapter
-                    if(adapter != null){
-                        adapter?.contacts = result
-                        adapter?.notifyDataSetChanged()
-                    }
-                }
-            }
-        }
-
-        val gd = SwitchContact()
-        gd.execute()
-    }*/
-
     fun updateContact(contact: Contact, itemView: View){
         val intent = Intent(itemView.context, AddContactActivity::class.java)
         intent.putExtra(itemView.context.getString(R.string.numberAlarmDatabas), contact.phoneFixed)
@@ -135,4 +96,43 @@ interface IContactDatabase {
         val dc = DeleteContact()
         dc.execute()
     }
+
+    /*fun switchContact(clickedContact: Contact, itemView: View, upClicked: Boolean){
+        class SwitchContact : AsyncTask<Unit, Unit, List<Contact>>() {
+
+            override fun doInBackground(vararg p0: Unit?): List<Contact>? {
+                val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(itemView.context)
+
+                // get Contact, which will be also switch
+                val res = if(upClicked){
+                    appDb.contactDao().getContactByPriority((clickedContact.priority-1))
+                }else{
+                    appDb.contactDao().getContactByPriority((clickedContact.priority+1))
+                }
+
+                return run {
+                    if(res != null){
+                        res.priority = clickedContact.priority.also { clickedContact.priority = res.priority }
+                        appDb.contactDao().updateContact(res)
+                        appDb.contactDao().updateContact(clickedContact)
+                        Log.i(LOG_TAG, "contact switch priority with other contact")
+                    }
+                    appDb.contactDao().getAllContact()
+                }
+            }
+
+            override fun onPostExecute(result: List<Contact>?) {
+                if(result != null){
+                    // update Contacts adapter
+                    if(adapter != null){
+                        adapter?.contacts = result
+                        adapter?.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
+
+        val gd = SwitchContact()
+        gd.execute()
+    }*/
 }
