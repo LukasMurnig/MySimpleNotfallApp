@@ -14,12 +14,13 @@ import com.example.notfallapp.R
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
+import com.example.notfallapp.interfaces.IContact
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
+class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission, IContact {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -60,14 +61,7 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
             startActivityForResult(intent, 1)
         }
 
-        btn_cancel.setOnClickListener {
-            Log.d(resources.getString(R.string.CancelButton),
-                String.format(resources.getString(R.string.CancelButtonClicked),
-                    resources.getString(R.string.AddContact)))
-            sureDialog()
-            val alert = builder.create()
-            alert.show()
-        }
+        initCancelButton(applicationContext, btn_cancel, builder)
 
         btn_add.setOnClickListener {
             Log.d(resources.getString(R.string.AddButton),
@@ -192,21 +186,6 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
         }
 
         return validate
-    }
-
-    private fun sureDialog() {
-        builder.setTitle(resources.getString(R.string.confirm))
-        builder.setMessage(resources.getString(R.string.sureStopCreatingContact))
-
-        builder.setPositiveButton(resources.getString(R.string.Yes)) { dialog, _ ->
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            dialog.dismiss()
-        }
-
-        builder.setNegativeButton(resources.getString(R.string.No)) { dialog, _ ->
-            dialog.dismiss()
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
