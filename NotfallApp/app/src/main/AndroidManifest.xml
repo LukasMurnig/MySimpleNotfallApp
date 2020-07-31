@@ -73,6 +73,9 @@
             android:name=".menubar.contact.AddContactActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".menubar.contact.UpdateContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".menubar.alert.AlarmsActivity"
             android:screenOrientation="portrait" />
         <activity

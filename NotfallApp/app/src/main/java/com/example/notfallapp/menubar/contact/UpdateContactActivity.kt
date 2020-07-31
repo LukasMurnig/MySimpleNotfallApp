@@ -19,7 +19,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
+class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -44,35 +44,35 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
     private lateinit var builder: AlertDialog.Builder
     private var path: String? = null
     private var prio: Int? = null
-
-    companion object{
-        // TODO evtl. zu list mit deren Value ändern
-        // zurzeit hardcodieren zum Testen
-        var phoneAreaCodes: MutableMap<String, String>? = null
-        val timezones: MutableMap<String, String>? = null
-        val countries: MutableMap<String, String>? = null
-        val languages: MutableMap<String, String>? = null
-    }
+    private lateinit var toUpdateContact: Contact
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addcontact)
-        createButtonBar()
 
         initComponents()
 
         addpicture.setOnClickListener {
             Log.d(resources.getString(R.string.AddButton),
-                  String.format(resources.getString(R.string.AddButtonPictureMessage),
-                                resources.getString(R.string.AddContact)))
+                String.format(resources.getString(R.string.AddButtonPictureMessage),
+                    resources.getString(R.string.AddContact)))
             val intent = Intent(this, SelectContactPictureActivity::class.java)
             startActivityForResult(intent, 1)
         }
 
+        btn_cancel.setOnClickListener {
+            Log.d(resources.getString(R.string.CancelButton),
+                String.format(resources.getString(R.string.CancelButtonClicked),
+                    resources.getString(R.string.AddContact)))
+            sureDialog()
+            val alert = builder.create()
+            alert.show()
+        }
+
         btn_add.setOnClickListener {
             Log.d(resources.getString(R.string.AddButton),
-                  String.format(resources.getString(R.string.AddButtonContactMessage),
-                                resources.getString(R.string.AddContact)))
+                String.format(resources.getString(R.string.AddButtonContactMessage),
+                    resources.getString(R.string.AddContact)))
 
             if(validate()){
                 var photoSet = false
@@ -85,55 +85,74 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                 }else{
                     0
                 }
-                val contact = Contact(null, input_firstname.text.toString(), input_lastname.text.toString(), true,
-                    "not implemented", gender, photoSet, input_email.text.toString(), input_number.text.toString(),
-                    null, null, spinnerMessage.selectedItem.toString(), prio!!, path,
-                    "not implemented", "not implemented", 1111, "not implemented", "not implemented"
-                )
-
-                installContact(contact, false)
+                toUpdateContact.forename = input_firstname.text.toString()
+                toUpdateContact.surname = input_lastname.text.toString()
+                toUpdateContact.gender = gender
+                toUpdateContact.e_mail = input_email.text.toString()
+                toUpdateContact.phoneFixed = input_number.text.toString()
+                toUpdateContact.messageType = spinnerMessage.selectedItem.toString()
+                toUpdateContact.photoSet = photoSet
+                if(toUpdateContact.pathToImage != null){
+                    toUpdateContact.photoSet = true
+                }
+                toUpdateContact.pathToImage = path
+                updateContact(toUpdateContact)
             }
-        }
-
-        btn_cancel.setOnClickListener {
-            Log.d(resources.getString(R.string.CancelButton),
-                String.format(resources.getString(R.string.CancelButtonClicked),
-                    resources.getString(R.string.AddContact)))
-            sureDialog()
-            val alert = builder.create()
-            alert.show()
         }
 
         val extras = intent.extras ?: return
         prio = extras.getInt(resources.getString(R.string.prio))
+        if(extras.getString(resources.getString(R.string.firstnameAlarmDatabase)) != null){
+            toUpdateContact = Contact(null,
+                extras.getString(resources.getString(R.string.firstnameAlarmDatabase)) as String,
+                extras.getString(resources.getString(R.string.lastnameAlarmDatabase)) as String,
+                extras.getBoolean(resources.getString(R.string.active)),
+                "not implemented",
+                extras.getInt("gender"),
+                false,
+                extras.getString(resources.getString(R.string.emailAlarmDatabase)) as String,
+                extras.getString(resources.getString(R.string.numberAlarmDatabas)) as String,
+                null,
+                null,
+                extras.getString("messageType") as String,
+                extras.getInt(resources.getString(R.string.prio)),
+                extras.getString(resources.getString(R.string.image)),
+                null,
+                null,
+                null,
+                null,
+                null
+            )
+
+            if(toUpdateContact.pathToImage != null){
+                toUpdateContact.photoSet = true
+                path = toUpdateContact.pathToImage
+                val bitmap =
+                    MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(toUpdateContact.pathToImage))
+                addpicture.background = BitmapDrawable(resources, bitmap)
+            }
+
+            input_firstname.setText(toUpdateContact.forename)
+            input_lastname.setText(toUpdateContact.surname)
+            input_email.setText(toUpdateContact.e_mail)
+            input_number.setText(toUpdateContact.phoneFixed)
+            spinnerGender.setSelection(toUpdateContact.gender)
+
+            when (toUpdateContact.messageType){
+                spinnerMessage.getItemAtPosition(0) -> spinnerMessage.setSelection(0)
+                spinnerMessage.getItemAtPosition(1) -> spinnerMessage.setSelection(1)
+                spinnerMessage.getItemAtPosition(2) -> spinnerMessage.setSelection(2)
+            }
+        }
     }
 
-    private fun installContact(contact: Contact, update: Boolean){
+    private fun updateContact(contact: Contact){
         val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
         GlobalScope.launch {
-            try{
-                appDb.contactDao().insertContact(contact)
-            }catch (ex: Exception){
-                // when unique constraint
-                Log.e("Database", "unique constraint, this email already exist")
-            }
+            appDb.contactDao().updateContact(contact)
         }
         val intent = Intent(this, ContactActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun createButtonBar() {
-        // SOS Button
-        btnSos = findViewById(R.id.btn_sos)
-
-        // Button bar
-        btnHome = findViewById(R.id.btnHome)
-        btnAlarms = findViewById(R.id.btnAlarms)
-        btnContact = findViewById(R.id.btnContact)
-        btnContact.setImageResource(R.drawable.contacts_active)
-        btnSettings = findViewById(R.id.btnSettings)
-
-        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 
     private fun validate(): Boolean {
@@ -202,16 +221,19 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                     addpicture.background = BitmapDrawable(resources, bitmap)
                 }catch (e: IOException){
                     Log.e(resources.getString(R.string.image),
-                          String.format(resources.getString(R.string.Image),
-                                        resources.getString(R.string.AddContact), e.toString()))
+                        String.format(resources.getString(R.string.Image),
+                            resources.getString(R.string.AddContact), e.toString()))
                 }
             }
         }
     }
 
     private fun initComponents() {
+        createButtonBar()
+
         addpicture = findViewById(R.id.addpicture)
         btn_add = findViewById(R.id.btn_add)
+        btn_add.text = "Aktualisieren"
         btn_cancel = findViewById(R.id.btn_cancel)
         spinnerGender = findViewById(R.id.spinnerGender)
         input_firstname = findViewById(R.id.input_firstname)
@@ -242,5 +264,19 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         spinnerTimezone.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, tiArray)
 
         checkInternetGPSPermissions(this)
+    }
+
+    private fun createButtonBar() {
+        // SOS Button
+        btnSos = findViewById(R.id.btn_sos)
+
+        // Button bar
+        btnHome = findViewById(R.id.btnHome)
+        btnAlarms = findViewById(R.id.btnAlarms)
+        btnContact = findViewById(R.id.btnContact)
+        btnContact.setImageResource(R.drawable.contacts_active)
+        btnSettings = findViewById(R.id.btnSettings)
+
+        createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 }

@@ -9,6 +9,7 @@ import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.menubar.contact.AddContactActivity
+import com.example.notfallapp.menubar.contact.UpdateContactActivity
 
 interface IContactDatabase {
     companion object{
@@ -45,7 +46,7 @@ interface IContactDatabase {
     }
 
     fun updateContact(contact: Contact, itemView: View){
-        val intent = Intent(itemView.context, AddContactActivity::class.java)
+        val intent = Intent(itemView.context, UpdateContactActivity::class.java)
         intent.putExtra(itemView.context.getString(R.string.numberAlarmDatabas), contact.phoneFixed)
         intent.putExtra(itemView.context.getString(R.string.firstnameAlarmDatabase), contact.forename)
         intent.putExtra(itemView.context.getString(R.string.lastnameAlarmDatabase), contact.surname)
