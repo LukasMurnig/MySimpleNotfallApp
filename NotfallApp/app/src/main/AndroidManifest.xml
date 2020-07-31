@@ -32,7 +32,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".menubar.alert.DetailAlertActivity"></activity>
 
         <receiver
             android:name=".receiver.BootUpReceiver"
@@ -75,6 +74,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".menubar.alert.AlarmsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".menubar.alert.DetailAlertActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".menubar.settings.SettingsActivity"

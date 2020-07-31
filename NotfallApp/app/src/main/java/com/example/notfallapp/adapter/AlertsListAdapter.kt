@@ -56,7 +56,4 @@ class AlertsListAdapter(private var alerts: List<Alert>) : RecyclerView.Adapter<
             alertHelper.text = alert.helperId.toString()
         }
     }
-
-
-
 }
