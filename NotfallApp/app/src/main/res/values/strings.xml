@@ -145,6 +145,8 @@
                                             Bitte versuchen Sie es erneut!</string>
     <string name="braceleterror">Hoppla, da ist wohl etwas schiefgelaufen bitte versuchen Sie es nochmal!</string>
     <string name="pair">Koppeln</string>
+    <string name="noDeviceToPair">Hoppla, anscheinend haben Sie noch kein Gerät verbunden.
+                                Bitte versuchen sie Ihr Gerät zuverbinden.</string>
     <!-- DIALOG -->
     <!-- Sure dialog -->
     <string name="confirm">Bestätigen</string>
