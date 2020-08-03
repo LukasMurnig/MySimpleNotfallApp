@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -77,6 +78,8 @@ interface INotifications {
     }
 
     fun createNotificationCancelledAlarm(context: Context){
+        val mp = MediaPlayer.create(context, R.raw.alarm_canceled)
+        mp.start()
         val builder = createBasicNotification(context, channelIdHighPriority, true)
 
         val notificationLayout = RemoteViews(context.packageName, R.layout.notification_alarm_canceled)
@@ -95,6 +98,8 @@ interface INotifications {
     }
 
     fun createNotificationAlarmOnGoing(context: Context){
+        val mp: MediaPlayer = MediaPlayer.create(context, R.raw.alarm_called)
+        mp.start()
         createNotificationChannel(context, NotificationManager.IMPORTANCE_HIGH, channelIdHighPriority)
 
         val builder = createBasicNotification(context, channelIdHighPriority, true)

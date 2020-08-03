@@ -103,6 +103,7 @@
 
         <service android:name=".service.ServiceCallAlarm" />
         <service android:name=".service.ServiceCancelAlarm" />
+        <service android:name=".service.ServiceStartChecking" />
     </application>
 
 </manifest>
