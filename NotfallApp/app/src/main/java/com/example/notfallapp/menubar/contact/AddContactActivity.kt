@@ -42,8 +42,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
     private var prio: Int? = null
 
     companion object{
-        // TODO evtl. zu list mit deren Value ändern
-        // zurzeit hardcodieren zum Testen
         var phoneAreaCodes = emptyArray<String>()
         var timezones = emptyArray<String>()
         var countries = emptyArray<String>()

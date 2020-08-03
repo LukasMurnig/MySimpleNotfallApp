@@ -1,6 +1,7 @@
 package com.example.notfallapp.interfaces
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import com.example.notfallapp.adapter.AlertingChainListAdapter
 import com.example.notfallapp.bll.AlertingChainMember
@@ -19,6 +20,7 @@ interface IAlertingChainMemberFunctions {
 
     fun activateAlertingChainMember(alertingChainMember: AlertingChainMember, itemView: View){
         alertingChainMember.active = !alertingChainMember.active
+        Log.i(LOG_TAG, "AlertingChainMember change active clicked ")
 
         //TODO update alertingChainMember and get new AlertingChain
         adapter!!.alertingChain = adapter!!.alertingChain
@@ -28,6 +30,7 @@ interface IAlertingChainMemberFunctions {
     fun updateAlertingChainMember(alertingChainMember: AlertingChainMember, itemView: View){
         val intent = Intent(itemView.context, UpdateContactActivity::class.java)
         intent.putExtra("id", alertingChainMember.helperId)
+        Log.i(LOG_TAG, "AlertingChainMember updated clicked")
         itemView.context.startActivity(intent)
     }
 
@@ -35,6 +38,7 @@ interface IAlertingChainMemberFunctions {
         val alertingChain = ContactActivity.alertingChain
         var idx = 0
         var member: AlertingChainMember? = null
+        Log.i(LOG_TAG, "AlertingChainMember delete clicked")
 
         // TODO im ServerResponse schauen, ob mit 0 oder 1 gestartet wird
         if(alertingChainMember.rank != 2){

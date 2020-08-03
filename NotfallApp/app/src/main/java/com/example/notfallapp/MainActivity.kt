@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(),
         initComponents()
         checkConnected()
         ServerApi.setContext(applicationContext)
-        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
+        ServerApi.sendLogInDataToServer("benni.hacksteiner@gmail.com", "NkTVpJ6YLN")
 
         checkState()
 
