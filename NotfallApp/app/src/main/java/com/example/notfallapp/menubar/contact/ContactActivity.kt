@@ -11,14 +11,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
+import com.example.notfallapp.adapter.AlertingChainListAdapter
 import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
+import com.example.notfallapp.interfaces.IAlertingChainMemberFunctions
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IContactDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.server.ServerAlertingChain
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
@@ -35,7 +39,6 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     companion object{
         lateinit var alertingChain: AlertingChain
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,14 +63,22 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
             startActivity( intent, null)
         }
 
-        GlobalScope.launch {
-            try{
+        MainScope().launch {
+            ServerAlertingChain().getAlertingChain()
+            while (alertingChain==null){
+
+            }
+            val adapter = AlertingChainListAdapter(alertingChain)
+            IAlertingChainMemberFunctions.setAdapter(adapter)
+            rvContacts.adapter = adapter
+            adapter.notifyDataSetChanged()
+            /*try{
                 getAllContacts()
             }catch (ex: Exception){
                 Log.e(resources.getString(R.string.ExceptionDatabase),
                       String.format(resources.getString(R.string.ExceptionDatabaseMessage),
                                     resources.getString(R.string.Contact), ex.toString()))
-            }
+            }*/
         }
     }
 

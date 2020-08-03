@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.bll.AlertingChainMember
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
@@ -17,6 +18,7 @@ import com.example.notfallapp.interfaces.IContact
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission, IContact {
 
@@ -91,6 +93,23 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
                 updateContact(toUpdateContact)
             }
         }
+
+        /* falls nur alertingChainmember und nicht contact zu updaten sind
+        val extras = intent.extras ?: return
+        lateinit var toUpdateAlertingChainMember: AlertingChainMember
+        ContactActivity.alertingChain.helpers!!.forEach { acm ->
+            if(acm.helperId == extras.get("id") as UUID)
+            {
+                toUpdateAlertingChainMember = acm
+            }
+        }
+        prio = toUpdateAlertingChainMember.rank
+
+        input_firstname.setText(toUpdateAlertingChainMember.helperForename)
+        input_lastname.setText(toUpdateAlertingChainMember.helperSurname)
+        input_email.setText(toUpdateAlertingChainMember.email)
+        input_number.setText(toUpdateAlertingChainMember.phoneNumber)
+        //spinnerGender.setSelection(toUpdateAlertingChainMember.)*/
 
         val extras = intent.extras ?: return
         prio = extras.getInt(resources.getString(R.string.prio))

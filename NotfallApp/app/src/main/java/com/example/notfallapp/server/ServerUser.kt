@@ -34,6 +34,24 @@ class ServerUser {
                     data.get("Timezone") as String?)
             }
         }
+        // solange Server noch nicht funktioniert
+        SettingsActivity.logInUser = User(
+            UUID(13215,123),
+            null,
+            "Dr",
+            "Maria",
+            "Musterfrau",
+            "Mamufrau",
+            true,
+            "User",
+             false,
+            true,
+            Date(),
+            "maria.muster@mail.com",
+            "06769392808",
+            1,
+            "Deutsch (Österreich)",
+            null)
     }
 
     fun updateUserInfo(user: User){

@@ -3,7 +3,6 @@ package com.example.notfallapp.server
 import com.android.volley.Request
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
-import com.example.notfallapp.menubar.alert.AlarmsActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -46,6 +45,24 @@ class ServerAlertingChain {
                 )
             }
         }
+        val arrAcm: Array<AlertingChainMember> = arrayOf(AlertingChainMember(
+            UUID(1202312,213),
+            UUID(1202312,213),
+            1,
+            true,
+            false,
+            "Benjamin",
+            "Hacksteiner",
+            "+436769392808",
+            "benni.hacksteiner@gmail.com"
+        ))
+        ContactActivity.alertingChain = AlertingChain(
+            UUID(1202312,213),
+            UUID(1202312,213),
+            null,
+            null,
+            arrAcm
+        )
     }
 
     fun updateAlertingChainMembers(alertingChainMembers: Array<AlertingChainMember>){

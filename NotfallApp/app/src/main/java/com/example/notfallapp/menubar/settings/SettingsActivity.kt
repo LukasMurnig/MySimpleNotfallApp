@@ -55,10 +55,20 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         updateProfilePicture()
 
         GlobalScope.launch {
-            ServerUser().getUserInfo(applicationContext)
-            tvName.text = resources.getString(R.string.sampleName)
+            if(logInUser==null){
+                ServerUser().getUserInfo(applicationContext)
+                while(logInUser==null){
+
+                }
+            }
+
+            tvName.text = logInUser!!.forename + " " + logInUser!!.surname
+            tvTelNr.text = logInUser!!.phoneFixed
+            tvEmail.text = logInUser!!.emailAddress
+
+            /*tvName.text = resources.getString(R.string.sampleName)
             tvTelNr.text = resources.getString(R.string.sampleNumber)
-            tvEmail.text = resources.getString(R.string.sampleEmail)
+            tvEmail.text = resources.getString(R.string.sampleEmail)*/
         }
 
         btnChangeDate.setOnClickListener {
