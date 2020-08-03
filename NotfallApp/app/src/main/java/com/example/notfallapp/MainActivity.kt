@@ -21,6 +21,7 @@ import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.*
 import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
+import com.example.notfallapp.service.ServiceStartChecking
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -127,7 +128,8 @@ class MainActivity : AppCompatActivity(),
         handler = Handler(this.mainLooper)
         context = this
         CurrentLocation.getCurrentLocation(this)
-        checkInternetGPSPermissions(this)
+        val intent= Intent(this, ServiceStartChecking::class.java)
+        context?.startService(intent)
     }
 
     private fun checkConnected(){
