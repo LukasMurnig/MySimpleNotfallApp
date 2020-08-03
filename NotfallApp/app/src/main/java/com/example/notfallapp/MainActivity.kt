@@ -18,12 +18,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.bll.Device
 import com.example.notfallapp.connectBracelet.AddBraceletActivityI
 import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.IConnectBracelet
-import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.interfaces.*
 import com.example.notfallapp.server.ServerApi
+import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -62,6 +59,8 @@ class MainActivity : AppCompatActivity(),
         checkConnected()
         ServerApi.setContext(applicationContext)
         ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
+
+        ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
 
         checkState()
 
@@ -116,7 +115,6 @@ class MainActivity : AppCompatActivity(),
         btnSettings = findViewById(R.id.btnSettings)
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
-        createNotificationCreateAlarm(applicationContext)
     }
 
     private fun initComponents(){

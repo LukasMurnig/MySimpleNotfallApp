@@ -1,10 +1,12 @@
 package com.example.notfallapp.interfaces
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -15,6 +17,7 @@ import com.example.notfallapp.alarm.AlarmSuccesfulActivity
 import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 import com.example.notfallapp.service.ServiceCancelAlarm
+
 
 // create a notification with a sos button to send a alarm
 interface INotifications {
@@ -39,10 +42,8 @@ interface INotifications {
         showNotification(context, builder)
     }
 
-    fun createNotificationCreateAlarm(context: Context){
+    fun createNotificationCreateAlarm(context: Context): Notification {
         createNotificationChannel(context, NotificationManager.IMPORTANCE_DEFAULT, channelIdLowPriority)
-
-        val builder = createBasicNotification(context, channelIdLowPriority, false)
 
         // when user click on button "SOS", call service call alarm, which call alarm
         val intentCallAlarm=Intent(context, ServiceCallAlarm::class.java).apply {
@@ -51,11 +52,16 @@ interface INotifications {
         val pendingIntentCallAlarm = PendingIntent.getService(context, 4444, intentCallAlarm, PendingIntent.FLAG_CANCEL_CURRENT)
         val notificationLayout = RemoteViews(context.packageName, R.layout.notification_sos)
         notificationLayout.setOnClickPendingIntent(R.id.btnNotSOS, pendingIntentCallAlarm)
-        builder
-            .setCustomContentView(notificationLayout)
-            .setCustomBigContentView(notificationLayout)
 
-        showNotification(context, builder)
+        val notification: Notification = NotificationCompat.Builder(context, channelIdLowPriority)
+            .setSmallIcon(R.drawable.notfallapplogo)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setOngoing(true)
+            .setCustomContentView(notificationLayout)
+            .setCustomBigContentView(notificationLayout).build()
+
+        return notification
     }
 
     fun createNotificationSuccessfulAlarm(context: Context){
@@ -121,7 +127,7 @@ interface INotifications {
         showNotification(context, builder)
     }
 
-    private fun createBasicNotification(context: Context, channelId: String, highPriority: Boolean): NotificationCompat.Builder{
+    fun createBasicNotification(context: Context, channelId: String, highPriority: Boolean): NotificationCompat.Builder{
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.notfallapplogo)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
