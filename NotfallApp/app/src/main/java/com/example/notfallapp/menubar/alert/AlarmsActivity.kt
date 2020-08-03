@@ -15,6 +15,7 @@ import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.server.ServerAlarm
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -28,10 +29,6 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
 
     private lateinit var rvAlarms: RecyclerView
     private lateinit var lbMessageNoAlarms: TextView
-
-    companion object{
-        var alertingChain: AlertingChain? = null
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,15 +44,13 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         lbMessageNoAlarms = findViewById(R.id.lbMessageNoAlarms)
 
         GlobalScope.launch {
-            getData()
+            //getData()
 
-            /*
-            ServerAlarm.getAllAlerts(rvAlarms, lbMessageNoAlarms)
-             */
+            ServerAlarm().getAllAlerts(applicationContext, rvAlarms, lbMessageNoAlarms)
         }
     }
 
-    private fun getData(){
+    /*private fun getData(){
         class GetData : AsyncTask<Unit, Unit, List<Alarm>>() {
 
             override fun doInBackground(vararg p0: Unit?): List<Alarm> {
@@ -78,7 +73,7 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
 
         val gd = GetData()
         gd.execute()
-    }
+    }*/
 
     private fun configureButtons() {
         // SOS Button

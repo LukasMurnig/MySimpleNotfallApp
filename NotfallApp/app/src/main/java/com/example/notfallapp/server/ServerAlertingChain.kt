@@ -4,6 +4,7 @@ import com.android.volley.Request
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
 import com.example.notfallapp.menubar.alert.AlarmsActivity
+import com.example.notfallapp.menubar.contact.ContactActivity
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -36,7 +37,7 @@ class ServerAlertingChain {
                         )
                     }
                 }
-                AlarmsActivity.alertingChain = AlertingChain(
+                ContactActivity.alertingChain = AlertingChain(
                     data.get("ID") as UUID,
                     data.get("UserId") as UUID,
                     data.get("Name") as String?,

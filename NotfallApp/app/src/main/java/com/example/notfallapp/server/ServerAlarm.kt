@@ -42,6 +42,24 @@ class ServerAlarm {
                 }
             }
         }
+        // Solange Server noch nicht funktioniert
+        val result = mutableListOf<Alert>()
+        result.add(Alert(
+            345365474563413,
+            Date(),
+            0,
+            0,
+            UUID(924389232,9340243),
+            UUID(924389232,9340243), //HelperId
+            null,
+            46.6422491,
+            14.2891614,
+            null,
+            false
+        ))
+        val adapter = AlertsListAdapter(result)
+        rvAlarms.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
     fun sendAlert(){

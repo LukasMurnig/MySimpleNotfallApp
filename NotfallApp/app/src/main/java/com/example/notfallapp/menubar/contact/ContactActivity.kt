@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.ContactListAdapter
+import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
@@ -30,6 +31,12 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     private lateinit var lbMessageNoContacts: TextView
     private lateinit var rvContacts: RecyclerView
     private lateinit var addButton: ImageButton
+
+    companion object{
+        lateinit var alertingChain: AlertingChain
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
