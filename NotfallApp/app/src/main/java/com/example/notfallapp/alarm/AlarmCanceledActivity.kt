@@ -17,6 +17,7 @@ import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.menubar.alert.AlarmsActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.menubar.settings.SettingsActivity
+import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceCallAlarm
 
 class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INotifications,
@@ -88,7 +89,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.HomeRegister),
                                 resources.getString(R.string.AlarmCanceled)))
-            createNotificationCreateAlarm(context)
+            ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
             val intent = Intent(context, MainActivity::class.java)
             ContextCompat.startActivity(context, intent, null)
         }
@@ -97,7 +98,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.AlarmRegister),
                                 resources.getString(R.string.AlarmCanceled)))
-            createNotificationCreateAlarm(context)
+            ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
             val intent = Intent(context, AlarmsActivity::class.java)
             ContextCompat.startActivity(context, intent, null)
         }
@@ -106,7 +107,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.ContactRegister),
                                 resources.getString(R.string.AlarmCanceled)))
-            createNotificationCreateAlarm(context)
+            ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
             val intent = Intent(context, ContactActivity::class.java)
             ContextCompat.startActivity(context, intent, null)
         }
@@ -115,7 +116,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.SettingsRegister),
                                 resources.getString(R.string.AlarmCanceled)))
-            createNotificationCreateAlarm(context)
+            ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
             val intent = Intent(context, SettingsActivity::class.java)
             ContextCompat.startActivity(context, intent, null)
         }
