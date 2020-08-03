@@ -44,10 +44,10 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
     companion object{
         // TODO evtl. zu list mit deren Value ändern
         // zurzeit hardcodieren zum Testen
-        var phoneAreaCodes: MutableMap<String, String>? = null
-        val timezones: MutableMap<String, String>? = null
-        val countries: MutableMap<String, String>? = null
-        val languages: MutableMap<String, String>? = null
+        var phoneAreaCodes = emptyArray<String>()
+        var timezones = emptyArray<String>()
+        var countries = emptyArray<String>()
+        var languages = emptyArray<String>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -193,14 +193,10 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
 
         // TODO get date vom Server Page 111 OrgUnitsItems
         // Zurzeit hardcodiert bsp. reintun
-        val phArray = arrayOf(" +1 ", " +43 ")
-        spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, phArray)
-        val laArray = arrayOf("Deutsch (Österreich)", "English (USA)")
-        spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, laArray)
-        val caArray = arrayOf("USA", "Österreich")
-        spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, caArray)
-        val tiArray = arrayOf("Europe/London", "America/New_York")
-        spinnerTimezone.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, tiArray)
+        spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, phoneAreaCodes)
+        spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, languages)
+        spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, countries)
+        spinnerTimezone.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, timezones)
 
         checkInternetGPSPermissions(this)
     }

@@ -13,27 +13,33 @@ class ServerOrgUnitsItems {
                 val phoneAreaCodes = data.getJSONArray("PhoneAreaCodes")
                 for(i in 0 until phoneAreaCodes.length()){
                     val item = phoneAreaCodes.getJSONObject(i)
-                    AddContactActivity.phoneAreaCodes?.plus(Pair(item.getString("Key"),item.getString("Value")))
+                    AddContactActivity.phoneAreaCodes.plus(item.getString("Value"))
                 }
 
                 val timezones = data.getJSONArray("Timezones")
                 for(i in 0 until timezones.length()){
                     val item = timezones.getJSONObject(i)
-                    AddContactActivity.timezones?.plus(Pair(item.getString("Key"),item.getString("Value")))
+                    AddContactActivity.timezones.plus(item.getString("Value"))
                 }
 
                 val countries = data.getJSONArray("Countries")
                 for(i in 0 until countries.length()){
                     val item = countries.getJSONObject(i)
-                    AddContactActivity.countries?.plus(Pair(item.getString("Key"),item.getString("Value")))
+                    AddContactActivity.countries.plus(item.getString("Value"))
                 }
 
                 val languages = data.getJSONArray("Countries")
                 for(i in 0 until languages.length()){
                     val item = languages.getJSONObject(i)
-                    AddContactActivity.languages?.plus(Pair(item.getString("Key"),item.getString("Value")))
+                    AddContactActivity.languages.plus(item.getString("Value"))
                 }
             }
         }
+        // Solange Server noch nicht funktioniert
+        AddContactActivity.phoneAreaCodes = arrayOf(" +1 ", " +43 ")
+        AddContactActivity.timezones = arrayOf("Europe/London", "America/New_York")
+        AddContactActivity.countries = arrayOf("USA", "Österreich")
+        AddContactActivity.languages = arrayOf("Deutsch (Österreich)", "English (USA)")
+
     }
 }

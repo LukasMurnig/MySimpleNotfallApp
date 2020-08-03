@@ -21,7 +21,7 @@ import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IContactDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ServerAlertingChain
-import kotlinx.coroutines.GlobalScope
+import com.example.notfallapp.server.ServerOrgUnitsItems
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -64,6 +64,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         }
 
         MainScope().launch {
+            ServerOrgUnitsItems().getOrgUnitItems()
             ServerAlertingChain().getAlertingChain()
             while (alertingChain==null){
 
