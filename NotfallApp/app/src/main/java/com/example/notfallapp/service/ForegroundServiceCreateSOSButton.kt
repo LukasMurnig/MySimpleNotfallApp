@@ -29,7 +29,7 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        try{
+        try {
             startForeground(444444123, createNotificationCreateAlarm(applicationContext))
         } catch (ex: Exception){
             ex.printStackTrace()
