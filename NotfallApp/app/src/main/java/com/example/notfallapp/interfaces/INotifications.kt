@@ -46,6 +46,8 @@ interface INotifications {
     fun createNotificationCreateAlarm(context: Context): Notification {
         createNotificationChannel(context, NotificationManager.IMPORTANCE_DEFAULT, channelIdLowPriority)
 
+        val notification = createBasicNotification(context, channelIdLowPriority, false)
+
         // when user click on button "SOS", call service call alarm, which call alarm
         val intentCallAlarm=Intent(context, ServiceCallAlarm::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK and  Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -53,16 +55,11 @@ interface INotifications {
         val pendingIntentCallAlarm = PendingIntent.getService(context, 4444, intentCallAlarm, PendingIntent.FLAG_CANCEL_CURRENT)
         val notificationLayout = RemoteViews(context.packageName, R.layout.notification_sos)
         notificationLayout.setOnClickPendingIntent(R.id.btnNotSOS, pendingIntentCallAlarm)
-
-        val notification: Notification = NotificationCompat.Builder(context, channelIdLowPriority)
-            .setSmallIcon(R.drawable.notfallapplogo)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .setOngoing(true)
+        notification
             .setCustomContentView(notificationLayout)
-            .setCustomBigContentView(notificationLayout).build()
+            .setCustomBigContentView(notificationLayout)
 
-        return notification
+        return notification.build()
     }
 
     fun createNotificationSuccessfulAlarm(context: Context){

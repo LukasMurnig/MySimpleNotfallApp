@@ -18,7 +18,6 @@ interface ICreatingOnClickListener {
         btnSos.setOnClickListener{
             // Service opens Call Alarm Activity
             val intent = Intent(context, ServiceCallAlarm::class.java)
-            //context.startForegroundService(intent)
             context.startService(intent)
         }
 
