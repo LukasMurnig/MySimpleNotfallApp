@@ -34,3 +34,10 @@ output.json
 #NDK
 obj/
 .externalNativeBuild
+
+# problem
+group-index.xml
+master-index.xml
+sdk-registry.xml
+/.idea/misc.xml
+/.idea/misc.xml

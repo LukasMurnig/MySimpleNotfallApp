@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ServerAlarm
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
@@ -43,14 +42,16 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         rvAlarms.layoutManager = LinearLayoutManager(this)
         lbMessageNoAlarms = findViewById(R.id.lbMessageNoAlarms)
 
-        GlobalScope.launch {
-            //getData()
-
+        MainScope().launch {
             ServerAlarm().getAllAlerts(applicationContext, rvAlarms, lbMessageNoAlarms)
         }
+
+        /*GlobalScope.launch {
+            getData()
+        }*/
     }
 
-    /*private fun getData(){
+    private fun getData(){
         class GetData : AsyncTask<Unit, Unit, List<Alarm>>() {
 
             override fun doInBackground(vararg p0: Unit?): List<Alarm> {
@@ -73,7 +74,7 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
 
         val gd = GetData()
         gd.execute()
-    }*/
+    }
 
     private fun configureButtons() {
         // SOS Button

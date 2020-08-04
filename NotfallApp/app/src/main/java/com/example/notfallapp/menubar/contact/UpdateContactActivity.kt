@@ -236,14 +236,18 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
 
         // TODO get date vom Server Page 111 OrgUnitsItems
         // Zurzeit hardcodiert bsp. reintun
-        val phArray = arrayOf(" +1 ", " +43 ")
-        spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, phArray)
-        val laArray = arrayOf("Deutsch (Österreich)", "English (USA)")
-        spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, laArray)
-        val caArray = arrayOf("USA", "Österreich")
-        spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, caArray)
-        val tiArray = arrayOf("Europe/London", "America/New_York")
-        spinnerTimezone.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, tiArray)
+        spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout,
+            AddContactActivity.phoneAreaCodes
+        )
+        spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout,
+            AddContactActivity.languages
+        )
+        spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout,
+            AddContactActivity.countries
+        )
+        spinnerTimezone.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout,
+            AddContactActivity.timezones
+        )
 
         checkInternetGPSPermissions(this)
     }

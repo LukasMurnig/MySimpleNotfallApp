@@ -42,10 +42,10 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
     private var prio: Int? = null
 
     companion object{
-        var phoneAreaCodes = emptyArray<String>()
-        var timezones = emptyArray<String>()
-        var countries = emptyArray<String>()
-        var languages = emptyArray<String>()
+        var phoneAreaCodes = arrayOf<String>()
+        var timezones = arrayOf<String>()
+        var countries = arrayOf<String>()
+        var languages = arrayOf<String>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
