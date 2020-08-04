@@ -41,23 +41,10 @@ interface IAlertingChainMemberFunctions {
         Log.i(LOG_TAG, "AlertingChainMember delete clicked")
 
         // TODO im ServerResponse schauen, ob mit 0 oder 1 gestartet wird
-        if(alertingChainMember.rank != 2){
-            if(idx < alertingChain.helpers!!.size - 1 && member == null){
-                if(alertingChain.helpers!![idx].rank == alertingChainMember.rank + 1){
-                    member = alertingChain.helpers!![idx]
-                }
-                idx++
-            }
-            if(member != null){
-                member.rank = member.rank - 1
-                alertingChain.helpers!![idx-1] = member
-            }
-
-            if(alertingChainMember.rank != 1){
-                idx=0
-                member = null
+        if(alertingChain != null){
+            if(alertingChainMember.rank != 2){
                 if(idx < alertingChain.helpers!!.size - 1 && member == null){
-                    if(alertingChain.helpers!![idx].rank == alertingChainMember.rank + 2){
+                    if(alertingChain.helpers!![idx].rank == alertingChainMember.rank + 1){
                         member = alertingChain.helpers!![idx]
                     }
                     idx++
@@ -66,12 +53,27 @@ interface IAlertingChainMemberFunctions {
                     member.rank = member.rank - 1
                     alertingChain.helpers!![idx-1] = member
                 }
-            }
-        }
 
-        alertingChain.helpers!!.forEach {acm ->
-            if(acm.helperId == alertingChainMember.helperId){
-                alertingChain.helpers!!.drop(alertingChain.helpers!!.indexOf(acm))
+                if(alertingChainMember.rank != 1){
+                    idx=0
+                    member = null
+                    if(idx < alertingChain.helpers!!.size - 1 && member == null){
+                        if(alertingChain.helpers!![idx].rank == alertingChainMember.rank + 2){
+                            member = alertingChain.helpers!![idx]
+                        }
+                        idx++
+                    }
+                    if(member != null){
+                        member.rank = member.rank - 1
+                        alertingChain.helpers!![idx-1] = member
+                    }
+                }
+            }
+
+            alertingChain.helpers!!.forEach {acm ->
+                if(acm.helperId == alertingChainMember.helperId){
+                    alertingChain.helpers!!.drop(alertingChain.helpers!!.indexOf(acm))
+                }
             }
         }
 

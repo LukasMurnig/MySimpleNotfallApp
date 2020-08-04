@@ -37,7 +37,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     private lateinit var addButton: ImageButton
 
     companion object{
-        lateinit var alertingChain: AlertingChain
+         var alertingChain: AlertingChain? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,13 +66,13 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         MainScope().launch {
             ServerOrgUnitsItems().getOrgUnitItems()
             ServerAlertingChain().getAlertingChain()
-            while (alertingChain==null){
+            while (alertingChain == null){
 
             }
-            val adapter = AlertingChainListAdapter(alertingChain)
+            val adapter = AlertingChainListAdapter(alertingChain!!)
             IAlertingChainMemberFunctions.setAdapter(adapter)
             rvContacts.adapter = adapter
-            adapter.notifyDataSetChanged()
+            (rvContacts.adapter as AlertingChainListAdapter).notifyDataSetChanged()
             /*try{
                 getAllContacts()
             }catch (ex: Exception){
