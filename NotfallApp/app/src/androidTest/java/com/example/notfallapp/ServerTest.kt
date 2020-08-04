@@ -72,7 +72,7 @@ class ServerTest {
     }
     
     private fun login(){
-        ServerApi.sendLogInDataToServer("benni.hacksteiner@gmail.com", "NkTVpJ6YLN")
+        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
 
         // 5 sec, wait for the response from server
         Thread.sleep(5000)
