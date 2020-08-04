@@ -22,6 +22,7 @@ import com.example.notfallapp.interfaces.IContactDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ServerAlertingChain
 import com.example.notfallapp.server.ServerOrgUnitsItems
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -46,7 +47,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
 
         initComponents()
 
-        addButton.setOnClickListener {
+        /*addButton.setOnClickListener {
             Log.d(resources.getString(R.string.AddButton),
                   String.format(resources.getString(R.string.AddButtonContactMessage),
                     resources.getString(R.string.Contact)))
@@ -61,10 +62,13 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
                 intent.putExtra(resources.getString(R.string.prio), 0)
             }
             startActivity( intent, null)
+        }*/
+
+        GlobalScope.launch {
+            ServerOrgUnitsItems().getOrgUnitItems()
         }
 
         MainScope().launch {
-            ServerOrgUnitsItems().getOrgUnitItems()
             ServerAlertingChain().getAlertingChain()
             while (alertingChain == null){
 
@@ -100,7 +104,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     private fun initComponents(){
         lbMessageNoContacts = findViewById(R.id.lbMessageNoContacts)
         rvContacts = findViewById(R.id.rvContacts)
-        addButton = findViewById(R.id.addButton)
+        //addButton = findViewById(R.id.addButton)
 
         rvContacts.setHasFixedSize(false)
         rvContacts.layoutManager = LinearLayoutManager(this)

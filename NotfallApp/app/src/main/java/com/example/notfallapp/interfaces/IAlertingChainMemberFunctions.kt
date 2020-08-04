@@ -3,6 +3,7 @@ package com.example.notfallapp.interfaces
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.notfallapp.adapter.AlertingChainListAdapter
 import com.example.notfallapp.bll.AlertingChainMember
 import com.example.notfallapp.menubar.contact.ContactActivity
@@ -28,14 +29,16 @@ interface IAlertingChainMemberFunctions {
     }
 
     fun updateAlertingChainMember(alertingChainMember: AlertingChainMember, itemView: View){
-        val intent = Intent(itemView.context, UpdateContactActivity::class.java)
+        Toast.makeText(itemView.context, "Gerade deaktiviert, da nicht sicher ob es gebraucht wird", Toast.LENGTH_LONG).show()
+        /*val intent = Intent(itemView.context, UpdateContactActivity::class.java)
         intent.putExtra("id", alertingChainMember.helperId)
         Log.i(LOG_TAG, "AlertingChainMember updated clicked")
-        itemView.context.startActivity(intent)
+        itemView.context.startActivity(intent)*/
     }
 
     fun deleteAlertingChainMember(alertingChainMember: AlertingChainMember, itemView: View){
-        val alertingChain = ContactActivity.alertingChain
+        Toast.makeText(itemView.context, "Gerade deaktiviert, da nicht sicher ob es gebraucht wird", Toast.LENGTH_LONG).show()
+        /*val alertingChain = ContactActivity.alertingChain
         var idx = 0
         var member: AlertingChainMember? = null
         Log.i(LOG_TAG, "AlertingChainMember delete clicked")
@@ -78,6 +81,8 @@ interface IAlertingChainMemberFunctions {
         }
 
         //TODO alertingChain Updaten
+
+         */
     }
 
     /*fun switchContact(clickedContact: Contact, itemView: View, upClicked: Boolean){

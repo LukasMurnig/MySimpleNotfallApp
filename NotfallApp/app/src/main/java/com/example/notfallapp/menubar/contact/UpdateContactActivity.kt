@@ -109,7 +109,7 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
         input_number.setText(toUpdateAlertingChainMember.phoneNumber)
         //spinnerGender.setSelection(toUpdateAlertingChainMember.)*/
 
-        val extras = intent.extras ?: return
+        /*val extras = intent.extras ?: return
         prio = extras.getInt(resources.getString(R.string.prio))
         if(extras.getString(resources.getString(R.string.firstnameAlarmDatabase)) != null){
             toUpdateContact = Contact(null,
@@ -152,7 +152,7 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
                 spinnerMessage.getItemAtPosition(1) -> spinnerMessage.setSelection(1)
                 spinnerMessage.getItemAtPosition(2) -> spinnerMessage.setSelection(2)
             }
-        }
+        }*/
     }
 
     private fun updateContact(contact: Contact){

@@ -52,9 +52,7 @@ class ServerApi {
             val reqBody = JSONObject()
             reqBody.put("Username", username)
             reqBody.put("Password", password)
-            //reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
-            reqBody.put("ClientId", null)
-
+            reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login", reqBody,

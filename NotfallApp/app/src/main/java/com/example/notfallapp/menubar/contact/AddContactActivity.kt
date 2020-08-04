@@ -79,13 +79,13 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
                 }else{
                     0
                 }
-                val contact = Contact(null, input_firstname.text.toString(), input_lastname.text.toString(), true,
+                /*val contact = Contact(null, input_firstname.text.toString(), input_lastname.text.toString(), true,
                     "not implemented", gender, photoSet, input_email.text.toString(), input_number.text.toString(),
                     null, null, spinnerMessage.selectedItem.toString(), prio!!, path,
                     "not implemented", "not implemented", 1111, "not implemented", "not implemented"
-                )
+                )*/
 
-                installContact(contact)
+                //installContact(contact)
             }
         }
 
