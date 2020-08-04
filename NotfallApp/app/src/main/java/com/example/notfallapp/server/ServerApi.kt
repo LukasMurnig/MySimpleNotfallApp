@@ -11,6 +11,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.notfallapp.MainActivity
+import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -19,6 +20,7 @@ class ServerApi {
     companion object{
         private lateinit var context: Context
         var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
+        //var serverAPIURL = "https://jamesdev.ilogs.com"
         //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
         const val TAG = "ServerApi"
         private var volleyRequestQueue: RequestQueue? = null
@@ -50,9 +52,14 @@ class ServerApi {
         fun sendLogInDataToServer(username: String, password: String){
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
-            reqBody.put("Username", username)
-            reqBody.put("Password", password)
-            reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
+
+            try {
+                reqBody.put("Username", username)
+                reqBody.put("Password", password)
+                reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login", reqBody,
@@ -67,14 +74,13 @@ class ServerApi {
 
                         timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
 
-                        accessToken = data.getString("AccessToken")
-                        refreshToken = data.getString("RefreshToken")
-                        multiFactorToken = data.getString("MultiFactorToken")
-                        tokenExpiresInSeconds = data.getInt("TokenExpiresInSeconds")
-                        multiFactorAuth = data.getBoolean("MultiFactorAuth")
-                        this.username = data.getString("Username")
-                        userId = data.get("UserId") as UUID?
-
+                        accessToken = proveIfNullOrValue("AccessToken", data) as String?
+                        refreshToken = proveIfNullOrValue("RefreshToken", data) as String?
+                        multiFactorToken = proveIfNullOrValue("MultiFactorToken", data) as String?
+                        tokenExpiresInSeconds = proveIfNullOrValue("TokenExpiresInSeconds", data) as Int?
+                        multiFactorAuth = proveIfNullOrValue("MultiFactorAuth", data) as Boolean?
+                        this.username = proveIfNullOrValue("Username", data) as String?
+                        userId = proveIfNullOrValue("UserId", data) as UUID?
                     }
                     Log.e(TAG, "Erfolgreich eingelogt")
                     Log.e(TAG, message)
@@ -97,6 +103,14 @@ class ServerApi {
             })
 
             volleyRequestQueue?.add(jsonObjectRequest)
+        }
+
+        private fun proveIfNullOrValue(key: String, response: JSONObject): Any?{
+            return try{
+                response.get(key)
+            }catch (ex: JSONException){
+                null
+            }
         }
 
         fun refreshToken(){

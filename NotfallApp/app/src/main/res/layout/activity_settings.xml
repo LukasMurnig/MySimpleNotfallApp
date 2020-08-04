@@ -66,6 +66,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
+            <Button
+                android:id="@+id/btnLogOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/logout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnChangeData" />
+
             <ImageButton
                 android:id="@+id/iBtnProfilPicture"
                 android:layout_width="100dp"
@@ -82,7 +91,7 @@
                 android:layout_height="120dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnChangeData">
+                app:layout_constraintTop_toBottomOf="@+id/btnLogOut">
 
             </FrameLayout>
 
