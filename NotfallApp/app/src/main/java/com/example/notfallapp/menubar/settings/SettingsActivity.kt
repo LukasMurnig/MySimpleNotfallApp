@@ -101,10 +101,10 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
 
         println(" Result: $resultCode")
         if (requestCode == 0) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                tvName.text = data.getStringExtra(resources.getString(R.string.numberAlarmDatabas))
-                tvTelNr.text = data.getStringExtra(resources.getString(R.string.telNr))
-                tvEmail.text = data.getStringExtra(resources.getString(R.string.emailAlarmDatabase))
+            if (resultCode == Activity.RESULT_OK /*&& data != null*/) {
+                tvName.text = logInUser!!.forename + " " + logInUser!!.surname
+                tvTelNr.text = logInUser!!.phoneFixed
+                tvEmail.text = logInUser!!.emailAddress
             }
         }
         if(resultCode == 2){
