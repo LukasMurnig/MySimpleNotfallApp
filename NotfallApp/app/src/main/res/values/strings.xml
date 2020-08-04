@@ -108,6 +108,7 @@
     <string name="sampleEmail">maria.musterfrau@mail.com</string>
     <string name="ReadFile">ReadFile</string>
     <string name="ReadFilePath">File Read::---> $1§s</string>
+    <string name="logout">Logout</string>
 
     <!-- Alarm called -->
     <string name="alarmcalled">Ein Alarm wurde ausgelöst!

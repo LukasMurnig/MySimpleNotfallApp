@@ -36,6 +36,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
     private lateinit var tvEmail: TextView
     private lateinit var btnChangeDate: Button
     private lateinit var btnProfilePicture: ImageButton
+    private lateinit var btnLogout: Button
 
     private val IMAGE_DIRECTORY = "/profilPicture"
 
@@ -52,6 +53,10 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
             .commit()
 
         initComponents()
+
+        btnLogout.setOnClickListener{
+            Toast.makeText(applicationContext, "Not implemented yet", Toast.LENGTH_LONG).show()
+        }
 
         updateProfilePicture()
 
@@ -145,6 +150,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         tvEmail = findViewById(R.id.tvEmail)
         btnChangeDate = findViewById(R.id.btnChangeData)
         btnProfilePicture = findViewById(R.id.iBtnProfilPicture)
+        btnLogout = findViewById(R.id.btnLogOut)
         checkInternetGPSPermissions(this)
     }
 
