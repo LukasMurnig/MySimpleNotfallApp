@@ -87,9 +87,25 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
                     1 -> deleteAlertingChainMember(alertingChainMember, itemView)
                     2 -> {
                         if(alertingChainMember.active){
-                            itemView.contact_active.setImageDrawable(null)
+                            val builder: AlertDialog.Builder = AlertDialog.Builder(itemView.context)
+                            builder.setTitle(itemView.context.resources.getString(R.string.confirm))
+                            builder.setMessage(itemView.context.resources.getString(R.string.sureDeactivedContact))
+
+                            builder.setPositiveButton(itemView.context.resources.getString(R.string.Yes)) { dialog, _ ->
+                                itemView.contact_active.setImageDrawable(null)
+                                activateAlertingChainMember(alertingChainMember, itemView)
+                                dialog.dismiss()
+                            }
+
+                            builder.setNegativeButton(itemView.context.resources.getString(R.string.No)) { dialog, _ ->
+                                dialog.dismiss()
+                            }
+
+                            builder.create().show()
+                        }else{
+                            activateAlertingChainMember(alertingChainMember, itemView)
                         }
-                        activateAlertingChainMember(alertingChainMember, itemView)
+
                     }
                 }
             }
