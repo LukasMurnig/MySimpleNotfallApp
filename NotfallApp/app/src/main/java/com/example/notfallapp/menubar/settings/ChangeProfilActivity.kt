@@ -28,6 +28,12 @@ class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
 
         initComponents()
 
+        if(SettingsActivity.logInUser != null){
+            etName.setText(SettingsActivity.logInUser!!.forename + " " + SettingsActivity.logInUser!!.surname)
+            etEmail.setText(SettingsActivity.logInUser!!.emailAddress)
+            etTelNr.setText(SettingsActivity.logInUser!!.phoneFixed)
+        }
+
         btnUpdateProfile.setOnClickListener{
             updateProfil()
         }
@@ -44,14 +50,10 @@ class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
         if(!valid()){
             return
         }
-        val intent = Intent()
-        etName.text.toString()
-        intent.putExtra(resources.getString(R.string.nameSettings), etName.text.toString())
-        intent.putExtra(resources.getString(R.string.numberSettings), etTelNr.text.toString())
-        intent.putExtra(resources.getString(R.string.emailAlarmDatabase), etEmail.text.toString())
 
         val loginUser = SettingsActivity.logInUser
-        if(loginUser!=null){
+        if(loginUser != null){
+            loginUser.phoneFixed = etTelNr.text.toString()
             loginUser.emailAddress = etEmail.text.toString()
 
             GlobalScope.launch {
@@ -59,11 +61,7 @@ class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
             }
         }
 
-
-
-
-
-        setResult(Activity.RESULT_OK, intent)
+        setResult(Activity.RESULT_OK)
         finish()
     }
 
@@ -100,11 +98,11 @@ class ChangeProfilActivity: AppCompatActivity(), ICheckPermission {
         btnUpdateProfile = findViewById(R.id.btn_updateProfil)
         btnCancelProfile = findViewById(R.id.btn_cancelProfil)
 
-        val extras = intent.extras ?: return
+        /*val extras = intent.extras ?: return
 
         etName.setText(extras.getString(resources.getString(R.string.nameSettings)))
         etTelNr.setText(extras.getString(resources.getString(R.string.numberSettings)))
-        etEmail.setText(extras.getString(resources.getString(R.string.emailAlarmDatabase)))
+        etEmail.setText(extras.getString(resources.getString(R.string.emailAlarmDatabase)))*/
 
         checkInternetGPSPermissions(this)
     }

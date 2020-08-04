@@ -9,31 +9,42 @@ import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlertsListAdapter
 import com.example.notfallapp.bll.Alert
 import com.example.notfallapp.interfaces.CurrentLocation
+import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+
 
 class ServerAlarm {
     fun getAllAlerts(context: Context, rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
         ServerApi.createCall(Request.Method.GET, "/alerts", null) { response ->
             if (response.has("data")) {
-                val data = response.get("data") as Array<JSONObject>
-                if(data.isEmpty()){
+                var data: JSONArray? = null
+                try{
+                    data = response.getJSONArray("data")
+                }catch (ex: JSONException){
+
+                }
+
+                if(data == null){
                     lbMessageNoAlarms.text = context.resources.getString(R.string.noAlarms)
                 }else{
-                    val result: List<Alert> = mutableListOf()
-                    for(json: JSONObject in data){
+                    val result = mutableListOf<Alert>()
+
+                    for (i in 0 until data.length()) {
+                        val js = data.getJSONObject(i)
                         result.plus(Alert(
-                            json.get("ID") as Long,
-                            json.get("Date") as Date,
-                            json.get("Type") as Byte,
-                            json.get("State") as Byte,
-                            json.get("ClientId") as UUID,
-                            json.get("HelperId") as UUID?,
-                            json.get("DeviceId") as UUID?,
-                            json.get("TriggeringPositionLatitude") as Double?,
-                            json.get("TriggeringPositionLongitude") as Double?,
-                            json.get("TriggeringPositionTime") as Date?,
-                            json.get("CanBeForwarded") as Boolean
+                            js.get("ID") as Long,
+                            js.get("Date") as Date,
+                            js.get("Type") as Byte,
+                            js.get("State") as Byte,
+                            js.get("ClientId") as UUID,
+                            proveIfNullOrValue("HelperId", js) as UUID?,
+                            proveIfNullOrValue("DeviceId", js) as UUID?,
+                            proveIfNullOrValue("TriggeringPositionLatitude", js) as Double?,
+                            proveIfNullOrValue("TriggeringPositionLongitude", js) as Double?,
+                            proveIfNullOrValue("TriggeringPositionTime", js) as Date?,
+                            js.get("CanBeForwarded") as Boolean
                         ))
                     }
                     val adapter = AlertsListAdapter(result)
@@ -41,6 +52,56 @@ class ServerAlarm {
                     adapter.notifyDataSetChanged()
                 }
             }
+        }
+        // Solange Server noch nicht funktioniert; Keine genaue Beschreibung über den Response List of Alert-ObjectsList
+        var result = listOf<Alert>()
+        val jsonArray = JSONArray()
+        val json = JSONObject()
+        json.put("ID", 390144198431043)
+        json.put("Date", Date())
+        json.put("Type", (0).toByte())
+        json.put("State", (0).toByte())
+        json.put("ClientId", UUID(230943,3204))
+        json.put("HelperId", UUID(2094582,4595))
+        json.put("DeviceId", null)
+        json.put("TriggeringPositionLatitude", 22.222222)
+        json.put("TriggeringPositionLongitude", 22.222222)
+        json.put("TriggeringPositionTime", Date())
+        json.put("CanBeForwarded", false)
+        jsonArray.put(json)
+
+        val endJson = JSONObject()
+        endJson.put("data", jsonArray)
+
+        val data: JSONArray = endJson.getJSONArray("data")
+
+        for (i in 0 until data.length()) {
+            val js = data.getJSONObject(i)
+            result = result.plus(Alert(
+                js.get("ID") as Long,
+                js.get("Date") as Date,
+                js.get("Type") as Byte,
+                js.get("State") as Byte,
+                js.get("ClientId") as UUID,
+                proveIfNullOrValue("HelperId", js) as UUID?,
+                proveIfNullOrValue("DeviceId", js) as UUID?,
+                proveIfNullOrValue("TriggeringPositionLatitude", js) as Double?,
+                proveIfNullOrValue("TriggeringPositionLongitude", js) as Double?,
+                proveIfNullOrValue("TriggeringPositionTime", js) as Date?,
+                js.get("CanBeForwarded") as Boolean
+            ))
+        }
+
+        val adapter = AlertsListAdapter(result)
+        rvAlarms.adapter = adapter
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun proveIfNullOrValue(key: String, response: JSONObject): Any?{
+        return try{
+            response.get(key)
+        }catch (ex: JSONException){
+            null
         }
     }
 

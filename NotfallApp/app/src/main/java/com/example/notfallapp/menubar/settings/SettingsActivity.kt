@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
@@ -55,18 +56,29 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         updateProfilePicture()
 
         GlobalScope.launch {
-            ServerUser().getUserInfo(applicationContext)
-            tvName.text = resources.getString(R.string.sampleName)
+            if(logInUser==null){
+                ServerUser().getUserInfo(applicationContext)
+                while(logInUser==null){
+
+                }
+            }
+
+            tvName.text = logInUser!!.forename + " " + logInUser!!.surname
+            tvTelNr.text = logInUser!!.phoneFixed
+            tvEmail.text = logInUser!!.emailAddress
+
+            /*tvName.text = resources.getString(R.string.sampleName)
             tvTelNr.text = resources.getString(R.string.sampleNumber)
-            tvEmail.text = resources.getString(R.string.sampleEmail)
+            tvEmail.text = resources.getString(R.string.sampleEmail)*/
         }
 
         btnChangeDate.setOnClickListener {
-            val intent = Intent(this, ChangeProfilActivity::class.java)
+            Toast.makeText(applicationContext, "Gerade nicht verfügbar, da nicht sicher ob gebraucht wird", Toast.LENGTH_LONG).show()
+            /*val intent = Intent(this, ChangeProfilActivity::class.java)
             intent.putExtra(resources.getString(R.string.numberAlarmDatabas), tvName.text as String)
             intent.putExtra(resources.getString(R.string.telNr), tvTelNr.text as String)
             intent.putExtra(resources.getString(R.string.emailAlarmDatabase), tvEmail.text as String)
-            startActivityForResult(intent, 0)
+            startActivityForResult(intent, 0)*/
         }
 
         btnProfilePicture.setOnClickListener{
@@ -91,10 +103,10 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
 
         println(" Result: $resultCode")
         if (requestCode == 0) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                tvName.text = data.getStringExtra(resources.getString(R.string.numberAlarmDatabas))
-                tvTelNr.text = data.getStringExtra(resources.getString(R.string.telNr))
-                tvEmail.text = data.getStringExtra(resources.getString(R.string.emailAlarmDatabase))
+            if (resultCode == Activity.RESULT_OK /*&& data != null*/) {
+                tvName.text = logInUser!!.forename + " " + logInUser!!.surname
+                tvTelNr.text = logInUser!!.phoneFixed
+                tvEmail.text = logInUser!!.emailAddress
             }
         }
         if(resultCode == 2){

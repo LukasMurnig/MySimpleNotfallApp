@@ -50,6 +50,7 @@
     <string name="lastnameEmpty">Nachname darf nicht leer sein!</string>
     <string name="emailEmpty">Email darf nicht leer sein bzw. Email stimmt nicht!</string>
     <string name="numberWrongType">Telefonnummer darf nur Zahlen beinhalten!</string>
+    <string name="sureDeactivedContact">Sind Sie sicher, dass Sie den Kontakt deaktivieren möchten? Bei einem Notfall wird dann der Kontakt nicht benachrichtigt!</string>
 
     <!-- Add contact -->
     <string name="contact_gender">Anrede (*)</string>

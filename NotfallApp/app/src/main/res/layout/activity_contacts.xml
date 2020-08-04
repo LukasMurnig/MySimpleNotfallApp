@@ -57,6 +57,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="140dp" />
 
+    <!--
     <ImageButton
         android:id="@+id/addButton"
         android:layout_width="80dp"
@@ -70,6 +71,7 @@
         android:src="@drawable/add_button_vector"
         android:gravity="center_vertical|center_horizontal"
         />
+        -->
 
     <include
         layout="@layout/layout_button_sos"
