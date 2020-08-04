@@ -37,8 +37,29 @@ interface INotifications {
 
         val builder = createBasicNotification(context, channelIdHighPriority, true)
 
-        builder.setContentTitle("Kein Internet")
-            .setContentText("Bitte schalten sie Internet an, damit die App funktioniert!")
+        builder.setContentTitle(context.getString(R.string.noInternet))
+            .setContentText(context.getString(R.string.enableInternet))
+
+        showNotification(context, builder)
+    }
+
+    fun createNotificationNoGPS(context: Context){
+        createNotificationChannel(context, NotificationManager.IMPORTANCE_HIGH, channelIdHighPriority)
+
+        var builder = createBasicNotification(context, channelIdHighPriority, true)
+
+        builder.setContentTitle(context.getString(R.string.noGPSNotificationbar))
+            .setContentText(context.getString(R.string.enableGPS))
+
+        showNotification(context, builder)
+    }
+
+    fun createNotificationConnectionBraceletLost(context: Context){
+        createNotificationChannel(context, NotificationManager.IMPORTANCE_HIGH, channelIdHighPriority)
+
+        var builder = createBasicNotification(context, channelIdHighPriority, true)
+        builder.setContentTitle(context.getString(R.string.lostConnection))
+            .setContentText(context.getString(R.string.reconnectBracelet))
 
         showNotification(context, builder)
     }

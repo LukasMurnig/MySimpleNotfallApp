@@ -30,6 +30,7 @@ interface IConnectBracelet {
         private var gattService: BluetoothGattService? = null
         private var mCharVerification: BluetoothGattCharacteristic? = null
         private var device: Device? = null
+        var wasConnected = false
     }
 
     fun connect(context: Context, device: BluetoothDevice, pair: Boolean){
@@ -52,6 +53,7 @@ interface IConnectBracelet {
                         BluetoothProfile.STATE_CONNECTED -> {
                             //start service discovery
                             connected = true
+                            wasConnected = true
                             GlobalScope.launch {
                                 EmergencyAppDatabase.getInstance(context).deviceDao().insertDevice(
                                     Device(deviceAddress)

@@ -78,7 +78,6 @@ interface ICheckPermission : INotifications {
     }
 
     private fun checkGPSEnabled(context: Context){
-        var builder: AlertDialog.Builder
         val handler = Handler(context.mainLooper)
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
@@ -95,12 +94,12 @@ interface ICheckPermission : INotifications {
         }, 0, 3000)
 
     }
-    private fun isNetworkAvailable(connectivityManager: ConnectivityManager?): Boolean {
+    fun isNetworkAvailable(connectivityManager: ConnectivityManager?): Boolean {
         val activeNetworkInfo = connectivityManager!!.activeNetworkInfo
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
-    private fun isBluetoothEnabled(bluetoothAdapter: BluetoothAdapter): Boolean {
+    fun isBluetoothEnabled(bluetoothAdapter: BluetoothAdapter): Boolean {
         var success = false
         if (bluetoothAdapter.isEnabled) {
             success = true
@@ -108,7 +107,7 @@ interface ICheckPermission : INotifications {
         return success
     }
 
-    private fun isGPSEnabled(context: Context):Boolean {
+    fun isGPSEnabled(context: Context):Boolean {
         try{
             var locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             var success = false
@@ -186,17 +185,9 @@ interface ICheckPermission : INotifications {
                             // Show the dialog by calling startResolutionForResult(), and check the result
                             // in onActivityResult().
                             status.startResolutionForResult(
-                                context as Activity?,
+                                context as Activity,
                                 0x1
                             )
-                            val timer = Timer()
-                            timer.scheduleAtFixedRate(object : TimerTask() {
-                                override fun run() {
-                                    timer.cancel()
-                                   checkGPSEnabled(context)
-                                }
-                            }, 0, 7000)
-                            //checkGPSEnabled(context)
                         } catch (e: SendIntentException) {
                             Log.i(TAG, "PendingIntent unable to execute request.")
                         }

@@ -170,6 +170,12 @@
     <string name="alarmWasSuccessful">Der Alarm war erfolgreich!</string>
     <string name="alarmWasCanceled">Der Alarm wurde abgebrochen!</string>
     <string name="title_activity_map">Map</string>
+    <string name="noInternet">Kein Internet</string>
+    <string name="enableInternet">Bitte schalten Sie Internet ein, damit die App funktioniert!</string>
+    <string name="noGPSNotificationbar">Kein GPS</string>
+    <string name="enableGPS">Bitte schalten Sie GPS ein, damit die App funktioniert!</string>
+    <string name="lostConnection">Armband entfernt</string>
+    <string name="reconnectBracelet">Wir haben leider die Verbindung zu Ihrem Armband verloren!</string>
 
     <!-- Server -->
     <!--ServerUser-->

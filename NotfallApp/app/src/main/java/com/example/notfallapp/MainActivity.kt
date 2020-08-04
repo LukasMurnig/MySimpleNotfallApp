@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -33,7 +34,7 @@ import java.util.*
 class MainActivity : AppCompatActivity(),
     ICreatingOnClickListener, INotifications, ICheckPermission, IConnectBracelet {
 
-    companion object{
+    companion object {
         var context: Context? = null
         var timer: Timer = Timer()
     }
@@ -73,12 +74,12 @@ class MainActivity : AppCompatActivity(),
             startActivity(intent)
         }
 
-        btnpairBracelet.setOnClickListener{
-                getDevice()
+        btnpairBracelet.setOnClickListener {
+            getDevice()
         }
     }
 
-    private fun checkGPSPermission(){
+    private fun checkGPSPermission() {
         Dexter.withActivity(this)
             .withPermissions(
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -88,7 +89,10 @@ class MainActivity : AppCompatActivity(),
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     // check if all permissions are granted
                     if (report.areAllPermissionsGranted()) {
-                        Log.i(resources.getString(R.string.userpermission), resources.getString(R.string.GPSPermissionGranted))
+                        Log.i(
+                            resources.getString(R.string.userpermission),
+                            resources.getString(R.string.GPSPermissionGranted)
+                        )
                     }
                 }
 
@@ -106,7 +110,7 @@ class MainActivity : AppCompatActivity(),
             .check()
     }
 
-    private fun configureButtons(){
+    private fun configureButtons() {
         // Button bar
         btnSos = findViewById(R.id.btn_sos)
         btnHome = findViewById(R.id.btnHome)
@@ -118,7 +122,7 @@ class MainActivity : AppCompatActivity(),
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 
-    private fun initComponents(){
+    private fun initComponents() {
         btnaddBracelet = findViewById(R.id.btn_add_bracelet)
         btnpairBracelet = findViewById(R.id.btn_pair_bracelet)
         btnBracelet = findViewById(R.id.btn_bracelet)
@@ -128,7 +132,8 @@ class MainActivity : AppCompatActivity(),
         handler = Handler(this.mainLooper)
         context = this
         CurrentLocation.getCurrentLocation(this)
-        val intent= Intent(this, ServiceStartChecking::class.java)
+        checkInternetGPSPermissions(this)
+        val intent = Intent(this, ServiceStartChecking::class.java)
         context?.startService(intent)
     }
 
