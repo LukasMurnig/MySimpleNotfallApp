@@ -54,18 +54,19 @@
 
         <activity
             android:name=".login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".login.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".menubar.contact.ContactActivity"
@@ -104,6 +105,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".menubar.settings.SelectProfilPictureActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".alarm.AlarmFailedActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".service.ServiceCallAlarm" />
         <service android:name=".service.ServiceCancelAlarm" />

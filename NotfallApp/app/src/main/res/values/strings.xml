@@ -115,6 +115,8 @@
     <string name="alarmcanceledok">OK</string>
     <string name="alarmcalledsuccesful">Ihr Alarm wurde erfolgreich an die Zentrale weitergeleitet!
                                         Hilfe ist unterwegs!</string>
+    <string name="alarmFailed">Ihr Alarm konnte leider nicht abgesendet werden, deswegen versuchen Sie es nochmal!</string>
+    <string name="retry">Erneut versuchen</string>
 
     <string name="longitude">Längengrad:</string>
     <string name="latitude">Breitengrad:</string>
@@ -176,6 +178,8 @@
     <string name="enableGPS">Bitte schalten Sie GPS ein, damit die App funktioniert!</string>
     <string name="lostConnection">Armband entfernt</string>
     <string name="reconnectBracelet">Wir haben leider die Verbindung zu Ihrem Armband verloren!</string>
+    <string name="forbidden">Hoppla anscheinend stimmt Benutzername oder Passwort nicht! </string>
+    <string name="internError">Hoppla anscheinend haben wir gerade Probleme mit unserem Server.</string>
 
     <!-- Server -->
     <!--ServerUser-->

@@ -14,10 +14,6 @@
         <item name="colorControlNormal">@color/colorWhite</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
-    <!-- Theme for Progressbar in Login -->
-    <style name="ProgressdialogLogin" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="android:text">@color/colorDark</item>
-    </style>
     <!-- Theme for Buttons in Button bar -->
     <style name="ButtonStyle" parent="android:Widget.ImageButton">
         <item name="background">@color/colorDodgerBlue</item>

@@ -21,7 +21,7 @@ import java.util.*
 interface IConnectBracelet {
 
     companion object{
-        private var batteryState: String = " "
+        var batteryState: String = " "
         var connected = false
         private var context: Context? = null
         var gattBluetooth: BluetoothGatt? = null

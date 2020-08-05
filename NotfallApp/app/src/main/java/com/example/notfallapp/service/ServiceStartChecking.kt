@@ -57,10 +57,10 @@ class ServiceStartChecking: Service(), ICheckPermission, INotifications {
                 if(IConnectBracelet.wasConnected) {
                     var connected = IConnectBracelet.connected
                     if (!connected) {
-                        var mp = MediaPlayer.create(applicationContext, R.raw.connectionlost)
-                        mp.start()
                         if (countBracelet == 0) {
                             createNotificationConnectionBraceletLost(applicationContext)
+                            var mp = MediaPlayer.create(applicationContext, R.raw.connectionlost)
+                            mp.start()
                             countBracelet++
                         }
                     } else {

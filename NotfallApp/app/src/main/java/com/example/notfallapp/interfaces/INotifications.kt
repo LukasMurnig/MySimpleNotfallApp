@@ -32,36 +32,33 @@ interface INotifications {
     private val notificationId: Int
         get() = 444444123
 
-    fun createNotificationNoInternet(context: Context){
-        createNotificationChannel(context, NotificationManager.IMPORTANCE_HIGH, channelIdHighPriority)
+    private val notificationIdPermission: Int
+        get() = 444440123
 
-        val builder = createBasicNotification(context, channelIdHighPriority, true)
+    fun createNotificationNoInternet(context: Context){
+        val builder = createBasicNotification(context, channelIdLowPriority, true)
 
         builder.setContentTitle(context.getString(R.string.noInternet))
             .setContentText(context.getString(R.string.enableInternet))
 
-        showNotification(context, builder)
+        showNotificationPermission(context, builder)
     }
 
     fun createNotificationNoGPS(context: Context){
-        createNotificationChannel(context, NotificationManager.IMPORTANCE_HIGH, channelIdHighPriority)
-
         var builder = createBasicNotification(context, channelIdHighPriority, true)
 
         builder.setContentTitle(context.getString(R.string.noGPSNotificationbar))
             .setContentText(context.getString(R.string.enableGPS))
 
-        showNotification(context, builder)
+        showNotificationPermission(context, builder)
     }
 
     fun createNotificationConnectionBraceletLost(context: Context){
-        createNotificationChannel(context, NotificationManager.IMPORTANCE_HIGH, channelIdHighPriority)
-
         var builder = createBasicNotification(context, channelIdHighPriority, true)
         builder.setContentTitle(context.getString(R.string.lostConnection))
             .setContentText(context.getString(R.string.reconnectBracelet))
 
-        showNotification(context, builder)
+        showNotificationPermission(context, builder)
     }
 
     fun createNotificationCreateAlarm(context: Context): Notification {
@@ -172,6 +169,11 @@ interface INotifications {
     private fun showNotification(context: Context, notification: NotificationCompat.Builder){
         with(NotificationManagerCompat.from(context)){
             notify(notificationId, notification.build())
+        }
+    }
+    private fun showNotificationPermission(context: Context, notification: NotificationCompat.Builder){
+        with(NotificationManagerCompat.from(context)){
+            notify(notificationIdPermission, notification.build())
         }
     }
 
