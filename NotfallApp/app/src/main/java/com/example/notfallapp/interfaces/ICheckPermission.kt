@@ -10,17 +10,15 @@ import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Handler
 import android.util.Log
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import com.example.notfallapp.R
 import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.common.api.Status
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.LocationSettingsResult
-import com.google.android.gms.location.LocationSettingsStatusCodes
+import com.google.android.gms.location.*
 import java.util.*
 
 
@@ -80,13 +78,13 @@ interface ICheckPermission : INotifications {
     }
 
     private fun checkGPSEnabled(context: Context){
-        var builder: AlertDialog.Builder
         val handler = Handler(context.mainLooper)
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 val success = isGPSEnabled(context)
                 if(!success){
+                    timer.cancel()
                     handler.post{
                         enableGPS(context)
                     }
@@ -96,12 +94,12 @@ interface ICheckPermission : INotifications {
         }, 0, 3000)
 
     }
-    private fun isNetworkAvailable(connectivityManager: ConnectivityManager?): Boolean {
+    fun isNetworkAvailable(connectivityManager: ConnectivityManager?): Boolean {
         val activeNetworkInfo = connectivityManager!!.activeNetworkInfo
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
-    private fun isBluetoothEnabled(bluetoothAdapter: BluetoothAdapter): Boolean {
+    fun isBluetoothEnabled(bluetoothAdapter: BluetoothAdapter): Boolean {
         var success = false
         if (bluetoothAdapter.isEnabled) {
             success = true
@@ -109,7 +107,7 @@ interface ICheckPermission : INotifications {
         return success
     }
 
-    private fun isGPSEnabled(context: Context):Boolean {
+    fun isGPSEnabled(context: Context):Boolean {
         try{
             var locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             var success = false
@@ -165,8 +163,6 @@ interface ICheckPermission : INotifications {
         googleApiClient.connect()
         val mLocationRequest: LocationRequest = LocationRequest.create()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            .setInterval(10 * 1000)
-            .setFastestInterval(1 * 1000)
         val builder =
             LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest)
         builder.setAlwaysShow(true)
@@ -189,7 +185,7 @@ interface ICheckPermission : INotifications {
                             // Show the dialog by calling startResolutionForResult(), and check the result
                             // in onActivityResult().
                             status.startResolutionForResult(
-                                context as Activity?,
+                                context as Activity,
                                 0x1
                             )
                         } catch (e: SendIntentException) {
@@ -220,4 +216,5 @@ interface ICheckPermission : INotifications {
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
     }
+
 }

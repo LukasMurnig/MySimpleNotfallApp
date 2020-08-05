@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -18,12 +19,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.bll.Device
 import com.example.notfallapp.connectBracelet.AddBraceletActivityI
 import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.IConnectBracelet
-import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.interfaces.*
 import com.example.notfallapp.server.ServerApi
+import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
+import com.example.notfallapp.service.ServiceStartChecking
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -35,7 +34,7 @@ import java.util.*
 class MainActivity : AppCompatActivity(),
     ICreatingOnClickListener, INotifications, ICheckPermission, IConnectBracelet {
 
-    companion object{
+    companion object {
         var context: Context? = null
         var timer: Timer = Timer()
     }
@@ -63,6 +62,8 @@ class MainActivity : AppCompatActivity(),
         ServerApi.setContext(applicationContext)
         ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
 
+        ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
+
         checkState()
 
         checkGPSPermission()
@@ -73,12 +74,12 @@ class MainActivity : AppCompatActivity(),
             startActivity(intent)
         }
 
-        btnpairBracelet.setOnClickListener{
-                getDevice()
+        btnpairBracelet.setOnClickListener {
+            getDevice()
         }
     }
 
-    private fun checkGPSPermission(){
+    private fun checkGPSPermission() {
         Dexter.withActivity(this)
             .withPermissions(
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -88,7 +89,10 @@ class MainActivity : AppCompatActivity(),
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     // check if all permissions are granted
                     if (report.areAllPermissionsGranted()) {
-                        Log.i(resources.getString(R.string.userpermission), resources.getString(R.string.GPSPermissionGranted))
+                        Log.i(
+                            resources.getString(R.string.userpermission),
+                            resources.getString(R.string.GPSPermissionGranted)
+                        )
                     }
                 }
 
@@ -106,7 +110,7 @@ class MainActivity : AppCompatActivity(),
             .check()
     }
 
-    private fun configureButtons(){
+    private fun configureButtons() {
         // Button bar
         btnSos = findViewById(R.id.btn_sos)
         btnHome = findViewById(R.id.btnHome)
@@ -116,10 +120,9 @@ class MainActivity : AppCompatActivity(),
         btnSettings = findViewById(R.id.btnSettings)
 
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
-        createNotificationCreateAlarm(applicationContext)
     }
 
-    private fun initComponents(){
+    private fun initComponents() {
         btnaddBracelet = findViewById(R.id.btn_add_bracelet)
         btnpairBracelet = findViewById(R.id.btn_pair_bracelet)
         btnBracelet = findViewById(R.id.btn_bracelet)
@@ -130,6 +133,8 @@ class MainActivity : AppCompatActivity(),
         context = this
         CurrentLocation.getCurrentLocation(this)
         checkInternetGPSPermissions(this)
+        val intent = Intent(this, ServiceStartChecking::class.java)
+        context?.startService(intent)
     }
 
     private fun checkConnected(){

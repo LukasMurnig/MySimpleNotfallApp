@@ -40,6 +40,7 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
             // start service cancel alarm, which also stop the timer;
             val intent = Intent(this, ServiceCancelAlarm::class.java)
             startService(intent)
+            finish()
         }
 
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
