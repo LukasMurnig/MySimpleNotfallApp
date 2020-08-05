@@ -3,8 +3,8 @@ package com.example.notfallapp
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.notfallapp.menubar.alert.AlarmsActivity
 import com.example.notfallapp.menubar.contact.AddContactActivity
+import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.server.ServerAlertingChain
 import com.example.notfallapp.server.ServerApi
@@ -68,11 +68,11 @@ class ServerTest {
         ServerAlertingChain().getAlertingChain()
         Thread.sleep(5000)
 
-        assertNotNull(AlarmsActivity.alertingChain)
+        assertNotNull(ContactActivity.alertingChain)
     }
     
     private fun login(){
-        ServerApi.sendLogInDataToServer("benni.hacksteiner@gmail.com", "NkTVpJ6YLN")
+        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
 
         // 5 sec, wait for the response from server
         Thread.sleep(5000)

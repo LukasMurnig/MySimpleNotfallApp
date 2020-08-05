@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import java.util.*
 
 class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
 
@@ -30,14 +31,19 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
         installComponents()
 
         val extras = intent.extras ?: return
-        tvDetailDeviceId.text = extras.getString("deviceId")
+        tvDetailDeviceId.text = (extras.get("deviceId") as UUID?).toString()
+
         tvDetailLongitude.text = extras.getDouble("longitude").toString()
         tvDetailLatitude.text = extras.getDouble("latitude").toString()
-        val timestamp = extras.getString("timestamp").split(' ')
-        tvDetailDate.text = timestamp[0]
-        tvDetailTime.text = timestamp[1]
-        if(extras.getString("accepted") != null){
+
+        val timestamp = extras.get("timestamp") as Date
+        tvDetailDate.text = android.text.format.DateFormat.format("dd-MM-yyyy", timestamp)
+        tvDetailTime.text = android.text.format.DateFormat.format("kk:mm:ss", timestamp)
+
+        if((extras.get("accepted") as UUID?) != null){
             tvDetailAlarmAccepted.text = extras.getString("accepted")
+        } else {
+            tvDetailAlarmAccepted.text = extras.getString("AlarmAccepted")
         }
     }
 

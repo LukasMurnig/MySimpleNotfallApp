@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlarmsListAdapter
 import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import kotlinx.coroutines.GlobalScope
+import com.example.notfallapp.server.ServerAlarm
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
@@ -28,10 +28,6 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
 
     private lateinit var rvAlarms: RecyclerView
     private lateinit var lbMessageNoAlarms: TextView
-
-    companion object{
-        var alertingChain: AlertingChain? = null
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,13 +42,13 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         rvAlarms.layoutManager = LinearLayoutManager(this)
         lbMessageNoAlarms = findViewById(R.id.lbMessageNoAlarms)
 
-        GlobalScope.launch {
-            getData()
-
-            /*
-            ServerAlarm.getAllAlerts(rvAlarms, lbMessageNoAlarms)
-             */
+        MainScope().launch {
+            ServerAlarm().getAllAlerts(applicationContext, rvAlarms, lbMessageNoAlarms)
         }
+
+        /*GlobalScope.launch {
+            getData()
+        }*/
     }
 
     private fun getData(){

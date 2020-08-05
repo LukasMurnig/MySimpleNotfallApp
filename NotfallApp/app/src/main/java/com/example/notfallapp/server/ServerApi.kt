@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.login.LoginActivity
+import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -23,6 +24,7 @@ class ServerApi {
         private lateinit var context: Context
         private lateinit var sharedPreferences: SharedPreferences
         var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
+        //var serverAPIURL = "https://jamesdev.ilogs.com"
         //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
         const val TAG = "ServerApi"
         private var volleyRequestQueue: RequestQueue? = null
@@ -61,6 +63,15 @@ class ServerApi {
             reqBody.put("Username", username)
             reqBody.put("Password", password)
             reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
+
+            try {
+                reqBody.put("Username", username)
+                reqBody.put("Password", password)
+                reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login", reqBody,
             Response.Listener { response ->
@@ -74,6 +85,13 @@ class ServerApi {
 
                         timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
 
+                        accessToken = proveIfNullOrValue("AccessToken", data) as String?
+                        refreshToken = proveIfNullOrValue("RefreshToken", data) as String?
+                        multiFactorToken = proveIfNullOrValue("MultiFactorToken", data) as String?
+                        tokenExpiresInSeconds = proveIfNullOrValue("TokenExpiresInSeconds", data) as Int?
+                        multiFactorAuth = proveIfNullOrValue("MultiFactorAuth", data) as Boolean?
+                        this.username = proveIfNullOrValue("Username", data) as String?
+                        userId = proveIfNullOrValue("UserId", data) as UUID?
                         accessToken = data.getString("AccessToken")
                         refreshToken = data.getString("RefreshToken")
                         multiFactorToken = data.getString("MultiFactorToken")
@@ -114,6 +132,14 @@ class ServerApi {
                 }
             })
             volleyRequestQueue?.add(jsonObjectRequest)
+        }
+
+        private fun proveIfNullOrValue(key: String, response: JSONObject): Any?{
+            return try{
+                response.get(key)
+            }catch (ex: JSONException){
+                null
+            }
         }
 
         fun refreshToken(){

@@ -92,7 +92,24 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
             }
         }
 
+        /* falls nur alertingChainmember und nicht contact zu updaten sind
         val extras = intent.extras ?: return
+        lateinit var toUpdateAlertingChainMember: AlertingChainMember
+        ContactActivity.alertingChain.helpers!!.forEach { acm ->
+            if(acm.helperId == extras.get("id") as UUID)
+            {
+                toUpdateAlertingChainMember = acm
+            }
+        }
+        prio = toUpdateAlertingChainMember.rank
+
+        input_firstname.setText(toUpdateAlertingChainMember.helperForename)
+        input_lastname.setText(toUpdateAlertingChainMember.helperSurname)
+        input_email.setText(toUpdateAlertingChainMember.email)
+        input_number.setText(toUpdateAlertingChainMember.phoneNumber)
+        //spinnerGender.setSelection(toUpdateAlertingChainMember.)*/
+
+        /*val extras = intent.extras ?: return
         prio = extras.getInt(resources.getString(R.string.prio))
         if(extras.getString(resources.getString(R.string.firstnameAlarmDatabase)) != null){
             toUpdateContact = Contact(null,
@@ -135,7 +152,7 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
                 spinnerMessage.getItemAtPosition(1) -> spinnerMessage.setSelection(1)
                 spinnerMessage.getItemAtPosition(2) -> spinnerMessage.setSelection(2)
             }
-        }
+        }*/
     }
 
     private fun updateContact(contact: Contact){
@@ -219,14 +236,18 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
 
         // TODO get date vom Server Page 111 OrgUnitsItems
         // Zurzeit hardcodiert bsp. reintun
-        val phArray = arrayOf(" +1 ", " +43 ")
-        spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, phArray)
-        val laArray = arrayOf("Deutsch (Österreich)", "English (USA)")
-        spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, laArray)
-        val caArray = arrayOf("USA", "Österreich")
-        spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, caArray)
-        val tiArray = arrayOf("Europe/London", "America/New_York")
-        spinnerTimezone.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout, tiArray)
+        spinnerTelNr.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout,
+            AddContactActivity.phoneAreaCodes
+        )
+        spinnerLanguage.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout,
+            AddContactActivity.languages
+        )
+        spinnerCountries.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout,
+            AddContactActivity.countries
+        )
+        spinnerTimezone.adapter = ArrayAdapter<String>(applicationContext, R.layout.spinner_layout,
+            AddContactActivity.timezones
+        )
 
         checkInternetGPSPermissions(this)
     }

@@ -11,13 +11,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
+import com.example.notfallapp.adapter.AlertingChainListAdapter
 import com.example.notfallapp.adapter.ContactListAdapter
+import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
+import com.example.notfallapp.interfaces.IAlertingChainMemberFunctions
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IContactDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.server.ServerAlertingChain
+import com.example.notfallapp.server.ServerOrgUnitsItems
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
@@ -30,13 +36,18 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     private lateinit var lbMessageNoContacts: TextView
     private lateinit var rvContacts: RecyclerView
     private lateinit var addButton: ImageButton
+
+    companion object{
+         var alertingChain: AlertingChain? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
 
         initComponents()
 
-        addButton.setOnClickListener {
+        /*addButton.setOnClickListener {
             Log.d(resources.getString(R.string.AddButton),
                   String.format(resources.getString(R.string.AddButtonContactMessage),
                     resources.getString(R.string.Contact)))
@@ -51,16 +62,28 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
                 intent.putExtra(resources.getString(R.string.prio), 0)
             }
             startActivity( intent, null)
-        }
+        }*/
 
         GlobalScope.launch {
-            try{
+            ServerOrgUnitsItems().getOrgUnitItems()
+        }
+
+        MainScope().launch {
+            ServerAlertingChain().getAlertingChain()
+            while (alertingChain == null){
+
+            }
+            val adapter = AlertingChainListAdapter(alertingChain!!)
+            IAlertingChainMemberFunctions.setAdapter(adapter)
+            rvContacts.adapter = adapter
+            (rvContacts.adapter as AlertingChainListAdapter).notifyDataSetChanged()
+            /*try{
                 getAllContacts()
             }catch (ex: Exception){
                 Log.e(resources.getString(R.string.ExceptionDatabase),
                       String.format(resources.getString(R.string.ExceptionDatabaseMessage),
                                     resources.getString(R.string.Contact), ex.toString()))
-            }
+            }*/
         }
     }
 
@@ -81,7 +104,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     private fun initComponents(){
         lbMessageNoContacts = findViewById(R.id.lbMessageNoContacts)
         rvContacts = findViewById(R.id.rvContacts)
-        addButton = findViewById(R.id.addButton)
+        //addButton = findViewById(R.id.addButton)
 
         rvContacts.setHasFixedSize(false)
         rvContacts.layoutManager = LinearLayoutManager(this)

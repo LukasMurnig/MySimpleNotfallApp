@@ -8,7 +8,6 @@ import com.example.notfallapp.R
 import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.menubar.contact.AddContactActivity
 import com.example.notfallapp.menubar.contact.UpdateContactActivity
 
 interface IContactDatabase {
