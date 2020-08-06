@@ -13,13 +13,14 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.login.LoginActivity
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ServerApi {
+class ServerApi : ICheckPermission {
     companion object{
         private lateinit var context: Context
         private lateinit var sharedPreferences: SharedPreferences
@@ -39,7 +40,7 @@ class ServerApi {
         private var tokenExpiresInSeconds: Int? = null
         private var multiFactorAuth: Boolean? = null
         private var username: String? = null
-        var userId: UUID? = null
+        var userId: String? = null
 
 
         fun setContext(context: Context){
@@ -76,41 +77,41 @@ class ServerApi {
                 Log.e(TAG, "response: $response")
 
                 try {
-                    //val message = response.getString("message")
-                    if (response.has("data")) {
-                        val data = response.getJSONObject("data")
-                        // Handle your server response data here
-
+                    var accessTokenCheck = response.has("AccessToken")
+                    if (accessTokenCheck)
+                    {
                         timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
+                        try {
+                            accessToken = response.get("AccessToken") as String?
+                            refreshToken = response.get("RefreshToken") as String?
+                            tokenExpiresInSeconds = response.get("TokenExpiresInSeconds") as Int
+                            multiFactorAuth = response.get("MultiFactorAuth") as Boolean?
+                            this.username = response.get("Username") as String?
+                            userId = response.get("UserId") as String?
+                        }catch (ex: Exception){
+                            println("Error :" + ex.toString())
+                            LoginActivity.errorLogin.text = context.getString(R.string.unexpectedErrorLogin)
+                        }
 
-                        accessToken = proveIfNullOrValue("AccessToken", data) as String?
-                        refreshToken = proveIfNullOrValue("RefreshToken", data) as String?
-                        multiFactorToken = proveIfNullOrValue("MultiFactorToken", data) as String?
-                        tokenExpiresInSeconds = proveIfNullOrValue("TokenExpiresInSeconds", data) as Int?
-                        multiFactorAuth = proveIfNullOrValue("MultiFactorAuth", data) as Boolean?
-                        this.username = proveIfNullOrValue("Username", data) as String?
-                        userId = proveIfNullOrValue("UserId", data) as UUID?
-                        accessToken = data.getString("AccessToken")
-                        refreshToken = data.getString("RefreshToken")
-                        multiFactorToken = data.getString("MultiFactorToken")
-                        tokenExpiresInSeconds = data.getInt("TokenExpiresInSeconds")
-                        multiFactorAuth = data.getBoolean("MultiFactorAuth")
-                        this.username = data.getString("Username")
-                        userId = data.get("UserId") as UUID?
                         var editor = sharedPreferences.edit()
                         editor.putString("clientID", clientID)
-                        editor.putString("accessToken", accessToken)
-                        editor.putString("refreshToken", refreshToken)
-                        editor.putString("multiFactorToken", multiFactorToken)
+                        editor.putString("AccessToken", accessToken)
+                        editor.putString("RefreshToken", refreshToken)
                         editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
-                        editor.putBoolean("multiFactorAuth", multiFactorAuth!!)
-                        editor.putString("UserId", userId.toString())
+                        editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
+                        editor.putString("UserId", userId)
                         editor.commit()
+                        try {
+                            var expires: Int = tokenExpiresInSeconds!! - 60
+                            var expiresTime = expires.toString().toLong()
+                            ICheckPermission.getNewTokenBeforeExpires(expiresTime)
+                        }catch(ex : java.lang.Exception){
+                            println(ex.toString())
+                        }
                         val intent = Intent(context, MainActivity::class.java)
                         context.startActivity(intent)
                     }
-                    Log.e(TAG, "Erfolgreich eingelogt")
-                    //Log.e(TAG, message)
+                    Log.d(TAG, "Erfolgreich eingelogt")
 
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
@@ -144,7 +145,7 @@ class ServerApi {
         fun refreshToken(){
             val reqBody = JSONObject()
             reqBody.put("RefreshToken", refreshToken)
-            reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
+            reqBody.put("ClientId", clientID)
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login/refreshtoken", reqBody,
@@ -152,15 +153,34 @@ class ServerApi {
                     Log.e(TAG, "response: $response")
 
                     try {
-                        if (response.has("data")) {
-                            val data = response.getJSONObject("data")
-                            accessToken = data.getString("AccessToken")
-                            refreshToken = data.getString("RefreshToken")
-                            multiFactorToken = data.getString("MultiFactorToken")
-                            tokenExpiresInSeconds = data.getInt("TokenExpiresInSeconds")
-                            multiFactorAuth = data.getBoolean("MultiFactorAuth")
-
+                        var accessTokenCheck = response.has("AccessToken")
+                        if (accessTokenCheck)
+                        {
+                            try {
+                                accessToken = response.get("AccessToken") as String?
+                                refreshToken = response.get("RefreshToken") as String?
+                                tokenExpiresInSeconds = response.get("TokenExpiresInSeconds") as Int
+                                multiFactorAuth = response.get("MultiFactorAuth") as Boolean?
+                                this.username = response.get("Username") as String?
+                                userId = response.get("UserId") as String?
+                            }catch (ex: Exception){
+                                println("Error :" + ex.toString())
+                            }
+                            var editor = sharedPreferences.edit()
+                            editor.putString("AccessToken", accessToken)
+                            editor.putString("RefreshToken", refreshToken)
+                            editor.putString("multiFactorToken", multiFactorToken)
+                            editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
+                            editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
+                            try {
+                                var expires: Int = tokenExpiresInSeconds!! - 60
+                                var expiresTime = expires.toString().toLong()
+                                ICheckPermission.getNewTokenBeforeExpires(expiresTime)
+                            }catch(ex : java.lang.Exception){
+                                println(ex.toString())
+                            }
                             timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
+                            Log.e(TAG, "Refresh Successfully")
                         }
                     } catch (e: Exception) { // caught while parsing the response
                         Log.e(TAG, "problem occurred")

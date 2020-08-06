@@ -93,7 +93,6 @@ class CurrentLocation {
                             )
                             currentLocation =
                                 locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                            println("Location: " + currentLocation.toString())
                         } else {
 
                             locationManager?.requestLocationUpdates(

@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         var sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
-        var token = sharedPreferences.getString("accessToken", "null")
+        var token = sharedPreferences.getString("AccessToken", "null")
         if(!token.equals("null")){
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -101,6 +101,6 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         passwordText = findViewById(R.id.input_password)
         loginButton = findViewById(R.id.btn_login)
         errorLogin = findViewById(R.id.error_login)
-        checkInternetGPSPermissions(this)
+        checkInternetAccess(this)
     }
 }
