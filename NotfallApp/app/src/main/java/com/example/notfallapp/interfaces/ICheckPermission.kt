@@ -7,11 +7,10 @@ import android.content.Context
 import android.content.IntentSender.SendIntentException
 import android.location.LocationManager
 import android.net.ConnectivityManager
+import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
 import android.os.Handler
 import android.util.Log
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import com.example.notfallapp.R
 import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.server.ServerApi.Companion.TAG
@@ -27,13 +26,14 @@ interface ICheckPermission : INotifications {
     companion object{
         fun getNewTokenBeforeExpires(expires: Long){
             var timer = Timer()
-            timer.scheduleAtFixedRate(object : TimerTask() {
+            timer.schedule(object : TimerTask() {
                 override fun run() {
-                    timer.cancel()
                     ServerApi.refreshToken()
                 }
-            },0, expires)
+            },expires)
         }
+        lateinit var wifiInfo: WifiInfo
+        var level: Int? = null
     }
     fun checkPermissions(context: Context){
         checkInternetAccess(context)
@@ -51,6 +51,10 @@ interface ICheckPermission : INotifications {
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
             context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        wifiInfo = wifi.connectionInfo
+        val numberOfLevels = 5
+        val wifiInfo = wifi.connectionInfo
+        level = WifiManager.calculateSignalLevel(wifiInfo.rssi, numberOfLevels)
         var builder: AlertDialog.Builder = AlertDialog.Builder(context)
         var handler = Handler(context.mainLooper)
         var timer = Timer()

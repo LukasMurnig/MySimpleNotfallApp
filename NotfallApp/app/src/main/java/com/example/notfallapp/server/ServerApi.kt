@@ -104,7 +104,7 @@ class ServerApi : ICheckPermission {
                         try {
                             var expires: Int = tokenExpiresInSeconds!! - 60
                             var expiresTime = expires.toString().toLong()
-                            ICheckPermission.getNewTokenBeforeExpires(expiresTime)
+                            ICheckPermission.getNewTokenBeforeExpires(expiresTime*1000)
                         }catch(ex : java.lang.Exception){
                             println(ex.toString())
                         }
@@ -161,21 +161,18 @@ class ServerApi : ICheckPermission {
                                 refreshToken = response.get("RefreshToken") as String?
                                 tokenExpiresInSeconds = response.get("TokenExpiresInSeconds") as Int
                                 multiFactorAuth = response.get("MultiFactorAuth") as Boolean?
-                                this.username = response.get("Username") as String?
-                                userId = response.get("UserId") as String?
                             }catch (ex: Exception){
                                 println("Error :" + ex.toString())
                             }
                             var editor = sharedPreferences.edit()
                             editor.putString("AccessToken", accessToken)
                             editor.putString("RefreshToken", refreshToken)
-                            editor.putString("multiFactorToken", multiFactorToken)
                             editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
                             editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
                             try {
                                 var expires: Int = tokenExpiresInSeconds!! - 60
                                 var expiresTime = expires.toString().toLong()
-                                ICheckPermission.getNewTokenBeforeExpires(expiresTime)
+                                ICheckPermission.getNewTokenBeforeExpires(expiresTime*1000)
                             }catch(ex : java.lang.Exception){
                                 println(ex.toString())
                             }

@@ -11,6 +11,8 @@ import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.interfaces.INotifications
+import com.example.notfallapp.server.ServerAlarm
+import com.example.notfallapp.server.ServerCallAlarm
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
@@ -28,6 +30,12 @@ class TimerHandler {
                     // here must the alarm send to the server
                     /*ServerAlarm().sendAlert()
                     ServerAlarm().sendPosition(context)*/
+
+                    // Send alarm to the Server
+                    ServerCallAlarm.sendAlarm(context)
+
+                    // Send position to the Server
+                    ServerCallAlarm.sendPosition(context)
 
                     // meanwhile create alarm in DB
                     createAlarmInDb(context)
