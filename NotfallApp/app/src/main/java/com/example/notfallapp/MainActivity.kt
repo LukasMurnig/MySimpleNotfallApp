@@ -16,14 +16,17 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.toolbox.Volley
 import com.example.notfallapp.bll.Device
 import com.example.notfallapp.connectBracelet.AddBraceletActivityI
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.*
+import com.example.notfallapp.menubar.contact.AddContactActivity
 import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.server.ServerAlertingChain
 import com.example.notfallapp.server.ServerApi
+import com.example.notfallapp.server.ServerOrgUnitsItems
 import com.example.notfallapp.server.ServerUser
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceStartChecking
@@ -70,8 +73,14 @@ class MainActivity : AppCompatActivity(),
 
         // fill companion objects in background
         GlobalScope.launch {
+            if(ServerApi.volleyRequestQueue == null){
+                ServerApi.volleyRequestQueue = Volley.newRequestQueue(applicationContext)
+            }
             if(ContactActivity.alertingChain == null){
                 ServerAlertingChain().getAlertingChain(applicationContext)
+            }
+            if(AddContactActivity.phoneAreaCodes == null){
+                ServerOrgUnitsItems().getOrgUnitItems()
             }
             if(SettingsActivity.logInUser == null){
                 ServerUser().getUserInfo(applicationContext)

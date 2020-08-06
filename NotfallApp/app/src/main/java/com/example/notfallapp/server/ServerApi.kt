@@ -28,7 +28,7 @@ class ServerApi : ICheckPermission {
         //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
         const val TAG = "ServerApi"
         val clientID = "299a645f-5fc3-48ac-8098-01baaa4c2caa"
-        private var volleyRequestQueue: RequestQueue? = null
+        var volleyRequestQueue: RequestQueue? = null
 
         private var timeTokenCome: Long? = null
 

@@ -18,19 +18,18 @@ class ServerAlertingChain {
 
         ServerApi.createCall(Request.Method.GET, "/users/$userId/alertingchain/", null) { response ->
             if (response.has("ID")) {
-                val data = response
                 var alertingChainMembers: JSONArray? = null
 
-                if(data.getJSONArray("Helpers") != null){
-                    alertingChainMembers = data.getJSONArray("Helpers")
+                if(response.getJSONArray("Helpers") != null){
+                    alertingChainMembers = response.getJSONArray("Helpers")
                 }
 
                 var alertChM: Array<AlertingChainMember>? = arrayOf()
                 if(alertingChainMembers == null){
                     alertChM = null
                 }else{
-                    for (i in 0 until alertingChainMembers!!.length()) {
-                        val json = alertingChainMembers!!.getJSONObject(i)
+                    for (i in 0 until alertingChainMembers.length()) {
+                        val json = alertingChainMembers.getJSONObject(i)
 
                         alertChM = alertChM?.plus(
                             AlertingChainMember(
@@ -48,10 +47,10 @@ class ServerAlertingChain {
                     }
                 }
                 ContactActivity.alertingChain = AlertingChain(
-                    UUID.fromString(data.get("ID") as String?),
-                    UUID.fromString(data.get("UserId") as String?),
-                    isStringOrNull("Name", data),
-                    isStringOrNull("Description", data),
+                    UUID.fromString(response.get("ID") as String?),
+                    UUID.fromString(response.get("UserId") as String?),
+                    isStringOrNull("Name", response),
+                    isStringOrNull("Description", response),
                     alertChM
                 )
                 Log.e("ServerAlertingChain", "AlertingChain set")
