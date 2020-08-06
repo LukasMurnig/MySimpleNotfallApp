@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 class ServerCallAlarm {
     companion object {
         private lateinit var sharedPreferences: SharedPreferences
-        var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
+        var serverAPIURL = "https://jamesdev.ilogs.com/API/v1"
 
         //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
         const val TAG = "ServerApi"

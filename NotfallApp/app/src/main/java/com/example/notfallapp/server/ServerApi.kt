@@ -27,6 +27,7 @@ class ServerApi {
         //var serverAPIURL = "https://jamesdev.ilogs.com"
         //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
         const val TAG = "ServerApi"
+        val clientID = "299a645f-5fc3-48ac-8098-01baaa4c2caa"
         private var volleyRequestQueue: RequestQueue? = null
 
         private var timeTokenCome: Long? = null
@@ -60,14 +61,11 @@ class ServerApi {
         fun sendLogInDataToServer(username: String, password: String, context: Context){
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
-            reqBody.put("Username", username)
-            reqBody.put("Password", password)
-            reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
 
             try {
                 reqBody.put("Username", username)
                 reqBody.put("Password", password)
-                reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
+                reqBody.put("ClientId", clientID)
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
@@ -78,7 +76,7 @@ class ServerApi {
                 Log.e(TAG, "response: $response")
 
                 try {
-                    val message = response.getString("message")
+                    //val message = response.getString("message")
                     if (response.has("data")) {
                         val data = response.getJSONObject("data")
                         // Handle your server response data here
@@ -100,6 +98,7 @@ class ServerApi {
                         this.username = data.getString("Username")
                         userId = data.get("UserId") as UUID?
                         var editor = sharedPreferences.edit()
+                        editor.putString("clientID", clientID)
                         editor.putString("accessToken", accessToken)
                         editor.putString("refreshToken", refreshToken)
                         editor.putString("multiFactorToken", multiFactorToken)
@@ -111,7 +110,7 @@ class ServerApi {
                         context.startActivity(intent)
                     }
                     Log.e(TAG, "Erfolgreich eingelogt")
-                    Log.e(TAG, message)
+                    //Log.e(TAG, message)
 
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
