@@ -2,6 +2,7 @@ package com.example.notfallapp.server
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.provider.Settings
 import android.util.Log
 import com.android.volley.AuthFailureError
@@ -11,6 +12,8 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.notfallapp.MainActivity
+import com.example.notfallapp.R
+import com.example.notfallapp.login.LoginActivity
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -19,10 +22,12 @@ import java.util.concurrent.TimeUnit
 class ServerApi {
     companion object{
         private lateinit var context: Context
+        private lateinit var sharedPreferences: SharedPreferences
         var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
         //var serverAPIURL = "https://jamesdev.ilogs.com"
         //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
         const val TAG = "ServerApi"
+        val clientID = "299a645f-5fc3-48ac-8098-01baaa4c2caa"
         private var volleyRequestQueue: RequestQueue? = null
 
         private var timeTokenCome: Long? = null
@@ -41,6 +46,10 @@ class ServerApi {
             this.context = context
         }
 
+        fun setSharedPreferences(sharedPreferences: SharedPreferences){
+            this.sharedPreferences = sharedPreferences
+        }
+
         private fun controlToken(){
             if(timeTokenCome!=null && tokenExpiresInSeconds!=null){
                 if((timeTokenCome!! + tokenExpiresInSeconds!! - 10) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
@@ -49,14 +58,14 @@ class ServerApi {
             }
         }
 
-        fun sendLogInDataToServer(username: String, password: String){
+        fun sendLogInDataToServer(username: String, password: String, context: Context){
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
 
             try {
                 reqBody.put("Username", username)
                 reqBody.put("Password", password)
-                reqBody.put("ClientId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
+                reqBody.put("ClientId", clientID)
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
@@ -67,7 +76,7 @@ class ServerApi {
                 Log.e(TAG, "response: $response")
 
                 try {
-                    val message = response.getString("message")
+                    //val message = response.getString("message")
                     if (response.has("data")) {
                         val data = response.getJSONObject("data")
                         // Handle your server response data here
@@ -81,9 +90,27 @@ class ServerApi {
                         multiFactorAuth = proveIfNullOrValue("MultiFactorAuth", data) as Boolean?
                         this.username = proveIfNullOrValue("Username", data) as String?
                         userId = proveIfNullOrValue("UserId", data) as UUID?
+                        accessToken = data.getString("AccessToken")
+                        refreshToken = data.getString("RefreshToken")
+                        multiFactorToken = data.getString("MultiFactorToken")
+                        tokenExpiresInSeconds = data.getInt("TokenExpiresInSeconds")
+                        multiFactorAuth = data.getBoolean("MultiFactorAuth")
+                        this.username = data.getString("Username")
+                        userId = data.get("UserId") as UUID?
+                        var editor = sharedPreferences.edit()
+                        editor.putString("clientID", clientID)
+                        editor.putString("accessToken", accessToken)
+                        editor.putString("refreshToken", refreshToken)
+                        editor.putString("multiFactorToken", multiFactorToken)
+                        editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
+                        editor.putBoolean("multiFactorAuth", multiFactorAuth!!)
+                        editor.putString("UserId", userId.toString())
+                        editor.commit()
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
                     }
                     Log.e(TAG, "Erfolgreich eingelogt")
-                    Log.e(TAG, message)
+                    //Log.e(TAG, message)
 
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
@@ -96,12 +123,13 @@ class ServerApi {
             Response.ErrorListener { error ->
                 if(error.networkResponse != null){
                     val resErrorBody = JSONObject(String(error.networkResponse.data))
+                    LoginActivity.errorLogin.text = context.getString(R.string.forbidden)
                     Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
                 }else{
+                    LoginActivity.errorLogin.text = context.getString(R.string.internError)
                     Log.e(TAG, "problem occurred, volley error: " + error.message)
                 }
             })
-
             volleyRequestQueue?.add(jsonObjectRequest)
         }
 

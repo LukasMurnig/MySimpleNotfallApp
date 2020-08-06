@@ -1,16 +1,19 @@
 package com.example.notfallapp.login
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.server.ServerApi
@@ -18,14 +21,20 @@ import com.example.notfallapp.server.ServerApi
 class LoginActivity : AppCompatActivity(), ICheckPermission {
     companion object{
         private const val TAG :String = "LoginActivity"
+        lateinit var errorLogin: TextView
     }
     private lateinit var usernameText: EditText
     private lateinit var passwordText: EditText
-    private lateinit var signupText: TextView
     private lateinit var loginButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        var sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
+        var token = sharedPreferences.getString("accessToken", "null")
+        if(!token.equals("null")){
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
         //a function which findViewById for our Controls in the LoginActivity
         setLoginControls()
 
@@ -34,11 +43,6 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
             login()
         }
 
-        signupText.setOnClickListener{
-            //start the signup activity
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun login() {
@@ -49,26 +53,23 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
 
         loginButton.isEnabled = true
 
-        val progressDialog = ProgressDialog(this,
-            R.style.ProgressdialogLogin
-        )
-        progressDialog.isIndeterminate = false
-        progressDialog.setMessage(resources.getString(R.string.Authenticate))
-        progressDialog.show()
-
         val username: String? = usernameText.text.toString()
         val password: String? = passwordText.text.toString()
 
         //Todo: Implementation of the authentication methode.
-
+        var code = 0
+        var sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
         ServerApi.setContext(applicationContext)
+        ServerApi.setSharedPreferences(sharedPreferences)
         if (username != null && password != null) {
-            ServerApi.sendLogInDataToServer(username, password)
+            var handler = Handler()
+            handler.post {
+                ServerApi.sendLogInDataToServer(username, password, this)
+            }
         }
 
-        /*val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)*/
     }
+
 
 
     private fun onLoginFailed() {
@@ -102,12 +103,8 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
     private fun setLoginControls() {
         usernameText = findViewById(R.id.input_username)
         passwordText = findViewById(R.id.input_password)
-        signupText = findViewById(R.id.link_signup)
         loginButton = findViewById(R.id.btn_login)
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi =
-            getSystemService(Context.WIFI_SERVICE) as WifiManager
+        errorLogin = findViewById(R.id.error_login)
         checkInternetGPSPermissions(this)
     }
 }

@@ -61,12 +61,12 @@
             android:padding="12dp" />
 
         <TextView
-            android:id="@+id/link_signup"
+            android:id="@+id/error_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:gravity="center"
-            android:text="@string/noUser"
+            android:text=""
             android:textSize="16sp" />
 
     </LinearLayout>

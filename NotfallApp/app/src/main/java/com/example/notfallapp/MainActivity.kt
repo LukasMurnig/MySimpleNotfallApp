@@ -59,8 +59,8 @@ class MainActivity : AppCompatActivity(),
         configureButtons()
         initComponents()
         checkConnected()
-        ServerApi.setContext(applicationContext)
-        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
+        /*ServerApi.setContext(applicationContext)
+        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")*/
 
         ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
 
