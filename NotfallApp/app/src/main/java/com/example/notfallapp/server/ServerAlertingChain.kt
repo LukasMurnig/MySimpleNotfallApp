@@ -60,7 +60,7 @@ class ServerAlertingChain {
     }
 
     private fun isStringOrNull(key: String, response: JSONObject): String? {
-        return if(response.getString(key) != null){
+        return if(response.getString(key) == null){
             null
         } else {
             response.getString(key)

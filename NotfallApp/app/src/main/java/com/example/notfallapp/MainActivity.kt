@@ -21,8 +21,10 @@ import com.example.notfallapp.connectBracelet.AddBraceletActivityI
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.*
 import com.example.notfallapp.menubar.contact.ContactActivity
+import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.server.ServerAlertingChain
 import com.example.notfallapp.server.ServerApi
+import com.example.notfallapp.server.ServerUser
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceStartChecking
 import com.karumi.dexter.Dexter
@@ -70,6 +72,9 @@ class MainActivity : AppCompatActivity(),
         GlobalScope.launch {
             if(ContactActivity.alertingChain == null){
                 ServerAlertingChain().getAlertingChain(applicationContext)
+            }
+            if(SettingsActivity.logInUser == null){
+                ServerUser().getUserInfo(applicationContext)
             }
         }
 

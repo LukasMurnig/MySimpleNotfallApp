@@ -8,78 +8,57 @@ import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.server.ServerApi.Companion.createCall
 import org.json.JSONException
 import org.json.JSONObject
+import java.lang.ClassCastException
 import java.util.*
 
 class ServerUser {
 
     fun getUserInfo(context: Context){
         createCall(Request.Method.GET, context.getString(R.string.UserMe), null ){ response ->
-            if (response.has("data")) {
-                val data = response.getJSONObject("data")
+            if (response.has("ID")) {
                 SettingsActivity.logInUser = User(
-                    data.get("ID") as UUID,
-                    proveIfNullOrValue("ForeignId", data) as String?,
-                    proveIfNullOrValue("Title", data) as String?,
-                    data.getString("Forename"),
-                    data.getString("Surename"),
-                    data.getString("Username"),
-                    data.getBoolean("Active"),
-                    data.getString("Role"),
-                    data.getBoolean("Gender"),
-                    data.getBoolean("PhotoSet"),
-                    proveIfNullOrValue("BirthDay", data) as Date?,
-                    proveIfNullOrValue("EmailAddress", data) as String?,
-                    proveIfNullOrValue("PhoneFixed", data) as String?,
-                    data.getInt("OrgUnit"),
-                    proveIfNullOrValue("Language", data) as String?,
-                    proveIfNullOrValue("Timezone", data) as String?
+                    UUID.fromString(response.get("ID") as String?),
+                    isStringOrNull("ForeignId", response),
+                    isStringOrNull("Title", response),
+                    response.getString("Forename"),
+                    response.getString("Surname"),
+                    response.getString("Username"),
+                    response.getBoolean("Active"),
+                    response.getString("Role"),
+                    response.getInt("Gender"),
+                    response.getBoolean("PhotoSet"),
+                    isDateOrNull("BirthDay", response),
+                    isStringOrNull("EmailAddress", response),
+                    isStringOrNull("PhoneFixed", response),
+                    response.getInt("OrgUnit"),
+                    isStringOrNull("Language", response),
+                    isStringOrNull("TimeZone", response)
                 )
             }
         }
-        // solange Server noch nicht funktioniert
-        val json = JSONObject()
-            json.put("ID", UUID(1234,123))
-            json.put("ForeignId", null)
-            json.put("Title", "Dr")
-            json.put("Forename", "Maria")
-            json.put("Surename", "Musterfrau")
-            json.put("Username", "mamufrau")
-            json.put("Active", true)
-            json.put("Role", "User")
-            json.put("Gender", false)
-            json.put("PhotoSet", false)
-            json.put("BirthDay", Date())
-            json.put("EmailAddress", "maria.musterfrau@mail.com")
-            json.put("PhoneFixed", "06769392808")
-            json.put("OrgUnit", 3)
-            json.put("Language", null)
-            json.put("Timezone", null)
-
-            SettingsActivity.logInUser = User(
-                json.get("ID") as UUID,
-                proveIfNullOrValue("ForeignId", json) as String?,
-                proveIfNullOrValue("Title", json) as String?,
-                json.getString("Forename"),
-                json.getString("Surename"),
-                json.getString("Username"),
-                json.getBoolean("Active"),
-                json.getString("Role"),
-                json.getBoolean("Gender"),
-                json.getBoolean("PhotoSet"),
-                proveIfNullOrValue("BirthDay", json) as Date?,
-                proveIfNullOrValue("EmailAddress", json) as String?,
-                proveIfNullOrValue("PhoneFixed", json) as String?,
-                json.getInt("OrgUnit"),
-                proveIfNullOrValue("Language", json) as String?,
-                proveIfNullOrValue("Timezone", json) as String?
-            )
     }
 
-    private fun proveIfNullOrValue(key: String, response: JSONObject): Any?{
-        return try{
-            response.get(key)
-        }catch (ex: JSONException){
+    private fun isStringOrNull(key: String, response: JSONObject): String? {
+        return if(response.getString(key) == null){
             null
+        } else {
+            try{
+                response.getString(key)
+            }catch (ex: JSONException){
+                null
+            }
+        }
+    }
+
+    private fun isDateOrNull(key: String, response: JSONObject): Date?{
+        return if(response.get(key) == null){
+            null
+        } else {
+            try{
+                response.get(key) as Date
+            }catch (ex : ClassCastException) {
+                null
+            }
         }
     }
 
