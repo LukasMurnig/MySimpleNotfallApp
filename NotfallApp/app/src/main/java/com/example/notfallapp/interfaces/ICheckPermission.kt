@@ -13,6 +13,7 @@ import android.util.Log
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.example.notfallapp.R
+import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
@@ -23,6 +24,17 @@ import java.util.*
 
 
 interface ICheckPermission : INotifications {
+    companion object{
+        fun getNewTokenBeforeExpires(expires: Long){
+            var timer = Timer()
+            timer.scheduleAtFixedRate(object : TimerTask() {
+                override fun run() {
+                    timer.cancel()
+                    ServerApi.refreshToken()
+                }
+            },0, expires)
+        }
+    }
     fun checkPermissions(context: Context){
         checkInternetAccess(context)
         checkBluetoothEnabled(context)
@@ -35,7 +47,7 @@ interface ICheckPermission : INotifications {
     }
 
     fun checkInternetAccess(context: Context){
-        /*val connectivityManager =
+        val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val wifi =
             context.getSystemService(Context.WIFI_SERVICE) as WifiManager
@@ -53,7 +65,7 @@ interface ICheckPermission : INotifications {
                     })
                 }
             }
-        }, 0, 3000)*/
+        }, 0, 3000)
     }
 
 
