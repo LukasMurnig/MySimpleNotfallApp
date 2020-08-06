@@ -2,6 +2,7 @@ package com.example.notfallapp
 
 import android.content.Context
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -10,6 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import com.example.notfallapp.login.LoginActivity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -22,12 +24,19 @@ class ButtonbarTest {
     private lateinit var testContext: Context
 
     @get:Rule
-    var activityRule: ActivityTestRule<MainActivity>
-            = ActivityTestRule(MainActivity::class.java)
+    var activityRule: ActivityTestRule<LoginActivity>
+            = ActivityTestRule(LoginActivity::class.java)
 
     @Before
     fun setup(){
         testContext = InstrumentationRegistry.getInstrumentation().targetContext
+        onView(withId(R.id.input_username))
+            .perform(ViewActions.typeText("sosapp"), ViewActions.closeSoftKeyboard())
+        onView(withId(R.id.input_password))
+            .perform(ViewActions.typeText("gTN52PoeUQ"), ViewActions.closeSoftKeyboard())
+        onView(withId(R.id.btn_login))
+            .perform(click())
+        Thread.sleep(1000)
     }
 
     @Test

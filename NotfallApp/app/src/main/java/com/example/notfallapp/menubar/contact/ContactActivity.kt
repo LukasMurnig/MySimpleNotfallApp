@@ -64,12 +64,11 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
             startActivity( intent, null)
         }*/
 
-        GlobalScope.launch {
+        /*GlobalScope.launch {
             ServerOrgUnitsItems().getOrgUnitItems()
-        }
+        }*/
 
         MainScope().launch {
-            ServerAlertingChain().getAlertingChain()
             while (alertingChain == null){
 
             }

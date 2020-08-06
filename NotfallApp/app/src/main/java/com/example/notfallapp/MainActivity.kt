@@ -20,6 +20,8 @@ import com.example.notfallapp.bll.Device
 import com.example.notfallapp.connectBracelet.AddBraceletActivityI
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.*
+import com.example.notfallapp.menubar.contact.ContactActivity
+import com.example.notfallapp.server.ServerAlertingChain
 import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceStartChecking
@@ -28,6 +30,8 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -61,6 +65,15 @@ class MainActivity : AppCompatActivity(),
         checkConnected()
         /*ServerApi.setContext(applicationContext)
         ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")*/
+
+        // fill companion objects in background
+        GlobalScope.launch {
+            if(ContactActivity.alertingChain == null){
+                ServerAlertingChain().getAlertingChain()
+            }
+
+        }
+
 
         ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
 

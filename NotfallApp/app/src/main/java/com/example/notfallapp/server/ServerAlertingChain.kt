@@ -1,5 +1,6 @@
 package com.example.notfallapp.server
 
+import android.util.Log
 import com.android.volley.Request
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
@@ -12,6 +13,8 @@ import java.util.*
 class ServerAlertingChain {
 
     fun getAlertingChain(){
+        while (ServerApi.userId == null){
+        }
         ServerApi.createCall(Request.Method.GET, "/users/${ServerApi.userId}/alertingchain/", null) { response ->
             if (response.has("data")) {
                 val data = response.getJSONObject("data")
@@ -50,10 +53,11 @@ class ServerAlertingChain {
                     proveIfNullOrValue("Description", data) as String?,
                     alertChM
                 )
+                Log.e("ServerAlertingChain", "AlertingChain set")
             }
         }
 
-        val endJson = JSONObject()
+        /*val endJson = JSONObject()
         endJson.put("ID", UUID(32453,34))
         endJson.put("UserId", UUID(31432,432))
         endJson.put("Name", "Test AlertingChain")
@@ -106,7 +110,7 @@ class ServerAlertingChain {
             proveIfNullOrValue("Name", endJson) as String?,
             proveIfNullOrValue("Description", endJson) as String?,
             alertChM
-        )
+        )*/
     }
 
     private fun proveIfNullOrValue(key: String, response: JSONObject): Any?{
