@@ -36,9 +36,9 @@ class LogInTest {
     @Test
     fun LoginShouldFailTest(){
         Espresso.onView(ViewMatchers.withId(R.id.input_username))
-            .perform(typeText("sosapp"), closeSoftKeyboard())
+            .perform(typeText("not in the system"), closeSoftKeyboard())
         Espresso.onView(ViewMatchers.withId(R.id.input_password))
-            .perform(typeText(""), closeSoftKeyboard())
+            .perform(typeText("not in the system"), closeSoftKeyboard())
         Espresso.onView(ViewMatchers.withId(R.id.btn_login))
             .perform(click())
 
