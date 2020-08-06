@@ -3,7 +3,6 @@ package com.example.notfallapp.server
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.provider.Settings
 import android.util.Log
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -112,6 +111,7 @@ class ServerApi : ICheckPermission {
                         context.startActivity(intent)
                     }
                     Log.d(TAG, "Erfolgreich eingelogt")
+                    Log.d(TAG, "userId: $userId")
 
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
@@ -196,38 +196,38 @@ class ServerApi : ICheckPermission {
         }
 
         fun createCall(method: Int, extraUrl: String, reqBody: JSONObject?, toDo: (response: JSONObject) -> Unit ) {
-            controlToken()
+            //controlToken()
 
             val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
                 method, serverAPIURL + extraUrl, reqBody,
                 Response.Listener<JSONObject> { response ->
                     Log.e(TAG, "response: $response")
                     try {
-                        val code = response.getInt("code")
-                        val message = response.getString("message")
-
-                        Log.i(TAG, "$code  $message")
-
                         toDo(response)
-
                     } catch (e: Exception) { // caught while parsing the response
-                        Log.e(TAG, "problem occurred")
+                        Log.e(TAG, "problem occurred, while do something with response function")
                         e.printStackTrace()
                     }
                 }, Response.ErrorListener { error ->
-                    if(error.networkResponse == null){
-                        val resErrorBody = JSONObject(String(error.networkResponse.data))
-                        Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
-                    }else{
-                        Log.e(TAG, "problem occurred, volley error: " + error.message)
+                    try{
+                        if(error.networkResponse == null){
+                            val resErrorBody = JSONObject(String(error.networkResponse.data))
+                            Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                        }else{
+                            Log.e(TAG, "problem occurred, volley error: " + error.message)
+                        }
+                    }catch (ex: Exception){
+                        Log.e(TAG, "problem occurred, volley error: " + error)
                     }
                 }) {
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
                     var params: MutableMap<String, String>? = super.getHeaders()
-                    if (params == null) params = HashMap()
+                    if (params == null || params.isEmpty() ) params = HashMap()
                     if(accessToken != null){
-                        params["Authorization"] = accessToken.toString()
+                        //params.put("Authorization", accessToken.toString())
+                        Log.d(TAG, params.toString())
+                        params["Authorization"] = "Bearer " + accessToken.toString()
                     }
                     return params
                 }

@@ -69,9 +69,8 @@ class MainActivity : AppCompatActivity(),
         // fill companion objects in background
         GlobalScope.launch {
             if(ContactActivity.alertingChain == null){
-                ServerAlertingChain().getAlertingChain()
+                ServerAlertingChain().getAlertingChain(applicationContext)
             }
-
         }
 
 

@@ -27,12 +27,18 @@ interface ICheckPermission : INotifications {
     companion object{
         fun getNewTokenBeforeExpires(expires: Long){
             var timer = Timer()
+            /*timer.scheduleAtFixedRate(object : TimerTask() {
+                override fun run() {
+                    timer.cancel()
+                    ServerApi.refreshToken()
+                }
+            },0, expires)*/
             timer.scheduleAtFixedRate(object : TimerTask() {
                 override fun run() {
                     timer.cancel()
                     ServerApi.refreshToken()
                 }
-            },0, expires)
+            },expires, 0)
         }
     }
     fun checkPermissions(context: Context){

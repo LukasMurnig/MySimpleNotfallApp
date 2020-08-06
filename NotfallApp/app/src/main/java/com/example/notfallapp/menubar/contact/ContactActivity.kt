@@ -1,9 +1,7 @@
 package com.example.notfallapp.menubar.contact
 
-import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -21,8 +19,6 @@ import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IContactDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ServerAlertingChain
-import com.example.notfallapp.server.ServerOrgUnitsItems
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -69,8 +65,9 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         }*/
 
         MainScope().launch {
-            while (alertingChain == null){
-
+            if (alertingChain == null){
+                ServerAlertingChain().getAlertingChain(applicationContext)
+                return@launch
             }
             val adapter = AlertingChainListAdapter(alertingChain!!)
             IAlertingChainMemberFunctions.setAdapter(adapter)
