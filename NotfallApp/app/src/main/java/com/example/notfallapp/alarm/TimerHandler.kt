@@ -18,6 +18,7 @@ import java.util.*
 
 class TimerHandler {
     companion object : INotifications {
+            const val timerAfterSosWillSend: Long = 5000
             private lateinit var handler: Handler
             fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
@@ -36,7 +37,7 @@ class TimerHandler {
                     val intent = Intent(context, AlarmSuccesfulActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, intent, null)
-                }, 5000)
+                }, timerAfterSosWillSend)
             }
 
             fun deleteTimer(){
