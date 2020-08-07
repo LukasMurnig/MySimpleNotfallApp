@@ -30,10 +30,10 @@ class ButtonbarTest {
     @Before
     fun setup(){
         testContext = InstrumentationRegistry.getInstrumentation().targetContext
-        onView(withId(R.id.input_username))
+        /*onView(withId(R.id.input_username))
             .perform(ViewActions.typeText("sosapp"), ViewActions.closeSoftKeyboard())
         onView(withId(R.id.input_password))
-            .perform(ViewActions.typeText("gTN52PoeUQ"), ViewActions.closeSoftKeyboard())
+            .perform(ViewActions.typeText("gTN52PoeUQ"), ViewActions.closeSoftKeyboard())*/
         onView(withId(R.id.btn_login))
             .perform(click())
         Thread.sleep(1000)

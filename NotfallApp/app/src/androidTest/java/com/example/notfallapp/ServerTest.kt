@@ -65,7 +65,7 @@ class ServerTest {
 
     @Test
     fun getAlertingChainTest(){
-        ServerAlertingChain().getAlertingChain()
+        ServerAlertingChain().getAlertingChain(testContext)
         Thread.sleep(5000)
 
         assertNotNull(ContactActivity.alertingChain)

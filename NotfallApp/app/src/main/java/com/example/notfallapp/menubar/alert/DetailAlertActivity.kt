@@ -36,7 +36,6 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
         tvDetailLongitude.text = extras.getDouble("longitude").toString()
         tvDetailLatitude.text = extras.getDouble("latitude").toString()
 
-        // TODO implemented split for the string, it is not a Date anymore
         val timestamp = extras.getString("timestamp").split('.')[0]
         tvDetailDate.text = timestamp.split('T')[0]
         tvDetailTime.text = timestamp.split('T')[1]
