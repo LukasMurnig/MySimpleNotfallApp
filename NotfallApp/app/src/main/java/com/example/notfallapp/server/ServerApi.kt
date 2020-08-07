@@ -24,8 +24,6 @@ class ServerApi : ICheckPermission {
         private lateinit var context: Context
         private lateinit var sharedPreferences: SharedPreferences
         var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
-        //var serverAPIURL = "https://jamesdev.ilogs.com"
-        //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
         const val TAG = "ServerApi"
         val clientID = "299a645f-5fc3-48ac-8098-01baaa4c2caa"
         var volleyRequestQueue: RequestQueue? = null
@@ -48,6 +46,10 @@ class ServerApi : ICheckPermission {
 
         fun setSharedPreferences(sharedPreferences: SharedPreferences){
             this.sharedPreferences = sharedPreferences
+        }
+
+        fun getSharedPreferences(): SharedPreferences{
+            return this.sharedPreferences
         }
 
         private fun controlToken(){
@@ -132,14 +134,6 @@ class ServerApi : ICheckPermission {
                 }
             })
             volleyRequestQueue?.add(jsonObjectRequest)
-        }
-
-        private fun proveIfNullOrValue(key: String, response: JSONObject): Any?{
-            return try{
-                response.get(key)
-            }catch (ex: JSONException){
-                null
-            }
         }
 
         fun refreshToken(){

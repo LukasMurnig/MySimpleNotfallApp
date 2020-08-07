@@ -36,9 +36,10 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
         tvDetailLongitude.text = extras.getDouble("longitude").toString()
         tvDetailLatitude.text = extras.getDouble("latitude").toString()
 
-        val timestamp = extras.get("timestamp") as Date
+        // TODO implemented split for the string, it is not a Date anymore
+        /*val timestamp = extras.get("timestamp") as Date
         tvDetailDate.text = android.text.format.DateFormat.format("dd-MM-yyyy", timestamp)
-        tvDetailTime.text = android.text.format.DateFormat.format("kk:mm:ss", timestamp)
+        tvDetailTime.text = android.text.format.DateFormat.format("kk:mm:ss", timestamp)*/
 
         if((extras.get("accepted") as UUID?) != null){
             tvDetailAlarmAccepted.text = extras.getString("accepted")

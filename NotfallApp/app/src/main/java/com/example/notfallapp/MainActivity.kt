@@ -68,11 +68,14 @@ class MainActivity : AppCompatActivity(),
         configureButtons()
         initComponents()
         checkConnected()
-        /*ServerApi.setContext(applicationContext)
-        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")*/
 
         // fill companion objects in background
         GlobalScope.launch {
+            try{
+                val sharedPreferences = ServerApi.getSharedPreferences()
+            }catch (ex: UninitializedPropertyAccessException){
+                ServerApi.setSharedPreferences(getSharedPreferences("Response", Context.MODE_PRIVATE))
+            }
             if(ServerApi.volleyRequestQueue == null){
                 ServerApi.volleyRequestQueue = Volley.newRequestQueue(applicationContext)
             }
@@ -86,7 +89,6 @@ class MainActivity : AppCompatActivity(),
                 ServerUser().getUserInfo(applicationContext)
             }
         }
-
 
         ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
 

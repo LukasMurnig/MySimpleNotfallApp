@@ -13,7 +13,7 @@ class Alert constructor(
     var deviceId: UUID?,
     var triggeringPositionLatitude: Double?,
     var triggeringPositionLongitude: Double?,
-    var triggeringPositionTime: Date?,
+    var triggeringPositionTime: String?, /*Date, change to String, because problem by converting*/
     var canBeForwarded: Boolean) {
 
     /*
