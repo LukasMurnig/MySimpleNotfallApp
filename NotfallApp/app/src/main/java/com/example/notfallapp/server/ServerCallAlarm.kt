@@ -4,20 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
+import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.notfallapp.MainActivity
-import com.example.notfallapp.R
+import com.example.notfallapp.alarm.AlarmFailedActivity
 import com.example.notfallapp.alarm.AlarmSuccesfulActivity
+import com.example.notfallapp.interfaces.CurrentLocation
+import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.login.LoginActivity
-import com.example.notfallapp.service.ServiceCallAlarm
 import org.json.JSONObject
 import java.util.*
-import java.util.concurrent.TimeUnit
+
 
 class ServerCallAlarm {
     companion object {
@@ -29,11 +30,7 @@ class ServerCallAlarm {
         private var volleyRequestQueue: RequestQueue? = null
         var userId: String? = null
 
-        fun setSharedPreferences(sharedPreferences: SharedPreferences) {
-            this.sharedPreferences = sharedPreferences
-        }
-
-        private fun sendAlarm(context: Context) {
+        fun sendAlarm(context: Context) {
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
@@ -42,12 +39,14 @@ class ServerCallAlarm {
             } else {
                 reqBody.put("Battery", IConnectBracelet.batteryState)
             }
+            sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
-            val jsonObjectRequest = JsonObjectRequest(
+            val jsonObjectRequest = object : JsonObjectRequest(
                 Request.Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/alert", reqBody,
                 Response.Listener { response ->
                     Log.e(ServerApi.TAG, "response: $response")
                     var intent = Intent(context, AlarmSuccesfulActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 },
                 Response.ErrorListener { error ->
@@ -59,14 +58,96 @@ class ServerCallAlarm {
                                 "Error"
                             )
                         )
-                        var intent = Intent(context, ServiceCallAlarm::class.java)
-                        context.startService(intent)
+                        var intent = Intent(context, AlarmFailedActivity::class.java)
+                        intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
+                        context.startActivity(intent)
                     } else {
                         Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
-                        var intent = Intent(context, ServiceCallAlarm::class.java)
-                        context.startService(intent)
+                        var intent = Intent(context, AlarmFailedActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        context.startActivity(intent)
                     }
-                })
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String>? {
+                    var params = HashMap<String, String>()
+                    var token = sharedPreferences.getString("AccessToken", "")
+                    params?.put("Authorization", "Bearer " +token)
+                    //..add other headers
+                    return params
+                }
+            }
+            volleyRequestQueue?.add(jsonObjectRequest)
+        }
+
+        fun sendPosition(context: Context){
+            volleyRequestQueue = Volley.newRequestQueue(context)
+            val reqBody = JSONObject()
+            val body = JSONObject()
+            val beacon = JSONObject()
+            val calendar = Calendar.getInstance()
+            val currentTime = "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH)}-${calendar.get(Calendar.DAY_OF_MONTH)}T" +
+                    "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}:${calendar.get(Calendar.SECOND)}+00:00"
+            val location = CurrentLocation.currentLocation
+            body.put("Timestamp", currentTime)
+            if(location?.longitude != null){
+                body.put("Longitude", location?.longitude)
+            }else{
+                body.put("Longitude", 0)
+            }
+            if(location?.latitude != null){
+                body.put("Latitude", location?.latitude)
+            }else{
+                body.put("Latitude", 0)
+            }
+            if(location?.accuracy != null){
+                body.put("Accuracy", location?.accuracy)
+            }else{
+                body.put("Accuracy", 0)
+            }
+            body.put("Source", "gps")
+            var wifiInfo = ICheckPermission.wifiInfo
+            if (wifiInfo.ipAddress != 0) {
+                reqBody.put("Positions", "[$body],")
+                beacon.put("Timestamp", currentTime)
+                beacon.put("Type", 1)
+                beacon.put("Identifier", wifiInfo.ssid)
+                beacon.put("Mac", wifiInfo.ipAddress)
+                beacon.put("SignalStrength", ICheckPermission.level)
+
+                reqBody.put("Beacons", "[${beacon}]")
+            }else{
+                reqBody.put("Positions", "[$body]")
+            }
+            sharedPreferences = LoginActivity.sharedPreferences!!
+            userId = sharedPreferences.getString("UserId", "")
+            println("Position: "+reqBody.toString())
+            val jsonObjectRequest = object : JsonObjectRequest(
+                Request.Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/positions", reqBody,
+                Response.Listener { response ->
+                    Log.e(ServerApi.TAG, "response: $response")
+                },
+                Response.ErrorListener { error ->
+                    if (error.networkResponse != null) {
+                        val resErrorBody = JSONObject(String(error.networkResponse.data))
+                        Log.e(
+                            ServerApi.TAG,
+                            "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get(
+                                "Error"
+                            )
+                        )
+                    } else {
+                        Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
+                    }
+                }) {
+                override fun getHeaders(): Map<String, String>? {
+                    var params = HashMap<String, String>()
+                    var token = sharedPreferences.getString("AccessToken", "")
+                    params?.put("Authorization", "Bearer " +token)
+                    //..add other headers
+                    return params
+                }
+            }
             volleyRequestQueue?.add(jsonObjectRequest)
         }
     }

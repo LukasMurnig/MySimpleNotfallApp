@@ -2,6 +2,9 @@ package com.example.notfallapp.login
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
 import android.widget.Button
@@ -18,6 +21,7 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
     companion object{
         private const val TAG :String = "LoginActivity"
         lateinit var errorLogin: TextView
+        var sharedPreferences: SharedPreferences? = null
     }
     private lateinit var usernameText: EditText
     private lateinit var passwordText: EditText
@@ -25,8 +29,8 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        var sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
-        var token = sharedPreferences.getString("AccessToken", "null")
+        sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
+        var token = sharedPreferences?.getString("AccessToken", "null")
         if(!token.equals("null")){
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
