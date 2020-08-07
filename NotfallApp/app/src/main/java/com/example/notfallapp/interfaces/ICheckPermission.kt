@@ -26,6 +26,7 @@ interface ICheckPermission : INotifications {
     companion object{
         fun getNewTokenBeforeExpires(expires: Long){
             var timer = Timer()
+
             timer.schedule(object : TimerTask() {
                 override fun run() {
                     ServerApi.refreshToken()

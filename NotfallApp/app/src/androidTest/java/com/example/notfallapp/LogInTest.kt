@@ -27,7 +27,7 @@ class LogInTest {
             .perform(typeText("gTN52PoeUQ"), closeSoftKeyboard())
         Espresso.onView(ViewMatchers.withId(R.id.btn_login))
             .perform(click())
-        Thread.sleep(5000)
+        Thread.sleep(2000)
 
         Espresso.onView(ViewMatchers.withId(R.id.tvStatusbracelet))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))

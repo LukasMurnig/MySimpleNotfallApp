@@ -2,9 +2,13 @@ package com.example.notfallapp.server
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.AuthFailureError
 import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlertsListAdapter
 import com.example.notfallapp.bll.Alert
@@ -17,33 +21,30 @@ import java.util.*
 
 class ServerAlarm {
     fun getAllAlerts(context: Context, rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
-        ServerApi.createCall(Request.Method.GET, "/alerts", null) { response ->
-            if (response.has("data")) {
-                var data: JSONArray? = null
-                try{
-                    data = response.getJSONArray("data")
-                }catch (ex: JSONException){
 
-                }
 
-                if(data == null){
+
+        createGetArrayCall(Request.Method.GET, "/alerts") { response ->
+
+                if(response.length() == 0){
                     lbMessageNoAlarms.text = context.resources.getString(R.string.noAlarms)
                 }else{
                     val result = mutableListOf<Alert>()
 
-                    for (i in 0 until data.length()) {
-                        val js = data.getJSONObject(i)
-                        result.plus(Alert(
-                            js.get("ID") as Long,
-                            js.get("Date") as Date,
-                            js.get("Type") as Byte,
-                            js.get("State") as Byte,
-                            js.get("ClientId") as UUID,
-                            proveIfNullOrValue("HelperId", js) as UUID?,
-                            proveIfNullOrValue("DeviceId", js) as UUID?,
-                            proveIfNullOrValue("TriggeringPositionLatitude", js) as Double?,
-                            proveIfNullOrValue("TriggeringPositionLongitude", js) as Double?,
-                            proveIfNullOrValue("TriggeringPositionTime", js) as Date?,
+                    for (i in 0 until response.length()) {
+                        val js = response.getJSONObject(i)
+
+                        result.add(Alert(
+                            (js.get("ID") as Int).toLong(),
+                            js.get("Date") as String,
+                            (js.get("Type") as Int).toByte(),
+                            (js.get("State") as Int).toByte(),
+                            UUID.fromString(isStringOrNull("ClientId", js)),
+                            convertToUUID(isStringOrNull("HelperId", js)),
+                            convertToUUID(isStringOrNull("DeviceId", js)),
+                            isDoubleOrNull("TriggeringPositionLatitude", js),
+                            isDoubleOrNull("TriggeringPositionLongitude", js),
+                            isStringOrNull("TriggeringPositionTime", js),
                             js.get("CanBeForwarded") as Boolean
                         ))
                     }
@@ -51,58 +52,76 @@ class ServerAlarm {
                     rvAlarms.adapter = adapter
                     adapter.notifyDataSetChanged()
                 }
-            }
         }
-        // Solange Server noch nicht funktioniert; Keine genaue Beschreibung über den Response List of Alert-ObjectsList
-        var result = listOf<Alert>()
-        val jsonArray = JSONArray()
-        val json = JSONObject()
-        json.put("ID", 390144198431043)
-        json.put("Date", Date())
-        json.put("Type", (0).toByte())
-        json.put("State", (0).toByte())
-        json.put("ClientId", UUID(230943,3204))
-        json.put("HelperId", UUID(2094582,4595))
-        json.put("DeviceId", null)
-        json.put("TriggeringPositionLatitude", 22.222222)
-        json.put("TriggeringPositionLongitude", 22.222222)
-        json.put("TriggeringPositionTime", Date())
-        json.put("CanBeForwarded", false)
-        jsonArray.put(json)
-
-        val endJson = JSONObject()
-        endJson.put("data", jsonArray)
-
-        val data: JSONArray = endJson.getJSONArray("data")
-
-        for (i in 0 until data.length()) {
-            val js = data.getJSONObject(i)
-            result = result.plus(Alert(
-                js.get("ID") as Long,
-                js.get("Date") as Date,
-                js.get("Type") as Byte,
-                js.get("State") as Byte,
-                js.get("ClientId") as UUID,
-                proveIfNullOrValue("HelperId", js) as UUID?,
-                proveIfNullOrValue("DeviceId", js) as UUID?,
-                proveIfNullOrValue("TriggeringPositionLatitude", js) as Double?,
-                proveIfNullOrValue("TriggeringPositionLongitude", js) as Double?,
-                proveIfNullOrValue("TriggeringPositionTime", js) as Date?,
-                js.get("CanBeForwarded") as Boolean
-            ))
-        }
-
-        val adapter = AlertsListAdapter(result)
-        rvAlarms.adapter = adapter
-        adapter.notifyDataSetChanged()
     }
 
-    private fun proveIfNullOrValue(key: String, response: JSONObject): Any?{
+    private fun convertToUUID(string: String?): UUID? {
+        return if(string == null || string.isEmpty() || string == "null"){
+            null
+        } else {
+            UUID.fromString(string)
+        }
+    }
+
+    private fun isDoubleOrNull(key: String, response: JSONObject): Double? {
         return try{
-            response.get(key)
+            if(response.get(key) == null || response.get(key).equals("null")){
+                null
+            } else if(response.getDouble(key) == null){
+                null
+            } else {
+                response.getDouble(key)
+            }
         }catch (ex: JSONException){
             null
         }
+    }
+
+    private fun isStringOrNull(key: String, response: JSONObject): String? {
+        return if(response.getString(key) == null){
+            null
+        } else {
+            response.getString(key)
+        }
+    }
+
+    fun createGetArrayCall(method: Int, extraUrl: String, toDo: (response: JSONArray) -> Unit ) {
+        val jsonObjectRequest: JsonArrayRequest = object : JsonArrayRequest(
+            method, ServerApi.serverAPIURL + extraUrl, null,
+            Response.Listener<JSONArray> { response ->
+                Log.e(ServerApi.TAG, "response: $response")
+                try {
+                    toDo(response)
+                } catch (e: Exception) { // caught while parsing the response
+                    Log.e(ServerApi.TAG, "problem occurred, while do something with response function")
+                    e.printStackTrace()
+                }
+            }, Response.ErrorListener { error ->
+                try{
+                    if(error.networkResponse == null){
+                        val resErrorBody = JSONObject(String(error.networkResponse.data))
+                        Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                    }else{
+                        Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
+                    }
+                }catch (ex: Exception){
+                    Log.e(ServerApi.TAG, "problem occurred, volley error: " + error)
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                var params: MutableMap<String, String>? = super.getHeaders()
+                if (params == null || params.isEmpty() ) params = HashMap()
+
+                val access = ServerApi.getSharedPreferences().getString("AccessToken", null)
+                if(access != null){
+                    params["Authorization"] = "Bearer $access"
+                }
+
+                return params
+            }
+        }
+        ServerApi.volleyRequestQueue?.add(jsonObjectRequest)
     }
 
     fun sendAlert(){

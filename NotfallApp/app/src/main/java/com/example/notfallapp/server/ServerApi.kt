@@ -3,7 +3,6 @@ package com.example.notfallapp.server
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.provider.Settings
 import android.util.Log
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -25,11 +24,9 @@ class ServerApi : ICheckPermission {
         private lateinit var context: Context
         private lateinit var sharedPreferences: SharedPreferences
         var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
-        //var serverAPIURL = "https://jamesdev.ilogs.com"
-        //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
         const val TAG = "ServerApi"
         val clientID = "299a645f-5fc3-48ac-8098-01baaa4c2caa"
-        private var volleyRequestQueue: RequestQueue? = null
+        var volleyRequestQueue: RequestQueue? = null
 
         private var timeTokenCome: Long? = null
 
@@ -49,6 +46,10 @@ class ServerApi : ICheckPermission {
 
         fun setSharedPreferences(sharedPreferences: SharedPreferences){
             this.sharedPreferences = sharedPreferences
+        }
+
+        fun getSharedPreferences(): SharedPreferences{
+            return this.sharedPreferences
         }
 
         private fun controlToken(){
@@ -112,6 +113,7 @@ class ServerApi : ICheckPermission {
                         context.startActivity(intent)
                     }
                     Log.d(TAG, "Erfolgreich eingelogt")
+                    Log.d(TAG, "userId: $userId")
 
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
@@ -132,14 +134,6 @@ class ServerApi : ICheckPermission {
                 }
             })
             volleyRequestQueue?.add(jsonObjectRequest)
-        }
-
-        private fun proveIfNullOrValue(key: String, response: JSONObject): Any?{
-            return try{
-                response.get(key)
-            }catch (ex: JSONException){
-                null
-            }
         }
 
         fun refreshToken(){
@@ -193,39 +187,40 @@ class ServerApi : ICheckPermission {
         }
 
         fun createCall(method: Int, extraUrl: String, reqBody: JSONObject?, toDo: (response: JSONObject) -> Unit ) {
-            controlToken()
+            //controlToken()
 
             val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
                 method, serverAPIURL + extraUrl, reqBody,
                 Response.Listener<JSONObject> { response ->
                     Log.e(TAG, "response: $response")
                     try {
-                        val code = response.getInt("code")
-                        val message = response.getString("message")
-
-                        Log.i(TAG, "$code  $message")
-
                         toDo(response)
-
                     } catch (e: Exception) { // caught while parsing the response
-                        Log.e(TAG, "problem occurred")
+                        Log.e(TAG, "problem occurred, while do something with response function")
                         e.printStackTrace()
                     }
                 }, Response.ErrorListener { error ->
-                    if(error.networkResponse == null){
-                        val resErrorBody = JSONObject(String(error.networkResponse.data))
-                        Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
-                    }else{
-                        Log.e(TAG, "problem occurred, volley error: " + error.message)
+                    try{
+                        if(error.networkResponse == null){
+                            val resErrorBody = JSONObject(String(error.networkResponse.data))
+                            Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                        }else{
+                            Log.e(TAG, "problem occurred, volley error: " + error.message)
+                        }
+                    }catch (ex: Exception){
+                        Log.e(TAG, "problem occurred, volley error: " + error)
                     }
                 }) {
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
                     var params: MutableMap<String, String>? = super.getHeaders()
-                    if (params == null) params = HashMap()
-                    if(accessToken != null){
-                        params["Authorization"] = accessToken.toString()
+                    if (params == null || params.isEmpty() ) params = HashMap()
+
+                    val access = getSharedPreferences().getString("AccessToken", null)
+                    if(access != null){
+                        params["Authorization"] = "Bearer $access"
                     }
+
                     return params
                 }
             }
