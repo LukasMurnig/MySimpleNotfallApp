@@ -2,7 +2,6 @@ package com.example.notfallapp.server
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.os.Build
 import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -17,9 +16,6 @@ import com.example.notfallapp.interfaces.CurrentLocation
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -117,13 +113,10 @@ class ServerAlarm {
                 var params: MutableMap<String, String>? = super.getHeaders()
                 if (params == null || params.isEmpty() ) params = HashMap()
 
-                    //params.put("Authorization", accessToken.toString())
-                    Log.d(ServerApi.TAG, params.toString())
-                    val access = ServerApi.getSharedPreferences().getString("AccessToken", null)
-                    Log.d(ServerApi.TAG, "Token: $access")
-                    if(access != null){
-                        params["Authorization"] = "Bearer " + access
-                    }
+                val access = ServerApi.getSharedPreferences().getString("AccessToken", null)
+                if(access != null){
+                    params["Authorization"] = "Bearer $access"
+                }
 
                 return params
             }

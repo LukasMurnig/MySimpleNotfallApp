@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="vertical">
 
     <!-- Wer nahm an -->
@@ -10,24 +12,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/AlarmAnswered"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="22dp"
-        android:layout_marginStart="10dp"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"/>
     <TextView
         android:id="@+id/alertAnswerdContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="120dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
         android:maxLines="2" />
 
     <!-- Zeitstempel -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/alertAnswerdContact"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="3dp"
         android:text="@string/time" />
@@ -36,7 +40,7 @@
         android:layout_marginStart="80dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/alertAnswerdContact"
         android:maxLines="2" />
 
 </RelativeLayout>

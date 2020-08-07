@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(),
         // fill companion objects in background
         GlobalScope.launch {
             try{
-                val sharedPreferences = ServerApi.getSharedPreferences()
+                ServerApi.getSharedPreferences()
             }catch (ex: UninitializedPropertyAccessException){
                 ServerApi.setSharedPreferences(getSharedPreferences("Response", Context.MODE_PRIVATE))
             }

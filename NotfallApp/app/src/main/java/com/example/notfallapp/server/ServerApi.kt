@@ -218,11 +218,12 @@ class ServerApi : ICheckPermission {
                 override fun getHeaders(): Map<String, String> {
                     var params: MutableMap<String, String>? = super.getHeaders()
                     if (params == null || params.isEmpty() ) params = HashMap()
-                    if(accessToken != null){
-                        //params.put("Authorization", accessToken.toString())
-                        Log.d(TAG, params.toString())
-                        params["Authorization"] = "Bearer " + accessToken.toString()
+
+                    val access = getSharedPreferences().getString("AccessToken", null)
+                    if(access != null){
+                        params["Authorization"] = "Bearer $access"
                     }
+
                     return params
                 }
             }
