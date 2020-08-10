@@ -13,7 +13,6 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
@@ -76,18 +75,15 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
                     val bitmap =
                         MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
                     saveImage(bitmap)
-                    Toast.makeText(this, resources.getString(R.string.Imagesaved), Toast.LENGTH_SHORT).show()
                     imageUpload.setImageBitmap(bitmap)
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    Toast.makeText(this, resources.getString(R.string.Failed), Toast.LENGTH_SHORT).show()
                 }
             }
         } else if (requestCode == CAMERA && data != null) {
             val thumbnail: Bitmap = data.extras.get(resources.getString(R.string.data)) as Bitmap
             imageUpload.setImageBitmap(thumbnail)
             saveImage(thumbnail)
-            Toast.makeText(this, resources.getString(R.string.Imagesaved), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -199,8 +195,6 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
                         token.continuePermissionRequest()
                     }
                 }).withErrorListener {
-                    Toast.makeText(context.applicationContext, context.resources.getString(R.string.someError), Toast.LENGTH_SHORT)
-                        .show()
                 }
                 .onSameThread()
                 .check()
