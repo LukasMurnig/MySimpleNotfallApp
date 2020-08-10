@@ -75,7 +75,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
                 try {
                     val bitmap =
                         MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
-                    val path: String? = saveImage(bitmap)
+                    saveImage(bitmap)
                     Toast.makeText(this, resources.getString(R.string.Imagesaved), Toast.LENGTH_SHORT).show()
                     imageUpload.setImageBitmap(bitmap)
                 } catch (e: IOException) {

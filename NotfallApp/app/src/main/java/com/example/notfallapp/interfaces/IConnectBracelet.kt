@@ -99,7 +99,7 @@ interface IConnectBracelet {
                         if (service == null || service.uuid == null) {
                             continue
                         }
-                        if (Constants.SERVICE_VSN_SIMPLE_SERVICE.equals(service.uuid)) {
+                        if (Constants.SERVICE_VSN_SIMPLE_SERVICE == service.uuid) {
                             mCharVerification =
                                 service.getCharacteristic(Constants.CHAR_APP_VERIFICATION)
                             // Write Emergency key press
@@ -142,7 +142,7 @@ interface IConnectBracelet {
                     characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0).toString().toInt()
                 if (characteristic.uuid == Constants.CHAR_DETECTION_NOTIFY) {
                     if (keyValue == 1) {
-                        var intent = Intent(Companion.context, ServiceCallAlarm::class.java)
+                        val intent = Intent(Companion.context, ServiceCallAlarm::class.java)
                         Companion.context?.startService(intent)
                     } else if (keyValue == 3) {
                         println("2-10 second press release")
@@ -164,7 +164,7 @@ interface IConnectBracelet {
             ) {
                 if (status == BluetoothGatt.GATT_SUCCESS) {
                     // Display received battery value.
-                    if (Constants.CHAR_BATTERY_LEVEL.equals(characteristic.uuid)) {
+                    if (Constants.CHAR_BATTERY_LEVEL == characteristic.uuid) {
                         batteryState =
                             characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0)
                                 .toString()
@@ -199,7 +199,7 @@ interface IConnectBracelet {
         IConnectBracelet.device = Device(device.address)
         sendDevice()
         if(!pair) {
-            var intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)
         }
     }
@@ -209,13 +209,13 @@ interface IConnectBracelet {
         mGatt: BluetoothGatt?,
         characteristic: BluetoothGattCharacteristic
     ) {
-        if (connected == false) {
+        if (!connected) {
             return
         }
         val readWriteCharacteristic = ReadWriteCharacteristic(
             ProcessQueueExecutor.REQUEST_TYPE_READ_CHAR,
             mGatt!!,
-            characteristic!!
+            characteristic
         )
         process.addProcess(readWriteCharacteristic)
     }
@@ -225,7 +225,7 @@ interface IConnectBracelet {
         characteristic: BluetoothGattCharacteristic,
         b: ByteArray?
     ) {
-        if (connected == false) {
+        if (!connected) {
             return
         }
         characteristic.value = b
@@ -248,7 +248,7 @@ interface IConnectBracelet {
         characteristic: BluetoothGattCharacteristic,
         enabled: Boolean
     ) {
-        if (connected == false) {
+        if (!connected) {
             return
         }
         if (!mGatt.setCharacteristicNotification(characteristic, enabled)) {

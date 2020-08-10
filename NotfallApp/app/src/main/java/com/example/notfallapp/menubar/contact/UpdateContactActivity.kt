@@ -9,12 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.IContact
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission, IContact {
+class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -54,7 +53,6 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
             startActivityForResult(intent, 1)
         }
 
-        initCancelButton(applicationContext, btn_cancel, builder)
 
         btn_add.setOnClickListener {
             Log.d(resources.getString(R.string.AddButton),
@@ -187,13 +185,6 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
         }
 
         return validate
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1 && data != null){
-            path = setImage(data, applicationContext, addpicture)
-        }
     }
 
     private fun initComponents() {

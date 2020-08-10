@@ -8,10 +8,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.IContact
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 
-class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission, IContact {
+class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -85,8 +84,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
             }
         }
 
-        initCancelButton(applicationContext, btn_cancel, builder)
-
         val extras = intent.extras ?: return
         prio = extras.getInt(resources.getString(R.string.prio))
     }
@@ -142,13 +139,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
         }
 
         return validate
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1 && data != null){
-            path = setImage(data, applicationContext, addpicture)
-        }
     }
 
     private fun initComponents() {

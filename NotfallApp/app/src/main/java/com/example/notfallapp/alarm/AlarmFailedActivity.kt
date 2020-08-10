@@ -18,8 +18,8 @@ class AlarmFailedActivity: Activity() {
         tvAlarm = findViewById(R.id.tvAlarmFailed)
         btnRetry = findViewById(R.id.btn_retry_alarm)
 
-        btnRetry.setOnClickListener(){
-            var intent = Intent(this, ServiceCallAlarm::class.java)
+        btnRetry.setOnClickListener {
+            val intent = Intent(this, ServiceCallAlarm::class.java)
             this.startService(intent)
         }
     }

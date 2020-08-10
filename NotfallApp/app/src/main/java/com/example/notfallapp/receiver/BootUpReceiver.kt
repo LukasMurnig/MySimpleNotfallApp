@@ -24,9 +24,6 @@ class BootUpReceiver : BroadcastReceiver() {
                     var intent = Intent(context, ServiceCallAlarm::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     context?.startService(intent)
-                    /*val i = Intent(context, MainActivity::class.java)
-                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    context.startActivity(i)*/
                 }
         }
     }

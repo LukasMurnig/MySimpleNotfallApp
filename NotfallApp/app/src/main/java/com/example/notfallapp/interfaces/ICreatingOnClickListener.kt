@@ -15,28 +15,28 @@ interface ICreatingOnClickListener {
 
     fun createOnClickListener(context: Context,btnSos: Button,  btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
 
-        btnSos.setOnClickListener{
+        btnSos.setOnClickListener {
             // Service opens Call Alarm Activity
             val intent = Intent(context, ServiceCallAlarm::class.java)
             context.startService(intent)
         }
 
-        btnHome.setOnClickListener{
+        btnHome.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
             startActivity(context, intent, null)
         }
 
-        btnAlarms.setOnClickListener{
+        btnAlarms.setOnClickListener {
             val intent = Intent(context, AlarmsActivity::class.java)
             startActivity(context, intent, null)
         }
 
-        btnContact.setOnClickListener(){
+        btnContact.setOnClickListener {
             val intent = Intent(context, ContactActivity::class.java)
             startActivity(context, intent, null)
         }
 
-        btnSettings.setOnClickListener(){
+        btnSettings.setOnClickListener {
             val intent = Intent(context, SettingsActivity::class.java)
             //val intent = Intent(context, LoginActivity::class.java)
             startActivity(context, intent, null)
