@@ -57,7 +57,7 @@ class ServerApi : ICheckPermission {
             val prefTimeTokenCome = pref.getLong("TimeTokenCome", 0L)
             val prefTokenExpiresInSeconds = pref.getInt("tokenExpiresInSeconds", 0)
             if(prefTimeTokenCome != 0L && prefTokenExpiresInSeconds != 0){
-                if((prefTimeTokenCome!! + prefTokenExpiresInSeconds!! - 60) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
+                if((prefTimeTokenCome + prefTokenExpiresInSeconds - 60) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
                     refreshToken()
                 }
             }
@@ -106,8 +106,8 @@ class ServerApi : ICheckPermission {
                         editor.putString("UserId", userId)
                         editor.commit()
                         try {
-                            var expires: Int = tokenExpiresInSeconds!! - 60
-                            var expiresTime = expires.toString().toLong()
+                            val expires: Int = tokenExpiresInSeconds!! - 60
+                            val expiresTime = expires.toString().toLong()
                             ICheckPermission.getNewTokenBeforeExpires(expiresTime*1000)
                         }catch(ex : java.lang.Exception){
                             println(ex.toString())

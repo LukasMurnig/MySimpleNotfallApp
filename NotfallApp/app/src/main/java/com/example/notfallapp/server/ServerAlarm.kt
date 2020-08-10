@@ -1,7 +1,6 @@
 package com.example.notfallapp.server
 
 import android.content.Context
-import android.net.ConnectivityManager
 import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +11,6 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlertsListAdapter
 import com.example.notfallapp.bll.Alert
-import com.example.notfallapp.interfaces.CurrentLocation
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject

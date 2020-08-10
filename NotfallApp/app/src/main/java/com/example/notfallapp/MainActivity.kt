@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -21,13 +20,7 @@ import com.example.notfallapp.bll.Device
 import com.example.notfallapp.connectBracelet.AddBraceletActivityI
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.*
-import com.example.notfallapp.menubar.contact.AddContactActivity
-import com.example.notfallapp.menubar.contact.ContactActivity
-import com.example.notfallapp.menubar.settings.SettingsActivity
-import com.example.notfallapp.server.ServerAlertingChain
 import com.example.notfallapp.server.ServerApi
-import com.example.notfallapp.server.ServerOrgUnitsItems
-import com.example.notfallapp.server.ServerUser
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceStartChecking
 import com.karumi.dexter.Dexter
@@ -207,7 +200,7 @@ class MainActivity : AppCompatActivity(),
                     if (device != null) {
                         tvStatusbracelet.text = context?.getString(R.string.tryToConnectBracelet)
                         val bluetoothDevice: BluetoothDevice =
-                            mBluetoothAdapter.getRemoteDevice(device?.macAddress)
+                            mBluetoothAdapter.getRemoteDevice(device.macAddress)
                         connect(applicationContext, bluetoothDevice, true)
                     }
                     else{
