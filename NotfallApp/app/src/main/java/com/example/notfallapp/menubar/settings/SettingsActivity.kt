@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -17,8 +18,10 @@ import com.example.notfallapp.R
 import com.example.notfallapp.bll.User
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.login.LoginActivity
+import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.server.ServerUser
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
@@ -55,22 +58,20 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         initComponents()
 
         btnLogout.setOnClickListener{
-            Toast.makeText(applicationContext, "Not implemented yet", Toast.LENGTH_LONG).show()
+            ServerApi.getSharedPreferences().edit().clear().commit()
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         updateProfilePicture()
 
-        GlobalScope.launch {
-            if(logInUser==null){
-                ServerUser().getUserInfo(applicationContext)
-                while(logInUser==null){
+        MainScope().launch {
+            ServerUser().getUserInfo(applicationContext, tvName, tvTelNr, tvEmail)
 
-                }
-            }
 
-            tvName.text = logInUser!!.forename + " " + logInUser!!.surname
+            /*tvName.text = logInUser!!.forename + " " + logInUser!!.surname
             tvTelNr.text = logInUser!!.phoneFixed
-            tvEmail.text = logInUser!!.emailAddress
+            tvEmail.text = logInUser!!.emailAddress*/
 
             /*tvName.text = resources.getString(R.string.sampleName)
             tvTelNr.text = resources.getString(R.string.sampleNumber)
@@ -120,25 +121,29 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
     }
 
     private fun updateProfilePicture(){
-        val wallpaperDirectory = File(
-            Environment.getExternalStorageDirectory().toString() + IMAGE_DIRECTORY
-        )
-
-        try {
-            val f = File(
-                wallpaperDirectory, resources.getString(R.string.namePicture)
+        MainScope().launch {
+            val wallpaperDirectory = File(
+                Environment.getExternalStorageDirectory().toString() + IMAGE_DIRECTORY
             )
-            if(f.exists()){
-                val options = BitmapFactory.Options()
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888
-                val bitmap = BitmapFactory.decodeFile(f.absolutePath, options)
-                btnProfilePicture.setImageBitmap(bitmap)
-                Log.d(resources.getString(R.string.ReadFile),
-                      String.format(resources.getString(R.string.ReadFilePath), f.absolutePath))
-            }
 
-        } catch (e1: IOException) {
-            e1.printStackTrace()
+            try {
+                val f = File(
+                    wallpaperDirectory, resources.getString(R.string.namePicture)
+                )
+                if(f.exists()){
+                    val options = BitmapFactory.Options()
+                    options.inPreferredConfig = Bitmap.Config.ARGB_8888
+                    val bitmap = BitmapFactory.decodeFile(f.absolutePath, options)
+
+                    btnProfilePicture.background = BitmapDrawable(bitmap)
+                    //btnProfilePicture.setImageBitmap(bitmap)
+                    Log.d(resources.getString(R.string.ReadFile),
+                        String.format(resources.getString(R.string.ReadFilePath), f.absolutePath))
+                }
+
+            } catch (e1: IOException) {
+                e1.printStackTrace()
+            }
         }
     }
 

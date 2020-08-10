@@ -24,11 +24,9 @@ class ServerApi : ICheckPermission {
         private lateinit var context: Context
         private lateinit var sharedPreferences: SharedPreferences
         var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
-        //var serverAPIURL = "https://jamesdev.ilogs.com"
-        //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
         const val TAG = "ServerApi"
         val clientID = "299a645f-5fc3-48ac-8098-01baaa4c2caa"
-        private var volleyRequestQueue: RequestQueue? = null
+        var volleyRequestQueue: RequestQueue? = null
 
         private var timeTokenCome: Long? = null
 
@@ -50,9 +48,16 @@ class ServerApi : ICheckPermission {
             this.sharedPreferences = sharedPreferences
         }
 
-        private fun controlToken(){
-            if(timeTokenCome!=null && tokenExpiresInSeconds!=null){
-                if((timeTokenCome!! + tokenExpiresInSeconds!! - 10) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
+        fun getSharedPreferences(): SharedPreferences{
+            return this.sharedPreferences
+        }
+
+        fun controlToken(){
+            val pref = getSharedPreferences()
+            val prefTimeTokenCome = pref.getLong("TimeTokenCome", 0L)
+            val prefTokenExpiresInSeconds = pref.getInt("tokenExpiresInSeconds", 0)
+            if(prefTimeTokenCome != 0L && prefTokenExpiresInSeconds != 0){
+                if((prefTimeTokenCome!! + prefTokenExpiresInSeconds!! - 60) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
                     refreshToken()
                 }
             }
@@ -76,7 +81,7 @@ class ServerApi : ICheckPermission {
                 Log.e(TAG, "response: $response")
 
                 try {
-                    var accessTokenCheck = response.has("AccessToken")
+                    val accessTokenCheck = response.has("AccessToken")
                     if (accessTokenCheck)
                     {
                         timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
@@ -88,19 +93,17 @@ class ServerApi : ICheckPermission {
                             this.username = response.get("Username") as String?
                             userId = response.get("UserId") as String?
                         }catch (ex: Exception){
-                            println("Error :" + ex.toString())
+                            println("Error :$ex")
                             LoginActivity.errorLogin.text = context.getString(R.string.unexpectedErrorLogin)
                         }
 
-                        var editor = sharedPreferences.edit()
+                        val editor = sharedPreferences.edit()
                         editor.putString("clientID", clientID)
                         editor.putString("AccessToken", accessToken)
                         editor.putString("RefreshToken", refreshToken)
                         editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
                         editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
                         editor.putString("UserId", userId)
-                        val unixTime = System.currentTimeMillis() / 1000L + tokenExpiresInSeconds!!
-                        editor.putLong("TokenValid", unixTime)
                         editor.commit()
                         try {
                             var expires: Int = tokenExpiresInSeconds!! - 60
@@ -135,18 +138,11 @@ class ServerApi : ICheckPermission {
             volleyRequestQueue?.add(jsonObjectRequest)
         }
 
-        private fun proveIfNullOrValue(key: String, response: JSONObject): Any?{
-            return try{
-                response.get(key)
-            }catch (ex: JSONException){
-                null
-            }
-        }
-
         fun refreshToken(){
             val reqBody = JSONObject()
-            reqBody.put("RefreshToken", refreshToken)
-            reqBody.put("ClientId", clientID)
+            val pref = getSharedPreferences()
+            reqBody.put("RefreshToken", pref.getString("RefreshToken", null)/*refreshToken*/)
+            reqBody.put("ClientId", pref.getString("clientID", null)/*clientID*/)
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login/refreshtoken", reqBody,
@@ -154,7 +150,7 @@ class ServerApi : ICheckPermission {
                     Log.e(TAG, "response: $response")
 
                     try {
-                        var accessTokenCheck = response.has("AccessToken")
+                        val accessTokenCheck = response.has("AccessToken")
                         if (accessTokenCheck)
                         {
                             try {
@@ -163,16 +159,16 @@ class ServerApi : ICheckPermission {
                                 tokenExpiresInSeconds = response.get("TokenExpiresInSeconds") as Int
                                 multiFactorAuth = response.get("MultiFactorAuth") as Boolean?
                             }catch (ex: Exception){
-                                println("Error :" + ex.toString())
+                                println("Error :$ex")
                             }
-                            var editor = sharedPreferences.edit()
+                            val editor = sharedPreferences.edit()
                             editor.putString("AccessToken", accessToken)
                             editor.putString("RefreshToken", refreshToken)
                             editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
                             editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
                             try {
-                                var expires: Int = tokenExpiresInSeconds!! - 60
-                                var expiresTime = expires.toString().toLong()
+                                val expires: Int = tokenExpiresInSeconds!! - 60
+                                val expiresTime = expires.toString().toLong()
                                 ICheckPermission.getNewTokenBeforeExpires(expiresTime*1000)
                             }catch(ex : java.lang.Exception){
                                 println(ex.toString())
@@ -193,40 +189,44 @@ class ServerApi : ICheckPermission {
             volleyRequestQueue?.add(jsonObjectRequest)
         }
 
-        fun createCall(method: Int, extraUrl: String, reqBody: JSONObject?, toDo: (response: JSONObject) -> Unit ) {
-            controlToken()
+        fun createJsonObjectRequest(method: Int, extraUrl: String, reqBody: JSONObject?, toDo: (response: JSONObject) -> Unit ) {
+            //controlToken()
 
             val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
                 method, serverAPIURL + extraUrl, reqBody,
                 Response.Listener<JSONObject> { response ->
                     Log.e(TAG, "response: $response")
                     try {
-                        val code = response.getInt("code")
-                        val message = response.getString("message")
-
-                        Log.i(TAG, "$code  $message")
-
                         toDo(response)
-
                     } catch (e: Exception) { // caught while parsing the response
-                        Log.e(TAG, "problem occurred")
+                        Log.e(TAG, "problem occurred, while do something with response function")
                         e.printStackTrace()
                     }
                 }, Response.ErrorListener { error ->
-                    if(error.networkResponse == null){
-                        val resErrorBody = JSONObject(String(error.networkResponse.data))
-                        Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
-                    }else{
-                        Log.e(TAG, "problem occurred, volley error: " + error.message)
+                    try{
+                        if(error.networkResponse == null){
+                            val resErrorBody = JSONObject(String(error.networkResponse.data))
+                            Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                        }else{
+                            if(error.message == null){
+                                throw java.lang.Exception()
+                            }
+                            Log.e(TAG, "problem occurred, volley error: " + error.message)
+                        }
+                    }catch (ex: Exception){
+                        Log.e(TAG, "problem occurred, volley error: " + error)
                     }
                 }) {
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
                     var params: MutableMap<String, String>? = super.getHeaders()
-                    if (params == null) params = HashMap()
-                    if(accessToken != null){
-                        params["Authorization"] = accessToken.toString()
+                    if (params == null || params.isEmpty() ) params = HashMap()
+
+                    val access = getSharedPreferences().getString("AccessToken", null)
+                    if(access != null){
+                        params["Authorization"] = "Bearer $access"
                     }
+
                     return params
                 }
             }

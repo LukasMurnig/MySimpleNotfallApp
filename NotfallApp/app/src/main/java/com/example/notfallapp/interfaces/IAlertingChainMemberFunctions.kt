@@ -1,13 +1,12 @@
 package com.example.notfallapp.interfaces
 
-import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.notfallapp.adapter.AlertingChainListAdapter
 import com.example.notfallapp.bll.AlertingChainMember
 import com.example.notfallapp.menubar.contact.ContactActivity
-import com.example.notfallapp.menubar.contact.UpdateContactActivity
+import com.example.notfallapp.server.ServerAlertingChain
 
 interface IAlertingChainMemberFunctions {
     companion object{
@@ -20,12 +19,28 @@ interface IAlertingChainMemberFunctions {
     }
 
     fun activateAlertingChainMember(alertingChainMember: AlertingChainMember, itemView: View){
-        alertingChainMember.active = !alertingChainMember.active
         Log.i(LOG_TAG, "AlertingChainMember change active clicked ")
 
-        //TODO update alertingChainMember and get new AlertingChain
-        adapter!!.alertingChain = adapter!!.alertingChain
-        adapter!!.notifyDataSetChanged()
+        if(ContactActivity.alertingChain == null){
+            return
+        }
+
+        val alertingChainMembers = ContactActivity.alertingChain!!.helpers
+
+        //alertingChainMember.active = !alertingChainMember.active
+
+        for(i in alertingChainMembers!!.indices){
+            if(alertingChainMembers[i].helperId == alertingChainMember.helperId){
+                alertingChainMembers[i].active = !alertingChainMembers[i].active
+            }
+
+        }
+
+        //ContactActivity.alertingChain!!.helpers!!.
+
+        ServerAlertingChain().updateAlertingChainMembers(ContactActivity.alertingChain!!.helpers!!)
+        /*adapter!!.alertingChain = adapter!!.alertingChain
+        adapter!!.notifyDataSetChanged()*/
     }
 
     fun updateAlertingChainMember(alertingChainMember: AlertingChainMember, itemView: View){

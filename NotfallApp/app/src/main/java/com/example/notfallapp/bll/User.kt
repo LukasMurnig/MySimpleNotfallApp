@@ -11,7 +11,7 @@ class User constructor(
     var username: String,
     var active: Boolean,
     var role: String,
-    var gender: Boolean,
+    var gender: Int,
     var photoSet: Boolean,
     var birthDay: Date?,
     var emailAddress: String?,

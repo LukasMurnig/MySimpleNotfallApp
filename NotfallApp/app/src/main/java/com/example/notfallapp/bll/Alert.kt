@@ -4,7 +4,8 @@ import java.util.*
 
 class Alert constructor(
     var id: Long,
-    var date: Date,
+    /*var date: Date, change to String, because problem by converting*/
+    var date: String,
     var type: Byte,
     var state: Byte,
     var clientId: UUID,
@@ -12,7 +13,7 @@ class Alert constructor(
     var deviceId: UUID?,
     var triggeringPositionLatitude: Double?,
     var triggeringPositionLongitude: Double?,
-    var triggeringPositionTime: Date?,
+    var triggeringPositionTime: String?, /*Date, change to String, because problem by converting*/
     var canBeForwarded: Boolean) {
 
     /*

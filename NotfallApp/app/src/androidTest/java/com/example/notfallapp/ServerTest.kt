@@ -65,14 +65,14 @@ class ServerTest {
 
     @Test
     fun getAlertingChainTest(){
-        ServerAlertingChain().getAlertingChain()
+        ServerAlertingChain().getAlertingChain(testContext)
         Thread.sleep(5000)
 
         assertNotNull(ContactActivity.alertingChain)
     }
     
     private fun login(){
-        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ")
+        ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ", testContext)
 
         // 5 sec, wait for the response from server
         Thread.sleep(5000)

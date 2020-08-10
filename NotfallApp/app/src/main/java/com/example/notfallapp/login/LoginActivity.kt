@@ -1,7 +1,5 @@
 package com.example.notfallapp.login
 
-import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences

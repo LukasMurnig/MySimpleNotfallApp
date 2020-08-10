@@ -8,32 +8,31 @@ import org.json.JSONObject
 class ServerOrgUnitsItems {
 
     fun getOrgUnitItems(){
-        ServerApi.createCall(Request.Method.GET, "/orgunits/${ServerApi.userId}/items", null) { response ->
-            if (response.has("data")) {
-                val data = response.getJSONObject("data")
+        ServerApi.createJsonObjectRequest(Request.Method.GET, "/orgunits/${ServerApi.userId}/items", null) { response ->
+            if (response.has("PhoneAreaCodes")) {
 
-                val phoneAreaCodes = data.getJSONArray("PhoneAreaCodes")
+                val phoneAreaCodes = response.getJSONArray("PhoneAreaCodes")
                 for(i in 0 until phoneAreaCodes.length()){
                     val item = phoneAreaCodes.getJSONObject(i)
                     AddContactActivity.phoneAreaCodes =
                         AddContactActivity.phoneAreaCodes.plusElement(item.getString("Value"))
                 }
 
-                val timezones = data.getJSONArray("Timezones")
+                val timezones = response.getJSONArray("Timezones")
                 for(i in 0 until timezones.length()){
                     val item = timezones.getJSONObject(i)
                     AddContactActivity.timezones =
                         AddContactActivity.timezones.plusElement(item.getString("Value"))
                 }
 
-                val countries = data.getJSONArray("Countries")
+                val countries = response.getJSONArray("Countries")
                 for(i in 0 until countries.length()){
                     val item = countries.getJSONObject(i)
                     AddContactActivity.countries =
                         AddContactActivity.countries.plusElement(item.getString("Value"))
                 }
 
-                val languages = data.getJSONArray("Countries")
+                val languages = response.getJSONArray("Countries")
                 for(i in 0 until languages.length()){
                     val item = languages.getJSONObject(i)
                     AddContactActivity.languages =
@@ -43,7 +42,7 @@ class ServerOrgUnitsItems {
         }
 
         // Solange Server noch nicht funktioniert
-        val endJson = JSONObject()
+        /*val endJson = JSONObject()
         val pJsonArray = JSONArray()
         val timJsonArray = JSONArray()
         val couJsonArray = JSONArray()
@@ -90,6 +89,6 @@ class ServerOrgUnitsItems {
             val item = languages.getJSONObject(i)
             AddContactActivity.languages =
             AddContactActivity.languages.plusElement(item.getString("Value"))
-        }
+        }*/
     }
 }
