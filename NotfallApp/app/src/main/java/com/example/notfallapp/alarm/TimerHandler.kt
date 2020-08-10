@@ -17,9 +17,6 @@ class TimerHandler {
                 //handler = Handler(Looper.getMainLooper())
                 handler = Handler()
                 handler.postDelayed({ //Do something after 10000ms
-                    // here must the alarm send to the server
-                    /*ServerAlarm().sendAlert()
-                    ServerAlarm().sendPosition(context)*/
 
                     // Send alarm to the Server
                     ServerCallAlarm.sendAlarm(context)
