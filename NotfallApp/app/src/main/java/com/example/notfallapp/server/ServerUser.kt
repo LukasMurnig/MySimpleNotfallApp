@@ -5,7 +5,6 @@ import com.android.volley.Request
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.User
 import com.example.notfallapp.menubar.settings.SettingsActivity
-import com.example.notfallapp.server.ServerApi.Companion.createCall
 import org.json.JSONException
 import org.json.JSONObject
 import java.lang.ClassCastException
@@ -14,7 +13,7 @@ import java.util.*
 class ServerUser {
 
     fun getUserInfo(context: Context){
-        createCall(Request.Method.GET, context.getString(R.string.UserMe), null ){ response ->
+        ServerApi.createJsonObjectRequest(Request.Method.GET, context.getString(R.string.UserMe), null ){ response ->
             if (response.has("ID")) {
                 SettingsActivity.logInUser = User(
                     UUID.fromString(response.get("ID") as String?),
@@ -78,7 +77,7 @@ class ServerUser {
         reqBody.put("Language", user.language)
         reqBody.put("TimeZone", user.timezone)
 
-        createCall(Request.Method.PUT, "/users/${ServerApi.userId}", reqBody){ response ->
+        ServerApi.createJsonObjectRequest(Request.Method.PUT, "/users/${ServerApi.userId}", reqBody){ response ->
             if (response.has("data")) {
                 val data = response.getJSONObject("data")
                 // TODO update user data in settings Activity

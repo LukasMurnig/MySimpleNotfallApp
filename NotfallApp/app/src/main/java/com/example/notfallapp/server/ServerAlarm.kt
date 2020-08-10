@@ -130,7 +130,7 @@ class ServerAlarm {
         reqBody.put("Type", 0)
         reqBody.put("Battery", null)
 
-        ServerApi.createCall(Request.Method.POST, "/users/${ServerApi.userId}/alert", reqBody) { response ->
+        ServerApi.createJsonObjectRequest(Request.Method.POST, "/users/${ServerApi.userId}/alert", reqBody) { response ->
             if (response.has("data")) {
                 val data = response.get("data")
 
@@ -171,7 +171,7 @@ class ServerAlarm {
         beacons.put("SignalStrength", null)
         reqBody.put("Beacons", beacons)
 
-        ServerApi.createCall(Request.Method.POST, "/users/${ServerApi.userId}/positions", reqBody) { response ->
+        ServerApi.createJsonObjectRequest(Request.Method.POST, "/users/${ServerApi.userId}/positions", reqBody) { response ->
         }
     }
 }

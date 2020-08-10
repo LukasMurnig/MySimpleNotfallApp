@@ -52,9 +52,12 @@ class ServerApi : ICheckPermission {
             return this.sharedPreferences
         }
 
-        private fun controlToken(){
-            if(timeTokenCome!=null && tokenExpiresInSeconds!=null){
-                if((timeTokenCome!! + tokenExpiresInSeconds!! - 10) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
+        fun controlToken(){
+            val pref = getSharedPreferences()
+            val prefTimeTokenCome = pref.getLong("TimeTokenCome", 0L)
+            val prefTokenExpiresInSeconds = pref.getInt("tokenExpiresInSeconds", 0)
+            if(prefTimeTokenCome != 0L && prefTokenExpiresInSeconds != 0){
+                if((prefTimeTokenCome!! + prefTokenExpiresInSeconds!! - 60) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
                     refreshToken()
                 }
             }
@@ -78,7 +81,7 @@ class ServerApi : ICheckPermission {
                 Log.e(TAG, "response: $response")
 
                 try {
-                    var accessTokenCheck = response.has("AccessToken")
+                    val accessTokenCheck = response.has("AccessToken")
                     if (accessTokenCheck)
                     {
                         timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
@@ -90,21 +93,22 @@ class ServerApi : ICheckPermission {
                             this.username = response.get("Username") as String?
                             userId = response.get("UserId") as String?
                         }catch (ex: Exception){
-                            println("Error :" + ex.toString())
+                            println("Error :$ex")
                             LoginActivity.errorLogin.text = context.getString(R.string.unexpectedErrorLogin)
                         }
 
-                        var editor = sharedPreferences.edit()
+                        val editor = sharedPreferences.edit()
                         editor.putString("clientID", clientID)
                         editor.putString("AccessToken", accessToken)
                         editor.putString("RefreshToken", refreshToken)
                         editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
                         editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
                         editor.putString("UserId", userId)
+                        editor.putLong("TimeTokenCome", timeTokenCome!!)
                         editor.commit()
                         try {
-                            var expires: Int = tokenExpiresInSeconds!! - 60
-                            var expiresTime = expires.toString().toLong()
+                            val expires: Int = tokenExpiresInSeconds!! - 60
+                            val expiresTime = expires.toString().toLong()
                             ICheckPermission.getNewTokenBeforeExpires(expiresTime*1000)
                         }catch(ex : java.lang.Exception){
                             println(ex.toString())
@@ -138,8 +142,9 @@ class ServerApi : ICheckPermission {
 
         fun refreshToken(){
             val reqBody = JSONObject()
-            reqBody.put("RefreshToken", refreshToken)
-            reqBody.put("ClientId", clientID)
+            val pref = getSharedPreferences()
+            reqBody.put("RefreshToken", pref.getString("RefreshToken", null)/*refreshToken*/)
+            reqBody.put("ClientId", pref.getString("clientID", null)/*clientID*/)
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login/refreshtoken", reqBody,
@@ -147,25 +152,27 @@ class ServerApi : ICheckPermission {
                     Log.e(TAG, "response: $response")
 
                     try {
-                        var accessTokenCheck = response.has("AccessToken")
+                        val accessTokenCheck = response.has("AccessToken")
                         if (accessTokenCheck)
                         {
+                            timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
                             try {
                                 accessToken = response.get("AccessToken") as String?
                                 refreshToken = response.get("RefreshToken") as String?
                                 tokenExpiresInSeconds = response.get("TokenExpiresInSeconds") as Int
                                 multiFactorAuth = response.get("MultiFactorAuth") as Boolean?
                             }catch (ex: Exception){
-                                println("Error :" + ex.toString())
+                                println("Error :$ex")
                             }
-                            var editor = sharedPreferences.edit()
+                            val editor = sharedPreferences.edit()
                             editor.putString("AccessToken", accessToken)
                             editor.putString("RefreshToken", refreshToken)
                             editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
                             editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
+                            editor.putLong("TimeTokenCome", timeTokenCome!!)
                             try {
-                                var expires: Int = tokenExpiresInSeconds!! - 60
-                                var expiresTime = expires.toString().toLong()
+                                val expires: Int = tokenExpiresInSeconds!! - 60
+                                val expiresTime = expires.toString().toLong()
                                 ICheckPermission.getNewTokenBeforeExpires(expiresTime*1000)
                             }catch(ex : java.lang.Exception){
                                 println(ex.toString())
@@ -186,7 +193,7 @@ class ServerApi : ICheckPermission {
             volleyRequestQueue?.add(jsonObjectRequest)
         }
 
-        fun createCall(method: Int, extraUrl: String, reqBody: JSONObject?, toDo: (response: JSONObject) -> Unit ) {
+        fun createJsonObjectRequest(method: Int, extraUrl: String, reqBody: JSONObject?, toDo: (response: JSONObject) -> Unit ) {
             //controlToken()
 
             val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(

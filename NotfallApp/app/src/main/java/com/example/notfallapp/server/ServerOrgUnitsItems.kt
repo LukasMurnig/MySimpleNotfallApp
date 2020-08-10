@@ -8,7 +8,7 @@ import org.json.JSONObject
 class ServerOrgUnitsItems {
 
     fun getOrgUnitItems(){
-        ServerApi.createCall(Request.Method.GET, "/orgunits/${ServerApi.userId}/items", null) { response ->
+        ServerApi.createJsonObjectRequest(Request.Method.GET, "/orgunits/${ServerApi.userId}/items", null) { response ->
             if (response.has("PhoneAreaCodes")) {
 
                 val phoneAreaCodes = response.getJSONArray("PhoneAreaCodes")

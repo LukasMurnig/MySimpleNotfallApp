@@ -79,7 +79,9 @@ class MainActivity : AppCompatActivity(),
             if(ServerApi.volleyRequestQueue == null){
                 ServerApi.volleyRequestQueue = Volley.newRequestQueue(applicationContext)
             }
-            if(ContactActivity.alertingChain == null){
+            ServerApi.controlToken()
+
+            /*if(ContactActivity.alertingChain == null){
                 ServerAlertingChain().getAlertingChain(applicationContext)
             }
             if(AddContactActivity.phoneAreaCodes == null){
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity(),
             }
             if(SettingsActivity.logInUser == null){
                 ServerUser().getUserInfo(applicationContext)
-            }
+            }*/
         }
 
         ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)

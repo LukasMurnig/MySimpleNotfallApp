@@ -16,7 +16,7 @@ class ServerAlertingChain {
         val pref = context.getSharedPreferences("Response", Context.MODE_PRIVATE)
         val userId = pref.getString("UserId", null) ?: return
 
-        ServerApi.createCall(Request.Method.GET, "/users/$userId/alertingchain/", null) { response ->
+        ServerApi.createJsonObjectRequest(Request.Method.GET, "/users/$userId/alertingchain/", null) { response ->
             if (response.has("ID")) {
                 var alertingChainMembers: JSONArray? = null
 
@@ -94,7 +94,7 @@ class ServerAlertingChain {
 
         reqBody.put("Helpers", helpers)
 
-        ServerApi.createCall(Request.Method.PUT, "/users/${ServerApi.userId}/alertingchain/", reqBody){response ->
+        ServerApi.createJsonObjectRequest(Request.Method.PUT, "/users/${ServerApi.userId}/alertingchain/", reqBody){response ->
             if (response.has("data")) {
                 val data = response.getJSONObject("data")
                 // TODO update alertingChain data in Contact Activity
