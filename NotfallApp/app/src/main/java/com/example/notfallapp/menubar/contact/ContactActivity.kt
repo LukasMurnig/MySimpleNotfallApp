@@ -9,12 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
-import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.AlertingChain
-import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.IContactDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ServerAlertingChain
 import kotlinx.coroutines.MainScope
@@ -95,32 +92,5 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
 
         checkInternetGPSPermissions(this)
         createButtonBar()
-    }
-
-    private fun getAllContacts(){
-        class GetData : AsyncTask<Unit, Unit, List<Contact>>() {
-
-            override fun doInBackground(vararg p0: Unit?): List<Contact> {
-                val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this@ContactActivity)
-                //appDb.contactDao().deleteAll()
-                return appDb.contactDao().getAllContact()
-            }
-
-            override fun onPostExecute(result: List<Contact>?) {
-                if(result != null){
-                    if(result.isEmpty()){
-                        lbMessageNoContacts.text = resources.getString(R.string.noContacts)
-                    }else{
-                        val adapter = ContactListAdapter(result)
-                        IContactDatabase.setAdapter(adapter)
-                        rvContacts.adapter = adapter
-                        adapter.notifyDataSetChanged()
-                    }
-                }
-            }
-        }
-
-        val gd = GetData()
-        gd.execute()
     }
 }

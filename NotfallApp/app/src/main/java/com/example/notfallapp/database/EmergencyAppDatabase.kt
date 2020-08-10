@@ -4,17 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.notfallapp.bll.Alarm
-import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.bll.Device
-import com.example.notfallapp.dao.AlarmsDao
-import com.example.notfallapp.dao.ContactDao
 import com.example.notfallapp.dao.DeviceDao
 
-@Database(entities = [Contact::class, Alarm::class, Device::class], version = 11)
+@Database(entities = [Device::class], version = 11)
 abstract class EmergencyAppDatabase : RoomDatabase(){
-    abstract fun contactDao(): ContactDao
-    abstract fun alarmsDao(): AlarmsDao
     abstract fun deviceDao(): DeviceDao
 
     companion object {
