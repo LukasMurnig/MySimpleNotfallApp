@@ -3,7 +3,6 @@ package com.example.notfallapp.server
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.provider.Settings
 import android.util.Log
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -100,6 +99,8 @@ class ServerApi : ICheckPermission {
                         editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
                         editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
                         editor.putString("UserId", userId)
+                        val unixTime = System.currentTimeMillis() / 1000L + tokenExpiresInSeconds!!
+                        editor.putLong("TokenValid", unixTime)
                         editor.commit()
                         try {
                             var expires: Int = tokenExpiresInSeconds!! - 60

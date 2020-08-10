@@ -34,6 +34,11 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
         var token = sharedPreferences?.getString("AccessToken", "null")
         if(!token.equals("null")){
+            var valid = sharedPreferences?.getLong("TokenValid", 0)
+            var unixTime = System.currentTimeMillis() / 1000L
+            if(unixTime > valid!!){
+                ServerApi.refreshToken()
+            }
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

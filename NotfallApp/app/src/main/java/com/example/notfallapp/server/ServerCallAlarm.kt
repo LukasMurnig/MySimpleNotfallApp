@@ -16,7 +16,11 @@ import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.login.LoginActivity
+import org.json.JSONArray
 import org.json.JSONObject
+import java.sql.Timestamp
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -84,10 +88,11 @@ class ServerCallAlarm {
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             val body = JSONObject()
+            val arrayBody = JSONArray()
             val beacon = JSONObject()
-            val calendar = Calendar.getInstance()
-            val currentTime = "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH)}-${calendar.get(Calendar.DAY_OF_MONTH)}T" +
-                    "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}:${calendar.get(Calendar.SECOND)}+00:00"
+            val time = Timestamp(System.currentTimeMillis()).toString()
+            var times = time.split(" ")
+            val currentTime = times[0]+"T"+times[1]+"+00:00"
             val location = CurrentLocation.currentLocation
             body.put("Timestamp", currentTime)
             if(location?.longitude != null){
@@ -106,24 +111,12 @@ class ServerCallAlarm {
                 body.put("Accuracy", 0)
             }
             body.put("Source", "gps")
-            var wifiInfo = ICheckPermission.wifiInfo
-            if (wifiInfo.ipAddress != 0) {
-                reqBody.put("Positions", "[$body],")
-                beacon.put("Timestamp", currentTime)
-                beacon.put("Type", 1)
-                beacon.put("Identifier", wifiInfo.ssid)
-                beacon.put("Mac", wifiInfo.ipAddress)
-                beacon.put("SignalStrength", ICheckPermission.level)
-
-                reqBody.put("Beacons", "[${beacon}]")
-            }else{
-                reqBody.put("Positions", "[$body]")
-            }
+            arrayBody.put(body)
+            reqBody.put("Positions", arrayBody)
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
-            println("Position: "+reqBody.toString())
             val jsonObjectRequest = object : JsonObjectRequest(
-                Request.Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/positions", reqBody,
+                Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/positions", reqBody,
                 Response.Listener { response ->
                     Log.e(ServerApi.TAG, "response: $response")
                 },
@@ -137,13 +130,15 @@ class ServerCallAlarm {
                             )
                         )
                     } else {
-                        Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
+                        if(!error.message.equals("org.json.JSONException: End of input at character 0 of ")) {
+                            Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
+                        }
                     }
                 }) {
                 override fun getHeaders(): Map<String, String>? {
                     var params = HashMap<String, String>()
                     var token = sharedPreferences.getString("AccessToken", "")
-                    params?.put("Authorization", "Bearer " +token)
+                    params?.put("Authorization", "Bearer $token")
                     //..add other headers
                     return params
                 }
