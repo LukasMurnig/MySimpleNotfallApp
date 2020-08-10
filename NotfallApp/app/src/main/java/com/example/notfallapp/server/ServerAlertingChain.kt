@@ -6,7 +6,6 @@ import com.android.volley.Request
 import com.example.notfallapp.adapter.AlertingChainListAdapter
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
-import com.example.notfallapp.interfaces.IAlertingChainMemberFunctions
 import com.example.notfallapp.menubar.contact.ContactActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -78,35 +77,7 @@ class ServerAlertingChain {
 
     private fun updateRecyclerView(rvContacts: RecyclerView){
         val adapter = AlertingChainListAdapter(ContactActivity.alertingChain!!)
-        IAlertingChainMemberFunctions.setAdapter(adapter)
         rvContacts.adapter = adapter
         (rvContacts.adapter as AlertingChainListAdapter).notifyDataSetChanged()
-    }
-
-    fun updateAlertingChainMembers(/*context: Context, rvContacts: RecyclerView,*/ alertingChainMembers: Array<AlertingChainMember>){
-        val reqBody = JSONObject()
-        var helpers = JSONArray()
-
-        alertingChainMembers.forEach { member ->
-            val jsonMember = JSONObject()
-            //jsonMember.put("AlertingChainId", member.alertingChainId)
-            jsonMember.put("HelperId", member.helperId)
-            jsonMember.put("Rank", member.rank)
-            jsonMember.put("Active", member.active)
-            jsonMember.put("Contact", member.contact)
-            /*jsonMember.put("HelperForename", member.helperForename)
-            jsonMember.put("HelperSurname", member.helperSurname)
-            jsonMember.put("PhoneNumber", member.phoneNumber)
-            jsonMember.put("Email", member.email)*/
-            helpers = helpers.put(jsonMember)
-        }
-
-        reqBody.put("Helpers", helpers)
-
-        val userId = ServerApi.getSharedPreferences().getString("UserId", null)
-
-        ServerApi.createJsonObjectRequest(Request.Method.PUT, "/users/$userId/alertingchain/", reqBody){
-            //getAlertingChain(context, rvContacts)
-        }
     }
 }

@@ -1,18 +1,15 @@
 package com.example.notfallapp.adapter
 
-import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
-import com.example.notfallapp.interfaces.IAlertingChainMemberFunctions
 
 class AlertingChainListAdapter(var alertingChain: AlertingChain) :
     RecyclerView.Adapter<AlertingChainListAdapter.AlertingChainMembersViewHolder>(){
@@ -48,7 +45,7 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
         }
     }
 
-    class AlertingChainMembersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), IAlertingChainMemberFunctions {
+    class AlertingChainMembersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var imageContact: ImageView
         private lateinit var contactName: TextView
         private lateinit var contactActive: ImageView
@@ -67,26 +64,6 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
                 contactActive.setImageResource(R.drawable.deactive)
             }
 
-        }
-
-        private fun showPictureDialog(alertingChainMember: AlertingChainMember, itemView: View) {
-            val pictureDialog: AlertDialog.Builder = AlertDialog.Builder(itemView.context)
-            val pictureDialogItems = arrayOf(
-                itemView.context.resources.getString(R.string.changeValue),
-                itemView.context.resources.getString(R.string.delete),
-                itemView.context.resources.getString(R.string.activate_deaktivate)
-            )
-            pictureDialog.setItems(pictureDialogItems
-            ) { _, which ->
-                when (which) {
-                    0 -> updateAlertingChainMember(alertingChainMember, itemView)
-                    1 -> deleteAlertingChainMember(alertingChainMember, itemView)
-                    2 -> {
-                        Toast.makeText(itemView.context, "nicht möglich da es Server noch nicht ermöglicht!", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-            pictureDialog.show()
         }
     }
 }
