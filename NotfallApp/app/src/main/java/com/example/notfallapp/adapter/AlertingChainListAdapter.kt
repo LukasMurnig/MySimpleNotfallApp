@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
 import com.example.notfallapp.interfaces.IAlertingChainMemberFunctions
-import kotlinx.android.synthetic.main.listcontact_item.view.*
 
 class AlertingChainListAdapter(var alertingChain: AlertingChain) :
     RecyclerView.Adapter<AlertingChainListAdapter.AlertingChainMembersViewHolder>(){
@@ -90,7 +90,8 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
                     0 -> updateAlertingChainMember(alertingChainMember, itemView)
                     1 -> deleteAlertingChainMember(alertingChainMember, itemView)
                     2 -> {
-                        if(alertingChainMember.active){
+                        Toast.makeText(itemView.context, "nicht möglich da es Server noch nicht ermöglicht!", Toast.LENGTH_LONG).show()
+                        /*if(alertingChainMember.active){
                             val builder: AlertDialog.Builder = AlertDialog.Builder(itemView.context)
                             builder.setTitle(itemView.context.resources.getString(R.string.confirm))
                             builder.setMessage(itemView.context.resources.getString(R.string.sureDeactivedContact))
@@ -107,8 +108,7 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
                             builder.create().show()
                         }else{
                             activateAlertingChainMember(alertingChainMember, itemView)
-                        }
-
+                        }*/
                     }
                 }
             }

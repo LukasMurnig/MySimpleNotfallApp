@@ -212,6 +212,9 @@ class ServerApi : ICheckPermission {
                             val resErrorBody = JSONObject(String(error.networkResponse.data))
                             Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
                         }else{
+                            if(error.message == null){
+                                throw java.lang.Exception()
+                            }
                             Log.e(TAG, "problem occurred, volley error: " + error.message)
                         }
                     }catch (ex: Exception){

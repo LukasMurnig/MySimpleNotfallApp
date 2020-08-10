@@ -1,7 +1,6 @@
 package com.example.notfallapp.server
 
 import android.content.Context
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.example.notfallapp.adapter.AlertingChainListAdapter
@@ -56,10 +55,7 @@ class ServerAlertingChain {
                     isStringOrNull("Description", response),
                     alertChM
                 )
-                val adapter = AlertingChainListAdapter(ContactActivity.alertingChain!!)
-                IAlertingChainMemberFunctions.setAdapter(adapter)
-                rvContacts.adapter = adapter
-                (rvContacts.adapter as AlertingChainListAdapter).notifyDataSetChanged()
+                updateRecyclerView(rvContacts)
             }
         }
     }
@@ -80,31 +76,37 @@ class ServerAlertingChain {
         }
     }
 
-    fun updateAlertingChainMembers(alertingChainMembers: Array<AlertingChainMember>){
+    private fun updateRecyclerView(rvContacts: RecyclerView){
+        val adapter = AlertingChainListAdapter(ContactActivity.alertingChain!!)
+        IAlertingChainMemberFunctions.setAdapter(adapter)
+        rvContacts.adapter = adapter
+        (rvContacts.adapter as AlertingChainListAdapter).notifyDataSetChanged()
+    }
+
+    fun updateAlertingChainMembers(/*context: Context, rvContacts: RecyclerView,*/ alertingChainMembers: Array<AlertingChainMember>){
         val reqBody = JSONObject()
-        val helpers = JSONArray()
+        var helpers = JSONArray()
 
         alertingChainMembers.forEach { member ->
             val jsonMember = JSONObject()
-            jsonMember.put("AlertingChainId", member.alertingChainId)
+            //jsonMember.put("AlertingChainId", member.alertingChainId)
             jsonMember.put("HelperId", member.helperId)
             jsonMember.put("Rank", member.rank)
             jsonMember.put("Active", member.active)
             jsonMember.put("Contact", member.contact)
-            jsonMember.put("HelperForename", member.helperForename)
+            /*jsonMember.put("HelperForename", member.helperForename)
             jsonMember.put("HelperSurname", member.helperSurname)
             jsonMember.put("PhoneNumber", member.phoneNumber)
-            jsonMember.put("Email", member.email)
-            helpers.put(jsonMember)
+            jsonMember.put("Email", member.email)*/
+            helpers = helpers.put(jsonMember)
         }
 
         reqBody.put("Helpers", helpers)
 
-        ServerApi.createJsonObjectRequest(Request.Method.PUT, "/users/${ServerApi.userId}/alertingchain/", reqBody){response ->
-            if (response.has("data")) {
-                val data = response.getJSONObject("data")
-                // TODO update alertingChain data in Contact Activity
-            }
+        val userId = ServerApi.getSharedPreferences().getString("UserId", null)
+
+        ServerApi.createJsonObjectRequest(Request.Method.PUT, "/users/$userId/alertingchain/", reqBody){response ->
+                //getAlertingChain(context, rvContacts)
         }
     }
 }
