@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
-import com.example.notfallapp.adapter.AlarmsListAdapter
-import com.example.notfallapp.bll.Alarm
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
@@ -49,31 +47,6 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         /*GlobalScope.launch {
             getData()
         }*/
-    }
-
-    private fun getData(){
-        class GetData : AsyncTask<Unit, Unit, List<Alarm>>() {
-
-            override fun doInBackground(vararg p0: Unit?): List<Alarm> {
-                val db = EmergencyAppDatabase.getInstance(this@AlarmsActivity)
-                return db.alarmsDao().getAllAlarms()
-            }
-
-            override fun onPostExecute(result: List<Alarm>?) {
-                if(result != null){
-                    if(result.isEmpty()){
-                        lbMessageNoAlarms.text = resources.getString(R.string.noAlarms)
-                    }else{
-                        val adapter = AlarmsListAdapter(result)
-                        rvAlarms.adapter = adapter
-                        adapter.notifyDataSetChanged()
-                    }
-                }
-            }
-        }
-
-        val gd = GetData()
-        gd.execute()
     }
 
     private fun configureButtons() {

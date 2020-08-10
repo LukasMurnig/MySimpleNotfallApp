@@ -1,7 +1,6 @@
 package com.example.notfallapp.dao
 
 import androidx.room.*
-import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.bll.Device
 
 @Dao

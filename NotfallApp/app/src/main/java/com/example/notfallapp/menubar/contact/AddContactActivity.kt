@@ -7,13 +7,9 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.bll.Contact
-import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IContact
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission, IContact {
 
@@ -93,19 +89,6 @@ class AddContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckP
 
         val extras = intent.extras ?: return
         prio = extras.getInt(resources.getString(R.string.prio))
-    }
-
-    private fun installContact(contact: Contact){
-        GlobalScope.launch {
-            try{
-                EmergencyAppDatabase.getInstance(applicationContext).contactDao().insertContact(contact)
-            }catch (ex: Exception){
-                // when unique constraint
-                Log.e("Database", "unique constraint, this email already exist")
-            }
-        }
-        val intent = Intent(this, ContactActivity::class.java)
-        startActivity(intent)
     }
 
     private fun createButtonBar() {

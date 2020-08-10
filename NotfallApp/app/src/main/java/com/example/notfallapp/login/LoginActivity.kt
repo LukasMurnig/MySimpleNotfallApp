@@ -30,6 +30,7 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
+        ServerApi.setSharedPreferences(getSharedPreferences("Response", Context.MODE_PRIVATE))
         var token = sharedPreferences?.getString("AccessToken", "null")
         if(!token.equals("null")){
             var valid = sharedPreferences?.getLong("TokenValid", 0)

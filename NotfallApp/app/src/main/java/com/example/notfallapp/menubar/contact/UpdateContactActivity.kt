@@ -1,16 +1,12 @@
 package com.example.notfallapp.menubar.contact
 
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IContact
@@ -43,7 +39,6 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
     private lateinit var builder: AlertDialog.Builder
     private var path: String? = null
     private var prio: Int? = null
-    private lateinit var toUpdateContact: Contact
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +72,7 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
                 }else{
                     0
                 }
-                toUpdateContact.forename = input_firstname.text.toString()
+                /*toUpdateContact.forename = input_firstname.text.toString()
                 toUpdateContact.surname = input_lastname.text.toString()
                 toUpdateContact.gender = gender
                 toUpdateContact.e_mail = input_email.text.toString()
@@ -88,7 +83,7 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
                     toUpdateContact.photoSet = true
                 }
                 toUpdateContact.pathToImage = path
-                updateContact(toUpdateContact)
+                updateContact(toUpdateContact)*/
             }
         }
 
@@ -153,15 +148,6 @@ class UpdateContactActivity: AppCompatActivity(), ICreatingOnClickListener, IChe
                 spinnerMessage.getItemAtPosition(2) -> spinnerMessage.setSelection(2)
             }
         }*/
-    }
-
-    private fun updateContact(contact: Contact){
-        val appDb: EmergencyAppDatabase = EmergencyAppDatabase.getInstance(this)
-        GlobalScope.launch {
-            appDb.contactDao().updateContact(contact)
-        }
-        val intent = Intent(this, ContactActivity::class.java)
-        startActivity(intent)
     }
 
     private fun validate(): Boolean {
