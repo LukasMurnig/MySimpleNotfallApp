@@ -41,4 +41,11 @@
         android:layout_below="@+id/alertHelper"
         android:layout_marginTop="10dp"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/alertDate"
+        android:layout_marginTop="10dp"/>
+
 </RelativeLayout>

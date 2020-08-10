@@ -39,17 +39,6 @@ class ServerTest {
 
         assertNotEquals(oldAccessToken, ServerApi.accessToken)
     }
-
-    @Test
-    fun getOrgUnitsItemsTest(){
-        ServerOrgUnitsItems().getOrgUnitItems()
-        Thread.sleep(5000)
-
-        assertNotNull(AddContactActivity.phoneAreaCodes)
-        assertNotNull(AddContactActivity.timezones)
-        assertNotNull(AddContactActivity.countries)
-        assertNotNull(AddContactActivity.languages)
-    }
     
     private fun login(){
         ServerApi.setSharedPreferences(testContext.getSharedPreferences("Response", Context.MODE_PRIVATE))
