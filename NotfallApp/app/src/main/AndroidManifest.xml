@@ -34,20 +34,6 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:ignore="HardcodedDebugMode">
 
-        <receiver
-            android:name=".receiver.BootUpReceiver"
-            android:directBootAware="true"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-            <intent-filter android:directBootAware="true">
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="android.intent.action.REBOOT" />
-            </intent-filter>
-        </receiver>
-
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -70,12 +56,6 @@
         </activity>
         <activity
             android:name=".menubar.contact.ContactActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".menubar.contact.AddContactActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".menubar.contact.UpdateContactActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".menubar.alert.AlarmsActivity"
@@ -101,8 +81,6 @@
         <activity
             android:name=".connectBracelet.AddBraceletActivityI"
             android:screenOrientation="portrait" />
-        <activity android:name=".menubar.contact.SelectContactPictureActivity"
-            android:screenOrientation="portrait"/>
         <activity android:name=".menubar.settings.SelectProfilPictureActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".alarm.AlarmFailedActivity"

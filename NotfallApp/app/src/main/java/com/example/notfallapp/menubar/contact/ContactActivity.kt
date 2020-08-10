@@ -38,33 +38,8 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
 
         initComponents()
 
-        /*addButton.setOnClickListener {
-            Log.d(resources.getString(R.string.AddButton),
-                  String.format(resources.getString(R.string.AddButtonContactMessage),
-                    resources.getString(R.string.Contact)))
-            val intent = Intent(this@ContactActivity, AddContactActivity::class.java)
-            if(rvContacts.adapter != null){
-                if(rvContacts.adapter!!.itemCount >= 3){
-                    lbMessageNoContacts.text = resources.getString(R.string.allowedContacts)
-                    return@setOnClickListener
-                }
-                intent.putExtra(resources.getString(R.string.prio), (rvContacts.adapter!!.itemCount))
-            }else{
-                intent.putExtra(resources.getString(R.string.prio), 0)
-            }
-            startActivity( intent, null)
-        }*/
-
         MainScope().launch {
             ServerAlertingChain().getAlertingChain(applicationContext, rvContacts)
-
-            /*try{
-                getAllContacts()
-            }catch (ex: Exception){
-                Log.e(resources.getString(R.string.ExceptionDatabase),
-                      String.format(resources.getString(R.string.ExceptionDatabaseMessage),
-                                    resources.getString(R.string.Contact), ex.toString()))
-            }*/
         }
     }
 
@@ -85,7 +60,6 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
     private fun initComponents(){
         lbMessageNoContacts = findViewById(R.id.lbMessageNoContacts)
         rvContacts = findViewById(R.id.rvContacts)
-        //addButton = findViewById(R.id.addButton)
 
         rvContacts.setHasFixedSize(false)
         rvContacts.layoutManager = LinearLayoutManager(this)

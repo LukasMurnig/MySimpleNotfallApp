@@ -11,7 +11,6 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.menubar.contact.SelectContactPictureActivity
 import java.io.IOException
 
 interface IContact {

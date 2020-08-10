@@ -54,13 +54,11 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
         private lateinit var imageContact: ImageView
         private lateinit var contactName: TextView
         private lateinit var contactActive: ImageView
-        private lateinit var contactMenu: ImageButton
 
         fun bindAlertingChainMember(alertingChainMember: AlertingChainMember){
             imageContact = itemView.findViewById(R.id.contact_item_icon)
             contactName = itemView.findViewById(R.id.contact_name)
             contactActive = itemView.findViewById(R.id.contact_active)
-            contactMenu = itemView.findViewById(R.id.iBtnContactMenu)
 
             contactName.text = alertingChainMember.helperSurname + ", " + alertingChainMember.helperForename
             if(alertingChainMember.active){
@@ -71,10 +69,6 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
                 contactActive.setImageResource(R.drawable.deactive)
             }
 
-            contactMenu.setOnClickListener{
-                Log.i(LOG_TAG, "AlertingChainMember Menu clicked")
-                showPictureDialog(alertingChainMember, itemView)
-            }
         }
 
         private fun showPictureDialog(alertingChainMember: AlertingChainMember, itemView: View) {
@@ -91,24 +85,6 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
                     1 -> deleteAlertingChainMember(alertingChainMember, itemView)
                     2 -> {
                         Toast.makeText(itemView.context, "nicht möglich da es Server noch nicht ermöglicht!", Toast.LENGTH_LONG).show()
-                        /*if(alertingChainMember.active){
-                            val builder: AlertDialog.Builder = AlertDialog.Builder(itemView.context)
-                            builder.setTitle(itemView.context.resources.getString(R.string.confirm))
-                            builder.setMessage(itemView.context.resources.getString(R.string.sureDeactivedContact))
-
-                            builder.setPositiveButton(itemView.context.resources.getString(R.string.Yes)) { dialog, _ ->
-                                activateAlertingChainMember(alertingChainMember, itemView)
-                                dialog.dismiss()
-                            }
-
-                            builder.setNegativeButton(itemView.context.resources.getString(R.string.No)) { dialog, _ ->
-                                dialog.dismiss()
-                            }
-
-                            builder.create().show()
-                        }else{
-                            activateAlertingChainMember(alertingChainMember, itemView)
-                        }*/
                     }
                 }
             }

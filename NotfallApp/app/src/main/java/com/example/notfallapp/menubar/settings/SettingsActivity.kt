@@ -37,7 +37,6 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
     private lateinit var tvName: TextView
     private lateinit var tvTelNr: TextView
     private lateinit var tvEmail: TextView
-    private lateinit var btnChangeDate: Button
     private lateinit var btnProfilePicture: ImageButton
     private lateinit var btnLogout: Button
 
@@ -50,10 +49,6 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.settings, SettingsFragment())
-            .commit()
 
         initComponents()
 
@@ -67,35 +62,13 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
 
         MainScope().launch {
             ServerUser().getUserInfo(applicationContext, tvName, tvTelNr, tvEmail)
-
-
-            /*tvName.text = logInUser!!.forename + " " + logInUser!!.surname
-            tvTelNr.text = logInUser!!.phoneFixed
-            tvEmail.text = logInUser!!.emailAddress*/
-
-            /*tvName.text = resources.getString(R.string.sampleName)
-            tvTelNr.text = resources.getString(R.string.sampleNumber)
-            tvEmail.text = resources.getString(R.string.sampleEmail)*/
         }
 
-        btnChangeDate.setOnClickListener {
-            Toast.makeText(applicationContext, "Gerade nicht verfügbar, da nicht sicher ob gebraucht wird", Toast.LENGTH_LONG).show()
-            /*val intent = Intent(this, ChangeProfilActivity::class.java)
-            intent.putExtra(resources.getString(R.string.numberAlarmDatabas), tvName.text as String)
-            intent.putExtra(resources.getString(R.string.telNr), tvTelNr.text as String)
-            intent.putExtra(resources.getString(R.string.emailAlarmDatabase), tvEmail.text as String)
-            startActivityForResult(intent, 0)*/
-        }
 
         btnProfilePicture.setOnClickListener{
             val intent = Intent(this, SelectProfilPictureActivity::class.java)
             startActivityForResult(intent, 2)
         }
-
-        /* to get the setting from somewhere else
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val set = prefs.getBoolean("attachment", true)
-        Toast.makeText(this, set.toString(), Toast.LENGTH_LONG).show()*/
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
@@ -136,7 +109,6 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
                     val bitmap = BitmapFactory.decodeFile(f.absolutePath, options)
 
                     btnProfilePicture.background = BitmapDrawable(bitmap)
-                    //btnProfilePicture.setImageBitmap(bitmap)
                     Log.d(resources.getString(R.string.ReadFile),
                         String.format(resources.getString(R.string.ReadFilePath), f.absolutePath))
                 }
@@ -153,7 +125,6 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         tvName = findViewById(R.id.tvName)
         tvTelNr = findViewById(R.id.tvTelNr)
         tvEmail = findViewById(R.id.tvEmail)
-        btnChangeDate = findViewById(R.id.btnChangeData)
         btnProfilePicture = findViewById(R.id.iBtnProfilPicture)
         btnLogout = findViewById(R.id.btnLogOut)
         checkInternetGPSPermissions(this)

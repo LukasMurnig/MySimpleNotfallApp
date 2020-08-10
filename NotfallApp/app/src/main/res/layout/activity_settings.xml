@@ -58,22 +58,14 @@
                 app:autoSizeStepGranularity="1sp"/>
 
             <Button
-                android:id="@+id/btnChangeData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="@string/ChangeProfil"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
-
-            <Button
                 android:id="@+id/btnLogOut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_width="250dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="30dp"
+                android:textSize="@dimen/size20"
                 android:text="@string/logout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnChangeData" />
+                app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
             <ImageButton
                 android:id="@+id/iBtnProfilPicture"
@@ -84,16 +76,6 @@
                 android:background="@drawable/addprofilepicture"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <FrameLayout
-                android:id="@+id/settings"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnLogOut">
-
-            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
