@@ -1,6 +1,5 @@
 package com.example.notfallapp.menubar.settings
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -11,7 +10,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
@@ -37,7 +35,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
     private lateinit var tvName: TextView
     private lateinit var tvTelNr: TextView
     private lateinit var tvEmail: TextView
-    private lateinit var btnChangeDate: Button
+    //private lateinit var btnChangeDate: Button
     private lateinit var btnProfilePicture: ImageButton
     private lateinit var btnLogout: Button
 
@@ -63,29 +61,22 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
             startActivity(intent)
         }
 
-        updateProfilePicture()
+        MainScope().launch {
+            updateProfilePicture()
+        }
 
         MainScope().launch {
             ServerUser().getUserInfo(applicationContext, tvName, tvTelNr, tvEmail)
-
-
-            /*tvName.text = logInUser!!.forename + " " + logInUser!!.surname
-            tvTelNr.text = logInUser!!.phoneFixed
-            tvEmail.text = logInUser!!.emailAddress*/
-
-            /*tvName.text = resources.getString(R.string.sampleName)
-            tvTelNr.text = resources.getString(R.string.sampleNumber)
-            tvEmail.text = resources.getString(R.string.sampleEmail)*/
         }
 
-        btnChangeDate.setOnClickListener {
+        /*btnChangeDate.setOnClickListener {
             Toast.makeText(applicationContext, "Gerade nicht verfügbar, da nicht sicher ob gebraucht wird", Toast.LENGTH_LONG).show()
             /*val intent = Intent(this, ChangeProfilActivity::class.java)
             intent.putExtra(resources.getString(R.string.numberAlarmDatabas), tvName.text as String)
             intent.putExtra(resources.getString(R.string.telNr), tvTelNr.text as String)
             intent.putExtra(resources.getString(R.string.emailAlarmDatabase), tvEmail.text as String)
             startActivityForResult(intent, 0)*/
-        }
+        }*/
 
         btnProfilePicture.setOnClickListener{
             val intent = Intent(this, SelectProfilPictureActivity::class.java)
@@ -101,22 +92,6 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        println(" Result: $resultCode")
-        if (requestCode == 0) {
-            if (resultCode == Activity.RESULT_OK /*&& data != null*/) {
-                tvName.text = logInUser!!.forename + " " + logInUser!!.surname
-                tvTelNr.text = logInUser!!.phoneFixed
-                tvEmail.text = logInUser!!.emailAddress
-            }
-        }
-        if(resultCode == 2){
-            updateProfilePicture()
         }
     }
 
@@ -153,7 +128,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         tvName = findViewById(R.id.tvName)
         tvTelNr = findViewById(R.id.tvTelNr)
         tvEmail = findViewById(R.id.tvEmail)
-        btnChangeDate = findViewById(R.id.btnChangeData)
+        //btnChangeDate = findViewById(R.id.btnChangeData)
         btnProfilePicture = findViewById(R.id.iBtnProfilPicture)
         btnLogout = findViewById(R.id.btnLogOut)
         checkInternetGPSPermissions(this)

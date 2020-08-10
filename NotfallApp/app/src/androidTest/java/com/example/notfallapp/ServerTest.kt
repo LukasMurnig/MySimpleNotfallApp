@@ -4,12 +4,8 @@ import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.notfallapp.menubar.contact.AddContactActivity
-import com.example.notfallapp.menubar.contact.ContactActivity
-import com.example.notfallapp.menubar.settings.SettingsActivity
-import com.example.notfallapp.server.ServerAlertingChain
 import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.server.ServerOrgUnitsItems
-import com.example.notfallapp.server.ServerUser
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -54,27 +50,13 @@ class ServerTest {
         assertNotNull(AddContactActivity.countries)
         assertNotNull(AddContactActivity.languages)
     }
-
-    @Test
-    fun getUserInfoTest(){
-        ServerUser().getUserInfo(testContext)
-        Thread.sleep(5000)
-
-        assertNotNull(SettingsActivity.logInUser)
-    }
-
-    @Test
-    fun getAlertingChainTest(){
-        ServerAlertingChain().getAlertingChain(testContext)
-        Thread.sleep(5000)
-
-        assertNotNull(ContactActivity.alertingChain)
-    }
     
     private fun login(){
+        ServerApi.setSharedPreferences(testContext.getSharedPreferences("Response", Context.MODE_PRIVATE))
         ServerApi.sendLogInDataToServer("sosapp", "gTN52PoeUQ", testContext)
 
         // 5 sec, wait for the response from server
         Thread.sleep(5000)
+        assertNotNull(ServerApi.userId)
     }
 }

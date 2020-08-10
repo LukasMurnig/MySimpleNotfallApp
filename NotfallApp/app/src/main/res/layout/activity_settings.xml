@@ -57,7 +57,7 @@
                 app:autoSizeMaxTextSize="20sp"
                 app:autoSizeStepGranularity="1sp"/>
 
-            <Button
+            <!--<Button
                 android:id="@+id/btnChangeData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,6 +65,7 @@
                 android:text="@string/ChangeProfil"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+                -->
 
             <Button
                 android:id="@+id/btnLogOut"
@@ -73,7 +74,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/logout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnChangeData" />
+                app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
             <ImageButton
                 android:id="@+id/iBtnProfilPicture"

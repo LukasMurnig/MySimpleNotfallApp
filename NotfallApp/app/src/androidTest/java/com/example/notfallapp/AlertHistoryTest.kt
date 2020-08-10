@@ -9,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.example.notfallapp.adapter.AlertsListAdapter
+import com.example.notfallapp.login.LoginActivity
 import com.example.notfallapp.menubar.alert.AlarmsActivity
 import org.junit.Rule
 import org.junit.Test
@@ -18,11 +19,18 @@ import org.junit.runner.RunWith
 @LargeTest
 class AlertHistoryTest {
     @get:Rule
-    var activityRule: ActivityTestRule<AlarmsActivity>
-            = ActivityTestRule(AlarmsActivity::class.java)
+    var activityRule: ActivityTestRule<LoginActivity>
+            = ActivityTestRule(LoginActivity::class.java)
 
     @Test
     fun clickOnAlertTest(){
+        Thread.sleep(2000)
+        Espresso.onView(ViewMatchers.withId(R.id.btnAlarms))
+            .perform(click())
+        Espresso.onView(ViewMatchers.withId(R.id.rvAlarms))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        Thread.sleep(3000)
+
         Espresso.onView(ViewMatchers.withId(R.id.rvAlarms))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<AlertsListAdapter.AlertsViewHolder>(
@@ -31,7 +39,5 @@ class AlertHistoryTest {
             )
         Espresso.onView(ViewMatchers.withId(R.id.tvDetailDeviceId))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-        Espresso.onView(ViewMatchers.withId(R.id.tvDetailAlarmAccepted))
-            .check(ViewAssertions.matches(ViewMatchers.withText("")))
     }
 }
