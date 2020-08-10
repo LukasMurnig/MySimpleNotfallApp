@@ -21,11 +21,11 @@
         android:textSize="30sp" />
 
     <Button
-        android:id="@+id/btn_retry_alarm"
+        android:id="@+id/btn_stop_alarm"
         android:layout_width="227dp"
         android:layout_height="96dp"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="309dp"
-        android:text="@string/retry" />
+        android:text="@string/stopAlarm" />
 </RelativeLayout>

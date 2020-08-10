@@ -117,8 +117,8 @@
     <string name="alarmcanceledok">OK</string>
     <string name="alarmcalledsuccesful">Ihr Alarm wurde erfolgreich an die Zentrale weitergeleitet!
                                         Hilfe ist unterwegs!</string>
-    <string name="alarmFailed">Ihr Alarm konnte leider nicht abgesendet werden, deswegen versuchen Sie es nochmal!</string>
-    <string name="retry">Erneut versuchen</string>
+    <string name="alarmFailed">Ihr Alarm konnte leider nicht abgesendet werden, deswegen versuchen wir es nochmals!</string>
+    <string name="stopAlarm">Alarm abbrechen!</string>
     <string name="unexpectedErrorLogin">Hoppla anscheinend ist ein Fehler aufgetretten der so nicht passieren sollte!
                                         Bitte verständigen Sie unseren Support!</string>
     <string name="longitude">Längengrad:</string>

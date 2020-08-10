@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.notfallapp.R
 import com.example.notfallapp.service.ServiceCallAlarm
+import com.google.android.gms.tasks.Task
+import java.util.*
 
 class AlarmFailedActivity: Activity() {
     private lateinit var tvAlarm: TextView
@@ -16,10 +18,19 @@ class AlarmFailedActivity: Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_failed)
         tvAlarm = findViewById(R.id.tvAlarmFailed)
-        btnRetry = findViewById(R.id.btn_retry_alarm)
-
+        btnRetry = findViewById(R.id.btn_stop_alarm)
+        var context = this
+        val timer = Timer()
+        timer.schedule(object: TimerTask() {
+            override fun run() {
+                // Service opens Call Alarm Activity
+                val intent = Intent(context, ServiceCallAlarm::class.java)
+                context.startService(intent)
+            }
+        },0,5000)
         btnRetry.setOnClickListener(){
-            var intent = Intent(this, ServiceCallAlarm::class.java)
+            timer.cancel()
+            var intent = Intent(this, AlarmCanceledActivity::class.java)
             this.startService(intent)
         }
     }

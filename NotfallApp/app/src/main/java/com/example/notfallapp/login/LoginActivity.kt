@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
             var valid = sharedPreferences?.getLong("TokenValid", 0)
             var unixTime = System.currentTimeMillis() / 1000L
             if(unixTime > valid!!){
+                ServerApi.setSharedPreferences(sharedPreferences!!)
                 ServerApi.refreshToken()
             }
             var intent = Intent(this, MainActivity::class.java)
