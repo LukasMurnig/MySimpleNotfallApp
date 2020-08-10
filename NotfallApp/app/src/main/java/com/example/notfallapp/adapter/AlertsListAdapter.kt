@@ -52,7 +52,10 @@ class AlertsListAdapter(private var alerts: List<Alert>) : RecyclerView.Adapter<
             alertDate = itemView.findViewById(R.id.alertDate)
             alertHelper = itemView.findViewById(R.id.alertHelper)
 
-            alertDate.text = alert.date.split('.')[0]
+            val timestamp = alert.date.split('.')[0]
+            val time = timestamp.split('T')
+
+            alertDate.text = time[0] + " " + time[1]
             alertHelper.text = alert.helperId.toString()
         }
     }

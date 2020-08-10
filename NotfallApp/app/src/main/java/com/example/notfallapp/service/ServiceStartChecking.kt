@@ -1,13 +1,11 @@
 package com.example.notfallapp.service
 
-import android.app.Activity
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.os.IBinder
-import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IConnectBracelet
@@ -30,11 +28,11 @@ class ServiceStartChecking: Service(), ICheckPermission, INotifications {
     }
 
     fun checkEnabled(){
-        var timer = Timer()
+        val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask()
         {
             override fun run() {
-                var gps = isGPSEnabled(applicationContext)
+                val gps = isGPSEnabled(applicationContext)
                 if(!gps){
                     if( countGPS == 0) {
                         createNotificationNoGPS(applicationContext)
@@ -45,7 +43,7 @@ class ServiceStartChecking: Service(), ICheckPermission, INotifications {
                 }
                 val connectivityManager =
                     applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                var internet = isNetworkAvailable(connectivityManager)
+                val internet = isNetworkAvailable(connectivityManager)
                 if(!internet){
                     if(countInternet == 0){
                         createNotificationNoInternet(applicationContext)
@@ -55,11 +53,11 @@ class ServiceStartChecking: Service(), ICheckPermission, INotifications {
                     countInternet = 0
                 }
                 if(IConnectBracelet.wasConnected) {
-                    var connected = IConnectBracelet.connected
+                    val connected = IConnectBracelet.connected
                     if (!connected) {
                         if (countBracelet == 0) {
                             createNotificationConnectionBraceletLost(applicationContext)
-                            var mp = MediaPlayer.create(applicationContext, R.raw.connectionlost)
+                            val mp = MediaPlayer.create(applicationContext, R.raw.connectionlost)
                             mp.start()
                             countBracelet++
                         }

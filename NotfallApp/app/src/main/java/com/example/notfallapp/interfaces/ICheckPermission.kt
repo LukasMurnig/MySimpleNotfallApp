@@ -25,7 +25,7 @@ import java.util.*
 interface ICheckPermission : INotifications {
     companion object{
         fun getNewTokenBeforeExpires(expires: Long){
-            var timer = Timer()
+            val timer = Timer()
 
             timer.schedule(object : TimerTask() {
                 override fun run() {
@@ -57,12 +57,12 @@ interface ICheckPermission : INotifications {
         val wifiInfo = wifi.connectionInfo
         level = WifiManager.calculateSignalLevel(wifiInfo.rssi, numberOfLevels)
         var builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        var handler = Handler(context.mainLooper)
-        var timer = Timer()
+        val handler = Handler(context.mainLooper)
+        val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                var result = isNetworkAvailable(connectivityManager)
-                if (result == false){
+                val result = isNetworkAvailable(connectivityManager)
+                if (!result){
                     timer.cancel()
                     handler.post( Runnable {
                         builder = enableInternetAccess(context, connectivityManager, wifi)
@@ -126,7 +126,7 @@ interface ICheckPermission : INotifications {
 
     fun isGPSEnabled(context: Context):Boolean {
         try{
-            var locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             var success = false
             if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                success = true
@@ -143,7 +143,7 @@ interface ICheckPermission : INotifications {
         builder.setTitle(context.resources.getString(R.string.confirm))
         builder.setMessage(context.resources.getString(R.string.noInternetAccess))
         builder.setPositiveButton(context.resources.getString(R.string.access)){dialog, which ->
-            wifi.setWifiEnabled(true)
+            wifi.isWifiEnabled = true
             checkInternetAccess(context)
         }
         builder.setNegativeButton(context.resources.getString(R.string.cancel)){dialog, which ->

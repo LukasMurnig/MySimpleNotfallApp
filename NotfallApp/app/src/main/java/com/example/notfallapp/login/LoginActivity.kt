@@ -3,8 +3,6 @@ package com.example.notfallapp.login
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.ConnectivityManager
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
 import android.widget.Button
@@ -31,15 +29,15 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         setContentView(R.layout.activity_login)
         sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
         ServerApi.setSharedPreferences(getSharedPreferences("Response", Context.MODE_PRIVATE))
-        var token = sharedPreferences?.getString("AccessToken", "null")
+        val token = sharedPreferences?.getString("AccessToken", "null")
         if(!token.equals("null")){
-            var valid = sharedPreferences?.getLong("TokenValid", 0)
-            var unixTime = System.currentTimeMillis() / 1000L
+            val valid = sharedPreferences?.getLong("TokenValid", 0)
+            val unixTime = System.currentTimeMillis() / 1000L
             if(unixTime > valid!!){
                 ServerApi.setSharedPreferences(sharedPreferences!!)
                 ServerApi.refreshToken()
             }
-            var intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         //a function which findViewById for our Controls in the LoginActivity
@@ -65,11 +63,11 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
 
         //Todo: Implementation of the authentication methode.
         var code = 0
-        var sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
         ServerApi.setContext(applicationContext)
         ServerApi.setSharedPreferences(sharedPreferences)
         if (username != null && password != null) {
-            var handler = Handler()
+            val handler = Handler()
             handler.post {
                 ServerApi.sendLogInDataToServer(username, password, this)
             }

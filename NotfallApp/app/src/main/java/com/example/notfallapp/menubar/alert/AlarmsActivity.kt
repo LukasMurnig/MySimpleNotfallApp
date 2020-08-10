@@ -1,6 +1,5 @@
 package com.example.notfallapp.menubar.alert
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
@@ -9,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
-import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ServerAlarm

@@ -7,7 +7,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
-import android.graphics.Bitmap
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -45,7 +44,7 @@ interface INotifications {
     }
 
     fun createNotificationNoGPS(context: Context){
-        var builder = createBasicNotification(context, channelIdHighPriority, true)
+        val builder = createBasicNotification(context, channelIdHighPriority, true)
 
         builder.setContentTitle(context.getString(R.string.noGPSNotificationbar))
             .setContentText(context.getString(R.string.enableGPS))
@@ -54,7 +53,7 @@ interface INotifications {
     }
 
     fun createNotificationConnectionBraceletLost(context: Context){
-        var builder = createBasicNotification(context, channelIdHighPriority, true)
+        val builder = createBasicNotification(context, channelIdHighPriority, true)
         builder.setContentTitle(context.getString(R.string.lostConnection))
             .setContentText(context.getString(R.string.reconnectBracelet))
 

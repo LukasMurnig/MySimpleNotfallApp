@@ -2,7 +2,6 @@ package com.example.notfallapp
 
 import android.content.Context
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -30,13 +29,8 @@ class ButtonbarTest {
     @Before
     fun setup(){
         testContext = InstrumentationRegistry.getInstrumentation().targetContext
-        /*onView(withId(R.id.input_username))
-            .perform(ViewActions.typeText("sosapp"), ViewActions.closeSoftKeyboard())
-        onView(withId(R.id.input_password))
-            .perform(ViewActions.typeText("gTN52PoeUQ"), ViewActions.closeSoftKeyboard())*/
-        onView(withId(R.id.btn_login))
-            .perform(click())
-        Thread.sleep(1000)
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -59,6 +53,7 @@ class ButtonbarTest {
     fun buttonBarContactItemClickedTest(){
         onView(withId(R.id.btnContact))
             .perform(click())
+        Thread.sleep(4000)
         onView(withId(R.id.rvContacts))
             .check(matches(isDisplayed()))
     }

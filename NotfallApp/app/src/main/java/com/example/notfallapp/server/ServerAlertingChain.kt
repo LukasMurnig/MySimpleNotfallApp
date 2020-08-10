@@ -105,8 +105,8 @@ class ServerAlertingChain {
 
         val userId = ServerApi.getSharedPreferences().getString("UserId", null)
 
-        ServerApi.createJsonObjectRequest(Request.Method.PUT, "/users/$userId/alertingchain/", reqBody){response ->
-                //getAlertingChain(context, rvContacts)
+        ServerApi.createJsonObjectRequest(Request.Method.PUT, "/users/$userId/alertingchain/", reqBody){
+            //getAlertingChain(context, rvContacts)
         }
     }
 }

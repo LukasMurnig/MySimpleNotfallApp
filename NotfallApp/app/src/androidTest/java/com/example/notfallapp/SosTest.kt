@@ -9,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.example.notfallapp.alarm.TimerHandler
+import com.example.notfallapp.login.LoginActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,8 +19,8 @@ import org.junit.runner.RunWith
 class SosTest {
 
     @get:Rule
-    var activityRule: ActivityTestRule<MainActivity>
-            = ActivityTestRule(MainActivity::class.java)
+    var activityRule: ActivityTestRule<LoginActivity>
+            = ActivityTestRule(LoginActivity::class.java)
 
     @Test
     fun clickSosAndCancelSosButtonTest(){

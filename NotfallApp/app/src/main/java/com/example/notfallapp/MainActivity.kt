@@ -200,7 +200,7 @@ class MainActivity : AppCompatActivity(),
                     if (device != null) {
                         tvStatusbracelet.text = context?.getString(R.string.tryToConnectBracelet)
                         val bluetoothDevice: BluetoothDevice =
-                            mBluetoothAdapter.getRemoteDevice(device?.macAddress)
+                            mBluetoothAdapter.getRemoteDevice(device.macAddress)
                         connect(applicationContext, bluetoothDevice, true)
                     }
                     else{

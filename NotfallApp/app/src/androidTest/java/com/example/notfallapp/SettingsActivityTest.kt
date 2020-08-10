@@ -30,13 +30,13 @@ class SettingsActivityTest {
     fun setup(){
         testContext = InstrumentationRegistry.getInstrumentation().targetContext
         //activityRule.launchActivity(Intent(testContext, SettingsActivity::class.java))
-        Espresso.onView(ViewMatchers.withId(R.id.input_username))
+        /*Espresso.onView(ViewMatchers.withId(R.id.input_username))
             .perform(ViewActions.typeText("sosapp"), ViewActions.closeSoftKeyboard())
         Espresso.onView(ViewMatchers.withId(R.id.input_password))
-            .perform(ViewActions.typeText("gTN52PoeUQ"), ViewActions.closeSoftKeyboard())
-        Espresso.onView(ViewMatchers.withId(R.id.btn_login))
-            .perform(click())
-        Thread.sleep(1000)
+            .perform(ViewActions.typeText("gTN52PoeUQ"), ViewActions.closeSoftKeyboard())*/
+        /*Espresso.onView(ViewMatchers.withId(R.id.btn_login))
+            .perform(click())*/
+        Thread.sleep(2000)
 
         Espresso.onView(ViewMatchers.withId(R.id.btnSettings))
             .perform(click())

@@ -8,8 +8,6 @@ import android.bluetooth.BluetoothGatt
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.net.ConnectivityManager
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Parcelable
@@ -25,12 +23,12 @@ import androidx.core.content.ContextCompat
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
-import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IConnectBracelet
+import com.example.notfallapp.interfaces.ICreatingOnClickListener
 
 
-class AddBraceletActivityI() : Activity(), ICreatingOnClickListener, ICheckPermission, IConnectBracelet {
+class AddBraceletActivityI : Activity(), ICreatingOnClickListener, ICheckPermission, IConnectBracelet {
     companion object{
         var connected: Boolean = false
         var batteryState: String = " "

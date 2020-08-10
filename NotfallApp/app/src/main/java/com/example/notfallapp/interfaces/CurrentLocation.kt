@@ -10,9 +10,6 @@ import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
-import com.example.notfallapp.database.EmergencyAppDatabase
-import com.google.android.gms.tasks.Task
-import java.util.*
 
 class CurrentLocation {
 
@@ -57,7 +54,7 @@ class CurrentLocation {
             class findLocation : AsyncTask<Unit, Unit, Unit>() {
 
                 override fun doInBackground(vararg p0: Unit?) {
-                    if (CurrentLocation.context?.let {
+                    if (context?.let {
                             ActivityCompat.checkSelfPermission(
                                 it,
                                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -72,18 +69,18 @@ class CurrentLocation {
                         //return null
                     }
 
-                    var permissionGranted: Boolean = context?.let {
+                    val permissionGranted: Boolean = context?.let {
                         ActivityCompat.checkSelfPermission(
                             it, Manifest.permission.ACCESS_FINE_LOCATION)
-                    } == PackageManager.PERMISSION_GRANTED;
+                    } == PackageManager.PERMISSION_GRANTED
                     if (!permissionGranted){
                         try{
-                        ActivityCompat.requestPermissions(context as Activity, Array<String>(3) {Manifest.permission.ACCESS_FINE_LOCATION}, 200)
+                        ActivityCompat.requestPermissions(context as Activity, Array(3) {Manifest.permission.ACCESS_FINE_LOCATION}, 200)
                         } catch (ex: RuntimeException) {
                             println("Error")
                         }
                     }else {
-                        if (gps == true) {
+                        if (gps) {
                             locationManager?.removeUpdates(this@Companion)
                             locationManager?.requestLocationUpdates(
                                 LocationManager.GPS_PROVIDER,

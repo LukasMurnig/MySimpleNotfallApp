@@ -25,7 +25,7 @@ class ServerApi : ICheckPermission {
         private lateinit var sharedPreferences: SharedPreferences
         var serverAPIURL = "https://jamesdev.ilogs.com/api/v1"
         const val TAG = "ServerApi"
-        val clientID = "299a645f-5fc3-48ac-8098-01baaa4c2caa"
+        private const val clientID = "299a645f-5fc3-48ac-8098-01baaa4c2caa"
         var volleyRequestQueue: RequestQueue? = null
 
         private var timeTokenCome: Long? = null
@@ -57,7 +57,7 @@ class ServerApi : ICheckPermission {
             val prefTimeTokenCome = pref.getLong("TimeTokenCome", 0L)
             val prefTokenExpiresInSeconds = pref.getInt("tokenExpiresInSeconds", 0)
             if(prefTimeTokenCome != 0L && prefTokenExpiresInSeconds != 0){
-                if((prefTimeTokenCome!! + prefTokenExpiresInSeconds!! - 60) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
+                if((prefTimeTokenCome + prefTokenExpiresInSeconds - 60) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
                     refreshToken()
                 }
             }
@@ -106,8 +106,8 @@ class ServerApi : ICheckPermission {
                         editor.putString("UserId", userId)
                         editor.commit()
                         try {
-                            var expires: Int = tokenExpiresInSeconds!! - 60
-                            var expiresTime = expires.toString().toLong()
+                            val expires: Int = tokenExpiresInSeconds!! - 60
+                            val expiresTime = expires.toString().toLong()
                             ICheckPermission.getNewTokenBeforeExpires(expiresTime*1000)
                         }catch(ex : java.lang.Exception){
                             println(ex.toString())
@@ -147,7 +147,7 @@ class ServerApi : ICheckPermission {
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login/refreshtoken", reqBody,
                 Response.Listener { response ->
-                    Log.e(TAG, "response: $response")
+                    Log.i(TAG, "response: $response")
 
                     try {
                         val accessTokenCheck = response.has("AccessToken")
@@ -174,7 +174,7 @@ class ServerApi : ICheckPermission {
                                 println(ex.toString())
                             }
                             timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
-                            Log.e(TAG, "Refresh Successfully")
+                            Log.i(TAG, "Refresh Successfully")
                         }
                     } catch (e: Exception) { // caught while parsing the response
                         Log.e(TAG, "problem occurred")
@@ -195,7 +195,7 @@ class ServerApi : ICheckPermission {
             val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
                 method, serverAPIURL + extraUrl, reqBody,
                 Response.Listener<JSONObject> { response ->
-                    Log.e(TAG, "response: $response")
+                    Log.i(TAG, "response: $response")
                     try {
                         toDo(response)
                     } catch (e: Exception) { // caught while parsing the response

@@ -21,10 +21,10 @@ class LogInTest {
 
     @Test
     fun LoginSuccessfulTest(){
-        Espresso.onView(ViewMatchers.withId(R.id.input_username))
+        /*Espresso.onView(ViewMatchers.withId(R.id.input_username))
             .perform(typeText("sosapp"), closeSoftKeyboard())
         Espresso.onView(ViewMatchers.withId(R.id.input_password))
-            .perform(typeText("gTN52PoeUQ"), closeSoftKeyboard())
+            .perform(typeText("gTN52PoeUQ"), closeSoftKeyboard())*/
         Espresso.onView(ViewMatchers.withId(R.id.btn_login))
             .perform(click())
         Thread.sleep(2000)

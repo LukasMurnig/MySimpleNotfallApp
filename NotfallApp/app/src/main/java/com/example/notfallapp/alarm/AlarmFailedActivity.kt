@@ -28,9 +28,9 @@ class AlarmFailedActivity: Activity() {
                 context.startService(intent)
             }
         },0,5000)
-        btnRetry.setOnClickListener(){
+        btnRetry.setOnClickListener {
             timer.cancel()
-            var intent = Intent(this, AlarmCanceledActivity::class.java)
+            val intent = Intent(this, AlarmCanceledActivity::class.java)
             this.startService(intent)
         }
     }

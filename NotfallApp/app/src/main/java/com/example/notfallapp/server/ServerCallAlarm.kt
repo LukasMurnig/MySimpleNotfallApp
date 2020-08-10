@@ -13,14 +13,11 @@ import com.android.volley.toolbox.Volley
 import com.example.notfallapp.alarm.AlarmFailedActivity
 import com.example.notfallapp.alarm.AlarmSuccesfulActivity
 import com.example.notfallapp.interfaces.CurrentLocation
-import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.login.LoginActivity
 import org.json.JSONArray
 import org.json.JSONObject
 import java.sql.Timestamp
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -38,7 +35,7 @@ class ServerCallAlarm {
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
-            if (IConnectBracelet.batteryState.equals(" ")) {
+            if (IConnectBracelet.batteryState == " ") {
                 reqBody.put("Battery", null)
             } else {
                 reqBody.put("Battery", IConnectBracelet.batteryState)
@@ -46,10 +43,10 @@ class ServerCallAlarm {
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
             val jsonObjectRequest = object : JsonObjectRequest(
-                Request.Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/alert", reqBody,
+                Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/alert", reqBody,
                 Response.Listener { response ->
                     Log.e(ServerApi.TAG, "response: $response")
-                    var intent = Intent(context, AlarmSuccesfulActivity::class.java)
+                    val intent = Intent(context, AlarmSuccesfulActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 },
@@ -62,21 +59,21 @@ class ServerCallAlarm {
                                 "Error"
                             )
                         )
-                        var intent = Intent(context, AlarmFailedActivity::class.java)
+                        val intent = Intent(context, AlarmFailedActivity::class.java)
                         intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
                         context.startActivity(intent)
                     } else {
                         Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
-                        var intent = Intent(context, AlarmFailedActivity::class.java)
+                        val intent = Intent(context, AlarmFailedActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         context.startActivity(intent)
                     }
                 }) {
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String>? {
-                    var params = HashMap<String, String>()
-                    var token = sharedPreferences.getString("AccessToken", "")
-                    params?.put("Authorization", "Bearer " +token)
+                    val params = HashMap<String, String>()
+                    val token = sharedPreferences.getString("AccessToken", "")
+                    params["Authorization"] = "Bearer $token"
                     //..add other headers
                     return params
                 }
@@ -91,22 +88,22 @@ class ServerCallAlarm {
             val arrayBody = JSONArray()
             val beacon = JSONObject()
             val time = Timestamp(System.currentTimeMillis()).toString()
-            var times = time.split(" ")
+            val times = time.split(" ")
             val currentTime = times[0]+"T"+times[1]+"+00:00"
             val location = CurrentLocation.currentLocation
             body.put("Timestamp", currentTime)
             if(location?.longitude != null){
-                body.put("Longitude", location?.longitude)
+                body.put("Longitude", location.longitude)
             }else{
                 body.put("Longitude", 0)
             }
             if(location?.latitude != null){
-                body.put("Latitude", location?.latitude)
+                body.put("Latitude", location.latitude)
             }else{
                 body.put("Latitude", 0)
             }
             if(location?.accuracy != null){
-                body.put("Accuracy", location?.accuracy)
+                body.put("Accuracy", location.accuracy)
             }else{
                 body.put("Accuracy", 0)
             }
@@ -136,9 +133,9 @@ class ServerCallAlarm {
                     }
                 }) {
                 override fun getHeaders(): Map<String, String>? {
-                    var params = HashMap<String, String>()
-                    var token = sharedPreferences.getString("AccessToken", "")
-                    params?.put("Authorization", "Bearer $token")
+                    val params = HashMap<String, String>()
+                    val token = sharedPreferences.getString("AccessToken", "")
+                    params["Authorization"] = "Bearer $token"
                     //..add other headers
                     return params
                 }

@@ -57,6 +57,16 @@
                 app:autoSizeMaxTextSize="20sp"
                 app:autoSizeStepGranularity="1sp"/>
 
+            <!--<Button
+                android:id="@+id/btnChangeData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/ChangeProfil"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+                -->
+
             <Button
                 android:id="@+id/btnLogOut"
                 android:layout_width="250dp"
