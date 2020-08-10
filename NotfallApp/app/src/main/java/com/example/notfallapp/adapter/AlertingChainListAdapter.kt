@@ -64,7 +64,11 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
 
             contactName.text = alertingChainMember.helperSurname + ", " + alertingChainMember.helperForename
             if(alertingChainMember.active){
+                contactActive.setBackgroundResource(R.color.limeGreen)
                 contactActive.setImageResource(R.drawable.active)
+            } else {
+                contactActive.setBackgroundResource(R.color.colorRed)
+                contactActive.setImageResource(R.drawable.deactive)
             }
 
             contactMenu.setOnClickListener{
@@ -92,7 +96,6 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
                             builder.setMessage(itemView.context.resources.getString(R.string.sureDeactivedContact))
 
                             builder.setPositiveButton(itemView.context.resources.getString(R.string.Yes)) { dialog, _ ->
-                                itemView.contact_active.setImageDrawable(null)
                                 activateAlertingChainMember(alertingChainMember, itemView)
                                 dialog.dismiss()
                             }

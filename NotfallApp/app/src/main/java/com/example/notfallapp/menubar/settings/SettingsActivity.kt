@@ -18,7 +18,7 @@ import com.example.notfallapp.bll.User
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ServerUser
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
@@ -60,17 +60,13 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
 
         updateProfilePicture()
 
-        GlobalScope.launch {
-            if(logInUser==null){
-                ServerUser().getUserInfo(applicationContext)
-                while(logInUser==null){
+        MainScope().launch {
+            ServerUser().getUserInfo(applicationContext, tvName, tvTelNr, tvEmail)
 
-                }
-            }
 
-            tvName.text = logInUser!!.forename + " " + logInUser!!.surname
+            /*tvName.text = logInUser!!.forename + " " + logInUser!!.surname
             tvTelNr.text = logInUser!!.phoneFixed
-            tvEmail.text = logInUser!!.emailAddress
+            tvEmail.text = logInUser!!.emailAddress*/
 
             /*tvName.text = resources.getString(R.string.sampleName)
             tvTelNr.text = resources.getString(R.string.sampleNumber)

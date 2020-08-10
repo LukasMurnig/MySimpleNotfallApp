@@ -2,9 +2,12 @@ package com.example.notfallapp.server
 
 import android.content.Context
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
+import com.example.notfallapp.adapter.AlertingChainListAdapter
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
+import com.example.notfallapp.interfaces.IAlertingChainMemberFunctions
 import com.example.notfallapp.menubar.contact.ContactActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -12,7 +15,7 @@ import java.util.*
 
 class ServerAlertingChain {
 
-    fun getAlertingChain(context: Context){
+    fun getAlertingChain(context: Context, rvContacts: RecyclerView){
         val pref = context.getSharedPreferences("Response", Context.MODE_PRIVATE)
         val userId = pref.getString("UserId", null) ?: return
 
@@ -53,7 +56,10 @@ class ServerAlertingChain {
                     isStringOrNull("Description", response),
                     alertChM
                 )
-                Log.e("ServerAlertingChain", "AlertingChain set")
+                val adapter = AlertingChainListAdapter(ContactActivity.alertingChain!!)
+                IAlertingChainMemberFunctions.setAdapter(adapter)
+                rvContacts.adapter = adapter
+                (rvContacts.adapter as AlertingChainListAdapter).notifyDataSetChanged()
             }
         }
     }

@@ -9,12 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
-import com.example.notfallapp.adapter.AlertingChainListAdapter
 import com.example.notfallapp.adapter.ContactListAdapter
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.Contact
 import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.interfaces.IAlertingChainMemberFunctions
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.IContactDatabase
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
@@ -60,19 +58,9 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
             startActivity( intent, null)
         }*/
 
-        /*GlobalScope.launch {
-            ServerOrgUnitsItems().getOrgUnitItems()
-        }*/
-
         MainScope().launch {
-            if (alertingChain == null){
-                ServerAlertingChain().getAlertingChain(applicationContext)
-                return@launch
-            }
-            val adapter = AlertingChainListAdapter(alertingChain!!)
-            IAlertingChainMemberFunctions.setAdapter(adapter)
-            rvContacts.adapter = adapter
-            (rvContacts.adapter as AlertingChainListAdapter).notifyDataSetChanged()
+            ServerAlertingChain().getAlertingChain(applicationContext, rvContacts)
+
             /*try{
                 getAllContacts()
             }catch (ex: Exception){

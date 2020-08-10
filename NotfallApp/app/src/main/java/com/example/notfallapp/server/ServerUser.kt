@@ -1,6 +1,7 @@
 package com.example.notfallapp.server
 
 import android.content.Context
+import android.widget.TextView
 import com.android.volley.Request
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.User
@@ -12,7 +13,7 @@ import java.util.*
 
 class ServerUser {
 
-    fun getUserInfo(context: Context){
+    fun getUserInfo(context: Context, tvName: TextView, tvPhone: TextView, tvEmail: TextView){
         ServerApi.createJsonObjectRequest(Request.Method.GET, context.getString(R.string.UserMe), null ){ response ->
             if (response.has("ID")) {
                 SettingsActivity.logInUser = User(
@@ -33,6 +34,9 @@ class ServerUser {
                     isStringOrNull("Language", response),
                     isStringOrNull("TimeZone", response)
                 )
+                tvName.text = SettingsActivity.logInUser!!.forename + " " + SettingsActivity.logInUser!!.surname
+                tvPhone.text = SettingsActivity.logInUser!!.phoneFixed
+                tvEmail.text = SettingsActivity.logInUser!!.emailAddress
             }
         }
     }
