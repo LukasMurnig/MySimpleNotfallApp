@@ -77,7 +77,7 @@ interface INotifications {
             .setCustomBigContentView(notificationLayout)
 
         val not = notification.build()
-        not.flags = Notification.FLAG_ONGOING_EVENT ; Notification.FLAG_NO_CLEAR
+        not.flags = Notification.FLAG_ONGOING_EVENT and Notification.FLAG_NO_CLEAR
         return not
     }
 
@@ -154,9 +154,10 @@ interface INotifications {
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
         if(highPriority){
+            val v = longArrayOf(500, 5000)
             builder
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
+                .setVibrate(v)
                 .setAutoCancel(true)
         }else{
             builder
