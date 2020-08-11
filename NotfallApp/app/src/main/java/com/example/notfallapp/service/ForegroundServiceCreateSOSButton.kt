@@ -38,4 +38,22 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
         //return START_STICKY
         return START_REDELIVER_INTENT
     }
+
+    override fun onStart(intent: Intent?, startId: Int) {
+        try {
+            startForeground(444444123, createNotificationCreateAlarm(applicationContext))
+        } catch (ex: Exception){
+            ex.printStackTrace()
+        }
+        super.onStart(intent, startId)
+    }
+
+    override fun onLowMemory() {
+        //super.onLowMemory()
+        try {
+            startForeground(444444123, createNotificationCreateAlarm(applicationContext))
+        } catch (ex: Exception){
+            ex.printStackTrace()
+        }
+    }
 }
