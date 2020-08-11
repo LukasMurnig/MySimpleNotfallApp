@@ -72,8 +72,6 @@ class MainActivity : AppCompatActivity(),
             if(ServerApi.volleyRequestQueue == null){
                 ServerApi.volleyRequestQueue = Volley.newRequestQueue(applicationContext)
             }
-
-            //ServerApi.controlToken()
         }
 
         ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
