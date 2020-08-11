@@ -36,6 +36,8 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
     private lateinit var tvCanceledAlarm: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        TimerHandler.deleteTimer()
+        
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_call_alarm_canceled)

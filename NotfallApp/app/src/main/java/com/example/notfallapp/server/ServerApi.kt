@@ -52,17 +52,6 @@ class ServerApi : ICheckPermission {
             return this.sharedPreferences
         }
 
-        fun controlToken(){
-            /*val pref = getSharedPreferences()
-            val prefTimeTokenCome = pref.getLong("TimeTokenCome", 0L)
-            val prefTokenExpiresInSeconds = pref.getInt("tokenExpiresInSeconds", 0)
-            if(prefTimeTokenCome != 0L && prefTokenExpiresInSeconds != 0){
-                if((prefTimeTokenCome + prefTokenExpiresInSeconds - 60) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
-                    refreshToken()
-                }
-            }*/
-        }
-
         fun sendLogInDataToServer(username: String, password: String, context: Context){
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
@@ -105,12 +94,13 @@ class ServerApi : ICheckPermission {
                         editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
                         editor.putString("UserId", userId)
                         editor.commit()
+
                         try {
                             val expires: Int = tokenExpiresInSeconds!! - 60
                             val expiresTime = expires.toString().toLong()
                             ICheckPermission.getNewTokenBeforeExpires(expiresTime*1000)
                         }catch(ex : java.lang.Exception){
-                            println(ex.toString())
+                            Log.e(TAG, ex.toString())
                         }
                         val intent = Intent(context, MainActivity::class.java)
                         context.startActivity(intent)
@@ -121,7 +111,7 @@ class ServerApi : ICheckPermission {
                     context.startActivity(intent)
 
                 } catch (e: Exception) {
-                    Log.e(TAG, "problem occurred")
+                    Log.e(TAG, "problem occurred " + e.printStackTrace())
                     e.printStackTrace()
                 }
             },
@@ -166,6 +156,7 @@ class ServerApi : ICheckPermission {
                             editor.putString("RefreshToken", refreshToken)
                             editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
                             editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
+                            editor.commit()
                             try {
                                 val expires: Int = tokenExpiresInSeconds!! - 60
                                 val expiresTime = expires.toString().toLong()
@@ -190,7 +181,6 @@ class ServerApi : ICheckPermission {
         }
 
         fun createJsonObjectRequest(method: Int, extraUrl: String, reqBody: JSONObject?, toDo: (response: JSONObject) -> Unit ) {
-            //controlToken()
 
             val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
                 method, serverAPIURL + extraUrl, reqBody,

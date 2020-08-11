@@ -36,7 +36,9 @@ class TimerHandler {
             }
 
             fun deleteTimer(){
-                handler.removeCallbacksAndMessages(null)
+                try{
+                    handler.removeCallbacksAndMessages(null)
+                } catch (ex: Exception){ }
             }
     }
 }

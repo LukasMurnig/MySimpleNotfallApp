@@ -36,6 +36,8 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
         initComponents()
 
         btnCancelAlarm.setOnClickListener {
+            TimerHandler.deleteTimer()
+
             Log.d(resources.getString(R.string.CancelButton),
                   String.format(resources.getString(R.string.CancelButtonClicked),
                                 resources.getString(R.string.CallAlarm)))
