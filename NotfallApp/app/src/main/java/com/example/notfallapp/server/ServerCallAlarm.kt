@@ -85,6 +85,7 @@ class ServerCallAlarm {
             val times = time.split(" ")
             val currentTime = times[0]+"T"+times[1]+"+00:00"
             val location = CurrentLocation.currentLocation
+
             body.put("Timestamp", currentTime)
             if(location?.longitude != null){
                 body.put("Longitude", location.longitude)

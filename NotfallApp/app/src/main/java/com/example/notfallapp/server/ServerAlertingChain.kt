@@ -8,7 +8,6 @@ import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
 import com.example.notfallapp.menubar.contact.ContactActivity
 import org.json.JSONArray
-import org.json.JSONObject
 import java.util.*
 
 class ServerAlertingChain {
@@ -34,15 +33,15 @@ class ServerAlertingChain {
 
                         alertChM = alertChM?.plus(
                             AlertingChainMember(
-                                UUID.fromString(json.get("AlertingChainId") as String?),
-                                UUID.fromString(json.get("HelperId") as String?),
+                                UUID.fromString(ResponseConverter().isStringOrNull("AlertingChainId", json)),
+                                UUID.fromString(ResponseConverter().isStringOrNull("HelperId", json)),
                                 json.getInt("Rank"),
                                 json.getBoolean("Active"),
                                 json.getBoolean("Contact"),
-                                proveIfNullOrValue("HelperForename", json) as String?,
-                                proveIfNullOrValue("HelperSurname", json) as String?,
-                                proveIfNullOrValue("PhoneNumber", json) as String?,
-                                proveIfNullOrValue("Email", json) as String?
+                                ResponseConverter().isStringOrNull("HelperForename", json),
+                                ResponseConverter().isStringOrNull("HelperSurname", json),
+                                ResponseConverter().isStringOrNull("PhoneNumber", json),
+                                ResponseConverter().isStringOrNull("Email", json)
                             )
                         )
                     }
@@ -50,28 +49,12 @@ class ServerAlertingChain {
                 ContactActivity.alertingChain = AlertingChain(
                     UUID.fromString(response.get("ID") as String?),
                     UUID.fromString(response.get("UserId") as String?),
-                    isStringOrNull("Name", response),
-                    isStringOrNull("Description", response),
+                    ResponseConverter().isStringOrNull("Name", response),
+                    ResponseConverter().isStringOrNull("Description", response),
                     alertChM
                 )
                 updateRecyclerView(rvContacts)
             }
-        }
-    }
-
-    private fun isStringOrNull(key: String, response: JSONObject): String? {
-        return if(response.getString(key) == null){
-            null
-        } else {
-            response.getString(key)
-        }
-    }
-
-    private fun proveIfNullOrValue(key: String, response: JSONObject): Any?{
-        return try{
-            response.get(key)
-        }catch (ex: Exception){
-            null
         }
     }
 
