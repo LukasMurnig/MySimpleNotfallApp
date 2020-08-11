@@ -8,6 +8,7 @@ import com.example.notfallapp.bll.ReadWriteCharacteristic
 import java.util.*
 
 class ProcessQueueExecutor: Thread() {
+
     companion object{
         val REQUEST_TYPE_READ_CHAR = 1
         val REQUEST_TYPE_WRITE_CHAR = 2

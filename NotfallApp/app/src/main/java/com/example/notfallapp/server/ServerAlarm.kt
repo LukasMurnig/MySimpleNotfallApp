@@ -20,8 +20,6 @@ import java.util.*
 class ServerAlarm {
     fun getAllAlerts(context: Context, rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
 
-
-
         createGetArrayCall(Request.Method.GET, "/alerts") { response ->
 
                 if(response.length() == 0){

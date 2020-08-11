@@ -23,6 +23,7 @@ abstract class EmergencyAppDatabase : RoomDatabase(){
                         ).fallbackToDestructiveMigration()
                          .build()
             }
+
             return INSTANCE as EmergencyAppDatabase
         }
     }

@@ -13,7 +13,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.alarm.AlarmCanceledActivity
-import com.example.notfallapp.alarm.AlarmSuccesfulActivity
+import com.example.notfallapp.alarm.AlarmSuccessfulActivity
 import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 import com.example.notfallapp.service.ServiceCancelAlarm
@@ -90,7 +90,7 @@ interface INotifications {
             .setCustomBigContentView(notificationLayout)
 
         // Set the intent that will fire when the user taps the notification
-        val intentSuccessful = Intent(context, AlarmSuccesfulActivity::class.java).apply {
+        val intentSuccessful = Intent(context, AlarmSuccessfulActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntentSuccessful: PendingIntent = PendingIntent.getActivity(context, 0, intentSuccessful, 0)

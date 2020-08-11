@@ -12,7 +12,7 @@ import com.example.notfallapp.interfaces.ICheckPermission
 /*
  * Activity shows that the alarm was successful
  */
-class AlarmSuccesfulActivity : AppCompatActivity(), ICheckPermission {
+class AlarmSuccessfulActivity : AppCompatActivity(), ICheckPermission {
 
     private lateinit var tvAlarm: TextView
     private lateinit var buttonSuccessfulOk: Button

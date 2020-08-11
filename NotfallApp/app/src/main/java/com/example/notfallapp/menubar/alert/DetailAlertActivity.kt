@@ -40,9 +40,6 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
         tvDetailDate.text = timestamp.split('T')[0]
         tvDetailTime.text = timestamp.split('T')[1]
 
-        /*tvDetailDate.text = android.text.format.DateFormat.format("dd-MM-yyyy", timestamp)
-        tvDetailTime.text = android.text.format.DateFormat.format("kk:mm:ss", timestamp)*/
-
         if((extras.get("accepted")) != null){
             tvDetailAlarmAccepted.text = (extras.get("accepted") as UUID?).toString()
         } else {

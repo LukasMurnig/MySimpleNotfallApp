@@ -11,7 +11,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.User
 import com.example.notfallapp.interfaces.ICheckPermission
@@ -35,7 +34,6 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
     private lateinit var tvName: TextView
     private lateinit var tvTelNr: TextView
     private lateinit var tvEmail: TextView
-    //private lateinit var btnChangeDate: Button
     private lateinit var btnProfilePicture: ImageButton
     private lateinit var btnLogout: Button
 
@@ -64,15 +62,10 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         MainScope().launch {
             ServerUser().getUserInfo(applicationContext, tvName, tvTelNr, tvEmail)
         }
+
         btnProfilePicture.setOnClickListener{
             val intent = Intent(this, SelectProfilPictureActivity::class.java)
             startActivityForResult(intent, 2)
-        }
-    }
-
-    class SettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
     }
 
@@ -108,7 +101,6 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         tvName = findViewById(R.id.tvName)
         tvTelNr = findViewById(R.id.tvTelNr)
         tvEmail = findViewById(R.id.tvEmail)
-        //btnChangeDate = findViewById(R.id.btnChangeData)
         btnProfilePicture = findViewById(R.id.iBtnProfilPicture)
         btnLogout = findViewById(R.id.btnLogOut)
         checkInternetGPSPermissions(this)

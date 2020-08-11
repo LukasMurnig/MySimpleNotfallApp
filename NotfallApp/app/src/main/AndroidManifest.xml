@@ -48,9 +48,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login.SignUpActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
         </activity>
@@ -74,7 +71,7 @@
             android:name=".alarm.AlarmCanceledActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".alarm.AlarmSuccesfulActivity"
+            android:name=".alarm.AlarmSuccessfulActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".connectBracelet.AddBraceletActivityI"

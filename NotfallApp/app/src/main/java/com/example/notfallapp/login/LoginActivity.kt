@@ -71,18 +71,16 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         val username: String? = usernameText.text.toString()
         val password: String? = passwordText.text.toString()
 
-        //Todo: Implementation of the authentication methode.
         var code = 0
-        //val sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
+        // was set before: val sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
         ServerApi.setContext(applicationContext)
-        //ServerApi.setSharedPreferences(sharedPreferences)
+        // was set before: ServerApi.setSharedPreferences(sharedPreferences)
         if (username != null && password != null) {
             val handler = Handler()
             handler.post {
                 ServerApi.sendLogInDataToServer(username, password, this)
             }
         }
-
     }
 
     private fun onLoginFailed() {

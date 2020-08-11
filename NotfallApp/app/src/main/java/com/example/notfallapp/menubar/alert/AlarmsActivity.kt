@@ -41,10 +41,6 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         MainScope().launch {
             ServerAlarm().getAllAlerts(applicationContext, rvAlarms, lbMessageNoAlarms)
         }
-
-        /*GlobalScope.launch {
-            getData()
-        }*/
     }
 
     private fun configureButtons() {
