@@ -168,7 +168,7 @@
     <string name="logo">Logo</string>
     <string name="title_activity_settings_test">SettingsTestActivity</string>
     <string name="buttonOk">ButtonOk</string>
-    <string name="buttonOkClicked">Button ok was clicked in %1$s!</string>
+    <string name="buttonOkClicked">Button OK was clicked in %1$s!</string>
     <string name="SOSButton">SOSButton</string>
     <string name="SOSButtonClicked">SOS Button was clicked in %1$s!</string>
     <string name="MenuItem">MenuItem</string>
@@ -208,7 +208,7 @@
     <string name="ErrorServerUserResponseMessage">problem occurred, volley error: %1$s %2$s</string>
     <string name="ErrorVerification">There was an Error in App Verification in %1$s with the message: %2$s</string>
     <string name="CharacteristicReadMessage">Achieved Characteristic Read: %1$s</string>
-    <string name="DescriptorReadMessage">Recieved descriptor Read: %1$s</string>
+    <string name="DescriptorReadMessage">Received descriptor Read: %1$s</string>
     <!-- Classes -->
     <string name="AlarmCanceled">AlarmCanceledActivity</string>
     <string name="AlarmSuccessful">AlarmSuccessfulActivity</string>
