@@ -11,7 +11,10 @@ import com.example.notfallapp.R
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
 
-class AlertingChainListAdapter(var alertingChain: AlertingChain) :
+/*
+ * RecyclerView Adapter for the Alerting Chain
+ */
+class AlertingChainListAdapter(private var alertingChain: AlertingChain) :
     RecyclerView.Adapter<AlertingChainListAdapter.AlertingChainMembersViewHolder>(){
 
     companion object {
@@ -28,7 +31,7 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
     }
 
     override fun getItemCount(): Int {
-        return if(alertingChain.helpers==null){
+        return if(alertingChain.helpers == null){
             0
         } else {
             alertingChain.helpers!!.size
@@ -46,12 +49,12 @@ class AlertingChainListAdapter(var alertingChain: AlertingChain) :
     }
 
     class AlertingChainMembersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private lateinit var imageContact: ImageView
+        //private lateinit var imageContact: ImageView
         private lateinit var contactName: TextView
         private lateinit var contactActive: ImageView
 
         fun bindAlertingChainMember(alertingChainMember: AlertingChainMember){
-            imageContact = itemView.findViewById(R.id.contact_item_icon)
+            //imageContact = itemView.findViewById(R.id.contact_item_icon)
             contactName = itemView.findViewById(R.id.contact_name)
             contactActive = itemView.findViewById(R.id.contact_active)
 

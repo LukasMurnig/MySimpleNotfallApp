@@ -24,6 +24,7 @@ class TimerHandler {
                     // Send position to the Server
                     ServerCallAlarm.sendPosition(context)
 
+                    // Create the notification "Alarm was successful"
                     createNotificationSuccessfulAlarm(context)
 
                     val intent = Intent(context, AlarmSuccesfulActivity::class.java)

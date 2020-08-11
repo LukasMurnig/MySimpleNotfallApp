@@ -53,14 +53,14 @@ class ServerApi : ICheckPermission {
         }
 
         fun controlToken(){
-            val pref = getSharedPreferences()
+            /*val pref = getSharedPreferences()
             val prefTimeTokenCome = pref.getLong("TimeTokenCome", 0L)
             val prefTokenExpiresInSeconds = pref.getInt("tokenExpiresInSeconds", 0)
             if(prefTimeTokenCome != 0L && prefTokenExpiresInSeconds != 0){
                 if((prefTimeTokenCome + prefTokenExpiresInSeconds - 60) < TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())){
                     refreshToken()
                 }
-            }
+            }*/
         }
 
         fun sendLogInDataToServer(username: String, password: String, context: Context){
@@ -174,7 +174,7 @@ class ServerApi : ICheckPermission {
                                 println(ex.toString())
                             }
                             timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
-                            Log.i(TAG, "Refresh Successfully")
+                            Log.i(TAG, "Refresh token Successfully")
                         }
                     } catch (e: Exception) { // caught while parsing the response
                         Log.e(TAG, "problem occurred")

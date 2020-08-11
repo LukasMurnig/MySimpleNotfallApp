@@ -35,7 +35,7 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
             ex.printStackTrace()
         }
 
-        return START_STICKY
-        // return START_REDELIVER_INTENT
+        //return START_STICKY
+        return START_REDELIVER_INTENT
     }
 }

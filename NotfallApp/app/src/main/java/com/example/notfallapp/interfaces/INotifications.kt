@@ -76,7 +76,9 @@ interface INotifications {
             .setCustomContentView(notificationLayout)
             .setCustomBigContentView(notificationLayout)
 
-        return notification.build()
+        val not = notification.build()
+        not.flags = Notification.FLAG_ONGOING_EVENT ; Notification.FLAG_NO_CLEAR
+        return not
     }
 
     fun createNotificationSuccessfulAlarm(context: Context){

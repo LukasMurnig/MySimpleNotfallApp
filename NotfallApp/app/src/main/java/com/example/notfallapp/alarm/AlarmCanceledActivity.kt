@@ -19,7 +19,9 @@ import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceCallAlarm
-
+/*
+ * Activity shows that the alarm was canceled
+ */
 class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INotifications,
     ICheckPermission {
 
@@ -67,7 +69,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 
-    // override function, because when user clicked on the menubar the notification with the button sos must be shown
+    // override function, because when user clicked on the menubar the notification with the button sos must be shown again
     override fun createOnClickListener(
         context: Context,
         btnSos: Button,

@@ -76,8 +76,6 @@
         <activity
             android:name=".alarm.AlarmSuccesfulActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".menubar.settings.ChangeProfilActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".connectBracelet.AddBraceletActivityI"
             android:screenOrientation="portrait" />

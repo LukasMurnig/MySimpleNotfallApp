@@ -38,7 +38,6 @@ interface ICreatingOnClickListener {
 
         btnSettings.setOnClickListener {
             val intent = Intent(context, SettingsActivity::class.java)
-            //val intent = Intent(context, LoginActivity::class.java)
             startActivity(context, intent, null)
         }
     }

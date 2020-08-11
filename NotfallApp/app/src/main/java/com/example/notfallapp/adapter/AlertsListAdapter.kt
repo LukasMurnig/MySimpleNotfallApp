@@ -11,7 +11,7 @@ import com.example.notfallapp.bll.Alert
 import com.example.notfallapp.menubar.alert.DetailAlertActivity
 
 /*
- * Adapter for Alert History Recycler View
+ * Recycler View Adapter for Alert History
  */
 class AlertsListAdapter(private var alerts: List<Alert>) : RecyclerView.Adapter<AlertsListAdapter.AlertsViewHolder>(){
 
