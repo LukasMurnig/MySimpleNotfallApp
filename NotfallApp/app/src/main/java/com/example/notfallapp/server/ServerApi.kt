@@ -86,22 +86,8 @@ class ServerApi : ICheckPermission {
                             LoginActivity.errorLogin.text = context.getString(R.string.unexpectedErrorLogin)
                         }
 
-                        val editor = sharedPreferences.edit()
-                        editor.putString("clientID", clientID)
-                        editor.putString("AccessToken", accessToken)
-                        editor.putString("RefreshToken", refreshToken)
-                        editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
-                        editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
-                        editor.putString("UserId", userId)
-                        editor.commit()
+                        saveDataToSharedPreferences()
 
-                        try {
-                            val expires: Int = tokenExpiresInSeconds!! - 60
-                            val expiresTime = expires.toString().toLong()
-                            ICheckPermission.getNewTokenBeforeExpires(expiresTime*1000)
-                        }catch(ex : java.lang.Exception){
-                            Log.e(TAG, ex.toString())
-                        }
                         val intent = Intent(context, MainActivity::class.java)
                         context.startActivity(intent)
                     }
@@ -151,19 +137,9 @@ class ServerApi : ICheckPermission {
                             }catch (ex: Exception){
                                 println("Error :$ex")
                             }
-                            val editor = sharedPreferences.edit()
-                            editor.putString("AccessToken", accessToken)
-                            editor.putString("RefreshToken", refreshToken)
-                            editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
-                            editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
-                            editor.commit()
-                            try {
-                                val expires: Int = tokenExpiresInSeconds!! - 60
-                                val expiresTime = expires.toString().toLong()
-                                ICheckPermission.getNewTokenBeforeExpires(expiresTime*1000)
-                            }catch(ex : java.lang.Exception){
-                                println(ex.toString())
-                            }
+
+                            saveDataToSharedPreferences()
+
                             timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
                             Log.i(TAG, "Refresh token Successfully")
                         }
@@ -178,6 +154,26 @@ class ServerApi : ICheckPermission {
                 }
             )
             volleyRequestQueue?.add(jsonObjectRequest)
+        }
+
+        private fun saveDataToSharedPreferences(){
+            val editor = sharedPreferences.edit()
+            editor.putString("AccessToken", accessToken)
+            editor.putString("RefreshToken", refreshToken)
+            editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
+            editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
+            if(userId != null){
+                editor.putString("UserId", userId)
+            }
+            editor.commit()
+
+            try {
+                val expires: Int = tokenExpiresInSeconds!! - 60
+                val expiresTime = expires.toString().toLong()
+                ICheckPermission.getNewTokenBeforeExpires(expiresTime * 1000)
+            }catch(ex: java.lang.Exception){
+                println(ex.toString())
+            }
         }
 
         fun createJsonObjectRequest(method: Int, extraUrl: String, reqBody: JSONObject?, toDo: (response: JSONObject) -> Unit ) {

@@ -3,8 +3,8 @@ package com.example.notfallapp.service
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.os.Binder
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
 import androidx.annotation.Nullable
 import com.example.notfallapp.interfaces.INotifications
@@ -41,30 +41,27 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
     }
 
     override fun onStart(intent: Intent?, startId: Int) {
-        try {
+        /*try {
             startForeground(435624234, createNotificationCreateAlarm(applicationContext))
         } catch (ex: Exception){
             ex.printStackTrace()
-        }
+        }*/
+        val handler = Handler()
+        handler.postDelayed({
+            startForegroundService(applicationContext)
+        }, 1800000)
         super.onStart(intent, startId)
     }
 
     override fun onLowMemory() {
-        super.onLowMemory()
-        try {
-            startForeground(435624234, createNotificationCreateAlarm(applicationContext))
-        } catch (ex: Exception){
-            ex.printStackTrace()
-        }
-    }
-
-    override fun onDestroy() {
-        val intent = Intent("com.android.techtrainner")
-        intent.putExtra("yourvalue", "torestore")
+        val intent = Intent()
+        intent.action = "com.notfallapp.SOSReceiver"
         sendBroadcast(intent)
     }
 
-    /*class SOSButtonBinder : Binder() {
-        Foreground
-    }*/
+    override fun onDestroy() {
+        val intent = Intent()
+        intent.action = "com.notfallapp.SOSReceiver"
+        sendBroadcast(intent)
+    }
 }
