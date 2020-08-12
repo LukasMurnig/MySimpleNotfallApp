@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity(),
                 ServerApi.getSharedPreferences()
             }catch (ex: UninitializedPropertyAccessException){
                 ServerApi.setSharedPreferences(getSharedPreferences("Response", Context.MODE_PRIVATE))
+                ServerApi.refreshToken()
             }
             if(ServerApi.volleyRequestQueue == null){
                 ServerApi.volleyRequestQueue = Volley.newRequestQueue(applicationContext)

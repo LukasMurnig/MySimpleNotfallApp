@@ -23,16 +23,16 @@ import com.example.notfallapp.service.ServiceCancelAlarm
 interface INotifications {
 
     private val channelIdLowPriority: String
-        get() = "aefewfw32rfsdaf"
+        get() = "dafew32rfda"
 
     private val channelIdHighPriority: String
-        get() = "dafewf23r2"
+        get() = "htw5343wgd"
 
     private val notificationId: Int
-        get() = 444444123
+        get() = 435624234
 
     private val notificationIdPermission: Int
-        get() = 444440123
+        get() = 435624234
 
     fun createNotificationNoInternet(context: Context){
         val builder = createBasicNotification(context, channelIdLowPriority, true)
@@ -162,7 +162,7 @@ interface INotifications {
         }else{
             builder
                 .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setVibrate(longArrayOf(500, 0))
+                .setVibrate(longArrayOf(0, 0))
                 .setOngoing(true)
         }
 

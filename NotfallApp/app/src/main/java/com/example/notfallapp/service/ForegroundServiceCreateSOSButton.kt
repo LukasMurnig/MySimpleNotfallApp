@@ -31,7 +31,7 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         try {
-            startForeground(444444123, createNotificationCreateAlarm(applicationContext))
+            startForeground(435624234, createNotificationCreateAlarm(applicationContext))
         } catch (ex: Exception){
             ex.printStackTrace()
         }
@@ -42,7 +42,7 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
 
     override fun onStart(intent: Intent?, startId: Int) {
         try {
-            startForeground(345262562, createNotificationCreateAlarm(applicationContext))
+            startForeground(435624234, createNotificationCreateAlarm(applicationContext))
         } catch (ex: Exception){
             ex.printStackTrace()
         }
@@ -52,7 +52,7 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
     override fun onLowMemory() {
         super.onLowMemory()
         try {
-            startForeground(345262562, createNotificationCreateAlarm(applicationContext))
+            startForeground(435624234, createNotificationCreateAlarm(applicationContext))
         } catch (ex: Exception){
             ex.printStackTrace()
         }
