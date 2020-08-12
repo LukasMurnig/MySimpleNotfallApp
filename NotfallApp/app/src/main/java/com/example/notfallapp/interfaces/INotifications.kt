@@ -162,6 +162,7 @@ interface INotifications {
         }else{
             builder
                 .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setVibrate(longArrayOf(500, 0))
                 .setOngoing(true)
         }
 

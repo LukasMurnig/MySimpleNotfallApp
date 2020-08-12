@@ -3,6 +3,7 @@ package com.example.notfallapp.service
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import androidx.annotation.Nullable
@@ -35,13 +36,13 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
             ex.printStackTrace()
         }
 
-        //return START_STICKY
-        return START_REDELIVER_INTENT
+        return START_STICKY
+        //return START_REDELIVER_INTENT
     }
 
     override fun onStart(intent: Intent?, startId: Int) {
         try {
-            startForeground(444444123, createNotificationCreateAlarm(applicationContext))
+            startForeground(345262562, createNotificationCreateAlarm(applicationContext))
         } catch (ex: Exception){
             ex.printStackTrace()
         }
@@ -49,11 +50,21 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
     }
 
     override fun onLowMemory() {
-        //super.onLowMemory()
+        super.onLowMemory()
         try {
-            startForeground(444444123, createNotificationCreateAlarm(applicationContext))
+            startForeground(345262562, createNotificationCreateAlarm(applicationContext))
         } catch (ex: Exception){
             ex.printStackTrace()
         }
     }
+
+    override fun onDestroy() {
+        val intent = Intent("com.android.techtrainner")
+        intent.putExtra("yourvalue", "torestore")
+        sendBroadcast(intent)
+    }
+
+    /*class SOSButtonBinder : Binder() {
+        Foreground
+    }*/
 }

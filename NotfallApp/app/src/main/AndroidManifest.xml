@@ -85,6 +85,12 @@
         <service android:name=".service.ServiceCancelAlarm" />
         <service android:name=".service.ServiceStartChecking" />
         <service android:name=".service.ForegroundServiceCreateSOSButton"/>
+        <receiver android:name=".service.ReceiverNotificationClose">
+            <intent-filter>
+                <action android:name="com.android.techtrainner"/>
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
