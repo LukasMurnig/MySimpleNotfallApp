@@ -39,7 +39,9 @@ interface IConnectBracelet {
         if (!process.isAlive) {
             process.start()
         }
+
         IConnectBracelet.context = context
+
         mGattCallbacks = object : BluetoothGattCallback() {
             override fun onConnectionStateChange(
                 gatt: BluetoothGatt,
@@ -78,6 +80,7 @@ interface IConnectBracelet {
             override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
                 val device = gatt.device
                 val deviceAddress = device.address
+
                 if (status == BluetoothGatt.GATT_SUCCESS) {
                     // Do APP verification as soon as service discovered.
                     try {
@@ -95,10 +98,12 @@ interface IConnectBracelet {
                               String.format(context.getString(R.string.ErrorVerification),
                                             context.getString(R.string.ConnectBracelet), e.message))
                     }
+
                     for (service in gatt.services) {
                         if (service == null || service.uuid == null) {
                             continue
                         }
+
                         if (Constants.SERVICE_VSN_SIMPLE_SERVICE == service.uuid) {
                             mCharVerification =
                                 service.getCharacteristic(Constants.CHAR_APP_VERIFICATION)
@@ -116,6 +121,7 @@ interface IConnectBracelet {
                                 true
                             )
                         }
+
                         if (Constants.SERVICE_BATTERY_LEVEL.equals(service.uuid)) {
                             //Read the device battery percentage
                             readCharacteristic(
@@ -195,6 +201,7 @@ interface IConnectBracelet {
                     String.format(context.getString(R.string.DescriptorReadMessage), descriptor.uuid.toString()))
             }
         }
+
         gattBluetooth = device.connectGatt(context, false, mGattCallbacks)
         IConnectBracelet.device = Device(device.address)
         sendDevice()

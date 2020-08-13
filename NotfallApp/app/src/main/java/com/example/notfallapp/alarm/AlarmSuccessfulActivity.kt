@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
-
-class AlarmSuccesfulActivity : AppCompatActivity(), ICheckPermission {
+/*
+ * Activity shows that the alarm was successful
+ */
+class AlarmSuccessfulActivity : AppCompatActivity(), ICheckPermission {
 
     private lateinit var tvAlarm: TextView
     private lateinit var buttonSuccessfulOk: Button

@@ -16,7 +16,10 @@ import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.service.ServiceCancelAlarm
 import kotlin.math.roundToInt
 
-
+/*
+ * Activity which opens when the user send SOS.
+ * It is possible to stop the alarm before it will send to the server
+ */
 class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
     private lateinit var btnCancelAlarm: Button
     private lateinit var tvAlarm: TextView
@@ -33,6 +36,8 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
         initComponents()
 
         btnCancelAlarm.setOnClickListener {
+            TimerHandler.deleteTimer()
+
             Log.d(resources.getString(R.string.CancelButton),
                   String.format(resources.getString(R.string.CancelButtonClicked),
                                 resources.getString(R.string.CallAlarm)))

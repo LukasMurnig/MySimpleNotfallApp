@@ -23,6 +23,7 @@ import java.util.*
 
 
 interface ICheckPermission : INotifications {
+
     companion object{
         fun getNewTokenBeforeExpires(expires: Long){
             val timer = Timer()
@@ -33,9 +34,11 @@ interface ICheckPermission : INotifications {
                 }
             },expires)
         }
+
         lateinit var wifiInfo: WifiInfo
         var level: Int? = null
     }
+
     fun checkPermissions(context: Context){
         checkInternetAccess(context)
         checkBluetoothEnabled(context)
@@ -56,8 +59,10 @@ interface ICheckPermission : INotifications {
         val numberOfLevels = 5
         val wifiInfo = wifi.connectionInfo
         level = WifiManager.calculateSignalLevel(wifiInfo.rssi, numberOfLevels)
+
         var builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val handler = Handler(context.mainLooper)
+
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
@@ -72,7 +77,6 @@ interface ICheckPermission : INotifications {
             }
         }, 0, 3000)
     }
-
 
     fun checkBluetoothEnabled(context: Context){
         val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -105,7 +109,6 @@ interface ICheckPermission : INotifications {
                     handler.post{
                         enableGPS(context)
                     }
-
                 }
             }
         }, 0, 3000)
@@ -180,6 +183,7 @@ interface ICheckPermission : INotifications {
         googleApiClient.connect()
         val mLocationRequest: LocationRequest = LocationRequest.create()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+
         val builder =
             LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest)
         builder.setAlwaysShow(true)
@@ -188,7 +192,7 @@ interface ICheckPermission : INotifications {
         result.setResultCallback(object : ResultCallback<LocationSettingsResult?> {
             override fun onResult(result: LocationSettingsResult) {
                 val status: Status = result.status
-                when (status.getStatusCode()) {
+                when (status.statusCode) {
                     LocationSettingsStatusCodes.SUCCESS -> Log.i(
                         TAG,
                         "All location settings are satisfied."

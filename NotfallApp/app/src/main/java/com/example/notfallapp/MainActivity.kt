@@ -62,27 +62,17 @@ class MainActivity : AppCompatActivity(),
         initComponents()
         checkConnected()
 
-        // fill companion objects in background
+        // make server ready
         GlobalScope.launch {
             try{
                 ServerApi.getSharedPreferences()
             }catch (ex: UninitializedPropertyAccessException){
                 ServerApi.setSharedPreferences(getSharedPreferences("Response", Context.MODE_PRIVATE))
+                ServerApi.refreshToken()
             }
             if(ServerApi.volleyRequestQueue == null){
                 ServerApi.volleyRequestQueue = Volley.newRequestQueue(applicationContext)
             }
-            ServerApi.controlToken()
-
-            /*if(ContactActivity.alertingChain == null){
-                ServerAlertingChain().getAlertingChain(applicationContext)
-            }
-            if(AddContactActivity.phoneAreaCodes == null){
-                ServerOrgUnitsItems().getOrgUnitItems()
-            }
-            if(SettingsActivity.logInUser == null){
-                ServerUser().getUserInfo(applicationContext)
-            }*/
         }
 
         ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)

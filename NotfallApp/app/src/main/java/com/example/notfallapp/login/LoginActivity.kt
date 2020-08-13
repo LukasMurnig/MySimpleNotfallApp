@@ -14,29 +14,39 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.server.ServerApi
-
+/*
+ * The activity that shows the login screen
+ */
 class LoginActivity : AppCompatActivity(), ICheckPermission {
+
     companion object{
         private const val TAG :String = "LoginActivity"
         lateinit var errorLogin: TextView
         var sharedPreferences: SharedPreferences? = null
     }
+
     private lateinit var usernameText: EditText
     private lateinit var passwordText: EditText
     private lateinit var loginButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
         ServerApi.setSharedPreferences(getSharedPreferences("Response", Context.MODE_PRIVATE))
+
         val token = sharedPreferences?.getString("AccessToken", "null")
+
         if(!token.equals("null")){
             val valid = sharedPreferences?.getLong("TokenValid", 0)
             val unixTime = System.currentTimeMillis() / 1000L
+
             if(unixTime > valid!!){
-                ServerApi.setSharedPreferences(sharedPreferences!!)
+                //ServerApi.setSharedPreferences(sharedPreferences!!)
                 ServerApi.refreshToken()
             }
+
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -61,21 +71,17 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         val username: String? = usernameText.text.toString()
         val password: String? = passwordText.text.toString()
 
-        //Todo: Implementation of the authentication methode.
         var code = 0
-        val sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
+        // was set before: val sharedPreferences = getSharedPreferences("Response", Context.MODE_PRIVATE)
         ServerApi.setContext(applicationContext)
-        ServerApi.setSharedPreferences(sharedPreferences)
+        // was set before: ServerApi.setSharedPreferences(sharedPreferences)
         if (username != null && password != null) {
             val handler = Handler()
             handler.post {
                 ServerApi.sendLogInDataToServer(username, password, this)
             }
         }
-
     }
-
-
 
     private fun onLoginFailed() {
         Toast.makeText(baseContext, resources.getString(R.string.LoginFailed), Toast.LENGTH_LONG).show()

@@ -1,19 +1,13 @@
 package com.example.notfallapp.server
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
-import com.android.volley.AuthFailureError
-import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.notfallapp.alarm.AlarmFailedActivity
-import com.example.notfallapp.alarm.AlarmSuccesfulActivity
 import com.example.notfallapp.interfaces.CurrentLocation
-import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.login.LoginActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -32,7 +26,7 @@ class ServerCallAlarm {
         var userId: String? = null
 
         fun sendAlarm(context: Context) {
-           /* volleyRequestQueue = Volley.newRequestQueue(context)
+            /*volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
             if (IConnectBracelet.batteryState == " ") {
@@ -46,7 +40,7 @@ class ServerCallAlarm {
                 Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/alert", reqBody,
                 Response.Listener { response ->
                     Log.e(ServerApi.TAG, "response: $response")
-                    val intent = Intent(context, AlarmSuccesfulActivity::class.java)
+                    val intent = Intent(context, AlarmSuccessfulActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 },
@@ -91,6 +85,7 @@ class ServerCallAlarm {
             val times = time.split(" ")
             val currentTime = times[0]+"T"+times[1]+"+00:00"
             val location = CurrentLocation.currentLocation
+
             body.put("Timestamp", currentTime)
             if(location?.longitude != null){
                 body.put("Longitude", location.longitude)

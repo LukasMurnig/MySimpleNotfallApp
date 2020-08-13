@@ -13,7 +13,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.alarm.AlarmCanceledActivity
-import com.example.notfallapp.alarm.AlarmSuccesfulActivity
+import com.example.notfallapp.alarm.AlarmSuccessfulActivity
 import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 import com.example.notfallapp.service.ServiceCancelAlarm
@@ -23,16 +23,16 @@ import com.example.notfallapp.service.ServiceCancelAlarm
 interface INotifications {
 
     private val channelIdLowPriority: String
-        get() = "aefewfw32rfsdaf"
+        get() = "dafew32rfda"
 
     private val channelIdHighPriority: String
-        get() = "dafewf23r2"
+        get() = "htw5343wgd"
 
     private val notificationId: Int
-        get() = 444444123
+        get() = 435624234
 
     private val notificationIdPermission: Int
-        get() = 444440123
+        get() = 435624234
 
     fun createNotificationNoInternet(context: Context){
         val builder = createBasicNotification(context, channelIdLowPriority, true)
@@ -76,7 +76,9 @@ interface INotifications {
             .setCustomContentView(notificationLayout)
             .setCustomBigContentView(notificationLayout)
 
-        return notification.build()
+        val not = notification.build()
+        not.flags = Notification.FLAG_ONGOING_EVENT and Notification.FLAG_NO_CLEAR
+        return not
     }
 
     fun createNotificationSuccessfulAlarm(context: Context){
@@ -88,7 +90,7 @@ interface INotifications {
             .setCustomBigContentView(notificationLayout)
 
         // Set the intent that will fire when the user taps the notification
-        val intentSuccessful = Intent(context, AlarmSuccesfulActivity::class.java).apply {
+        val intentSuccessful = Intent(context, AlarmSuccessfulActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntentSuccessful: PendingIntent = PendingIntent.getActivity(context, 0, intentSuccessful, 0)
@@ -152,13 +154,15 @@ interface INotifications {
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
         if(highPriority){
+            val v = longArrayOf(500, 5000)
             builder
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
+                .setVibrate(v)
                 .setAutoCancel(true)
         }else{
             builder
                 .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setVibrate(longArrayOf(0, 0))
                 .setOngoing(true)
         }
 

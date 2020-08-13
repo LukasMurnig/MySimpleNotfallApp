@@ -20,6 +20,9 @@ import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceCallAlarm
 
+/*
+ * Activity shows that the alarm was canceled
+ */
 class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INotifications,
     ICheckPermission {
 
@@ -33,6 +36,8 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
     private lateinit var tvCanceledAlarm: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        TimerHandler.deleteTimer()
+        
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_call_alarm_canceled)
@@ -67,7 +72,7 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 
-    // override function, because when user clicked on the menubar the notification with the button sos must be shown
+    // override function, because when user clicked on the menubar the notification with the button sos must be shown again
     override fun createOnClickListener(
         context: Context,
         btnSos: Button,
@@ -89,36 +94,34 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.HomeRegister),
                                 resources.getString(R.string.AlarmCanceled)))
-            ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
-            val intent = Intent(context, MainActivity::class.java)
-            ContextCompat.startActivity(context, intent, null)
+            startForegroundService(context, MainActivity::class.java)
         }
 
         btnAlarms.setOnClickListener{
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.AlarmRegister),
                                 resources.getString(R.string.AlarmCanceled)))
-            ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
-            val intent = Intent(context, AlarmsActivity::class.java)
-            ContextCompat.startActivity(context, intent, null)
+            startForegroundService(context, AlarmsActivity::class.java)
         }
 
         btnContact.setOnClickListener {
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.ContactRegister),
                                 resources.getString(R.string.AlarmCanceled)))
-            ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
-            val intent = Intent(context, ContactActivity::class.java)
-            ContextCompat.startActivity(context, intent, null)
+            startForegroundService(context, ContactActivity::class.java)
         }
 
         btnSettings.setOnClickListener {
             Log.d(resources.getString(R.string.MenuItem),
                   String.format(resources.getString(R.string.SettingsRegister),
                                 resources.getString(R.string.AlarmCanceled)))
-            ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
-            val intent = Intent(context, SettingsActivity::class.java)
-            ContextCompat.startActivity(context, intent, null)
+            startForegroundService(context, SettingsActivity::class.java)
         }
+    }
+
+    private fun startForegroundService(context: Context, activity: Class<*>){
+        ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
+        val intent = Intent(context, activity)
+        ContextCompat.startActivity(context, intent, null)
     }
 }

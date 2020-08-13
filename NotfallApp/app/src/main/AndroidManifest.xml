@@ -48,9 +48,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login.SignUpActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
         </activity>
@@ -74,10 +71,8 @@
             android:name=".alarm.AlarmCanceledActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".alarm.AlarmSuccesfulActivity"
+            android:name=".alarm.AlarmSuccessfulActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".menubar.settings.ChangeProfilActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".connectBracelet.AddBraceletActivityI"
             android:screenOrientation="portrait" />
@@ -90,6 +85,12 @@
         <service android:name=".service.ServiceCancelAlarm" />
         <service android:name=".service.ServiceStartChecking" />
         <service android:name=".service.ForegroundServiceCreateSOSButton"/>
+        <receiver android:name=".service.ReceiverNotificationClose">
+            <intent-filter>
+                <action android:name="com.notfallapp.SOSReceiver"/>
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -18,10 +18,12 @@ class CurrentLocation {
         var currentLocation: Location? = null
         var context: Context? = null
         var locationManager: LocationManager? = null
+
         fun getCurrentLocation(context: Context): Location?{
             CurrentLocation.context = context
             val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             locationManager = lm
+
                 if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     gps = true
                     getLastKnownLocation()
@@ -29,7 +31,6 @@ class CurrentLocation {
                     gps = false
                     getLastKnownLocation()
                 }
-
 
             return currentLocation
         }
@@ -73,13 +74,14 @@ class CurrentLocation {
                         ActivityCompat.checkSelfPermission(
                             it, Manifest.permission.ACCESS_FINE_LOCATION)
                     } == PackageManager.PERMISSION_GRANTED
+
                     if (!permissionGranted){
-                        try{
-                        ActivityCompat.requestPermissions(context as Activity, Array(3) {Manifest.permission.ACCESS_FINE_LOCATION}, 200)
+                        try {
+                        ActivityCompat.requestPermissions(context as Activity, Array(3) { Manifest.permission.ACCESS_FINE_LOCATION }, 200)
                         } catch (ex: RuntimeException) {
                             println("Error")
                         }
-                    }else {
+                    } else {
                         if (gps) {
                             locationManager?.removeUpdates(this@Companion)
                             locationManager?.requestLocationUpdates(

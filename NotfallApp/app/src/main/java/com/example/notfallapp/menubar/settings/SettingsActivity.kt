@@ -11,7 +11,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceFragmentCompat
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.User
 import com.example.notfallapp.interfaces.ICheckPermission
@@ -51,12 +50,6 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
 
         initComponents()
 
-        /*btnLogout.setOnClickListener{
-            ServerApi.getSharedPreferences().edit().clear().commit()
-            val intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
-        }*/
-
         btnLogout.setOnClickListener{
             ServerApi.getSharedPreferences().edit().clear().commit()
             val intent = Intent(applicationContext, LoginActivity::class.java)
@@ -70,15 +63,10 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         MainScope().launch {
             ServerUser().getUserInfo(applicationContext, tvName, tvTelNr, tvEmail)
         }
+
         btnProfilePicture.setOnClickListener{
             val intent = Intent(this, SelectProfilPictureActivity::class.java)
             startActivityForResult(intent, 2)
-        }
-    }
-
-    class SettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
     }
 
@@ -114,9 +102,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         tvName = findViewById(R.id.tvName)
         tvTelNr = findViewById(R.id.tvTelNr)
         tvEmail = findViewById(R.id.tvEmail)
-        //btnChangeDate = findViewById(R.id.btnChangeData)
         btnProfilePicture = findViewById(R.id.iBtnProfilPicture)
-        //btnLogout = findViewById(R.id.btnLogOut)
         btnLogout = findViewById(R.id.btn_logout_fab)
         checkInternetGPSPermissions(this)
     }

@@ -3,13 +3,7 @@ package com.example.notfallapp
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.notfallapp.menubar.contact.AddContactActivity
-import com.example.notfallapp.menubar.contact.ContactActivity
-import com.example.notfallapp.menubar.settings.SettingsActivity
-import com.example.notfallapp.server.ServerAlertingChain
 import com.example.notfallapp.server.ServerApi
-import com.example.notfallapp.server.ServerOrgUnitsItems
-import com.example.notfallapp.server.ServerUser
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before

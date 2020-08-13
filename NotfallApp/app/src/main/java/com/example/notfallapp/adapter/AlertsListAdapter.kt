@@ -11,7 +11,7 @@ import com.example.notfallapp.bll.Alert
 import com.example.notfallapp.menubar.alert.DetailAlertActivity
 
 /*
-* Wird später den Alarms List Adapter ersetzen, dann wenn man Daten vom Server bekommt
+ * Recycler View Adapter for Alert History
  */
 class AlertsListAdapter(private var alerts: List<Alert>) : RecyclerView.Adapter<AlertsListAdapter.AlertsViewHolder>(){
 

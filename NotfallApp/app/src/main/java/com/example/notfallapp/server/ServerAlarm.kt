@@ -20,8 +20,6 @@ import java.util.*
 class ServerAlarm {
     fun getAllAlerts(context: Context, rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
 
-
-
         createGetArrayCall(Request.Method.GET, "/alerts") { response ->
 
                 if(response.length() == 0){
@@ -37,12 +35,12 @@ class ServerAlarm {
                             js.get("Date") as String,
                             (js.get("Type") as Int).toByte(),
                             (js.get("State") as Int).toByte(),
-                            UUID.fromString(isStringOrNull("ClientId", js)),
-                            convertToUUID(isStringOrNull("HelperId", js)),
-                            convertToUUID(isStringOrNull("DeviceId", js)),
-                            isDoubleOrNull("TriggeringPositionLatitude", js),
-                            isDoubleOrNull("TriggeringPositionLongitude", js),
-                            isStringOrNull("TriggeringPositionTime", js),
+                            UUID.fromString(ResponseConverter().isStringOrNull("ClientId", js)),
+                            ResponseConverter().convertFromStringToUUID(ResponseConverter().isStringOrNull("HelperId", js)),
+                            ResponseConverter().convertFromStringToUUID(ResponseConverter().isStringOrNull("DeviceId", js)),
+                            ResponseConverter().isDoubleOrNull("TriggeringPositionLatitude", js),
+                            ResponseConverter().isDoubleOrNull("TriggeringPositionLongitude", js),
+                            ResponseConverter().isStringOrNull("TriggeringPositionTime", js),
                             js.get("CanBeForwarded") as Boolean
                         ))
                     }
@@ -53,37 +51,7 @@ class ServerAlarm {
         }
     }
 
-    private fun convertToUUID(string: String?): UUID? {
-        return if(string == null || string.isEmpty() || string == "null"){
-            null
-        } else {
-            UUID.fromString(string)
-        }
-    }
-
-    private fun isDoubleOrNull(key: String, response: JSONObject): Double? {
-        return try{
-            if(response.get(key) == null || response.get(key).equals("null")){
-                null
-            } else if(response.getDouble(key) == null){
-                null
-            } else {
-                response.getDouble(key)
-            }
-        }catch (ex: JSONException){
-            null
-        }
-    }
-
-    private fun isStringOrNull(key: String, response: JSONObject): String? {
-        return if(response.getString(key) == null){
-            null
-        } else {
-            response.getString(key)
-        }
-    }
-
-    fun createGetArrayCall(method: Int, extraUrl: String, toDo: (response: JSONArray) -> Unit ) {
+    private fun createGetArrayCall(method: Int, extraUrl: String, toDo: (response: JSONArray) -> Unit ) {
         val jsonObjectRequest: JsonArrayRequest = object : JsonArrayRequest(
             method, ServerApi.serverAPIURL + extraUrl, null,
             Response.Listener<JSONArray> { response ->

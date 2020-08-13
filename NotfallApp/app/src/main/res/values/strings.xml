@@ -32,42 +32,7 @@
     <string name="noContacts">Sie besitzen leider noch keine Kontakte!</string>
     <string name="contactName">Name</string>
     <string name="contactActive">Aktiv</string>
-    <string name="createContact">Glückwunsch! Sie haben erfolgreich einen neuen Kontakt hinzugefügt.</string>
-    <string name="updateContact">Ihr Kontakt wurde erfolgreich aktualisiert.</string>
-    <string name="deleteContact">Ihr Kontakt wurde erfolgreich gelöscht.</string>
-    <string name="createContactFailed">Leider konnte ihr Kontakt nicht erstellt werden.
-                                      Grund dafür ist: %1$s</string>
-    <string name="updateContactFailed">Ihr Kontakt konnte nicht aktualisiert werden.
-                                      Grund dafür ist: %1$s</string>
-    <string name="deleteContactFailed">Ihr Kontakt konnte nicht gelöscht werden.
-                                      Grund dafür ist: %1$s</string>
     <string name="add">Hinzufügen</string>
-    <string name="allowedContacts">Es sind nur höchstens drei Notfallkontakte möglich</string>
-    <string name="changeValue">"Daten Ändern"</string>
-    <string name="delete">Entfernen</string>
-    <string name="activate_deaktivate">"Aktivieren/Deaktivieren"</string>
-    <string name="firstnameEmpty">Vorname darf nicht leer sein</string>
-    <string name="lastnameEmpty">Nachname darf nicht leer sein!</string>
-    <string name="emailEmpty">Email darf nicht leer sein bzw. Email stimmt nicht!</string>
-    <string name="numberWrongType">Telefonnummer darf nur Zahlen beinhalten!</string>
-    <string name="sureDeactivedContact">Sind Sie sicher, dass Sie den Kontakt deaktivieren möchten? Bei einem Notfall wird dann der Kontakt nicht benachrichtigt!</string>
-
-    <!-- Add contact -->
-    <string name="contact_gender">Anrede (*)</string>
-    <string name="contact_firstname">Vorname (*)</string>
-    <string name="contact_lastname">Nachname (*)</string>
-    <string name="contact_email">Email (*)</string>
-    <string name="TelNr">Vorwahl (*)</string>
-    <string name="contact_telNr">Telefonnummer (*)</string>
-    <string name="language">Sprache (*):</string>
-    <string name="timezone">Zeitzone (*):</string>
-    <string name="message">Wie benachrichtigen? (*):</string>
-    <string name="street">Straße</string>
-    <string name="housenumber">Hausnummer</string>
-    <string name="postcode">Postleitzahl</string>
-    <string name="place">Stadt</string>
-    <string name="country">Land:</string>
-    <string name="phoneAreaCode">Vorwahl (*):</string>
 
     <!-- Alarms -->
     <string name="noAlarms">Gottseidank besitzen Sie noch keine Alarme!</string>
@@ -91,21 +56,10 @@
     <string name="lastname">Nachname</string>
     <string name="firstname">Vorname</string>
     <string name="number">Telefonnummer</string>
-    <string name="sureStopCreatingContact">Sind Sie sich sicher, dass Sie, dass bearbeiten von Ihrem
-                                            Kontakt beenden wollen?</string>
     <string name="updateProfil">Aktualisieren</string>
     <string name="cancelProfil">Abbrechen</string>
-    <string name="BackgroundStartTitle">Hintergrund Start</string>
-    <string name="backgroundStart">App im Hintergrund starten?</string>
-    <string name="backgroundStartActive">App startet automatisch im Hintergrund</string>
     <string name="nameSettings">name</string>
     <string name="numberSettings">telNr</string>
-    <string name="nameNotFilled">Name ist nicht ausgefüllt!</string>
-    <string name="noValidnumber">Keine gültige Telefon Nummer eingegeben!</string>
-    <string name="noValidemail">Keine gültige E-mail eingegeben!</string>
-    <string name="sampleName">Maria Musterfrau</string>
-    <string name="sampleNumber">0123456789</string>
-    <string name="sampleEmail">maria.musterfrau@mail.com</string>
     <string name="ReadFile">ReadFile</string>
     <string name="ReadFilePath">File Read::---> $1§s</string>
     <string name="logout">Abmelden</string>
@@ -216,7 +170,7 @@
     <string name="logo">Logo</string>
     <string name="title_activity_settings_test">SettingsTestActivity</string>
     <string name="buttonOk">ButtonOk</string>
-    <string name="buttonOkClicked">Button ok was clicked in %1$s!</string>
+    <string name="buttonOkClicked">Button OK was clicked in %1$s!</string>
     <string name="SOSButton">SOSButton</string>
     <string name="SOSButtonClicked">SOS Button was clicked in %1$s!</string>
     <string name="MenuItem">MenuItem</string>
@@ -256,7 +210,7 @@
     <string name="ErrorServerUserResponseMessage">problem occurred, volley error: %1$s %2$s</string>
     <string name="ErrorVerification">There was an Error in App Verification in %1$s with the message: %2$s</string>
     <string name="CharacteristicReadMessage">Achieved Characteristic Read: %1$s</string>
-    <string name="DescriptorReadMessage">Recieved descriptor Read: %1$s</string>
+    <string name="DescriptorReadMessage">Received descriptor Read: %1$s</string>
     <!-- Classes -->
     <string name="AlarmCanceled">AlarmCanceledActivity</string>
     <string name="AlarmSuccessful">AlarmSuccessfulActivity</string>

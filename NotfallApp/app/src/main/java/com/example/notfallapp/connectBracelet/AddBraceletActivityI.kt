@@ -29,11 +29,13 @@ import com.example.notfallapp.interfaces.ICreatingOnClickListener
 
 
 class AddBraceletActivityI : Activity(), ICreatingOnClickListener, ICheckPermission, IConnectBracelet {
+
     companion object{
         var connected: Boolean = false
         var batteryState: String = " "
         var device: BluetoothDevice? = null
     }
+
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
     private lateinit var btnContact: ImageButton
@@ -71,7 +73,7 @@ class AddBraceletActivityI : Activity(), ICreatingOnClickListener, ICheckPermiss
             searchDevices()
         }
 
-        lvDevices.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+        lvDevices.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             Log.d("ListViewClicked", "List View in Add BraceletActivity was clicked")
             if(devices.size != 0) {
                 var device = devices[position]
@@ -82,10 +84,10 @@ class AddBraceletActivityI : Activity(), ICreatingOnClickListener, ICheckPermiss
                 lvDevices.adapter = adapter
                 adapter.notifyDataSetChanged()
             }
-        })
+        }
 
         searchDevices()
-        var intent = Intent(this,IConnectBracelet::class.java)
+        val intent = Intent(this,IConnectBracelet::class.java)
         bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
     }
     private fun configureButtons() {
@@ -109,6 +111,7 @@ class AddBraceletActivityI : Activity(), ICreatingOnClickListener, ICheckPermiss
         builder = AlertDialog.Builder(this)
         context = this
         checkPermissions(this)
+
         mReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 val action = intent.action
@@ -130,19 +133,19 @@ class AddBraceletActivityI : Activity(), ICreatingOnClickListener, ICheckPermiss
                 } else if (BluetoothDevice.ACTION_FOUND == action) {
                     //bluetooth device found
                     try {
-                        var device =
-                            intent.getParcelableExtra<Parcelable>(BluetoothDevice.EXTRA_DEVICE) as BluetoothDevice
+                        val device =
+                            intent.getParcelableExtra<Parcelable>(BluetoothDevice.EXTRA_DEVICE) as BluetoothDevice?
                         if (device != null) {
                             if (device.name != null) {
                                 if (device.name.contains("V")) {
                                     var exist: Boolean = false
                                     for (indx in devices.indices) {
-                                        var arraydevice: BluetoothDevice = devices[indx]
-                                        if (arraydevice.address.equals(device.address)) {
+                                        val arraydevice: BluetoothDevice = devices[indx]
+                                        if (arraydevice.address == device.address) {
                                             exist = true;
                                         }
                                     }
-                                    if (exist != true) {
+                                    if (!exist) {
                                         devices.add(device)
                                     }
                                 }
@@ -156,10 +159,9 @@ class AddBraceletActivityI : Activity(), ICreatingOnClickListener, ICheckPermiss
         }
     }
     private fun searchDevices() {
-        //TODO search for Bluetooth devices.
         Log.d("SearchDevices", "SearchDevices was called in AddBraceletActivity")
-        var success = checkPermissions()
-        if (success == false){
+        val success = checkPermissions()
+        if (!success){
             return
         }
         this.devices = ArrayList<BluetoothDevice>()
@@ -195,7 +197,6 @@ class AddBraceletActivityI : Activity(), ICreatingOnClickListener, ICheckPermiss
         unbindService(mServiceConnection)
         super.onDestroy()
     }
-
 
         private fun checkPermissions(): Boolean{
         var success = false
