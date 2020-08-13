@@ -81,7 +81,7 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
                 }
             }
         } else if (requestCode == CAMERA && data != null) {
-            val thumbnail: Bitmap = data.extras.get(resources.getString(R.string.data)) as Bitmap
+            val thumbnail: Bitmap = data.extras?.get(resources.getString(R.string.data)) as Bitmap
             imageUpload.setImageBitmap(thumbnail)
             saveImage(thumbnail)
         }

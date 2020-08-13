@@ -36,9 +36,9 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
         tvDetailLongitude.text = extras.getDouble("longitude").toString()
         tvDetailLatitude.text = extras.getDouble("latitude").toString()
 
-        val timestamp = extras.getString("timestamp").split('.')[0]
-        tvDetailDate.text = timestamp.split('T')[0]
-        tvDetailTime.text = timestamp.split('T')[1]
+        val timestamp = extras.getString("timestamp")?.split('.')?.get(0)
+        tvDetailDate.text = timestamp?.split('T')?.get(0)
+        tvDetailTime.text = timestamp?.split('T')?.get(1)
 
         if((extras.get("accepted")) != null){
             tvDetailAlarmAccepted.text = (extras.get("accepted") as UUID?).toString()
