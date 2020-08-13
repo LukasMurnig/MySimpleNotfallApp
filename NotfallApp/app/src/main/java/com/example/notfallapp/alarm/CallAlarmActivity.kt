@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
-import com.example.notfallapp.connectBracelet.AddBraceletActivityI
+import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.service.ServiceCancelAlarm
@@ -56,7 +56,7 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
             tvConnectionState.text = resources.getText(R.string.notConnected)
         }
 
-        val batteryState = AddBraceletActivityI.batteryState
+        val batteryState = AddBraceletActivity.batteryState
         if(batteryState == " "){
             tvBattery.text = resources.getText(R.string.notConnected)
         }else{

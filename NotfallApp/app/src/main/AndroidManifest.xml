@@ -73,7 +73,7 @@
             android:name=".alarm.AlarmSuccessfulActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".connectBracelet.AddBraceletActivityI"
+            android:name=".connectBracelet.AddBraceletActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".menubar.settings.SelectProfilPictureActivity"
             android:screenOrientation="portrait"/>

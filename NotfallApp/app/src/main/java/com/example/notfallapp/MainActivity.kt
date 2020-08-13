@@ -17,7 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.toolbox.Volley
 import com.example.notfallapp.bll.Device
-import com.example.notfallapp.connectBracelet.AddBraceletActivityI
+import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.database.EmergencyAppDatabase
 import com.example.notfallapp.interfaces.*
 import com.example.notfallapp.server.ServerApi
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(),
 
         btnaddBracelet.setOnClickListener {
             Log.d("ButtonAdd", "Button Add bracelet was clicked in MainActivity")
-            val intent = Intent(this, AddBraceletActivityI::class.java)
+            val intent = Intent(this, AddBraceletActivity::class.java)
             startActivity(intent)
         }
 

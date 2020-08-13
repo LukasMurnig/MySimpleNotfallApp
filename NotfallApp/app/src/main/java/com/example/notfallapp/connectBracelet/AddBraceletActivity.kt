@@ -28,7 +28,7 @@ import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 
 
-class AddBraceletActivityI : Activity(), ICreatingOnClickListener, ICheckPermission, IConnectBracelet {
+class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermission, IConnectBracelet {
 
     companion object{
         var connected: Boolean = false
