@@ -56,9 +56,7 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
             startActivity(intent)
         }
 
-        MainScope().launch {
-            updateProfilePicture()
-        }
+        updateProfilePicture()
 
         MainScope().launch {
             ServerUser().getUserInfo(applicationContext, tvName, tvTelNr, tvEmail)

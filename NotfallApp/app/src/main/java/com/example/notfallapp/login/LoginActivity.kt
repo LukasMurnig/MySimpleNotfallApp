@@ -10,10 +10,14 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.toolbox.Volley
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.server.ServerApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+
 /*
  * The activity that shows the login screen
  */
@@ -42,13 +46,19 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
             val valid = sharedPreferences?.getLong("TokenValid", 0)
             val unixTime = System.currentTimeMillis() / 1000L
 
+            if(ServerApi.volleyRequestQueue == null){
+                ServerApi.volleyRequestQueue = Volley.newRequestQueue(applicationContext)
+            }
+
             if(unixTime > valid!!){
-                //ServerApi.setSharedPreferences(sharedPreferences!!)
-                ServerApi.refreshToken()
+                GlobalScope.launch {
+                    ServerApi.refreshToken()
+                }
             }
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            return
         }
         //a function which findViewById for our Controls in the LoginActivity
         setLoginControls()

@@ -77,7 +77,8 @@ interface INotifications {
             .setCustomBigContentView(notificationLayout)
 
         val not = notification.build()
-        not.flags = Notification.FLAG_ONGOING_EVENT and Notification.FLAG_NO_CLEAR
+        not.flags = (Notification.FLAG_ONGOING_EVENT and Notification.FLAG_NO_CLEAR)
+        //notification.flags or (Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR)
         return not
     }
 

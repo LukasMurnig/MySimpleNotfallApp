@@ -1,5 +1,6 @@
 package com.example.notfallapp.service
 
+import android.app.Notification
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -60,6 +61,7 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
     }
 
     override fun onDestroy() {
+        stopForeground(true)
         val intent = Intent()
         intent.action = "com.notfallapp.SOSReceiver"
         sendBroadcast(intent)
