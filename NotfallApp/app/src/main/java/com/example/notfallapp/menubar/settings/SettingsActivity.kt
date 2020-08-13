@@ -35,9 +35,9 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
     private lateinit var tvName: TextView
     private lateinit var tvTelNr: TextView
     private lateinit var tvEmail: TextView
-    //private lateinit var btnChangeDate: Button
+    private lateinit var btnLogout : Button
     private lateinit var btnProfilePicture: ImageButton
-    private lateinit var btnLogout: Button
+    //private lateinit var btnLogout: Button
 
     private val IMAGE_DIRECTORY = "/profilPicture"
 
@@ -50,6 +50,12 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         setContentView(R.layout.activity_settings)
 
         initComponents()
+
+        /*btnLogout.setOnClickListener{
+            ServerApi.getSharedPreferences().edit().clear().commit()
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intent)
+        }*/
 
         btnLogout.setOnClickListener{
             ServerApi.getSharedPreferences().edit().clear().commit()
@@ -110,7 +116,8 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         tvEmail = findViewById(R.id.tvEmail)
         //btnChangeDate = findViewById(R.id.btnChangeData)
         btnProfilePicture = findViewById(R.id.iBtnProfilPicture)
-        btnLogout = findViewById(R.id.btnLogOut)
+        //btnLogout = findViewById(R.id.btnLogOut)
+        btnLogout = findViewById(R.id.btn_logout_fab)
         checkInternetGPSPermissions(this)
     }
 

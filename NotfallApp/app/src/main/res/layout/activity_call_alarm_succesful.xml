@@ -17,13 +17,16 @@
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/size30"/>
 
-    <Button
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_alarm_succesful_ok"
         android:layout_width="163dp"
         android:layout_height="81dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="304dp"
-        android:text="@string/alarmcanceledok" />
+        android:text="@string/alarmcanceledok"
+        android:textSize="@dimen/size30"
+        android:gravity="center"
+        android:backgroundTint="@color/colorWhite"/>
 
 </RelativeLayout>

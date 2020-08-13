@@ -20,7 +20,7 @@
         android:textColor="@color/colorWhite"
         android:textSize="30sp" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_stop_alarm"
         android:layout_width="227dp"
         android:layout_height="96dp"

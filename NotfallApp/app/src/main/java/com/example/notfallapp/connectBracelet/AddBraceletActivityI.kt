@@ -102,8 +102,8 @@ class AddBraceletActivityI : Activity(), ICreatingOnClickListener, ICheckPermiss
     }
 
     private fun initComponents() {
-        btnRetrySearching = findViewById(R.id.btn_retry_searching)
-        btnCancel = findViewById(R.id.btn_cancel_searching_device)
+        btnRetrySearching = findViewById(R.id.btn_retry_searching_fab)
+        btnCancel = findViewById(R.id.btn_cancel_searching_fab)
         tvConnectBracelet = findViewById(R.id.tvConnectBracelet)
         lvDevices = findViewById(R.id.lvDevices)
         builder = AlertDialog.Builder(this)

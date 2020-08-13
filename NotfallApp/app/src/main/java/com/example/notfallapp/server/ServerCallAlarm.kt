@@ -32,7 +32,7 @@ class ServerCallAlarm {
         var userId: String? = null
 
         fun sendAlarm(context: Context) {
-            volleyRequestQueue = Volley.newRequestQueue(context)
+           /* volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
             if (IConnectBracelet.batteryState == " ") {
@@ -78,11 +78,11 @@ class ServerCallAlarm {
                     return params
                 }
             }
-            volleyRequestQueue?.add(jsonObjectRequest)
+            volleyRequestQueue?.add(jsonObjectRequest)*/
         }
 
         fun sendPosition(context: Context){
-            volleyRequestQueue = Volley.newRequestQueue(context)
+            /*volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             val body = JSONObject()
             val arrayBody = JSONArray()
@@ -140,7 +140,7 @@ class ServerCallAlarm {
                     return params
                 }
             }
-            volleyRequestQueue?.add(jsonObjectRequest)
+            volleyRequestQueue?.add(jsonObjectRequest)*/
         }
     }
 }

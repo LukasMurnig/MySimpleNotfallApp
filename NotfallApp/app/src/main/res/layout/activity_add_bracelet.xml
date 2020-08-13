@@ -29,26 +29,28 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="187dp" />
 
-    <Button
-        android:id="@+id/btn_retry_searching"
-        android:layout_width="181dp"
-        android:layout_height="71dp"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_retry_searching_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginBottom="170dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="169dp"
         android:text="@string/retrySearching" />
 
-    <Button
-        android:id="@+id/btn_cancel_searching_device"
-        android:layout_width="181dp"
-        android:layout_height="71dp"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_cancel_searching_fab"
+        android:layout_width="187dp"
+        android:layout_height="69dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="213dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="167dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginStart="218dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="163dp"
         android:text="@string/cancel" />
 
     <include

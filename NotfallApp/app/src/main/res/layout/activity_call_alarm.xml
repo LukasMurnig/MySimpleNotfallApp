@@ -131,12 +131,15 @@
         android:textColor="@color/colorWhite"
         android:textSize="30sp" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_cancel_alarm"
-        android:layout_width="198dp"
-        android:layout_height="78dp"
+        android:layout_width="175dp"
+        android:layout_height="69dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginTop="500dp"
-        android:text="@string/cancel" />
+        android:backgroundTint="@color/colorWhite"
+        android:text="@string/cancel"
+        android:textSize="@dimen/size20" />
+
 </RelativeLayout>

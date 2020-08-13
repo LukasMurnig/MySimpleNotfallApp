@@ -16,24 +16,31 @@
             android:id="@+id/imageUpload"
             android:layout_width="100dp"
             android:layout_height="100dp" />
-
-        <Button
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnSelectPicture"
-            android:layout_width="match_parent"
+            android:layout_width="283dp"
             android:layout_height="wrap_content"
-            android:text="Wähle Profil Bild"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:text="@string/selectProfilPicture" />
 
-        <Button
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnSavePicture"
-            android:layout_width="match_parent"
+            android:layout_width="283dp"
             android:layout_height="wrap_content"
-            android:text="Speichern"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:text="@string/saveProfilPicture"/>
 
-        <Button
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnCancelProfilPicture"
-            android:layout_width="match_parent"
+            android:layout_width="283dp"
             android:layout_height="wrap_content"
-            android:text="@string/cancel"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/cancel" />
 
         <include
             layout="@layout/layout_button_sos"

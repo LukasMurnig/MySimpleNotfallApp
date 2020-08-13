@@ -108,7 +108,7 @@
     <string name="sampleEmail">maria.musterfrau@mail.com</string>
     <string name="ReadFile">ReadFile</string>
     <string name="ReadFilePath">File Read::---> $1§s</string>
-    <string name="logout">Logout</string>
+    <string name="logout">Abmelden</string>
 
     <!-- Alarm called -->
     <string name="alarmcalled">Ein Alarm wurde ausgelöst!
@@ -135,6 +135,8 @@
     <string name="data">data</string>
     <string name="namePicture">ProfilePicture.jpg</string>
     <string name="PictureType">image/jpeg</string>
+    <string name="selectProfilPicture">Wähle ein Profilbild aus</string>
+    <string name="saveProfilPicture">Speichern</string>
 
     <!-- Connect bracelet -->
     <string name="nobraceletconnected">Sie haben kein Armband mit Ihrer App Verbunden</string>
@@ -149,7 +151,7 @@
     <string name="nobluetoothdevicesfound">Wir haben leider keine Bluetoothgeräte in Ihrer nähe gefunden.
                                             Bitte versuchen Sie es erneut!</string>
     <string name="braceleterror">Hoppla, da ist wohl etwas schiefgelaufen bitte versuchen Sie es nochmal!</string>
-    <string name="pair">Koppeln</string>
+    <string name="connect">Verbinden</string>
     <string name="noDeviceToPair">Hoppla, anscheinend haben Sie noch kein Gerät verbunden.
                                 Bitte versuchen sie Ihr Gerät zuverbinden.</string>
     <!-- DIALOG -->
