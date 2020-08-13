@@ -50,7 +50,7 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
         val handler = Handler()
         handler.postDelayed({
             startForegroundService(applicationContext)
-        }, 1800000)
+        }, 900000)
         super.onStart(intent, startId)
     }
 
@@ -63,7 +63,7 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
     override fun onDestroy() {
         stopForeground(true)
         val intent = Intent()
-        intent.action = "com.notfallapp.SOSReceiver"
+        intent.action = "com.notfallApp.service.ReceiverNotificationClose"
         sendBroadcast(intent)
     }
 }
