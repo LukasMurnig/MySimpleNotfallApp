@@ -11,9 +11,9 @@ import com.example.notfallapp.R
 import com.example.notfallapp.bll.AlertingChain
 import com.example.notfallapp.bll.AlertingChainMember
 
-/*
+/**
  * RecyclerView Adapter for the Alerting Chain
- */
+ **/
 class AlertingChainListAdapter(private var alertingChain: AlertingChain) :
     RecyclerView.Adapter<AlertingChainListAdapter.AlertingChainMembersViewHolder>(){
 
@@ -21,6 +21,9 @@ class AlertingChainListAdapter(private var alertingChain: AlertingChain) :
         private val LOG_TAG: String? = AlertingChainListAdapter::class.simpleName
     }
 
+    /**
+     * ViewHolder for our AlertingChainListAdapter
+     */
     @NonNull
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -30,6 +33,9 @@ class AlertingChainListAdapter(private var alertingChain: AlertingChain) :
         return AlertingChainMembersViewHolder(itemView)
     }
 
+    /**
+     * To get the size of alertingChain.helper
+     */
     override fun getItemCount(): Int {
         return if(alertingChain.helpers == null){
             0
@@ -38,6 +44,9 @@ class AlertingChainListAdapter(private var alertingChain: AlertingChain) :
         }
     }
 
+    /**
+     * To bind the ViewHolder with our Alert Chain Member
+     */
     override fun onBindViewHolder(
         holder: AlertingChainMembersViewHolder,
         position: Int
@@ -47,12 +56,17 @@ class AlertingChainListAdapter(private var alertingChain: AlertingChain) :
             holder.bindAlertingChainMember(alertingChainMember)
         }
     }
-
+    /**
+     * class for our AlertingChainViewHolder
+     **/
     class AlertingChainMembersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //private lateinit var imageContact: ImageView
         private lateinit var contactName: TextView
         private lateinit var contactActive: ImageView
 
+        /**
+         * Bind the AlertingChainMembers
+         */
         fun bindAlertingChainMember(alertingChainMember: AlertingChainMember){
             //imageContact = itemView.findViewById(R.id.contact_item_icon)
             contactName = itemView.findViewById(R.id.contact_name)

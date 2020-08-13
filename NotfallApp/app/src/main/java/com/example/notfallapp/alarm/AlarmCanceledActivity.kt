@@ -20,9 +20,9 @@ import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceCallAlarm
 
-/*
+/**
  * Activity shows that the alarm was canceled
- */
+ **/
 class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INotifications,
     ICheckPermission {
 
@@ -52,6 +52,9 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
         }
     }
 
+    /**
+     * Initialize the components of the View
+     */
     private fun initComponents() {
         configureButtons()
         btnCancelAlarmOk = findViewById(R.id.btn_cancel_alarm_ok)
@@ -59,6 +62,9 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
         checkInternetGPSPermissions(this)
     }
 
+    /**
+     * Configuration for our MenuBar und SOS Button
+     */
     private fun configureButtons() {
         // SOS Button
         btnSos = findViewById(R.id.btn_sos)
@@ -72,7 +78,9 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 
-    // override function, because when user clicked on the menubar the notification with the button sos must be shown again
+    /**
+     * override function, because when user clicked on the menubar the notification with the button sos must be shown again
+     */
     override fun createOnClickListener(
         context: Context,
         btnSos: Button,
@@ -119,6 +127,9 @@ class AlarmCanceledActivity : AppCompatActivity(), ICreatingOnClickListener, INo
         }
     }
 
+    /**
+     * Start Foreground Service to Stop an Alarm in the notificationBar
+     */
     private fun startForegroundService(context: Context, activity: Class<*>){
         ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
         val intent = Intent(context, activity)

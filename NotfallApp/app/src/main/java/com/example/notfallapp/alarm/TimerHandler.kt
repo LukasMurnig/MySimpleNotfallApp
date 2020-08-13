@@ -7,14 +7,19 @@ import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.server.ServerCallAlarm
 
-
+/**
+ * TimerHandler to Send our Alarm to the Server after some Time
+ */
 class TimerHandler {
     companion object : INotifications {
 
-            const val timerAfterSosWillSend: Long = 5000
+            const val timerAfterSosWillSend: Long = 10000
             private lateinit var handler: Handler
 
-            fun timerHandler(context: Context){
+        /**
+         * To start Alarm after some Time if it doesn't get stopped.
+         */
+        fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
                 //handler = Handler(Looper.getMainLooper())
                 handler = Handler()
@@ -34,8 +39,10 @@ class TimerHandler {
                     startActivity(context, intent, null)
                 }, timerAfterSosWillSend)
             }
-
-            fun deleteTimer(){
+        /**
+         * Delete Timer if the alarm was just an mistake
+         */
+        fun deleteTimer(){
                 try{
                     handler.removeCallbacksAndMessages(null)
                 } catch (ex: Exception){

@@ -16,10 +16,9 @@ import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.service.ServiceCancelAlarm
 import kotlin.math.roundToInt
 
-/*
+/**
  * Activity which opens when the user send SOS.
- * It is possible to stop the alarm before it will send to the server
- */
+ **/
 class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
     private lateinit var btnCancelAlarm: Button
     private lateinit var tvAlarm: TextView
@@ -65,6 +64,9 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
         getLatestKnownLocation()
     }
 
+    /**
+     * Set the Last Location in our Activity to show the user his position
+     */
     private fun getLatestKnownLocation(){
         val location = CurrentLocation.getCurrentLocation(applicationContext)
         var longitude: String?
@@ -95,6 +97,9 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
         tvAccuracy.text = "${tvAccuracy.text} m"
     }
 
+    /**
+     * Initialize the Components for our current Activity
+     */
     private fun initComponents(){
         btnCancelAlarm = findViewById(R.id.btn_cancel_alarm)
         tvAlarm = findViewById(R.id.tvAlarm)

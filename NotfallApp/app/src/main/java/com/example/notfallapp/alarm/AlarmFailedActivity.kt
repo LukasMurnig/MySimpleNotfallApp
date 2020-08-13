@@ -9,9 +9,9 @@ import com.example.notfallapp.R
 import com.example.notfallapp.service.ServiceCallAlarm
 import java.util.*
 
-/*
+/**
  * Activity shows that the alarm failed and tries to start the alarm again
- */
+ **/
 class AlarmFailedActivity: Activity() {
     private lateinit var tvAlarm: TextView
     private lateinit var btnRetry: Button
