@@ -2,6 +2,9 @@ package com.example.notfallapp.bll
 
 import java.util.*
 
+/**
+ * Class for the Members of Alerting Chain from the Server
+ */
 class AlertingChainMember constructor(
     var alertingChainId: UUID,
     var helperId: UUID,

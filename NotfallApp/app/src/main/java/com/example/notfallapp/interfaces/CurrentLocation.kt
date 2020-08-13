@@ -11,6 +11,9 @@ import android.os.AsyncTask
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 
+/**
+ * Class where we get our current Location back.
+ */
 class CurrentLocation {
 
     companion object: LocationListener{
@@ -19,6 +22,9 @@ class CurrentLocation {
         var context: Context? = null
         var locationManager: LocationManager? = null
 
+        /**
+         * Function which return current Location
+         */
         fun getCurrentLocation(context: Context): Location?{
             CurrentLocation.context = context
             val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -51,6 +57,9 @@ class CurrentLocation {
 
         }
 
+        /**
+         * Function who set the currentLocation to a variable which will be returned in getCurrentLocation
+         */
         fun getLastKnownLocation() {
             class findLocation : AsyncTask<Unit, Unit, Unit>() {
 

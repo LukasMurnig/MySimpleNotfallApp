@@ -2,6 +2,9 @@ package com.example.notfallapp.bll
 
 import java.util.*
 
+/**
+ * Class for the User who is logged in with their information
+ */
 class User constructor(
     var id: UUID,
     var foreignId: String?,

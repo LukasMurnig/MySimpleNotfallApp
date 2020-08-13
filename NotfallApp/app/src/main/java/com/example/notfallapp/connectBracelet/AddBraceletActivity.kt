@@ -90,6 +90,10 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
         val intent = Intent(this,IConnectBracelet::class.java)
         bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
     }
+
+    /**
+     * Initialize Button from the MenuBar and SOS Button for the Activity
+     */
     private fun configureButtons() {
         // SOS Button
         btnSos = findViewById(R.id.btn_sos)
@@ -103,6 +107,9 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
         createOnClickListener(this, btnSos, btnHome, btnAlarms, btnContact, btnSettings)
     }
 
+    /**
+     * Initialize Components for the Activity and the BroadcastReciever
+     */
     private fun initComponents() {
         btnRetrySearching = findViewById(R.id.btn_retry_searching_fab)
         btnCancel = findViewById(R.id.btn_cancel_searching_fab)
@@ -158,6 +165,10 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
             }
         }
     }
+
+    /**
+     * Function start BroadCast with searching for devices
+     */
     private fun searchDevices() {
         Log.d("SearchDevices", "SearchDevices was called in AddBraceletActivity")
         val success = checkPermissions()
@@ -179,6 +190,9 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
     }
 
     // Code to manage Service lifecycle.
+    /**
+     * Function who connect to the Service if the device was initialized
+     */
     private val mServiceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
 
@@ -191,6 +205,9 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
         }
     }
 
+    /**
+     * Should stop Discovery and unbindService
+     */
     override fun onDestroy() {
         bAdapter.cancelDiscovery()
         unregisterReceiver(mReceiver)
@@ -198,7 +215,10 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
         super.onDestroy()
     }
 
-        private fun checkPermissions(): Boolean{
+    /**
+     * check if bluetoothAdapeter already discover and if device is discoverable.
+     */
+    private fun checkPermissions(): Boolean{
         var success = false
         if (bAdapter.isDiscovering) {
             bAdapter.cancelDiscovery()
@@ -228,6 +248,10 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
         success = true
         return success
     }
+
+    /**
+     * Function who ask the user if them is sure to stop searching for a bluetooth Device.
+     */
     private fun sureDialog() {
         builder.setTitle(getResources().getString(R.string.confirm))
         builder.setMessage(resources.getString(R.string.sureStopSearching))

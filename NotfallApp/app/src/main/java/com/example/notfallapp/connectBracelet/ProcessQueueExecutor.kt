@@ -7,6 +7,9 @@ import android.util.Log
 import com.example.notfallapp.bll.ReadWriteCharacteristic
 import java.util.*
 
+/**
+ * Class who start the Process to Read and Write with the Bracelet.
+ */
 class ProcessQueueExecutor: Thread() {
 
     companion object{

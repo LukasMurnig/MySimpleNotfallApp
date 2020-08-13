@@ -7,6 +7,9 @@ import androidx.room.RoomDatabase
 import com.example.notfallapp.bll.Device
 import com.example.notfallapp.dao.DeviceDao
 
+/**
+ * Class for the Room Database
+ */
 @Database(entities = [Device::class], version = 11)
 abstract class EmergencyAppDatabase : RoomDatabase(){
     abstract fun deviceDao(): DeviceDao

@@ -21,10 +21,15 @@ import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import java.util.*
 
-
+/**
+ * Interface which check if GPS, Internet and Bluetooth are enabled.
+ */
 interface ICheckPermission : INotifications {
 
     companion object{
+        /**
+         * Call refreshToken before it expires
+         */
         fun getNewTokenBeforeExpires(expires: Long){
             val timer = Timer()
 
@@ -39,17 +44,26 @@ interface ICheckPermission : INotifications {
         var level: Int? = null
     }
 
+    /**
+     * Function who check for all 3 Permissions
+     */
     fun checkPermissions(context: Context){
         checkInternetAccess(context)
         checkBluetoothEnabled(context)
         checkGPSEnabled(context)
     }
 
+    /**
+     * Function which just check if Internet and GPs are enabled.
+     */
     fun checkInternetGPSPermissions(context: Context){
         checkInternetAccess(context)
         checkGPSEnabled(context)
     }
 
+    /**
+     * Function which check if Internet is enabled and that you have a connection otherwise it asks for the permission
+     */
     fun checkInternetAccess(context: Context){
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -78,6 +92,9 @@ interface ICheckPermission : INotifications {
         }, 0, 3000)
     }
 
+    /**
+     * Function which checks if Bluetooth is Enabled otherwise it asks for the permission
+     */
     fun checkBluetoothEnabled(context: Context){
         val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         var builder: AlertDialog.Builder
@@ -98,6 +115,9 @@ interface ICheckPermission : INotifications {
         }, 0, 5000)
     }
 
+    /**
+     * Function which check if GPS is enabled otherwise it ask for the permission.
+     */
     private fun checkGPSEnabled(context: Context){
         val handler = Handler(context.mainLooper)
         val timer = Timer()
@@ -114,11 +134,18 @@ interface ICheckPermission : INotifications {
         }, 0, 3000)
 
     }
+
+    /**
+     * Function check if Network is available
+     */
     fun isNetworkAvailable(connectivityManager: ConnectivityManager?): Boolean {
         val activeNetworkInfo = connectivityManager!!.activeNetworkInfo
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
+    /**
+     * Function check if Bluetooth is enabled
+     */
     fun isBluetoothEnabled(bluetoothAdapter: BluetoothAdapter): Boolean {
         var success = false
         if (bluetoothAdapter.isEnabled) {
@@ -127,6 +154,9 @@ interface ICheckPermission : INotifications {
         return success
     }
 
+    /**
+     * Function checks if GPS is enabled.
+     */
     fun isGPSEnabled(context: Context):Boolean {
         try{
             val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -141,6 +171,9 @@ interface ICheckPermission : INotifications {
         return false
     }
 
+    /**
+     * Dialog to Enable Internet.
+     */
     private fun enableInternetAccess(context: Context, connectivityManager: ConnectivityManager?, wifi: WifiManager): AlertDialog.Builder{
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setTitle(context.resources.getString(R.string.confirm))
@@ -159,6 +192,9 @@ interface ICheckPermission : INotifications {
         return builder
     }
 
+    /**
+     * Dialog to enable Bluetooth
+     */
     private fun enableBluetooth(context: Context, bluetoothAdapter: BluetoothAdapter): AlertDialog.Builder{
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setTitle(context.resources.getString(R.string.confirm))
@@ -177,6 +213,9 @@ interface ICheckPermission : INotifications {
         return builder
     }
 
+    /**
+     * Dialog to enable GPS
+     */
     private fun enableGPS(context: Context){
         val googleApiClient = GoogleApiClient.Builder(context)
             .addApi(LocationServices.API).build()
@@ -222,17 +261,25 @@ interface ICheckPermission : INotifications {
         })
     }
 
+    /**
+     * Function to show Dialog again if them denies to enable Internet
+     */
     private fun noInternetAccess(context: Context, connectivityManager: ConnectivityManager?, wifi: WifiManager){
         createNotificationNoInternet(context)
         val builder: AlertDialog.Builder = enableInternetAccess(context, connectivityManager, wifi)
         showAccess(builder)
     }
-
+    /**
+     * Function to show Dialog again if them denies to enable Bluetooth
+     */
     private fun noBluetoothEnabled(context: Context, bluetoothAdapter: BluetoothAdapter){
         val builder: AlertDialog.Builder = enableBluetooth(context, bluetoothAdapter)
         showAccess(builder)
     }
-    
+
+    /**
+     * Function which invoke Dialog and show it on the activity
+     */
     private fun showAccess(builder: AlertDialog.Builder){
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
