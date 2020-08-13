@@ -7,7 +7,7 @@ import android.util.Log
 
 class ReceiverNotificationClose : BroadcastReceiver() {
     override fun onReceive(p0: Context?, p1: Intent?) {
-        Log.i("Notification", "Service Stops")
+        Log.i("Notification", "Service Stops, start BroadcastReceiver")
 
         ForegroundServiceCreateSOSButton.startForegroundService(p0!!)
     }

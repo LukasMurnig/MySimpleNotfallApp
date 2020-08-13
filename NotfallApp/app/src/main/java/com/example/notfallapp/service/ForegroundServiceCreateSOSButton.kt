@@ -56,7 +56,7 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
 
     override fun onLowMemory() {
         val intent = Intent()
-        intent.action = "com.notfallapp.SOSReceiver"
+        intent.action = "com.notfallApp.service.ReceiverNotificationClose"
         sendBroadcast(intent)
     }
 

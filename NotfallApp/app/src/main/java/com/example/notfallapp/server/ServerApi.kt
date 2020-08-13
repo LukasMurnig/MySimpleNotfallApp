@@ -118,7 +118,7 @@ class ServerApi : ICheckPermission {
             val reqBody = JSONObject()
             val pref = getSharedPreferences()
             reqBody.put("RefreshToken", pref.getString("RefreshToken", null)/*refreshToken*/)
-            reqBody.put("ClientId", pref.getString("clientID", null)/*clientID*/)
+            reqBody.put("ClientId", clientID)
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login/refreshtoken", reqBody,
