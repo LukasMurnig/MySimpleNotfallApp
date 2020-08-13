@@ -6,13 +6,16 @@ import com.android.volley.Request
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.User
 import com.example.notfallapp.menubar.settings.SettingsActivity
-import org.json.JSONException
-import org.json.JSONObject
-import java.lang.ClassCastException
 import java.util.*
 
+/**
+ * class to get the data of the logged in User from the Server
+ */
 class ServerUser {
 
+    /**
+     * create the request, handle the response and fill data to three text views
+     */
     fun getUserInfo(context: Context, tvName: TextView, tvPhone: TextView, tvEmail: TextView){
         ServerApi.createJsonObjectRequest(Request.Method.GET, context.getString(R.string.UserMe), null ){ response ->
             if (response.has("ID")) {

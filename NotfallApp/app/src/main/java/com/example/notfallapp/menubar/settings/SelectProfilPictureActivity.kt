@@ -27,7 +27,9 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-
+/**
+ * Activity where you can select a profile picture from the gallery or to take a photo now
+ */
 class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
 
     private val _IMAGE_DIRECTORY = "/profilPicture"
@@ -87,6 +89,9 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
         }
     }
 
+    /**
+     * save the image to the directory
+     */
     private fun saveImage(myBitmap: Bitmap): String? {
         val bytes = ByteArrayOutputStream()
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
@@ -121,6 +126,9 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
         return ""
     }
 
+    /**
+     * opens the photo gallery of the device
+     */
     private fun choosePhotoFromGallery() {
         val galleryIntent = Intent(
             Intent.ACTION_PICK,
@@ -129,11 +137,17 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
         startActivityForResult(galleryIntent, GALLERY)
     }
 
+    /**
+     * opens the camera
+     */
     private fun takePhotoFromCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, CAMERA)
     }
 
+    /**
+     * shows a dialog where the user can select gallery or camera
+     */
     private fun showPictureDialog() {
         val pictureDialog: AlertDialog.Builder = AlertDialog.Builder(this)
         pictureDialog.setTitle(resources.getString(R.string.decide))
@@ -166,6 +180,9 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
     }
 
     companion object{
+        /**
+         * check if the permission are granted by the user
+         */
         fun checkGalleryPermission(context: Context, activity: Activity){
             Dexter.withActivity(activity)
                 .withPermissions(

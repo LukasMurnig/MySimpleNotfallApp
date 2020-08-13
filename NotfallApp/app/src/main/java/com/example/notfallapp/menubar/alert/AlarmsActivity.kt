@@ -14,6 +14,9 @@ import com.example.notfallapp.server.ServerAlarm
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
+/**
+ * Activity shows the alert history from the user
+ */
 class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
 
     private lateinit var btnSos: Button
@@ -39,6 +42,7 @@ class AlarmsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         lbMessageNoAlarms = findViewById(R.id.lbMessageNoAlarms)
 
         MainScope().launch {
+            // get the Alert History from the server
             ServerAlarm().getAllAlerts(applicationContext, rvAlarms, lbMessageNoAlarms)
         }
     }

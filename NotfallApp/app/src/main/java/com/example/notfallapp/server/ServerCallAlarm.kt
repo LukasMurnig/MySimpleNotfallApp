@@ -14,7 +14,9 @@ import org.json.JSONObject
 import java.sql.Timestamp
 import java.util.*
 
-
+/**
+ * class that has the function to send a alarm and the position to the server
+ */
 class ServerCallAlarm {
     companion object {
         private lateinit var sharedPreferences: SharedPreferences
@@ -25,6 +27,9 @@ class ServerCallAlarm {
         private var volleyRequestQueue: RequestQueue? = null
         var userId: String? = null
 
+        /**
+         * function send a alarm to the server and handle the response
+         */
         fun sendAlarm(context: Context) {
             /*volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
@@ -75,6 +80,9 @@ class ServerCallAlarm {
             volleyRequestQueue?.add(jsonObjectRequest)*/
         }
 
+        /**
+         * function send the position of the user to the server and handle the response
+         */
         fun sendPosition(context: Context){
             /*volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()

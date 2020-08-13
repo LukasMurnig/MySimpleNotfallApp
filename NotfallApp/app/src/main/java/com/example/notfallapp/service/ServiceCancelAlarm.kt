@@ -7,6 +7,11 @@ import com.example.notfallapp.alarm.AlarmCanceledActivity
 import com.example.notfallapp.alarm.TimerHandler
 import com.example.notfallapp.interfaces.INotifications
 
+/**
+ * Service stop Timer before the Alarm is send to the server,
+ * create Notification "the Alarm was successfully closed and
+ * open the AlarmCanceledActivity
+ */
 class ServiceCancelAlarm: Service(), INotifications {
 
     override fun onBind(p0: Intent?): IBinder? {

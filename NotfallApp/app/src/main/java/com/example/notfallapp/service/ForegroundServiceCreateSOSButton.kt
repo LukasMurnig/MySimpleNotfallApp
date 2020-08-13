@@ -1,6 +1,5 @@
 package com.example.notfallapp.service
 
-import android.app.Notification
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -10,9 +9,15 @@ import android.os.IBinder
 import androidx.annotation.Nullable
 import com.example.notfallapp.interfaces.INotifications
 
+/**
+ * Foreground Service which send the Notification with the SOS Button
+ */
 class ForegroundServiceCreateSOSButton : Service(), INotifications {
 
     companion object{
+        /**
+         * function that start the ForegroundService
+         */
         fun startForegroundService(context: Context){
             val intent = Intent(context, ForegroundServiceCreateSOSButton::class.java)
 
@@ -42,11 +47,6 @@ class ForegroundServiceCreateSOSButton : Service(), INotifications {
     }
 
     override fun onStart(intent: Intent?, startId: Int) {
-        /*try {
-            startForeground(435624234, createNotificationCreateAlarm(applicationContext))
-        } catch (ex: Exception){
-            ex.printStackTrace()
-        }*/
         val handler = Handler()
         handler.postDelayed({
             startForegroundService(applicationContext)

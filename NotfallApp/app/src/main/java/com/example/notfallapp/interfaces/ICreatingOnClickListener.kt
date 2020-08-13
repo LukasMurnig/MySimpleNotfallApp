@@ -11,8 +11,14 @@ import com.example.notfallapp.menubar.contact.ContactActivity
 import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 
+/**
+ * interface make it easier to create the menubar and the SOS button on the most Activities
+ */
 interface ICreatingOnClickListener {
 
+    /**
+     * creates the menubar and the SOS button on the most Activities
+     */
     fun createOnClickListener(context: Context,btnSos: Button,  btnHome: ImageButton, btnAlarms: ImageButton, btnContact: ImageButton, btnSettings: ImageButton){
 
         btnSos.setOnClickListener {

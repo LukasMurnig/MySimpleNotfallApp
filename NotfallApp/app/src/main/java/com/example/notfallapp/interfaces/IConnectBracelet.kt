@@ -18,6 +18,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
+/**
+ * interface has the functionality to search and connect to a bracelet
+ */
 interface IConnectBracelet {
 
     companion object{
@@ -33,6 +36,9 @@ interface IConnectBracelet {
         var wasConnected = false
     }
 
+    /**
+     * search bluetooth devices with a 'A' letter in the name in the near and
+     */
     fun connect(context: Context, device: BluetoothDevice, pair: Boolean){
         process = ProcessQueueExecutor()
         //To execute the read and write operation in a queue.
@@ -211,7 +217,9 @@ interface IConnectBracelet {
         }
     }
 
-    //Read the value of the BLE device
+    /**
+     * Read the value of the BLE device
+     */
     fun readCharacteristic(
         mGatt: BluetoothGatt?,
         characteristic: BluetoothGattCharacteristic
@@ -226,7 +234,9 @@ interface IConnectBracelet {
         )
         process.addProcess(readWriteCharacteristic)
     }
-    //To write the value to the BLE device.
+    /**
+     * To write the value to the BLE device.
+     */
     fun writeCharacteristic(
         mGatt: BluetoothGatt?,
         characteristic: BluetoothGattCharacteristic,
@@ -320,6 +330,9 @@ interface IConnectBracelet {
         return gattService?.getCharacteristic(charectersticuuid)
     }
 
+    /**
+     * close the search of bluetooth devices
+     */
     fun close() {
         gattBluetooth?.disconnect()
         gattBluetooth?.close()
@@ -327,6 +340,9 @@ interface IConnectBracelet {
         process.interrupt()
     }
 
+    /**
+     * save founded device in the intern database
+     */
     fun sendDevice(){
         class sendData : AsyncTask<Unit, Unit, Unit>() {
 

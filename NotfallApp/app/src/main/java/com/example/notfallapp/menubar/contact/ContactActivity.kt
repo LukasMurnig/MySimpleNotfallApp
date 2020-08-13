@@ -15,6 +15,9 @@ import com.example.notfallapp.server.ServerAlertingChain
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
+/**
+ * Activity where you can see the alerting chain from the server
+ */
 class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -24,7 +27,6 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
 
     private lateinit var lbMessageNoContacts: TextView
     private lateinit var rvContacts: RecyclerView
-    private lateinit var addButton: ImageButton
 
     companion object{
          var alertingChain: AlertingChain? = null
@@ -37,6 +39,7 @@ class ContactActivity: AppCompatActivity(), ICreatingOnClickListener, ICheckPerm
         initComponents()
 
         MainScope().launch {
+            // get the alerting chain from the server
             ServerAlertingChain().getAlertingChain(applicationContext, rvContacts)
         }
     }

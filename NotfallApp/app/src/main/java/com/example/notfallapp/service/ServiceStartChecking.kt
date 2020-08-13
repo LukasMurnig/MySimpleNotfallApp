@@ -12,6 +12,10 @@ import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.interfaces.INotifications
 import java.util.*
 
+/**
+ * Service which check if gps, internet and connection to bracelet is on/active,
+ * when not it will send a notification with the problem
+ */
 class ServiceStartChecking: Service(), ICheckPermission, INotifications {
     companion object {
         var countGPS = 0
@@ -27,6 +31,9 @@ class ServiceStartChecking: Service(), ICheckPermission, INotifications {
         return super.onStartCommand(intent, flags, startId)
     }
 
+    /**
+     * check if gps, internet and connection to bracelet is on/active
+     */
     fun checkEnabled(){
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask()

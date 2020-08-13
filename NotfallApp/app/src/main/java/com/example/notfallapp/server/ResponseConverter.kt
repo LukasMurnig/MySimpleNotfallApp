@@ -4,11 +4,15 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.lang.ClassCastException
 import java.util.*
-/*
- * Convert response fields to their right Format
+
+/**
+ * Convert some server response fields to their right format
  */
 class ResponseConverter {
 
+    /**
+     * function which try to convert a string to UUID or null
+     */
     fun convertFromStringToUUID(string: String?): UUID? {
         return if(string == null || string.isEmpty() || string == "null"){
             null
@@ -17,6 +21,9 @@ class ResponseConverter {
         }
     }
 
+    /**
+     * function which return null or a Double value
+     */
     fun isDoubleOrNull(key: String, response: JSONObject): Double? {
         return try{
             if(response.get(key) == null || response.get(key) == "null"){
@@ -29,6 +36,9 @@ class ResponseConverter {
         }
     }
 
+    /**
+     * function which return null or a Date value
+     */
     fun isDateOrNull(key: String, response: JSONObject): Date?{
         return if(response.get(key) == null){
             null
@@ -41,6 +51,9 @@ class ResponseConverter {
         }
     }
 
+    /**
+     * function which return null or a String value
+     */
     fun isStringOrNull(key: String, response: JSONObject): String? {
         return if(response.getString(key) == null){
             null

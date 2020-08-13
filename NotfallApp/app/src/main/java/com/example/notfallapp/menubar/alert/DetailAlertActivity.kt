@@ -9,6 +9,9 @@ import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import java.util.*
 
+/**
+ * activity shows the details of an alert, it shows, device id, longitude, latitude, date, time and who accepted the alert
+ */
 class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
 
     private lateinit var btnSos: Button

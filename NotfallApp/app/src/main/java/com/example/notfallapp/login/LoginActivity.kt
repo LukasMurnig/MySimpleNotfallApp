@@ -18,8 +18,9 @@ import com.example.notfallapp.server.ServerApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-/*
- * The activity that shows the login screen
+/**
+ * Activity shows the login screen with two edit text fields (username/email and password) and
+ * a button login
  */
 class LoginActivity : AppCompatActivity(), ICheckPermission {
 
@@ -70,6 +71,9 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
 
     }
 
+    /**
+     * check the text fiels and login the user
+     */
     private fun login() {
         if (!validate()){
             onLoginFailed()
@@ -98,6 +102,9 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         loginButton.isEnabled = true
     }
 
+    /**
+     * check if the user tip in valid values
+     */
     private fun validate(): Boolean {
         var validate = true
 

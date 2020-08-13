@@ -18,8 +18,9 @@ import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.service.ServiceCallAlarm
 import com.example.notfallapp.service.ServiceCancelAlarm
 
-
-// create a notification with a sos button to send a alarm
+/**
+ * Interface which creates all Notifications of the app
+ */
 interface INotifications {
 
     private val channelIdLowPriority: String
@@ -34,6 +35,9 @@ interface INotifications {
     private val notificationIdPermission: Int
         get() = 435624234
 
+    /**
+     * create Notification no internet
+     */
     fun createNotificationNoInternet(context: Context){
         val builder = createBasicNotification(context, channelIdLowPriority, true)
 
@@ -43,6 +47,9 @@ interface INotifications {
         showNotificationPermission(context, builder)
     }
 
+    /**
+     * create Notification no gps
+     */
     fun createNotificationNoGPS(context: Context){
         val builder = createBasicNotification(context, channelIdHighPriority, true)
 
@@ -52,6 +59,9 @@ interface INotifications {
         showNotificationPermission(context, builder)
     }
 
+    /**
+     * create Notification connection with the bracelet lost
+     */
     fun createNotificationConnectionBraceletLost(context: Context){
         val builder = createBasicNotification(context, channelIdHighPriority, true)
         builder.setContentTitle(context.getString(R.string.lostConnection))
@@ -60,6 +70,9 @@ interface INotifications {
         showNotificationPermission(context, builder)
     }
 
+    /**
+     * create Notification with the SOS button
+     */
     fun createNotificationCreateAlarm(context: Context): Notification {
         createNotificationChannel(context, NotificationManager.IMPORTANCE_DEFAULT, channelIdLowPriority)
 
@@ -82,6 +95,9 @@ interface INotifications {
         return not
     }
 
+    /**
+     * create Notification alarm was successful
+     */
     fun createNotificationSuccessfulAlarm(context: Context){
         val builder = createBasicNotification(context, channelIdHighPriority, true)
 
@@ -100,6 +116,9 @@ interface INotifications {
         showNotification(context, builder)
     }
 
+    /**
+     * create Notification the alarm was canceled
+     */
     fun createNotificationCancelledAlarm(context: Context){
         val mp = MediaPlayer.create(context, R.raw.alarm_canceled)
         mp.start()
@@ -120,6 +139,9 @@ interface INotifications {
         showNotification(context, builder)
     }
 
+    /**
+     * create Notification a alarm will be send soon to the server
+     */
     fun createNotificationAlarmOnGoing(context: Context){
         val mp: MediaPlayer = MediaPlayer.create(context, R.raw.alarm_called)
         mp.start()
@@ -149,6 +171,9 @@ interface INotifications {
         showNotification(context, builder)
     }
 
+    /**
+     * function create the base notification of all notifications
+     */
     fun createBasicNotification(context: Context, channelId: String, highPriority: Boolean): NotificationCompat.Builder{
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.notfallapplogo)
@@ -170,17 +195,26 @@ interface INotifications {
         return builder
     }
 
+    /**
+     * function shows the notification to the user
+     */
     private fun showNotification(context: Context, notification: NotificationCompat.Builder){
         with(NotificationManagerCompat.from(context)){
             notify(notificationId, notification.build())
         }
     }
+    /**
+     * function shows the permission notification to the user
+     */
     private fun showNotificationPermission(context: Context, notification: NotificationCompat.Builder){
         with(NotificationManagerCompat.from(context)){
             notify(notificationIdPermission, notification.build())
         }
     }
 
+    /**
+     * function create the notifcation channel which is required from a certain version to see the notification
+     */
     private fun createNotificationChannel(context: Context, importance: Int, channelId: String){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.getString(R.string.notificationTitle)

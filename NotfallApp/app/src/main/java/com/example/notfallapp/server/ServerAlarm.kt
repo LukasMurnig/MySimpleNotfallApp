@@ -12,12 +12,17 @@ import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlertsListAdapter
 import com.example.notfallapp.bll.Alert
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
-
+/**
+ * class that has the function to get the Alert History from the Server
+ */
 class ServerAlarm {
+    /**
+     * function create the request and handle the response from the server and
+     * the data from the response fill a recycler view
+     */
     fun getAllAlerts(context: Context, rvAlarms: RecyclerView, lbMessageNoAlarms: TextView){
 
         createGetArrayCall(Request.Method.GET, "/alerts") { response ->
@@ -51,6 +56,9 @@ class ServerAlarm {
         }
     }
 
+    /**
+     * function create the special request of a JSONArray
+      */
     private fun createGetArrayCall(method: Int, extraUrl: String, toDo: (response: JSONArray) -> Unit ) {
         val jsonObjectRequest: JsonArrayRequest = object : JsonArrayRequest(
             method, ServerApi.serverAPIURL + extraUrl, null,

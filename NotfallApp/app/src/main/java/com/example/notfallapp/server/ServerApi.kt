@@ -19,6 +19,10 @@ import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * class has the required parameters for the server, the login function, the recreateToken function and
+ * the createJsonObjectRequest function, which create the basic request for almost all requests
+ */
 class ServerApi : ICheckPermission {
     companion object{
         private lateinit var context: Context
@@ -40,18 +44,32 @@ class ServerApi : ICheckPermission {
         var userId: String? = null
 
 
+        /**
+         * set the context of the companion object
+         */
         fun setContext(context: Context){
             this.context = context
         }
 
+        /**
+         * set the shared preferences of the companion object
+         */
         fun setSharedPreferences(sharedPreferences: SharedPreferences){
             this.sharedPreferences = sharedPreferences
         }
 
+        /**
+         * get the shared preferences of the companion object
+         */
         fun getSharedPreferences(): SharedPreferences{
             return this.sharedPreferences
         }
 
+        /**
+         * create the request to login, handle the response and
+         * when it is successful, save data to the shared preferences and opens
+         * the MainActivity
+         */
         fun sendLogInDataToServer(username: String, password: String, context: Context){
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
@@ -114,6 +132,10 @@ class ServerApi : ICheckPermission {
             volleyRequestQueue?.add(jsonObjectRequest)
         }
 
+        /**
+         * create the request to get a new token from the server, handle the response, when
+         * successful response data to the shared preferences
+         */
         fun refreshToken(){
             val reqBody = JSONObject()
             val pref = getSharedPreferences()
@@ -160,6 +182,7 @@ class ServerApi : ICheckPermission {
             }
         }
 
+        // save response data to sharedPreferences
         private fun saveDataToSharedPreferences(){
             val editor = sharedPreferences.edit()
             editor.putString("AccessToken", accessToken)
@@ -180,6 +203,9 @@ class ServerApi : ICheckPermission {
             }
         }
 
+        /**
+         * create the basic request for almost all requests in the program
+         */
         fun createJsonObjectRequest(method: Int, extraUrl: String, reqBody: JSONObject?, toDo: (response: JSONObject) -> Unit ) {
 
             val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
@@ -207,7 +233,7 @@ class ServerApi : ICheckPermission {
                         Log.e(TAG, "problem occurred, volley error: " + error)
                     }
                 }) {
-                @Throws(AuthFailureError::class)
+                @Throws(AuthFailureError::class) // add the Authorization header to the server request
                 override fun getHeaders(): Map<String, String> {
                     var params: MutableMap<String, String>? = super.getHeaders()
                     if (params == null || params.isEmpty() ) params = HashMap()

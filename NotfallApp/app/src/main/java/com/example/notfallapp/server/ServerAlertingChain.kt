@@ -10,8 +10,15 @@ import com.example.notfallapp.menubar.contact.ContactActivity
 import org.json.JSONArray
 import java.util.*
 
+/**
+ * class that has the function to get the AlertingChain from the Server
+ */
 class ServerAlertingChain {
 
+    /**
+     * function create the request, handle the response from the server and
+     * fill the data to a recycler view
+     */
     fun getAlertingChain(context: Context, rvContacts: RecyclerView){
         val pref = context.getSharedPreferences("Response", Context.MODE_PRIVATE)
         val userId = pref.getString("UserId", null) ?: return
@@ -53,14 +60,11 @@ class ServerAlertingChain {
                     ResponseConverter().isStringOrNull("Description", response),
                     alertChM
                 )
-                updateRecyclerView(rvContacts)
+
+                val adapter = AlertingChainListAdapter(ContactActivity.alertingChain!!)
+                rvContacts.adapter = adapter
+                (rvContacts.adapter as AlertingChainListAdapter).notifyDataSetChanged()
             }
         }
-    }
-
-    private fun updateRecyclerView(rvContacts: RecyclerView){
-        val adapter = AlertingChainListAdapter(ContactActivity.alertingChain!!)
-        rvContacts.adapter = adapter
-        (rvContacts.adapter as AlertingChainListAdapter).notifyDataSetChanged()
     }
 }

@@ -32,7 +32,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
-
+/**
+ * MainActivity/HomeActivity, has the buttons to add a bracelet and give information if a bracelet is connected or not
+ */
 class MainActivity : AppCompatActivity(),
     ICreatingOnClickListener, INotifications, ICheckPermission, IConnectBracelet {
 
@@ -75,6 +77,7 @@ class MainActivity : AppCompatActivity(),
             }
         }
 
+        // start the foregroundService which opens the notifcation with the SOS button
         ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
 
         checkState()
@@ -92,6 +95,9 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
+    /**
+     * try to get the permission of the user for GPS
+     */
     private fun checkGPSPermission() {
         Dexter.withActivity(this)
             .withPermissions(
@@ -142,6 +148,7 @@ class MainActivity : AppCompatActivity(),
         tvStatusbracelet = findViewById(R.id.tvStatusbracelet)
         tvaddbracelet = findViewById(R.id.tvaddbracelet)
         tvpairbracelet = findViewById(R.id.tvpairbracelet)
+
         handler = Handler(this.mainLooper)
         context = this
         CurrentLocation.getCurrentLocation(this)
@@ -150,6 +157,9 @@ class MainActivity : AppCompatActivity(),
         context?.startService(intent)
     }
 
+    /**
+     * see if bracelet is connected or not and inform the user
+     */
     private fun checkConnected(){
         val state: Boolean = IConnectBracelet.connected
         if (state){
@@ -171,6 +181,9 @@ class MainActivity : AppCompatActivity(),
         }, 0, 2000)
     }
 
+    /**
+     * get the bracelet which is the app connected from the intern database, when one exist
+     */
     private fun getDevice(){
         class GetData : AsyncTask<Unit, Unit, List<Device>>() {
 

@@ -7,7 +7,10 @@ import com.example.notfallapp.alarm.CallAlarmActivity
 import com.example.notfallapp.alarm.TimerHandler
 import com.example.notfallapp.interfaces.INotifications
 
-// open Call Alarm Activity
+/**
+ * Service create Notification "Alarm will be send soon" with a cancel button
+ * and opens the CallAlarmActivity
+ */
 class ServiceCallAlarm: Service(), INotifications {
 
     override fun onBind(p0: Intent?): IBinder? {

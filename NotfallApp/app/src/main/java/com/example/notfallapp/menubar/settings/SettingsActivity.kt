@@ -23,6 +23,10 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 
+/**
+ * Activity shows user info of the logged in user, possibly a profile picture if one is selected, and
+ * there is a logout button
+ */
 class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPermission {
 
     private lateinit var btnSos: Button
@@ -36,7 +40,6 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
     private lateinit var tvEmail: TextView
     private lateinit var btnLogout : Button
     private lateinit var btnProfilePicture: ImageButton
-    //private lateinit var btnLogout: Button
 
     private val IMAGE_DIRECTORY = "/profilPicture"
 
@@ -68,6 +71,9 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         }
     }
 
+    /**
+     * search for a profile picture in the image directory and shows it, when exist
+     */
     private fun updateProfilePicture(){
         MainScope().launch {
             val wallpaperDirectory = File(
