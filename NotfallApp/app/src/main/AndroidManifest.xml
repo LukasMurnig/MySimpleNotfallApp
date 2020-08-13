@@ -86,7 +86,7 @@
         <service android:name=".service.ForegroundServiceCreateSOSButton"/>
         <receiver android:name=".service.ReceiverNotificationClose">
             <intent-filter>
-                <action android:name="com.notfallapp.SOSReceiver"/>
+                <action android:name="com.notfallApp.service.ReceiverNotificationClose"/>
                 <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
             </intent-filter>
         </receiver>

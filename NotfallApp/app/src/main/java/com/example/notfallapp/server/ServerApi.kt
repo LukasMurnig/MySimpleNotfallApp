@@ -153,7 +153,11 @@ class ServerApi : ICheckPermission {
                     Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
                 }
             )
-            volleyRequestQueue?.add(jsonObjectRequest)
+            if(volleyRequestQueue != null){
+                volleyRequestQueue!!.add(jsonObjectRequest)
+            } else {
+                Log.i(TAG, "konnte token nicht refreshen da volley Request Queue nicht instanziert war")
+            }
         }
 
         private fun saveDataToSharedPreferences(){
