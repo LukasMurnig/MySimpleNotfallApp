@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/colorRed</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -19,6 +19,5 @@
     </style>
     <style name="ButtonTheme" parent="">
         <item name="android:buttonStyle">@style/ButtonStyle</item>
-</style>
-
+    </style>
 </resources>
