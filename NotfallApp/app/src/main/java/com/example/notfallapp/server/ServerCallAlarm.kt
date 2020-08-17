@@ -1,13 +1,18 @@
 package com.example.notfallapp.server
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
+import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.notfallapp.alarm.AlarmFailedActivity
+import com.example.notfallapp.alarm.AlarmSuccessfulActivity
 import com.example.notfallapp.interfaces.CurrentLocation
+import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.login.LoginActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -31,7 +36,7 @@ class ServerCallAlarm {
          * function send a alarm to the server and handle the response
          */
         fun sendAlarm(context: Context) {
-            /*volleyRequestQueue = Volley.newRequestQueue(context)
+            volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
             if (IConnectBracelet.batteryState == " ") {
@@ -77,14 +82,14 @@ class ServerCallAlarm {
                     return params
                 }
             }
-            volleyRequestQueue?.add(jsonObjectRequest)*/
+            volleyRequestQueue?.add(jsonObjectRequest)
         }
 
         /**
          * function send the position of the user to the server and handle the response
          */
         fun sendPosition(context: Context){
-            /*volleyRequestQueue = Volley.newRequestQueue(context)
+            volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             val body = JSONObject()
             val arrayBody = JSONArray()
@@ -143,7 +148,7 @@ class ServerCallAlarm {
                     return params
                 }
             }
-            volleyRequestQueue?.add(jsonObjectRequest)*/
+            volleyRequestQueue?.add(jsonObjectRequest)
         }
     }
 }
