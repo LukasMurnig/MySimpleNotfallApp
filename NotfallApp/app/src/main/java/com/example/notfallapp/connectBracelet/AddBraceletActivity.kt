@@ -26,17 +26,11 @@ import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallappLibrary.bll.Device
+import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.example.notfallappLibrary.interfaces.IConnectBracelet
 
 
 class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermission, IConnectBracelet {
-
-    companion object{
-        var connected: Boolean = false
-        var batteryState: String = " "
-        var device: BluetoothDevice? = null
-    }
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
@@ -76,11 +70,14 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
             Log.d("ListViewClicked", "List View in Add BraceletActivity was clicked")
             if(devices.size != 0) {
                 var device = devices[position]
-                valrtConnectDevice(this, device, { string ->
+                valrtSelectDevice(this, device)
+                valrtConnectToSelectedDevice(this, false, { string ->
+                    Log.e(TAG, string)
                     tvConnectBracelet.text = context.getString(R.string.braceleterror)
-                },{->
+                },{
+                    Log.e(TAG, "SUCCESS")
                     var intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    this.startActivity(intent)
                 })
             }else{
                 tvConnectBracelet.text = context.getString(R.string.braceleterror)

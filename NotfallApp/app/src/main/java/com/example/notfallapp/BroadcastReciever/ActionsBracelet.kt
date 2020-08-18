@@ -20,7 +20,6 @@ class ActionsBracelet : BroadcastReceiver(), IConnectBracelet  {
     override fun onReceive(p0: Context?, p1: Intent?) {
         context = p0
         var action = p1?.action
-        Log.e(TAG, action)
         checkBatteryState()
         when (action){
             "ACTION_GATT_CONNECTED" -> connected = true
