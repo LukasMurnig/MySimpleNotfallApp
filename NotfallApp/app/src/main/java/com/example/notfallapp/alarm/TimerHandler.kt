@@ -3,6 +3,7 @@ package com.example.notfallapp.alarm
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
+import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.server.ServerCallAlarm
@@ -43,11 +44,13 @@ class TimerHandler {
          * Delete Timer if the alarm was just an mistake
          */
         fun deleteTimer(){
-                try{
-                    handler.removeCallbacksAndMessages(null)
-                } catch (ex: Exception){
-                    deleteTimer()
-                }
+            Log.i("Timer", "try to stop handler")
+            try{
+                handler.removeCallbacksAndMessages(null)
+            }catch (ex: Exception){
+
             }
+
+        }
     }
 }
