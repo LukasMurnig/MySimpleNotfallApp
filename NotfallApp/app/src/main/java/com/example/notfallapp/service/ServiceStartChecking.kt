@@ -8,7 +8,6 @@ import android.net.ConnectivityManager
 import android.os.IBinder
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.interfaces.INotifications
 import java.util.*
 
@@ -59,7 +58,7 @@ class ServiceStartChecking: Service(), ICheckPermission, INotifications {
                 }else{
                     countInternet = 0
                 }
-                if(IConnectBracelet.wasConnected) {
+                /*if(IConnectBracelet.wasConnected) {
                     val connected = IConnectBracelet.connected
                     if (!connected) {
                         if (countBracelet == 0) {
@@ -71,7 +70,7 @@ class ServiceStartChecking: Service(), ICheckPermission, INotifications {
                     } else {
                         countBracelet = 0
                     }
-                }
+                }*/
             }
 
         },0, 5000)

@@ -1,14 +1,11 @@
 package com.example.notfallapp
 
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.Intent
-import android.os.AsyncTask
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -16,10 +13,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.toolbox.Volley
-import com.example.notfallapp.bll.Device
+import com.example.notfallapp.BroadcastReciever.ActionsBracelet
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
-import com.example.notfallapp.database.EmergencyAppDatabase
-import com.example.notfallapp.interfaces.*
+import com.example.notfallapp.interfaces.CurrentLocation
+import com.example.notfallapp.interfaces.ICheckPermission
+import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceStartChecking
@@ -36,7 +35,7 @@ import java.util.*
  * MainActivity/HomeActivity, has the buttons to add a bracelet and give information if a bracelet is connected or not
  */
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener, INotifications, ICheckPermission, IConnectBracelet {
+    ICreatingOnClickListener, INotifications, ICheckPermission{
 
     companion object {
         var context: Context? = null
@@ -63,7 +62,13 @@ class MainActivity : AppCompatActivity(),
         configureButtons()
         initComponents()
         checkConnected()
-
+        var actionsBracelet = ActionsBracelet()
+        val filter = IntentFilter()
+        filter.addAction("ACTION_GATT_CONNECTED")
+        filter.addAction("ACTION_GATT_DISCONNECTED")
+        filter.addAction("Alarm called")
+        filter.addAction("Batterystate")
+        registerReceiver(actionsBracelet, filter)
         // make server ready
         GlobalScope.launch {
             try{
@@ -91,7 +96,6 @@ class MainActivity : AppCompatActivity(),
         }
 
         btnpairBracelet.setOnClickListener {
-            getDevice()
         }
     }
 
@@ -161,8 +165,7 @@ class MainActivity : AppCompatActivity(),
      * see if bracelet is connected or not and inform the user
      */
     private fun checkConnected(){
-        val state: Boolean = IConnectBracelet.connected
-        if (state){
+        if (ActionsBracelet.connected){
             tvStatusbracelet.text = resources.getString(R.string.braceleteconnected)
             btnBracelet.visibility = View.VISIBLE
         }else{
@@ -179,44 +182,6 @@ class MainActivity : AppCompatActivity(),
                 }
             }
         }, 0, 2000)
-    }
-
-    /**
-     * get the bracelet which is the app connected from the intern database, when one exist
-     */
-    private fun getDevice(){
-        class GetData : AsyncTask<Unit, Unit, List<Device>>() {
-
-            override fun doInBackground(vararg p0: Unit?): List<Device> {
-                val db = EmergencyAppDatabase.getInstance(this@MainActivity)
-                return db.deviceDao().getDevice()
-            }
-
-            override fun onPostExecute(result: List<Device>?) {
-                if(result != null){
-                    val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-                    var device: Device? = null
-                    try {
-                        device = result[0]
-                    }catch(ex: IndexOutOfBoundsException){
-                    }
-                    if (device != null) {
-                        tvStatusbracelet.text = context?.getString(R.string.tryToConnectBracelet)
-                        val bluetoothDevice: BluetoothDevice =
-                            mBluetoothAdapter.getRemoteDevice(device.macAddress)
-                        connect(applicationContext, bluetoothDevice, true)
-                    }
-                    else{
-                        tvStatusbracelet.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22F)
-                        tvStatusbracelet.text = context?.getString(R.string.noDeviceToPair)
-                        timer.cancel()
-                    }
-                }
-            }
-        }
-
-        val gd = GetData()
-        gd.execute()
     }
 }
 

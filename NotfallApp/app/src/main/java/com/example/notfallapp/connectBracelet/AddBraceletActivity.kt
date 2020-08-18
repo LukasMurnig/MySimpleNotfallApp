@@ -3,6 +3,7 @@ package com.example.notfallapp.connectBracelet
 import android.Manifest
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothClass
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.content.*
@@ -24,8 +25,9 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
 import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallappLibrary.bll.Device
+import com.example.notfallappLibrary.interfaces.IConnectBracelet
 
 
 class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermission, IConnectBracelet {
@@ -47,10 +49,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
     private lateinit var tvConnectBracelet: TextView
     private lateinit var lvDevices: ListView
     private lateinit var builder: AlertDialog.Builder
-    private var bAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-    private lateinit var mReceiver: BroadcastReceiver
     private var devices = ArrayList<BluetoothDevice>()
-    private var bluetoothGatt: BluetoothGatt? = null
     private lateinit var context: Context
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,14 +69,19 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
         btnRetrySearching.setOnClickListener {
             Log.d("ButtonSearch", "Search Button was clicked in AddBraceletActivity")
             tvConnectBracelet.text = getResources().getString(R.string.tryToConnectBracelet)
-            searchDevices()
+            searchDevice()
         }
 
         lvDevices.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             Log.d("ListViewClicked", "List View in Add BraceletActivity was clicked")
             if(devices.size != 0) {
                 var device = devices[position]
-                connect(this, device, false)
+                valrtConnectDevice(this, device, { string ->
+                    tvConnectBracelet.text = context.getString(R.string.braceleterror)
+                },{->
+                    var intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                })
             }else{
                 tvConnectBracelet.text = context.getString(R.string.braceleterror)
                 val adapter = BluetoothListAdapter(applicationContext, devices)
@@ -85,10 +89,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
                 adapter.notifyDataSetChanged()
             }
         }
-
-        searchDevices()
-        val intent = Intent(this,IConnectBracelet::class.java)
-        bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
+        searchDevice()
     }
 
     /**
@@ -118,135 +119,23 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
         builder = AlertDialog.Builder(this)
         context = this
         checkPermissions(this)
-
-        mReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                val action = intent.action
-                if (BluetoothAdapter.ACTION_DISCOVERY_STARTED == action) {
-                    devices = ArrayList<BluetoothDevice>()
-                    btnRetrySearching.isClickable = false
-                    btnRetrySearching.setTextColor(Color.parseColor("#FF0000"))
-                    //discovery starts, we can show progress dialog or perform other tasks
-                } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
-                    btnRetrySearching.isClickable = true
-                    btnRetrySearching.setTextColor(Color.parseColor("#000000"))
-                    if(devices.size == 0){
-                        tvConnectBracelet.text = getResources().getString(R.string.nobluetoothdevicesfound)
-                    }else {
-                        val adapter = BluetoothListAdapter(applicationContext, devices)
-                        lvDevices.adapter = adapter
-                        adapter.notifyDataSetChanged()
-                    }
-                } else if (BluetoothDevice.ACTION_FOUND == action) {
-                    //bluetooth device found
-                    try {
-                        val device =
-                            intent.getParcelableExtra<Parcelable>(BluetoothDevice.EXTRA_DEVICE) as BluetoothDevice?
-                        if (device != null) {
-                            if (device.name != null) {
-                                if (device.name.contains("V")) {
-                                    var exist: Boolean = false
-                                    for (indx in devices.indices) {
-                                        val arraydevice: BluetoothDevice = devices[indx]
-                                        if (arraydevice.address == device.address) {
-                                            exist = true;
-                                        }
-                                    }
-                                    if (!exist) {
-                                        devices.add(device)
-                                    }
-                                }
-                            }
-                        }
-                    }catch(ex: Exception){
-                        tvConnectBracelet.text = context.getString(R.string.braceleterror)
-                    }
-                }
-            }
-        }
     }
 
     /**
-     * Function start BroadCast with searching for devices
+     * Function which calls our Libary which look for Bracelet in distance.
      */
-    private fun searchDevices() {
-        Log.d("SearchDevices", "SearchDevices was called in AddBraceletActivity")
-        val success = checkPermissions()
-        if (!success){
-            return
+    private fun searchDevice(){
+        btnRetrySearching.isEnabled = false
+        valrtScanForDevices(this, { message ->
+            tvConnectBracelet.text = this.getString(R.string.nobluetoothdevicesfound)
+            btnRetrySearching.isEnabled = true
+        }){ devices ->
+            val adapter = BluetoothListAdapter(applicationContext, devices)
+            this.devices = devices
+            lvDevices.adapter = adapter
+            adapter.notifyDataSetChanged()
+            btnRetrySearching.isEnabled = true
         }
-        this.devices = ArrayList<BluetoothDevice>()
-        val adapter = BluetoothListAdapter(applicationContext, devices)
-        this.lvDevices.adapter = adapter
-        val onFoundFilter = IntentFilter(BluetoothDevice.ACTION_FOUND)
-        onFoundFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
-        onFoundFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
-        registerReceiver(mReceiver, onFoundFilter)
-        bAdapter.startDiscovery()
-        if(bluetoothGatt != null){
-            bluetoothGatt!!.disconnect()
-            bluetoothGatt!!.close()
-        }
-    }
-
-    // Code to manage Service lifecycle.
-    /**
-     * Function who connect to the Service if the device was initialized
-     */
-    private val mServiceConnection: ServiceConnection = object : ServiceConnection {
-        override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
-
-            // Automatically connects to the device upon successful start-up initialization.
-            device?.let { connect(application, it, false) }
-        }
-
-        override fun onServiceDisconnected(componentName: ComponentName) {
-
-        }
-    }
-
-    /**
-     * Should stop Discovery and unbindService
-     */
-    override fun onDestroy() {
-        bAdapter.cancelDiscovery()
-        unregisterReceiver(mReceiver)
-        unbindService(mServiceConnection)
-        super.onDestroy()
-    }
-
-    /**
-     * check if bluetoothAdapeter already discover and if device is discoverable.
-     */
-    private fun checkPermissions(): Boolean{
-        var success = false
-        if (bAdapter.isDiscovering) {
-            bAdapter.cancelDiscovery()
-        }
-
-        val discoverableIntent: Intent =
-            Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
-                putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300)
-            }
-        startActivity(discoverableIntent)
-
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            Log.i("info", "No fine location permissions")
-
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1
-            )
-        }
-        success = true
-        return success
     }
 
     /**

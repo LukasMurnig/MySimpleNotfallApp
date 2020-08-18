@@ -12,7 +12,6 @@ import com.android.volley.toolbox.Volley
 import com.example.notfallapp.alarm.AlarmFailedActivity
 import com.example.notfallapp.alarm.AlarmSuccessfulActivity
 import com.example.notfallapp.interfaces.CurrentLocation
-import com.example.notfallapp.interfaces.IConnectBracelet
 import com.example.notfallapp.login.LoginActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -39,11 +38,11 @@ class ServerCallAlarm {
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
-            if (IConnectBracelet.batteryState == " ") {
+            /*if (IConnectBracelet.batteryState == " ") {
                 reqBody.put("Battery", null)
             } else {
                 reqBody.put("Battery", IConnectBracelet.batteryState)
-            }
+            }*/
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
             val jsonObjectRequest = object : JsonObjectRequest(
