@@ -1,5 +1,6 @@
 package com.example.notfallapp.server
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,6 +10,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.notfallapp.BroadcastReciever.ActionsBracelet
 import com.example.notfallapp.alarm.AlarmFailedActivity
 import com.example.notfallapp.alarm.AlarmSuccessfulActivity
 import com.example.notfallapp.interfaces.CurrentLocation
@@ -38,11 +40,11 @@ class ServerCallAlarm {
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
-            /*if (IConnectBracelet.batteryState == " ") {
+            if (ActionsBracelet.batteryState == 0) {
                 reqBody.put("Battery", null)
             } else {
-                reqBody.put("Battery", IConnectBracelet.batteryState)
-            }*/
+                reqBody.put("Battery", ActionsBracelet.batteryState)
+            }
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
             val jsonObjectRequest = object : JsonObjectRequest(
@@ -92,7 +94,6 @@ class ServerCallAlarm {
             val reqBody = JSONObject()
             val body = JSONObject()
             val arrayBody = JSONArray()
-            val beacon = JSONObject()
             val time = Timestamp(System.currentTimeMillis()).toString()
             val times = time.split(" ")
             val currentTime = times[0]+"T"+times[1]+"+00:00"
