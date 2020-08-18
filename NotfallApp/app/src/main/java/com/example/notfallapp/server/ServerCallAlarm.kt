@@ -27,8 +27,6 @@ class ServerCallAlarm {
     companion object {
         private lateinit var sharedPreferences: SharedPreferences
         var serverAPIURL = "https://jamesdev.ilogs.com/API/v1"
-
-        //var serverAPIURL = "https://safemotiondev.ilogs.com/API/v1"
         const val TAG = "ServerApi"
         private var volleyRequestQueue: RequestQueue? = null
         var userId: String? = null
@@ -68,10 +66,12 @@ class ServerCallAlarm {
                         intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
                         context.startActivity(intent)
                     } else {
-                        Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
-                        val intent = Intent(context, AlarmFailedActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        context.startActivity(intent)
+                        if(!error.message.equals("org.json.JSONException: End of input at character 0 of ")) {
+                            Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
+                            val intent = Intent(context, AlarmFailedActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            context.startActivity(intent)
+                        }
                     }
                 }) {
                 @Throws(AuthFailureError::class)
@@ -120,6 +120,7 @@ class ServerCallAlarm {
             reqBody.put("Positions", arrayBody)
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
+            Log.e(TAG, reqBody.toString())
             val jsonObjectRequest = object : JsonObjectRequest(
                 Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/positions", reqBody,
                 Response.Listener { response ->
@@ -127,13 +128,16 @@ class ServerCallAlarm {
                 },
                 Response.ErrorListener { error ->
                     if (error.networkResponse != null) {
+                        Log.e(TAG,"TEST NOT NULL")
                         val resErrorBody = JSONObject(String(error.networkResponse.data))
-                        Log.e(
-                            ServerApi.TAG,
-                            "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get(
-                                "Error"
+                        if (!resErrorBody.get("Error").equals("org.json.JSONException: End of input at character 0 of ")) {
+                            Log.e(
+                                ServerApi.TAG,
+                                "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get(
+                                    "Error"
+                                )
                             )
-                        )
+                        }
                     } else {
                         if(!error.message.equals("org.json.JSONException: End of input at character 0 of ")) {
                             Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)

@@ -62,13 +62,17 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
         configureButtons()
         initComponents()
-        checkConnected()
+        try {
+            checkState()
+        }catch(ex: Exception){
+            ex.toString()
+        }
         var actionsBracelet = ActionsBracelet()
         val filter = IntentFilter()
         filter.addAction("ACTION_GATT_CONNECTED")
         filter.addAction("ACTION_GATT_DISCONNECTED")
         filter.addAction("Alarm called")
-        filter.addAction("Batterystate")
+        filter.addAction("BatteryState")
         registerReceiver(actionsBracelet, filter)
         // make server ready
         GlobalScope.launch {
@@ -86,21 +90,24 @@ class MainActivity : AppCompatActivity(),
         // start the foregroundService which opens the notifcation with the SOS button
         ForegroundServiceCreateSOSButton.startForegroundService(applicationContext)
 
-        checkState()
-
         checkGPSPermission()
 
         btnaddBracelet.setOnClickListener {
             Log.d("ButtonAdd", "Button Add bracelet was clicked in MainActivity")
             val intent = Intent(this, AddBraceletActivity::class.java)
             startActivity(intent)
+            timer.cancel()
         }
 
         btnpairBracelet.setOnClickListener {
             var success = valrtHasSelectedDevice(this)
             if(success){
                 tvStatusbracelet.text = this.getString(R.string.tryToConnectBracelet)
-                timer.cancel()
+                try {
+                    timer.cancel()
+                }catch (ex: Exception){
+                    ex.toString()
+                }
                 valrtConnectToSelectedDevice(this, true, {
                     tvStatusbracelet.text = this.getString(R.string.braceleterror)
                 },{
