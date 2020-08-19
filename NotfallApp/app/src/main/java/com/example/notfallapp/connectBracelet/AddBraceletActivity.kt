@@ -27,10 +27,10 @@ import com.example.notfallapp.adapter.BluetoothListAdapter
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ServerApi.Companion.TAG
-import com.example.notfallappLibrary.interfaces.IConnectBracelet
+import com.example.notfallappLibrary.interfaces.VALRTIConnectBracelet
 
 
-class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermission, IConnectBracelet {
+class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermission, VALRTIConnectBracelet {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton

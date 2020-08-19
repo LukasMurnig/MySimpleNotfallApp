@@ -22,7 +22,7 @@ import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceStartChecking
-import com.example.notfallappLibrary.interfaces.IConnectBracelet
+import com.example.notfallappLibrary.interfaces.VALRTIConnectBracelet
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -36,7 +36,7 @@ import java.util.*
  * MainActivity/HomeActivity, has the buttons to add a bracelet and give information if a bracelet is connected or not
  */
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener, INotifications, ICheckPermission, IConnectBracelet{
+    ICreatingOnClickListener, INotifications, ICheckPermission, VALRTIConnectBracelet{
 
     companion object {
         var context: Context? = null

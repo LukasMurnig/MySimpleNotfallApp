@@ -13,4 +13,5 @@
     <color name="midnightblue">#191970</color>
     <color name="gray">#DCDCDC</color>
     <color name="yellow">#FFFF00</color>
+    <color name="blueLogin">#428BB4</color>
 </resources>
