@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/colorRed"
@@ -27,15 +28,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:theme="@style/TextLabel">
+            android:theme="@style/TextLabel"
+            app:startIconDrawable="@drawable/user"
+            app:startIconTint="@color/colorDark">
+
             <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_username"
+                android:id="@+id/input_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:autofillHints=""
                 android:hint="@string/username"
-                android:text="sosapp"
-                android:autofillHints="" />
+                android:inputType="text"
+                android:text="sosapp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Label -->
@@ -45,14 +49,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:theme="@style/TextLabel">
+            android:theme="@style/TextLabel"
+            app:startIconDrawable="@drawable/lock"
+            app:startIconTint="@color/colorDark"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleDrawable="@drawable/show_password_selector"
+            app:passwordToggleTint="@color/colorDark">
             <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="@string/password"
                 android:text="gTN52PoeUQ"
-                android:autofillHints="" />
+                android:autofillHints=""
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
