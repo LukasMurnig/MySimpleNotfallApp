@@ -33,10 +33,10 @@ class TimerHandler {
                     if(!isStopped!!){
                         isStopped = true
                         // Send alarm to the Server
-                        //ServerCallAlarm.sendAlarm(context)
+                        ServerCallAlarm.sendAlarm(context)
 
                         // Send position to the Server
-                        //ServerCallAlarm.sendPosition(context)
+                        ServerCallAlarm.sendPosition(context)
 
                         // Create the notification "Alarm was successful"
                         createNotificationSuccessfulAlarm(context)
