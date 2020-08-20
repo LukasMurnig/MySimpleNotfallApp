@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(),
         }catch(ex: Exception){
             ex.toString()
         }
-        var actionsBracelet = ActionsBracelet()
+        val actionsBracelet = ActionsBracelet()
         val filter = IntentFilter()
         filter.addAction("ACTION_GATT_CONNECTED")
         filter.addAction("ACTION_GATT_DISCONNECTED")
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity(),
         }
 
         btnpairBracelet.setOnClickListener {
-            var success = valrtHasSelectedDevice(this)
+            val success = valrtHasSelectedDevice(this)
             if(success){
                 tvStatusbracelet.text = this.getString(R.string.tryToConnectBracelet)
                 try {

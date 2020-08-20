@@ -18,7 +18,7 @@ class ActionsBracelet : BroadcastReceiver(), VALRTIBracelet {
     private var context: Context? = null
     override fun onReceive(p0: Context?, p1: Intent?) {
         context = p0
-        var action = p1?.action
+        val action = p1?.action
         Log.e(TAG, action)
         checkBatteryState()
         when (action){
@@ -29,12 +29,12 @@ class ActionsBracelet : BroadcastReceiver(), VALRTIBracelet {
         }
     }
     private fun callAlarm(){
-        var intent = Intent(context!!, ServiceCallAlarm::class.java)
+        val intent = Intent(context!!, ServiceCallAlarm::class.java)
         context!!.startService(intent)
     }
 
     private fun checkBatteryState(){
-        var timer = Timer()
+        val timer = Timer()
         timer.schedule(object : TimerTask(){
             override fun run() {
                 try{batteryState = valrtGetSelectedDeviceBattery(context!!).toInt()}catch(ex: Exception){ex.toString()}

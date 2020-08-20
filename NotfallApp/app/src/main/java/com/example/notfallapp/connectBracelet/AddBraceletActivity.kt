@@ -53,21 +53,21 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
 
         btnRetrySearching.setOnClickListener {
             Log.d("ButtonSearch", "Search Button was clicked in AddBraceletActivity")
-            tvConnectBracelet.text = getResources().getString(R.string.tryToConnectBracelet)
+            tvConnectBracelet.text = resources.getString(R.string.tryToConnectBracelet)
             searchDevice()
         }
 
         lvDevices.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             Log.d("ListViewClicked", "List View in Add BraceletActivity was clicked")
             if(devices.size != 0) {
-                var device = devices[position]
+                val device = devices[position]
                 valrtSelectDevice(this, device)
                 valrtConnectToSelectedDevice(this, false, { string ->
                     Log.e(TAG, string)
                     tvConnectBracelet.text = context.getString(R.string.braceleterror)
                 },{
                     Log.e(TAG, "SUCCESS")
-                    var intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     this.startActivity(intent)
                 })
             }else{
@@ -130,7 +130,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
      * Function who ask the user if them is sure to stop searching for a bluetooth Device.
      */
     private fun sureDialog() {
-        builder.setTitle(getResources().getString(R.string.confirm))
+        builder.setTitle(resources.getString(R.string.confirm))
         builder.setMessage(resources.getString(R.string.sureStopSearching))
 
         builder.setPositiveButton(getResources().getString(R.string.Yes)) { dialog, which ->

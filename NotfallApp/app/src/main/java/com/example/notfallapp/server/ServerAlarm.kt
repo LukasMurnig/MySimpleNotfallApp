@@ -79,7 +79,7 @@ class ServerAlarm {
                         Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
                     }
                 }catch (ex: Exception){
-                    Log.e(ServerApi.TAG, "problem occurred, volley error: " + error)
+                    Log.e(ServerApi.TAG, "problem occurred, volley error: $error")
                 }
             }) {
             @Throws(AuthFailureError::class)

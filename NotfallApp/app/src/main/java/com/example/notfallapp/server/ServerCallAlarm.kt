@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.android.volley.*
 import com.android.volley.toolbox.HttpHeaderParser
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.notfallapp.BroadcastReciever.ActionsBracelet
@@ -28,7 +27,6 @@ import java.util.*
 class ServerCallAlarm {
     companion object {
         private lateinit var sharedPreferences: SharedPreferences
-        var serverAPIURL = "https://jamesdev.ilogs.com/API/v1"
         const val TAG = "ServerApi"
         private var volleyRequestQueue: RequestQueue? = null
         var userId: String? = null
@@ -60,7 +58,7 @@ class ServerCallAlarm {
                     }catch(ex: ParseException){
                         Log.e(TAG, ex.toString())
                     }
-                    if(statusCode >= 200 && statusCode <300) {
+                    if(statusCode in 200..299) {
                         alarmSuccessful = true
                         val intent = Intent(context, AlarmSuccessfulActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -105,15 +103,15 @@ class ServerCallAlarm {
 
                 @Throws(AuthFailureError::class)
                 override fun getBody(): ByteArray? {
-                    try {
+                    return try {
                         if(requestBody == null){
-                            return null
+                            null
                         }else{
-                            return requestBody.toByteArray(Charsets.UTF_8)
+                            requestBody.toByteArray(Charsets.UTF_8)
                         }
                     } catch (ex: UnsupportedEncodingException) {
                         VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", reqBody, "utf-8")
-                        return null
+                        null
                     }
                 }
 
@@ -166,7 +164,7 @@ class ServerCallAlarm {
             reqBody.put("Positions", arrayBody)
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
-            var requestBody = reqBody.toString()
+            val requestBody = reqBody.toString()
             val stringRequest = object : StringRequest(
                 Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/positions",
                 Response.Listener<String> { response ->
@@ -176,14 +174,14 @@ class ServerCallAlarm {
                     }catch(ex: ParseException){
                         Log.e(TAG, ex.toString())
                     }
-                    if (statusCode >= 200 && statusCode < 300){
+                    if (statusCode in 200..299){
                         positionSuccessful = true
                     }
                 },
                 Response.ErrorListener { error ->
                     if (error.networkResponse != null) {
                         val resErrorBody = JSONObject(String(error.networkResponse.data))
-                        if (!resErrorBody.get("Error").equals("org.json.JSONException: End of input at character 0 of ")) {
+                        if (resErrorBody.get("Error") != "org.json.JSONException: End of input at character 0 of ") {
                             Log.e(
                                 ServerApi.TAG,
                                 "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get(
