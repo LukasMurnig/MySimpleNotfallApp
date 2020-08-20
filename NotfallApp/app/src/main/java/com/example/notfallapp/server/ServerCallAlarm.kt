@@ -27,11 +27,11 @@ import java.util.*
 class ServerCallAlarm {
     companion object {
         private lateinit var sharedPreferences: SharedPreferences
-        const val TAG = "ServerApi"
+        private const val TAG = "ServerApi"
         private var volleyRequestQueue: RequestQueue? = null
         var userId: String? = null
-        var alarmSuccessful = false
-        var positionSuccessful = false
+        private var alarmSuccessful = false
+        private var positionSuccessful = false
 
         /**
          * function send a alarm to the server and handle the response
@@ -45,89 +45,29 @@ class ServerCallAlarm {
             } else {
                 reqBody.put("Battery", ActionsBracelet.batteryState)
             }
-            val requestBody = reqBody.toString()
+
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
-            val stringRequest = object : StringRequest(
-                Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/alert",
-                Response.Listener<String> { response ->
-                    Log.e(ServerApi.TAG, "response Alarm: $response")
-                    var statusCode = 0
-                    try {
-                        statusCode = response.toInt()
-                    }catch(ex: ParseException){
-                        Log.e(TAG, ex.toString())
-                    }
-                    if(statusCode in 200..299) {
-                        alarmSuccessful = true
-                        val intent = Intent(context, AlarmSuccessfulActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        context.startActivity(intent)
-                    }else{
-                        val intent = Intent(context, AlarmFailedActivity::class.java)
-                        intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
-                        context.startActivity(intent)
-                    }
-                },
-                Response.ErrorListener { error ->
-                    if (error.networkResponse != null) {
-                        val resErrorBody = JSONObject(String(error.networkResponse.data))
-                        Log.e(
-                            ServerApi.TAG,
-                            "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get(
-                                "Error"
-                            )
-                        )
-                        val intent = Intent(context, AlarmFailedActivity::class.java)
-                        intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
-                        context.startActivity(intent)
-                    } else {
-                        Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
-                        val intent = Intent(context, AlarmFailedActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        context.startActivity(intent)
-                    }
-                }) {
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String>? {
-                    val params = HashMap<String, String>()
-                    val token = sharedPreferences.getString("AccessToken", "")
-                    params["Authorization"] = "Bearer $token"
-                    //..add other headers
-                    return params
-                }
 
-                override fun getBodyContentType(): String {
-                    return "application/json; charset=utf-8"
+            createStringRequest(context, "alert", reqBody){response ->
+                Log.e(ServerApi.TAG, "response Alarm: $response")
+                var statusCode = 0
+                try {
+                    statusCode = response.toInt()
+                }catch(ex: ParseException){
+                    Log.e(TAG, ex.toString())
                 }
-
-                @Throws(AuthFailureError::class)
-                override fun getBody(): ByteArray? {
-                    return try {
-                        if(requestBody == null){
-                            null
-                        }else{
-                            requestBody.toByteArray(Charsets.UTF_8)
-                        }
-                    } catch (ex: UnsupportedEncodingException) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", reqBody, "utf-8")
-                        null
-                    }
-                }
-
-                override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
-                    var responseString = ""
-                    if (response != null) {
-                        responseString = java.lang.String.valueOf(response.statusCode)
-                        // can get more details such as response.headers
-                    }
-                    return Response.success(
-                        responseString,
-                        HttpHeaderParser.parseCacheHeaders(response)
-                    )
+                if(statusCode in 200..299) {
+                    alarmSuccessful = true
+                    val intent = Intent(context, AlarmSuccessfulActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    context.startActivity(intent)
+                }else{
+                    val intent = Intent(context, AlarmFailedActivity::class.java)
+                    intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
+                    context.startActivity(intent)
                 }
             }
-            volleyRequestQueue?.add(stringRequest)
         }
 
         /**
@@ -164,19 +104,27 @@ class ServerCallAlarm {
             reqBody.put("Positions", arrayBody)
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
+
+            createStringRequest(context, "positions", reqBody){response ->
+                var statusCode = 0
+                try{
+                    statusCode = response.toInt()
+                }catch(ex: ParseException){
+                    Log.e(TAG, ex.toString())
+                }
+                if (statusCode in 200..299){
+                    positionSuccessful = true
+                }
+            }
+        }
+
+        private fun createStringRequest(context: Context, url: String, reqBody: JSONObject, response: (response: String) -> Unit){
             val requestBody = reqBody.toString()
+
             val stringRequest = object : StringRequest(
-                Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/positions",
+                Method.POST, "${ServerApi.serverAPIURL}/users/${userId}/$url",
                 Response.Listener<String> { response ->
-                    var statusCode = 0
-                    try{
-                        statusCode = response.toInt()
-                    }catch(ex: ParseException){
-                        Log.e(TAG, ex.toString())
-                    }
-                    if (statusCode in 200..299){
-                        positionSuccessful = true
-                    }
+                    response(response)
                 },
                 Response.ErrorListener { error ->
                     if (error.networkResponse != null) {
@@ -192,6 +140,11 @@ class ServerCallAlarm {
                     } else {
                         Log.e(ServerApi.TAG, "problem occurred, volley error: " + error.message)
                     }
+                    if(url == "alert"){
+                        val intent = Intent(context, AlarmFailedActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        context.startActivity(intent)
+                    }
                 }) {
                 override fun getHeaders(): Map<String, String>? {
                     val params = HashMap<String, String>()
@@ -206,15 +159,15 @@ class ServerCallAlarm {
 
                 @Throws(AuthFailureError::class)
                 override fun getBody(): ByteArray? {
-                    try {
+                    return try {
                         if(requestBody == null){
-                            return null
+                            null
                         }else{
-                            return requestBody.toByteArray(Charsets.UTF_8)
+                            requestBody.toByteArray(Charsets.UTF_8)
                         }
                     } catch (ex: UnsupportedEncodingException) {
                         VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", reqBody, "utf-8")
-                        return null
+                        null
                     }
                 }
 
