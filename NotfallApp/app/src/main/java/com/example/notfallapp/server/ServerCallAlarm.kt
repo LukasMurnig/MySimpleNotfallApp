@@ -118,6 +118,9 @@ class ServerCallAlarm {
             }
         }
 
+        /**
+         * function creates the String request for the two functions above
+         */
         private fun createStringRequest(context: Context, url: String, reqBody: JSONObject, response: (response: String) -> Unit){
             val requestBody = reqBody.toString()
 
