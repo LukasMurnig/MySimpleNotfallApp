@@ -1,3 +1,4 @@
 include ':VALRTILogsLibrary-debug'
+include ':VALRTILogsLibrary-debug'
 rootProject.name='NotfallApp'
 include ':app'

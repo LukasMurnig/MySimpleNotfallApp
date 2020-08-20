@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <dimen name="size10">10dp</dimen>
+    <dimen name="size15">15dp</dimen>
+    <dimen name="size20">20dp</dimen>
+    <dimen name="size30">30dp</dimen>
+    <string name="CharacteristicReadMessage">Achieved Characteristic Read: %1$s</string>
+    <string name="ConnectBracelet">ConnectBracelet</string>
+    <string name="Database">alarms.db</string>
+    <string name="DescriptorReadMessage">Received descriptor Read: %1$s</string>
+    <string name="ErrorVerification">There was an Error in App Verification in %1$s with the message: %2$s</string>
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+</resources>

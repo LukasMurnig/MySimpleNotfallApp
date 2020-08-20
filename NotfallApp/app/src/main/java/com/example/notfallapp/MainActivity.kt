@@ -22,7 +22,7 @@ import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceStartChecking
-import com.example.notfallappLibrary.interfaces.VALRTIConnectBracelet
+import com.example.notfallappLibrary.interfaces.VALRTIBracelet
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -36,7 +36,7 @@ import java.util.*
  * MainActivity/HomeActivity, has the buttons to add a bracelet and give information if a bracelet is connected or not
  */
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener, INotifications, ICheckPermission, VALRTIConnectBracelet {
+    ICreatingOnClickListener, INotifications, ICheckPermission, VALRTIBracelet {
 
     companion object {
         var context: Context? = null
@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity(),
     private lateinit var tvpairbracelet: TextView
 
     private lateinit var handler: Handler
+    private val actionsBracelet = ActionsBracelet()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -67,7 +68,6 @@ class MainActivity : AppCompatActivity(),
         }catch(ex: Exception){
             ex.toString()
         }
-        val actionsBracelet = ActionsBracelet()
         val filter = IntentFilter()
         filter.addAction("ACTION_GATT_CONNECTED")
         filter.addAction("ACTION_GATT_DISCONNECTED")
@@ -209,6 +209,10 @@ class MainActivity : AppCompatActivity(),
                 }
             }
         }, 0, 2000)
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(actionsBracelet)
     }
 }
 
