@@ -22,7 +22,7 @@ import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceStartChecking
-import com.example.notfallappLibrary.interfaces.VALRTIBracelet
+import com.example.notfallappLibrary.interfaces.VALRTIConnectBracelet
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -36,7 +36,7 @@ import java.util.*
  * MainActivity/HomeActivity, has the buttons to add a bracelet and give information if a bracelet is connected or not
  */
 class MainActivity : AppCompatActivity(),
-    ICreatingOnClickListener, INotifications, ICheckPermission, VALRTIBracelet {
+    ICreatingOnClickListener, INotifications, ICheckPermission, VALRTIConnectBracelet {
 
     companion object {
         var context: Context? = null
@@ -102,16 +102,22 @@ class MainActivity : AppCompatActivity(),
         btnpairBracelet.setOnClickListener {
             val success = valrtHasSelectedDevice(this)
             if(success){
+                tvStatusbracelet.textSize = 20F
                 tvStatusbracelet.text = this.getString(R.string.tryToConnectBracelet)
                 try {
                     timer.cancel()
                 }catch (ex: Exception){
                     ex.toString()
                 }
-                valrtConnectToSelectedDevice(this, true, {
+                valrtConnectToSelectedDevice(this, false, {
                     tvStatusbracelet.text = this.getString(R.string.braceleterror)
                 },{
-                    checkState()
+                    try {
+                        timer = Timer()
+                        checkState()
+                    }catch(ex: java.lang.Exception){
+                        Log.e("TAG", ex.toString())
+                    }
                 })
             }else{
                 tvStatusbracelet.text = this.getString(R.string.noDeviceToPair)
@@ -185,6 +191,7 @@ class MainActivity : AppCompatActivity(),
      * see if bracelet is connected or not and inform the user
      */
     private fun checkConnected(){
+        tvStatusbracelet.textSize = 30F
         if (ActionsBracelet.connected){
             tvStatusbracelet.text = resources.getString(R.string.braceleteconnected)
             btnBracelet.visibility = View.VISIBLE
