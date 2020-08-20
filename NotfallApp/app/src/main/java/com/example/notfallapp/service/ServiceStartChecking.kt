@@ -3,10 +3,8 @@ package com.example.notfallapp.service
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.os.IBinder
-import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.INotifications
 import java.util.*
@@ -22,7 +20,7 @@ class ServiceStartChecking: Service(), ICheckPermission, INotifications {
         var countBracelet = 0
     }
     override fun onBind(intent: Intent?): IBinder? {
-        TODO("Not yet implemented")
+        return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -33,7 +31,7 @@ class ServiceStartChecking: Service(), ICheckPermission, INotifications {
     /**
      * check if gps, internet and connection to bracelet is on/active
      */
-    fun checkEnabled(){
+    private fun checkEnabled(){
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask()
         {

@@ -21,8 +21,6 @@ class ServiceCancelAlarm: Service(), INotifications {
     override fun onStartCommand(intent: Intent?, flags2: Int, startId: Int): Int {
         // stop timer, before the timer can send to the server
         TimerHandler.deleteTimer()
-        // because of a bug
-        TimerHandler.deleteTimer()
 
         // create Notification "Alarm was cancelled"
         createNotificationCancelledAlarm(this)

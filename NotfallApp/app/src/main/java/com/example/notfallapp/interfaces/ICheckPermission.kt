@@ -74,7 +74,7 @@ interface ICheckPermission : INotifications {
         val wifiInfo = wifi.connectionInfo
         level = WifiManager.calculateSignalLevel(wifiInfo.rssi, numberOfLevels)
 
-        var builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        var builder: AlertDialog.Builder
         val handler = Handler(context.mainLooper)
 
         val timer = Timer()
@@ -83,10 +83,10 @@ interface ICheckPermission : INotifications {
                 val result = isNetworkAvailable(connectivityManager)
                 if (!result){
                     timer.cancel()
-                    handler.post( Runnable {
+                    handler.post {
                         builder = enableInternetAccess(context, connectivityManager, wifi)
                         showAccess(builder)
-                    })
+                    }
                 }
             }
         }, 0, 3000)

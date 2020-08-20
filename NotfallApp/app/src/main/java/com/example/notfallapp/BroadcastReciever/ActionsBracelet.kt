@@ -6,10 +6,10 @@ import android.content.Intent
 import android.util.Log
 import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.example.notfallapp.service.ServiceCallAlarm
-import com.example.notfallappLibrary.interfaces.VALRTIConnectBracelet
+import com.example.notfallappLibrary.interfaces.VALRTIBracelet
 import java.util.*
 
-class ActionsBracelet : BroadcastReceiver(), VALRTIConnectBracelet  {
+class ActionsBracelet : BroadcastReceiver(), VALRTIBracelet {
     companion object{
         var connected = false
         var batteryState = 0
@@ -18,7 +18,7 @@ class ActionsBracelet : BroadcastReceiver(), VALRTIConnectBracelet  {
     private var context: Context? = null
     override fun onReceive(p0: Context?, p1: Intent?) {
         context = p0
-        var action = p1?.action
+        val action = p1?.action
         Log.e(TAG, action)
         checkBatteryState()
         when (action){
@@ -29,12 +29,12 @@ class ActionsBracelet : BroadcastReceiver(), VALRTIConnectBracelet  {
         }
     }
     private fun callAlarm(){
-        var intent = Intent(context!!, ServiceCallAlarm::class.java)
+        val intent = Intent(context!!, ServiceCallAlarm::class.java)
         context!!.startService(intent)
     }
 
     private fun checkBatteryState(){
-        var timer = Timer()
+        val timer = Timer()
         timer.schedule(object : TimerTask(){
             override fun run() {
                 try{batteryState = valrtGetSelectedDeviceBattery(context!!).toInt()}catch(ex: Exception){ex.toString()}

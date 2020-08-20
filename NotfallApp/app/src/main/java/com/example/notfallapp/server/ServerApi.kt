@@ -84,51 +84,51 @@ class ServerApi : ICheckPermission {
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login", reqBody,
-            Response.Listener { response ->
-                Log.e(TAG, "response: $response")
+                { response ->
+                    Log.e(TAG, "response: $response")
 
-                try {
-                    val accessTokenCheck = response.has("AccessToken")
-                    if (accessTokenCheck)
-                    {
-                        timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
-                        try {
-                            accessToken = response.get("AccessToken") as String?
-                            refreshToken = response.get("RefreshToken") as String?
-                            tokenExpiresInSeconds = response.get("TokenExpiresInSeconds") as Int
-                            multiFactorAuth = response.get("MultiFactorAuth") as Boolean?
-                            this.username = response.get("Username") as String?
-                            userId = response.get("UserId") as String?
-                        }catch (ex: Exception){
-                            println("Error :$ex")
-                            LoginActivity.errorLogin.text = context.getString(R.string.unexpectedErrorLogin)
+                    try {
+                        val accessTokenCheck = response.has("AccessToken")
+                        if (accessTokenCheck)
+                        {
+                            timeTokenCome = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
+                            try {
+                                accessToken = response.get("AccessToken") as String?
+                                refreshToken = response.get("RefreshToken") as String?
+                                tokenExpiresInSeconds = response.get("TokenExpiresInSeconds") as Int
+                                multiFactorAuth = response.get("MultiFactorAuth") as Boolean?
+                                this.username = response.get("Username") as String?
+                                userId = response.get("UserId") as String?
+                            }catch (ex: Exception){
+                                println("Error :$ex")
+                                LoginActivity.errorLogin.text = context.getString(R.string.unexpectedErrorLogin)
+                            }
+
+                            saveDataToSharedPreferences()
+
+                            val intent = Intent(context, MainActivity::class.java)
+                            context.startActivity(intent)
                         }
-
-                        saveDataToSharedPreferences()
+                        Log.d(TAG, "Erfolgreich eingelogt")
 
                         val intent = Intent(context, MainActivity::class.java)
                         context.startActivity(intent)
+
+                    } catch (e: Exception) {
+                        Log.e(TAG, "problem occurred " + e.printStackTrace())
+                        e.printStackTrace()
                     }
-                    Log.d(TAG, "Erfolgreich eingelogt")
-
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-
-                } catch (e: Exception) {
-                    Log.e(TAG, "problem occurred " + e.printStackTrace())
-                    e.printStackTrace()
-                }
-            },
-            Response.ErrorListener { error ->
-                if(error.networkResponse != null){
-                    val resErrorBody = JSONObject(String(error.networkResponse.data))
-                    LoginActivity.errorLogin.text = context.getString(R.string.forbidden)
-                    Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
-                }else{
-                    LoginActivity.errorLogin.text = context.getString(R.string.internError)
-                    Log.e(TAG, "problem occurred, volley error: " + error.message)
-                }
-            })
+                },
+                { error ->
+                    if(error.networkResponse != null){
+                        val resErrorBody = JSONObject(String(error.networkResponse.data))
+                        LoginActivity.errorLogin.text = context.getString(R.string.forbidden)
+                        Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                    }else{
+                        LoginActivity.errorLogin.text = context.getString(R.string.internError)
+                        Log.e(TAG, "problem occurred, volley error: " + error.message)
+                    }
+                })
             volleyRequestQueue?.add(jsonObjectRequest)
         }
 
@@ -144,7 +144,7 @@ class ServerApi : ICheckPermission {
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.POST, "$serverAPIURL/login/refreshtoken", reqBody,
-                Response.Listener { response ->
+                { response ->
                     Log.i(TAG, "response: $response")
 
                     try {
@@ -170,7 +170,7 @@ class ServerApi : ICheckPermission {
                         e.printStackTrace()
                     }
                 },
-                Response.ErrorListener { error ->
+                { error ->
                     val resErrorBody = JSONObject(String(error.networkResponse.data))
                     Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
                 }
@@ -230,7 +230,7 @@ class ServerApi : ICheckPermission {
                             Log.e(TAG, "problem occurred, volley error: " + error.message)
                         }
                     }catch (ex: Exception){
-                        Log.e(TAG, "problem occurred, volley error: " + error)
+                        Log.e(TAG, "problem occurred, volley error: $error")
                     }
                 }) {
                 @Throws(AuthFailureError::class) // add the Authorization header to the server request

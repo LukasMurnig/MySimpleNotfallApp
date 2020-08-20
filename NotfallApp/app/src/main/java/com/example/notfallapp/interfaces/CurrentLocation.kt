@@ -61,7 +61,7 @@ class CurrentLocation {
          * Function who set the currentLocation to a variable which will be returned in getCurrentLocation
          */
         fun getLastKnownLocation() {
-            class findLocation : AsyncTask<Unit, Unit, Unit>() {
+            class FindLocation : AsyncTask<Unit, Unit, Unit>() {
 
                 override fun doInBackground(vararg p0: Unit?) {
                     if (context?.let {
@@ -69,7 +69,7 @@ class CurrentLocation {
                                 it,
                                 Manifest.permission.ACCESS_FINE_LOCATION
                             )
-                        } != PackageManager.PERMISSION_GRANTED && CurrentLocation!!.context?.let {
+                        } != PackageManager.PERMISSION_GRANTED && context?.let {
                             ActivityCompat.checkSelfPermission(
                                 it,
                                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -115,7 +115,7 @@ class CurrentLocation {
                     }
                 }
             }
-                val gd = findLocation()
+                val gd = FindLocation()
                 gd.execute()
         }
     }
