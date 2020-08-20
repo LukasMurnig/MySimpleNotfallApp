@@ -4,13 +4,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.example.notfallapp.MainActivity
 import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.example.notfallapp.service.ServiceCallAlarm
-import com.example.notfallappLibrary.interfaces.IConnectBracelet
+import com.example.notfallappLibrary.interfaces.VALRTIBracelet
 import java.util.*
 
-class ActionsBracelet : BroadcastReceiver(), IConnectBracelet  {
+class ActionsBracelet : BroadcastReceiver(), VALRTIBracelet {
     companion object{
         var connected = false
         var batteryState = 0

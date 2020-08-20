@@ -1,17 +1,10 @@
 package com.example.notfallapp.connectBracelet
 
-import android.Manifest
 import android.app.Activity
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothClass
 import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothGatt
-import android.content.*
-import android.content.pm.PackageManager
-import android.graphics.Color
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.os.IBinder
-import android.os.Parcelable
 import android.util.Log
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
@@ -19,18 +12,16 @@ import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ServerApi.Companion.TAG
-import com.example.notfallappLibrary.interfaces.IConnectBracelet
+import com.example.notfallappLibrary.interfaces.VALRTIBracelet
 
 
-class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermission, IConnectBracelet {
+class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermission, VALRTIBracelet {
 
     private lateinit var btnSos: Button
     private lateinit var btnHome: ImageButton
