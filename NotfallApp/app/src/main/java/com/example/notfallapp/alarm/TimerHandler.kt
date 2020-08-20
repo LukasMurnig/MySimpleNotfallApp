@@ -18,7 +18,6 @@ class TimerHandler {
             const val timerAfterSosWillSend: Long = 10000
             private lateinit var handler: Handler
             private var isStopped: Boolean? = null
-            private var idx = 0
 
         /**
          * To start Alarm after some Time if it doesn't get stopped.
@@ -40,8 +39,6 @@ class TimerHandler {
 
                         // Create the notification "Alarm was successful"
                         createNotificationSuccessfulAlarm(context)
-                        idx++
-                        Log.i("TimerTest","Timer erhöht: $idx")
 
                         val intent = Intent(context, AlarmSuccessfulActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
