@@ -140,6 +140,6 @@
         android:layout_marginTop="500dp"
         android:backgroundTint="@color/colorWhite"
         android:text="@string/cancel"
-        android:textSize="@dimen/size20" />
+        android:textSize="20sp" />
 
 </RelativeLayout>

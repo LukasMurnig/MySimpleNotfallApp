@@ -21,7 +21,7 @@
         android:layout_marginTop="165dp"
         android:text="@string/alarmcanceled"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/size30" />
+        android:textSize="30sp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_cancel_alarm_ok"
@@ -31,7 +31,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="323dp"
         android:text="@string/alarmcanceledok"
-        android:textSize="@dimen/size30"
+        android:textSize="30sp"
         android:gravity="center"
         android:backgroundTint="@color/colorWhite"/>
 

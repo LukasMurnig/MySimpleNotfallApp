@@ -76,7 +76,7 @@
             android:layout_gravity="center"
             android:padding="12dp"
             android:text="@string/loginbutton"
-            android:textSize="@dimen/size20" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/error_login"
