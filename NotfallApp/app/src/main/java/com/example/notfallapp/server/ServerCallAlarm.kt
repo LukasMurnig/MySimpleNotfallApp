@@ -40,6 +40,7 @@ class ServerCallAlarm {
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
+
             if (ActionsBracelet.batteryState == 0) {
                 reqBody.put("Battery", null)
             } else {
@@ -52,11 +53,13 @@ class ServerCallAlarm {
             createStringRequest(context, "alert", reqBody){response ->
                 Log.e(ServerApi.TAG, "response Alarm: $response")
                 var statusCode = 0
+
                 try {
                     statusCode = response.toInt()
                 }catch(ex: ParseException){
                     Log.e(TAG, ex.toString())
                 }
+
                 if(statusCode in 200..299) {
                     alarmSuccessful = true
                     val intent = Intent(context, AlarmSuccessfulActivity::class.java)
@@ -84,21 +87,25 @@ class ServerCallAlarm {
             val location = CurrentLocation.currentLocation
 
             body.put("Timestamp", currentTime)
+
             if(location?.longitude != null){
                 body.put("Longitude", location.longitude)
             }else{
                 body.put("Longitude", 0)
             }
+
             if(location?.latitude != null){
                 body.put("Latitude", location.latitude)
             }else{
                 body.put("Latitude", 0)
             }
+
             if(location?.accuracy != null){
                 body.put("Accuracy", location.accuracy)
             }else{
                 body.put("Accuracy", 0)
             }
+
             body.put("Source", "gps")
             arrayBody.put(body)
             reqBody.put("Positions", arrayBody)
@@ -112,6 +119,7 @@ class ServerCallAlarm {
                 }catch(ex: ParseException){
                     Log.e(TAG, ex.toString())
                 }
+
                 if (statusCode in 200..299){
                     positionSuccessful = true
                 }

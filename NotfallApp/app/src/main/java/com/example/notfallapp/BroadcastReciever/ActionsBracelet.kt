@@ -21,6 +21,7 @@ class ActionsBracelet : BroadcastReceiver(), VALRTIBracelet {
         val action = p1?.action
         Log.e(TAG, action)
         checkBatteryState()
+
         when (action){
             "ACTION_GATT_CONNECTED" -> connected = true
             "ACTION_GATT_DISCONNECTED" -> connected = false

@@ -60,7 +60,6 @@ class AlertingChainListAdapter(private var alertingChain: AlertingChain) :
      * class for our AlertingChainViewHolder
      **/
     class AlertingChainMembersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //private lateinit var imageContact: ImageView
         private lateinit var contactName: TextView
         private lateinit var contactActive: ImageView
 
@@ -68,7 +67,6 @@ class AlertingChainListAdapter(private var alertingChain: AlertingChain) :
          * Bind the AlertingChainMembers
          */
         fun bindAlertingChainMember(alertingChainMember: AlertingChainMember){
-            //imageContact = itemView.findViewById(R.id.contact_item_icon)
             contactName = itemView.findViewById(R.id.contact_name)
             contactActive = itemView.findViewById(R.id.contact_active)
 

@@ -59,8 +59,10 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
 
         lvDevices.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             Log.d("ListViewClicked", "List View in Add BraceletActivity was clicked")
+
             if(devices.size != 0) {
                 val device = devices[position]
+
                 valrtSelectDevice(this, device)
                 valrtConnectToSelectedDevice(this, false, { string ->
                     Log.e(TAG, string)

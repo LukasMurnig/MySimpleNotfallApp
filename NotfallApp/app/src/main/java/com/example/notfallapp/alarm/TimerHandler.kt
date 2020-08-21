@@ -25,7 +25,7 @@ class TimerHandler {
         fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
                 //handler = Handler(Looper.getMainLooper())
-                handler = Handler(Looper.getMainLooper())
+                handler = Handler()
                 isStopped = false
                 handler.postDelayed({ //Do something after 10000ms
 
@@ -44,7 +44,6 @@ class TimerHandler {
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(context, intent, null)
                     }
-
                 }, timerAfterSosWillSend)
             }
         /**
@@ -58,7 +57,6 @@ class TimerHandler {
             }catch (ex: Exception){
                 println(ex.toString())
             }
-
         }
     }
 }

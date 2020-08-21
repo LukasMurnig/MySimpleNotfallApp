@@ -98,11 +98,13 @@ class SelectProfilPictureActivity : AppCompatActivity(), ICheckPermission {
         val wallpaperDirectory = File(
             Environment.getExternalStorageDirectory().toString() + _IMAGE_DIRECTORY
         )
+
         // have the object build the directory structure, if needed.
         if (wallpaperDirectory.exists()) {
             wallpaperDirectory.delete()
         }
         wallpaperDirectory.mkdirs()
+
         try {
             val f = File(
                 wallpaperDirectory, resources.getString(R.string.namePicture)
