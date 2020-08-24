@@ -88,12 +88,12 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
                     val options = BitmapFactory.Options()
                     options.inPreferredConfig = Bitmap.Config.ARGB_8888
                     val bitmap = BitmapFactory.decodeFile(f.absolutePath, options)
-
-                    btnProfilePicture.background = BitmapDrawable(bitmap)
-                    Log.d(resources.getString(R.string.ReadFile),
-                        String.format(resources.getString(R.string.ReadFilePath), f.absolutePath))
+                    if(bitmap != null){
+                        btnProfilePicture.background = BitmapDrawable(bitmap)
+                        Log.d(resources.getString(R.string.ReadFile),
+                            String.format(resources.getString(R.string.ReadFilePath), f.absolutePath))
+                    }
                 }
-
             } catch (e1: IOException) {
                 e1.printStackTrace()
             }
