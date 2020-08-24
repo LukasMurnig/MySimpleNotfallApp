@@ -20,7 +20,7 @@ class TimerHandler {
             private var isStopped: Boolean? = null
 
         /**
-         * To start Alarm after some Time if it doesn't get stopped.
+         * To start Alarm after some Time if it doesn't get stopped by the user.
          */
         fun timerHandler(context: Context){
                 // this, when you would like to have the timer in the main thread
