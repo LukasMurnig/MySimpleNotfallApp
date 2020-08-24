@@ -7,28 +7,37 @@
     android:padding="3dp">
 
     <!-- Wer nahm an -->
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/AlarmAnswered"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"/>-->
+    <ImageView
+        android:id="@+id/alertState"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
+
     <TextView
-        android:id="@+id/alertHelper"
+        android:id="@+id/alertType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="110dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"/>
 
     <!-- Zeitstempel -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/alertHelper"
+        android:layout_below="@+id/alertType"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/time" />
@@ -37,7 +46,7 @@
         android:layout_marginStart="80dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/alertHelper"
+        android:layout_below="@+id/alertType"
         android:layout_marginTop="10dp"/>
 
     <View

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
@@ -57,20 +58,33 @@ class AlertsListAdapter(private var alerts: List<Alert>) : RecyclerView.Adapter<
      */
     class AlertsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var alertDate: TextView
-        private lateinit var alertHelper: TextView
+        private lateinit var alertType: TextView
+        private lateinit var alertState: ImageView
 
         /**
          * Bind our Alerts
          */
         fun bindAlert(alert: Alert){
             alertDate = itemView.findViewById(R.id.alertDate)
-            alertHelper = itemView.findViewById(R.id.alertHelper)
+            alertType = itemView.findViewById(R.id.alertType)
+            alertState = itemView.findViewById(R.id.alertState)
 
             val timestamp = alert.date.split('.')[0]
-            val time = timestamp.split('T')
+            var time = timestamp.split('T')
+            val date = time[0].split('-')
+            time = time[1].split(':')
 
-            alertDate.text = time[0] + " " + time[1]
-            alertHelper.text = alert.helperId.toString()
+
+            alertDate.text = "${date[2]}.${date[1]}.${date[0]} ${time[0]}:${time[1]}"
+            if(alert.type == 0.toByte()){
+                alertType.text = itemView.context.getString(R.string.sos)
+            }
+
+            if(alert.state == 0.toByte()){
+                alertState.background = itemView.context.getDrawable(R.drawable.red_circle)
+            }else {
+                alertState.background = itemView.context.getDrawable(R.drawable.green_circle)
+            }
         }
     }
 }
