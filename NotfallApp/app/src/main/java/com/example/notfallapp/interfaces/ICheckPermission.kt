@@ -99,6 +99,7 @@ interface ICheckPermission : INotifications {
         val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         var builder: AlertDialog.Builder
         val handler = Handler(context.mainLooper)
+
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
@@ -120,6 +121,7 @@ interface ICheckPermission : INotifications {
      */
     private fun checkGPSEnabled(context: Context){
         val handler = Handler(context.mainLooper)
+
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {

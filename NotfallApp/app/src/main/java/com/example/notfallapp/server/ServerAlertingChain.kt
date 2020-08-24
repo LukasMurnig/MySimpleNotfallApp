@@ -34,7 +34,7 @@ class ServerAlertingChain {
                 var alertChM: Array<AlertingChainMember>? = arrayOf()
                 if(alertingChainMembers == null){
                     alertChM = null
-                }else{
+                } else {
                     for (i in 0 until alertingChainMembers.length()) {
                         val json = alertingChainMembers.getJSONObject(i)
 

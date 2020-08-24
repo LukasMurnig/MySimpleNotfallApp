@@ -61,19 +61,23 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         configureButtons()
         initComponents()
+
         try {
             checkState()
         }catch(ex: Exception){
             ex.toString()
         }
+
         val filter = IntentFilter()
         filter.addAction("ACTION_GATT_CONNECTED")
         filter.addAction("ACTION_GATT_DISCONNECTED")
         filter.addAction("Alarm called")
         filter.addAction("BatteryState")
         registerReceiver(actionsBracelet, filter)
+
         // make server ready
         GlobalScope.launch {
             try{
@@ -104,11 +108,13 @@ class MainActivity : AppCompatActivity(),
             if(success){
                 tvStatusbracelet.textSize = 20F
                 tvStatusbracelet.text = this.getString(R.string.tryToConnectBracelet)
+
                 try {
                     timer.cancel()
                 }catch (ex: Exception){
                     ex.toString()
                 }
+
                 valrtConnectToSelectedDevice(this, false, {
                     tvStatusbracelet.text = this.getString(R.string.braceleterror)
                 },{

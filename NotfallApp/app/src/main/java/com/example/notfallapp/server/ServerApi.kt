@@ -189,6 +189,7 @@ class ServerApi : ICheckPermission {
             editor.putString("RefreshToken", refreshToken)
             editor.putInt("tokenExpiresInSeconds", tokenExpiresInSeconds!!)
             editor.putBoolean("MultiFactorAuth", multiFactorAuth!!)
+
             if(userId != null){
                 editor.putString("UserId", userId)
             }

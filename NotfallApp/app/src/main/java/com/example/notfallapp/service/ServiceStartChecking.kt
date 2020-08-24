@@ -45,6 +45,7 @@ class ServiceStartChecking: Service(), ICheckPermission, INotifications {
                 }else{
                     countGPS = 0
                 }
+
                 val connectivityManager =
                     applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                 val internet = isNetworkAvailable(connectivityManager)
