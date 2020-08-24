@@ -40,6 +40,7 @@ class AlertsListAdapter(private var alerts: List<Alert>) : RecyclerView.Adapter<
                 intent.putExtra("longitude", alert.triggeringPositionLongitude)
                 intent.putExtra("latitude", alert.triggeringPositionLatitude)
                 intent.putExtra("timestamp", alert.date)
+                intent.putExtra("type", alert.type)
                 intent.putExtra("accepted", alert.helperId)
                 holder.itemView.context.startActivity(intent)
             }

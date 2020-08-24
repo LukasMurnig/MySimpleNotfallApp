@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
+import com.example.notfallapp.server.ResponseConverter
 import java.util.*
 
 /**
@@ -25,6 +26,7 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var tvDetailLatitude: TextView
     private lateinit var tvDetailDate: TextView
     private lateinit var tvDetailTime: TextView
+    private lateinit var tvDetailType: TextView
     private lateinit var tvDetailAlarmAccepted: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,14 +36,25 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
         installComponents()
 
         val extras = intent.extras ?: return
-        tvDetailDeviceId.text = (extras.get("deviceId") as UUID?).toString()
+
+        tvDetailDeviceId.text = (ResponseConverter().convertFromStringToUUID(extras.get("deviceId") as String?)).toString()
 
         tvDetailLongitude.text = extras.getDouble("longitude").toString()
         tvDetailLatitude.text = extras.getDouble("latitude").toString()
 
         val timestamp = extras.getString("timestamp")?.split('.')?.get(0)
-        tvDetailDate.text = timestamp?.split('T')?.get(0)
-        tvDetailTime.text = timestamp?.split('T')?.get(1)
+        if(timestamp!=null){
+            var time = timestamp.split('T')
+            val date = time[0].split('-')
+            time = time[1].split(':')
+
+            tvDetailDate.text = "${date?.get(2)}.${date?.get(1)}.${date?.get(0)}"
+            tvDetailTime.text = "${time[0]}:${time[1]}"
+        }
+
+        if(extras.getByte("type") == 0.toByte()){
+            tvDetailType.text = applicationContext.getText(R.string.sos)
+        }
 
         if((extras.get("accepted")) != null){
             tvDetailAlarmAccepted.text = (extras.get("accepted") as UUID?).toString()
@@ -58,6 +71,7 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
         tvDetailLatitude = findViewById(R.id.tvDetailLatitude)
         tvDetailDate = findViewById(R.id.tvDetailDate)
         tvDetailTime = findViewById(R.id.tvDetailTime)
+        tvDetailType = findViewById(R.id.tvDetailType)
         tvDetailAlarmAccepted = findViewById(R.id.tvDetailAlarmAccepted)
     }
 

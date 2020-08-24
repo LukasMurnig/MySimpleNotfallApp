@@ -49,6 +49,7 @@
     <string name="prio">prio</string>
     <string name="device">Gerät:</string>
     <string name="date">Datum:</string>
+    <string name="alarmType">Alarm Typ:</string>
 
     <!-- Settings -->
     <string name="ChangeProfil">Ändere Daten</string>

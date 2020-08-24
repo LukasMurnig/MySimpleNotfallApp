@@ -110,6 +110,25 @@
         android:layout_marginStart="110dp"
         android:layout_marginTop="10dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/alarmType"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailTime"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+    <TextView
+        android:id="@+id/tvDetailType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailTime"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="10dp"/>
+
     <!-- Wer nahm an -->
     <TextView
         android:layout_width="wrap_content"
@@ -117,7 +136,7 @@
         android:text="@string/AlarmAnswered"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDetailTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailType"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"/>
     <TextView
@@ -127,7 +146,7 @@
         android:text="@string/AlarmAccepted"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDetailTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailType"
         android:layout_marginStart="150dp"
         android:layout_marginTop="10dp"/>
 
