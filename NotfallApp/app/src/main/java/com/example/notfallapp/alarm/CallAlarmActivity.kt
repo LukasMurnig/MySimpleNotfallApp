@@ -11,9 +11,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.BroadcastReciever.ActionsBracelet
 import com.example.notfallapp.R
+import com.example.notfallapp.interfaces.BeaconInRange
 import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.service.ServiceCancelAlarm
+import org.altbeacon.beacon.Beacon
 import kotlin.math.roundToInt
 
 /**
@@ -67,6 +69,8 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
      * Set the Last Location in our Activity to show the user his position
      */
     private fun getLatestKnownLocation(){
+        var s = BeaconInRange()
+        s.getBeacon()
         val location = CurrentLocation.getCurrentLocation(applicationContext)
         var longitude: String?
         var latitude: String?

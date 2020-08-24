@@ -11,6 +11,7 @@ import com.android.volley.toolbox.Volley
 import com.example.notfallapp.BroadcastReciever.ActionsBracelet
 import com.example.notfallapp.alarm.AlarmFailedActivity
 import com.example.notfallapp.alarm.AlarmSuccessfulActivity
+import com.example.notfallapp.interfaces.BeaconInRange
 import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.login.LoginActivity
 import org.json.JSONArray
@@ -37,7 +38,7 @@ class ServerCallAlarm {
          * function send a alarm to the server and handle the response
          */
         fun sendAlarm(context: Context) {
-            volleyRequestQueue = Volley.newRequestQueue(context)
+            /*volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
 
@@ -70,7 +71,7 @@ class ServerCallAlarm {
                     intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 }
-            }
+            }*/
         }
 
         /**
@@ -80,12 +81,13 @@ class ServerCallAlarm {
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             val body = JSONObject()
+            val beaconBody = JSONObject()
             val arrayBody = JSONArray()
             val time = Timestamp(System.currentTimeMillis()).toString()
             val times = time.split(" ")
             val currentTime = times[0]+"T"+times[1]+"+00:00"
             val location = CurrentLocation.currentLocation
-
+            val beacon = BeaconInRange.beacon
             body.put("Timestamp", currentTime)
 
             if(location?.longitude != null){
@@ -108,7 +110,17 @@ class ServerCallAlarm {
 
             body.put("Source", "gps")
             arrayBody.put(body)
+            if(beacon != null){
+                beaconBody.put("Timestamp", currentTime)
+                beaconBody.put("Type", beacon.beaconTypeCode)
+                beaconBody.put("Identifier", beacon.identifiers)
+                beaconBody.put("Mac", beacon.bluetoothAddress)
+                beaconBody.put("SignalStrength", beacon.measurementCount)
+                arrayBody.put(beaconBody)
+            }
+            Log.e("GAG",arrayBody.toString())
             reqBody.put("Positions", arrayBody)
+            Log.e("GAG",reqBody.toString())
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
 

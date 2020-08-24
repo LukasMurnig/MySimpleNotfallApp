@@ -216,6 +216,7 @@ class MainActivity : AppCompatActivity(),
             }
         }, 0, 2000)
     }
+
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(actionsBracelet)
