@@ -36,6 +36,7 @@ class AlertsListAdapter(private var alerts: List<Alert>) : RecyclerView.Adapter<
 
             holder.itemView.setOnClickListener{
                 val intent = Intent(holder.itemView.context, DetailAlertActivity::class.java)
+                intent.putExtra("ID", alert.id)
                 intent.putExtra("deviceId", alert.deviceId)
                 intent.putExtra("longitude", alert.triggeringPositionLongitude)
                 intent.putExtra("latitude", alert.triggeringPositionLatitude)

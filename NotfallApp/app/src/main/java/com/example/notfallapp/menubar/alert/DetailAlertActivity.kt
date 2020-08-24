@@ -5,9 +5,14 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ResponseConverter
+import com.example.notfallapp.server.ServerAlarm
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 /**
@@ -28,6 +33,7 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
     private lateinit var tvDetailTime: TextView
     private lateinit var tvDetailType: TextView
     private lateinit var tvDetailAlarmAccepted: TextView
+    private lateinit var rvAlertLogs: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +66,15 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
             tvDetailAlarmAccepted.text = (extras.get("accepted") as UUID?).toString()
         } else {
             tvDetailAlarmAccepted.text = resources.getText(R.string.AlarmAccepted)
+        }
+
+        rvAlertLogs = findViewById(R.id.rvAlertLogs)
+        rvAlertLogs.setHasFixedSize(false)
+        rvAlertLogs.layoutManager = LinearLayoutManager(this)
+
+        MainScope().launch {
+            // get the Alert History from the server
+            ServerAlarm().getAlertLogs(applicationContext, rvAlertLogs, extras.getLong("ID"))
         }
     }
 
