@@ -65,8 +65,10 @@ class ServerAlarm {
      */
     fun getActiveAlarm(context: Context){
         createGetArrayCall(Request.Method.GET, "/alerts?state=0"){response ->
-            var intent = Intent(context, AlarmSuccessfulActivity::class.java)
-            context.startActivity(intent)
+            if(response.length() != 0) {
+                var intent = Intent(context, AlarmSuccessfulActivity::class.java)
+                context.startActivity(intent)
+            }
         }
     }
 
