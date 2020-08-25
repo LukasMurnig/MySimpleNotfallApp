@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity(),
         initComponents()
 
         try {
+            timer = Timer()
             checkState()
         }catch(ex: Exception){
             ex.toString()
@@ -218,12 +219,17 @@ class MainActivity : AppCompatActivity(),
      */
     private fun checkConnected(){
         tvStatusbracelet.textSize = 30F
+        Log.e("TAG", ActionsBracelet.connected.toString())
         if (ActionsBracelet.connected){
             tvStatusbracelet.text = resources.getString(R.string.braceleteconnected)
             btnBracelet.visibility = View.VISIBLE
+            btnpairBracelet.visibility = View.GONE
+            tvpairbracelet.visibility = View.GONE
         }else{
             tvStatusbracelet.text = resources.getString(R.string.nobraceletconnected)
             btnBracelet.visibility = View.GONE
+            btnpairBracelet.visibility = View.VISIBLE
+            tvpairbracelet.visibility = View.VISIBLE
         }
     }
 
