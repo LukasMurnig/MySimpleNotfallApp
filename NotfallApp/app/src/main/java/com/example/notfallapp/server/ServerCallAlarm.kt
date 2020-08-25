@@ -38,7 +38,7 @@ class ServerCallAlarm {
          * function send a alarm to the server and handle the response
          */
         fun sendAlarm(context: Context) {
-            /*volleyRequestQueue = Volley.newRequestQueue(context)
+            volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
 
@@ -71,7 +71,7 @@ class ServerCallAlarm {
                     intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 }
-            }*/
+            }
         }
 
         /**
@@ -83,6 +83,7 @@ class ServerCallAlarm {
             val body = JSONObject()
             val beaconBody = JSONObject()
             val arrayBody = JSONArray()
+            val arrayBodyBeacon = JSONArray()
             val time = Timestamp(System.currentTimeMillis()).toString()
             val times = time.split(" ")
             val currentTime = times[0]+"T"+times[1]+"+00:00"
@@ -113,14 +114,13 @@ class ServerCallAlarm {
             if(beacon != null){
                 beaconBody.put("Timestamp", currentTime)
                 beaconBody.put("Type", beacon.beaconTypeCode)
-                beaconBody.put("Identifier", beacon.identifiers)
+                beaconBody.put("Identifier", beacon.id1)
                 beaconBody.put("Mac", beacon.bluetoothAddress)
-                beaconBody.put("SignalStrength", beacon.measurementCount)
-                arrayBody.put(beaconBody)
+                beaconBody.put("SignalStrength", beacon.distance)
+                arrayBodyBeacon.put(beaconBody)
             }
-            Log.e("GAG",arrayBody.toString())
             reqBody.put("Positions", arrayBody)
-            Log.e("GAG",reqBody.toString())
+            reqBody.put("Beacon", arrayBodyBeacon)
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
 
@@ -131,7 +131,6 @@ class ServerCallAlarm {
                 }catch(ex: ParseException){
                     Log.e(TAG, ex.toString())
                 }
-
                 if (statusCode in 200..299){
                     positionSuccessful = true
                 }

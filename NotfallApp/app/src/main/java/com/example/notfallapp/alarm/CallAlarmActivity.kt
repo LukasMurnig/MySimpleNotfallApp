@@ -69,8 +69,6 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
      * Set the Last Location in our Activity to show the user his position
      */
     private fun getLatestKnownLocation(){
-        var s = BeaconInRange()
-        s.getBeacon()
         val location = CurrentLocation.getCurrentLocation(applicationContext)
         var longitude: String?
         var latitude: String?

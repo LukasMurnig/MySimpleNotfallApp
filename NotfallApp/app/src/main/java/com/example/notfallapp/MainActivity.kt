@@ -15,10 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.toolbox.Volley
 import com.example.notfallapp.BroadcastReciever.ActionsBracelet
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
-import com.example.notfallapp.interfaces.CurrentLocation
-import com.example.notfallapp.interfaces.ICheckPermission
-import com.example.notfallapp.interfaces.ICreatingOnClickListener
-import com.example.notfallapp.interfaces.INotifications
+import com.example.notfallapp.interfaces.*
 import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceStartChecking
@@ -70,6 +67,8 @@ class MainActivity : AppCompatActivity(),
         }catch(ex: Exception){
             ex.toString()
         }
+        var s = BeaconInRange()
+        s.getBeacon(this)
 
         val filter = IntentFilter()
         filter.addAction("ACTION_GATT_CONNECTED")
