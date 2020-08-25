@@ -1,11 +1,8 @@
 package com.example.notfallapp.alarm
 
 import android.content.Context
-import android.content.Intent
 import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.server.ServerCallAlarm
 
@@ -32,10 +29,10 @@ class TimerHandler {
                     if(!isStopped!!){
                         isStopped = true
                         // Send alarm to the Server
-                        //ServerCallAlarm.sendAlarm(context)
+                        ServerCallAlarm.sendAlarm(context)
 
                         // Send position to the Server
-                        //ServerCallAlarm.sendPosition(context)
+                        ServerCallAlarm.sendPosition(context)
 
                         // Create the notification "Alarm was successful"
                         createNotificationSuccessfulAlarm(context)

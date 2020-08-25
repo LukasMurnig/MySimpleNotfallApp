@@ -65,12 +65,17 @@ class ServerAlarm {
      */
     fun getActiveAlarm(context: Context){
         createGetArrayCall(Request.Method.GET, "/alerts?state=0"){response ->
-            var intent = Intent(context, AlarmSuccessfulActivity::class.java)
+            val intent = Intent(context, AlarmSuccessfulActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.putExtra("Id", (response.getJSONObject(0).get("ID") as Int).toLong())
             context.startActivity(intent)
         }
     }
 
-    fun getAlertLogs(context: Context, rvAlarmLogs: RecyclerView, alarmId: Long, white: Boolean){
+    /**
+     * function to get all alert logs of a alert
+     */
+    fun getAlertLogs(rvAlarmLogs: RecyclerView, alarmId: Long, white: Boolean){
         createGetArrayCall(Request.Method.GET, "/alerts/$alarmId/alertlogs") { response ->
 
             if(response.length() == 0){
@@ -92,8 +97,15 @@ class ServerAlarm {
                         ))
                 }
                 val adapter = AlertLogsListAdapter(result, white)
-                rvAlarmLogs.adapter = adapter
-                adapter.notifyDataSetChanged()
+                if(rvAlarmLogs.adapter != null){
+                    if(rvAlarmLogs.adapter!!.itemCount < adapter.itemCount){
+                        rvAlarmLogs.adapter = adapter
+                        adapter.notifyDataSetChanged()
+                    }
+                } else {
+                    rvAlarmLogs.adapter = adapter
+                    adapter.notifyDataSetChanged()
+                }
             }
         }
     }
