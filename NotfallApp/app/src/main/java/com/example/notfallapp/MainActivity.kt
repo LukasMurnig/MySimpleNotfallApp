@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity(),
     companion object {
         var context: Context? = null
         var timer: Timer = Timer()
+        var count = 0
     }
 
     private lateinit var btnSos: Button
@@ -188,6 +189,10 @@ class MainActivity : AppCompatActivity(),
         context = this
         CurrentLocation.getCurrentLocation(this)
         checkInternetGPSPermissions(this)
+        if(count == 0) {
+            checkBluetoothPermission(this)
+            count++
+        }
         val intent = Intent(this, ServiceStartChecking::class.java)
         context?.startService(intent)
     }

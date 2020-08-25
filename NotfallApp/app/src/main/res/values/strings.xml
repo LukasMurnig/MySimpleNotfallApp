@@ -166,6 +166,9 @@
     <string name="reconnectBracelet">Wir haben leider die Verbindung zu Ihrem Armband verloren!</string>
     <string name="forbidden">Hoppla anscheinend stimmt Benutzername oder Passwort nicht! </string>
     <string name="internError">Hoppla anscheinend haben wir gerade Probleme mit unserem Server.</string>
+    <string name="hint">Hinweis!</string>
+    <string name="hintMessage">Damit wir Sie bei einem Alarm besser finden können benötigen wir, dass Sie
+                                Bluetooth einschalten!</string>
 
     <!-- Server -->
     <!--ServerUser-->

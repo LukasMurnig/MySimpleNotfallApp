@@ -14,6 +14,7 @@ import com.example.notfallapp.alarm.AlarmSuccessfulActivity
 import com.example.notfallapp.interfaces.BeaconInRange
 import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.login.LoginActivity
+import com.example.notfallapp.server.ServerApi.Companion.createJsonObjectRequest
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
@@ -51,12 +52,11 @@ class ServerCallAlarm {
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
 
-            createStringRequest(context, "alert", reqBody){response ->
+            createJsonObjectRequest(Request.Method.POST, "/alert", reqBody){response ->
                 Log.e(ServerApi.TAG, "response Alarm: $response")
                 var statusCode = 0
-
                 try {
-                    statusCode = response.toInt()
+                    //statusCode = response.
                 }catch(ex: ParseException){
                     Log.e(TAG, ex.toString())
                 }

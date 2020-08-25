@@ -45,6 +45,18 @@ interface ICheckPermission : INotifications {
     }
 
     /**
+     * Function which check if bluetooth is Enabled so that we can look for beacons.
+     */
+    fun checkBluetoothPermission(context: Context){
+        val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        val success = isBluetoothEnabled(bluetoothAdapter)
+        if(!success){
+            var builder: AlertDialog.Builder
+            builder = enableBluetoothForBeacon(context, bluetoothAdapter)
+            showAccess(builder)
+        }
+    }
+    /**
      * Function who check for all 3 Permissions
      */
     fun checkPermissions(context: Context){
@@ -210,6 +222,24 @@ interface ICheckPermission : INotifications {
             if (!success){
             noBluetoothEnabled(context, bluetoothAdapter)
             }
+            dialog.dismiss()
+        }
+        return builder
+    }
+
+    /**
+     * Dialog to enable Bluetooth but just ones
+     */
+
+    private fun enableBluetoothForBeacon(context: Context, bluetoothAdapter: BluetoothAdapter): AlertDialog.Builder{
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setTitle(context.resources.getString(R.string.hint))
+        builder.setMessage(context.resources.getString(R.string.hintMessage))
+        builder.setPositiveButton(context.resources.getString(R.string.access)){dialog, which ->
+            bluetoothAdapter.enable()
+            checkBluetoothEnabled(context)
+        }
+        builder.setNegativeButton(context.resources.getString(R.string.cancel)){dialog, which ->
             dialog.dismiss()
         }
         return builder
