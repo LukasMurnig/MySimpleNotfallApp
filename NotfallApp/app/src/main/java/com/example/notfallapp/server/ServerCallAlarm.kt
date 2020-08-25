@@ -9,6 +9,7 @@ import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.notfallapp.BroadcastReciever.ActionsBracelet
+import com.example.notfallapp.MainActivity
 import com.example.notfallapp.alarm.AlarmFailedActivity
 import com.example.notfallapp.interfaces.BeaconInRange
 import com.example.notfallapp.interfaces.CurrentLocation
@@ -118,6 +119,18 @@ class ServerCallAlarm {
                 if (statusCode in 200..299){
                     positionSuccessful = true
                 }
+            }
+        }
+
+        /**
+         * function stops the alarm
+         */
+        fun stopAlarm(context: Context, idAlarm: String){
+            createJsonObjectRequest(Request.Method.POST, "/alerts/$idAlarm/close", null){response ->
+                Log.i(TAG, "Stopped the alarm")
+                val intent = Intent(context, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
             }
         }
 

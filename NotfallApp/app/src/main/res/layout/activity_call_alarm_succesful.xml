@@ -17,10 +17,24 @@
         android:textColor="@color/colorWhite"
         android:textSize="25sp"/>
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_endAlarm"
+        android:layout_width="220dp"
+        android:layout_height="81dp"
+        android:layout_alignTop="@+id/tvAlarm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:text="@string/endAlarm"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:backgroundTint="@color/colorWhite"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSuccessfulAlertLogs"
         android:layout_width="match_parent"
-        android:layout_height="590dp"
+        android:layout_height="500dp"
+        android:layout_alignTop="@id/btn_endAlarm"
+        android:layout_marginTop="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"/>
 
