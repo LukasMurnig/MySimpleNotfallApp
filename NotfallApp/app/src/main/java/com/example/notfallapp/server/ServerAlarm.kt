@@ -89,7 +89,7 @@ class ServerAlarm {
     /**
      * function create the special request of a JSONArray
       */
-    private fun createGetArrayCall(method: Int, extraUrl: String, toDo: (response: JSONArray) -> Unit ) {
+    fun createGetArrayCall(method: Int, extraUrl: String, toDo: (response: JSONArray) -> Unit ) {
         val jsonObjectRequest: JsonArrayRequest = object : JsonArrayRequest(
             method, ServerApi.serverAPIURL + extraUrl, null,
             Response.Listener<JSONArray> { response ->

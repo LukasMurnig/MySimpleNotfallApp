@@ -11,6 +11,7 @@ import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ResponseConverter
 import com.example.notfallapp.server.ServerAlarm
+import com.example.notfallapp.server.ServerUser
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.util.*
@@ -64,6 +65,7 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
 
         if((extras.get("accepted")) != null){
             tvDetailAlarmAccepted.text = (extras.get("accepted") as UUID?).toString()
+            ServerUser().getUserName((extras.get("accepted") as UUID?).toString(), tvDetailAlarmAccepted)
         } else {
             tvDetailAlarmAccepted.text = resources.getText(R.string.AlarmAccepted)
         }
