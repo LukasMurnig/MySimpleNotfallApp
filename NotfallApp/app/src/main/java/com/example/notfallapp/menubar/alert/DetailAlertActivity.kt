@@ -76,7 +76,7 @@ class DetailAlertActivity : AppCompatActivity(), ICreatingOnClickListener {
 
         MainScope().launch {
             // get the Alert History from the server
-            ServerAlarm().getAlertLogs(applicationContext, rvAlertLogs, extras.getLong("ID"))
+            ServerAlarm().getAlertLogs(rvAlertLogs, extras.getLong("ID"), false)
         }
     }
 

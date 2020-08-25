@@ -58,7 +58,7 @@ class ServerAlarm {
         }
     }
 
-    fun getAlertLogs(context: Context, rvAlarmLogs: RecyclerView, alarmId: Long){
+    fun getAlertLogs(rvAlarmLogs: RecyclerView, alarmId: Long, white: Boolean){
         createGetArrayCall(Request.Method.GET, "/alerts/$alarmId/alertlogs") { response ->
 
             if(response.length() == 0){
@@ -79,7 +79,7 @@ class ServerAlarm {
                             ResponseConverter().isStringOrNull("Message", js)
                         ))
                 }
-                val adapter = AlertLogsListAdapter(result)
+                val adapter = AlertLogsListAdapter(result, white)
                 rvAlarmLogs.adapter = adapter
                 adapter.notifyDataSetChanged()
             }

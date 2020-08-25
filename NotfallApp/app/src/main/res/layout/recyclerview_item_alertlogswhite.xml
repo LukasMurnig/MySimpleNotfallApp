@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:padding="3dp">
+
+    <!-- Zeitstempel -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/time"
+        android:textSize="20sp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/colorWhite"/>
+    <TextView
+        android:id="@+id/alertLogDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="110dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <!-- User -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@+id/alertLogDate"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"/>
+    <TextView
+        android:id="@+id/alertLogUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@+id/alertLogDate"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="5dp"/>
+
+    <!-- Comment -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comment"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@+id/alertLogUser"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"/>
+    <TextView
+        android:id="@+id/alertLogComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@+id/alertLogUser"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="5dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/alertLogComment"
+        android:layout_marginTop="3dp"/>
+
+</RelativeLayout>

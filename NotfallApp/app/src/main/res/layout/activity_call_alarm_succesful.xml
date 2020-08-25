@@ -15,7 +15,7 @@
         android:layout_marginTop="110dp"
         android:text="@string/alarmcalledsuccesful"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/size30"/>
+        android:textSize="30sp"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_alarm_succesful_ok"
@@ -25,8 +25,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="304dp"
         android:text="@string/alarmcanceledok"
-        android:textSize="@dimen/size30"
+        android:textSize="30sp"
         android:gravity="center"
         android:backgroundTint="@color/colorWhite"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSuccessfulAlertLogs"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"/>
 
 </RelativeLayout>
