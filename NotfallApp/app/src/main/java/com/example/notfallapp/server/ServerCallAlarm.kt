@@ -52,7 +52,7 @@ class ServerCallAlarm {
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
 
-            createJsonObjectRequest(Request.Method.POST, "/alert", reqBody){response ->
+            createJsonObjectRequest(Request.Method.POST, "/users/$userId/alert", reqBody){ response ->
                 Log.e(ServerApi.TAG, "response Alarm: $response")
                 var statusCode = 0
                 try {
