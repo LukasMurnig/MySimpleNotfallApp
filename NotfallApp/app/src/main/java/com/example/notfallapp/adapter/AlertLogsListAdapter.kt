@@ -7,17 +7,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notfallapp.R
 import com.example.notfallapp.bll.AlertLog
+import com.example.notfallapp.server.ServerUser
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class AlertLogsListAdapter(private var alertLogs: List<AlertLog>) : RecyclerView.Adapter<AlertLogsListAdapter.AlertLogsViewHolder>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AlertLogsListAdapter.AlertLogsViewHolder {
+    ): AlertLogsViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item_alertlog, parent, false)
         return AlertLogsViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: AlertLogsListAdapter.AlertLogsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AlertLogsViewHolder, position: Int) {
         val alertLog: AlertLog? = alertLogs[position]
         if(alertLog != null){
             holder.bindAlertLog(alertLog)
@@ -29,49 +32,54 @@ class AlertLogsListAdapter(private var alertLogs: List<AlertLog>) : RecyclerView
     }
 
     class AlertLogsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private lateinit var alertLogDate: TextView
-        private lateinit var alertLogUser: TextView
-        private lateinit var alertLogComment: TextView
+        private lateinit var tvAlertLogDate: TextView
+        private lateinit var tvAlertLogUser: TextView
+        private lateinit var tvAlertLogComment: TextView
 
         fun bindAlertLog(alertLog: AlertLog) {
-            alertLogDate = itemView.findViewById(R.id.alertLogDate)
-            alertLogUser = itemView.findViewById(R.id.alertLogUser)
-            alertLogComment = itemView.findViewById(R.id.alertLogComment)
+            tvAlertLogDate = itemView.findViewById(R.id.alertLogDate)
+            tvAlertLogUser = itemView.findViewById(R.id.alertLogUser)
+            tvAlertLogComment = itemView.findViewById(R.id.alertLogComment)
 
             val timestamp = alertLog.date.split('.')[0]
             var time = timestamp.split('T')
             val date = time[0].split('-')
             time = time[1].split(':')
 
-            alertLogDate.text = "${date[2]}.${date[1]}.${date[0]} ${time[0]}:${time[1]}"
-            alertLogUser.text = alertLog.userId.toString()
+            tvAlertLogDate.text = "${date[2]}.${date[1]}.${date[0]} ${time[0]}:${time[1]}"
+
+            tvAlertLogUser.text = alertLog.userId.toString()
+
+            MainScope().launch {
+                ServerUser().getUserName(alertLog.userId.toString(), tvAlertLogUser)
+            }
 
             when(alertLog.logType){
-                0 -> alertLogComment.text = "Alert triggered"
-                1 -> alertLogComment.text = "Alert accepted"
-                2 -> alertLogComment.text = "Alert invalidated"
-                3 -> alertLogComment.text = "Alert Closed"
-                4 -> alertLogComment.text = " Close Forced by system"
-                5 -> alertLogComment.text = "Close Forced by movement zone"
-                6 -> alertLogComment.text = "Close Forced by wlan connection"
-                10 -> alertLogComment.text = "User contacted"
-                11 -> alertLogComment.text = "User status recall (deprecated)"
-                12 -> alertLogComment.text = "User Contacted via sms"
-                13 -> alertLogComment.text = "User Contacted via email"
-                14 -> alertLogComment.text = "Call Center contacted"
-                20 -> alertLogComment.text = "User not reachable"
-                21 -> alertLogComment.text = "User absent"
-                22 -> alertLogComment.text = "User inactive"
-                23 -> alertLogComment.text = "User phone number missing"
-                24 -> alertLogComment.text = "User no contact type activated"
-                25 -> alertLogComment.text = "User already alerted"
-                30 -> alertLogComment.text = "User refused"
-                31 -> alertLogComment.text = "User hang up"
-                40 -> alertLogComment.text = "alert restart chain"
-                41 -> alertLogComment.text = "alerting chain completed"
+                0 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_AlertTriggered)
+                1 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_AlertAccepted)
+                2 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_AlertInvalidated)
+                3 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_AlertClosed)
+                4 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_CloseForcedBySystem)
+                5 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_CloseForcedByMovementZone)
+                6 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_CloseForcedByWlanConnection)
+                10 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserContacted)
+                11 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserStatusRecallDeprecated)
+                12 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserContactedViaSms)
+                13 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserContactedViaEmail)
+                14 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_CallCenterContacted)
+                20 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserNotReachable)
+                21 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserAbsent)
+                22 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserInactive)
+                23 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserPhoneNumberMissing)
+                24 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserNoContactTypeActivated)
+                25 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserAlreadyAlerted)
+                30 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserRefused)
+                31 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_UserHangUp)
+                40 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_alertRestartChain)
+                41 -> tvAlertLogComment.text = itemView.context.getString(R.string.alertLog_alertingChainCompleted)
                 50 -> {
                     if(alertLog.message != null){
-                        alertLogComment.text = alertLog.message
+                        tvAlertLogComment.text = alertLog.message
                     }
                 }
             }

@@ -19,7 +19,9 @@ import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
+import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.server.ServerApi
+import com.example.notfallapp.server.ServerUser
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
 import com.example.notfallapp.service.ServiceStartChecking
 import com.example.notfallappLibrary.interfaces.VALRTIBracelet
@@ -88,6 +90,10 @@ class MainActivity : AppCompatActivity(),
 
             if(ServerApi.volleyRequestQueue == null){
                 ServerApi.volleyRequestQueue = Volley.newRequestQueue(applicationContext)
+            }
+
+            if(SettingsActivity.logInUser == null){
+                ServerUser().getUserInfo(applicationContext, null, null, null)
             }
         }
 

@@ -62,7 +62,9 @@ class SettingsActivity : AppCompatActivity(), ICreatingOnClickListener, ICheckPe
         updateProfilePicture()
 
         MainScope().launch {
-            ServerUser().getUserInfo(applicationContext, tvName, tvTelNr, tvEmail)
+            if(logInUser == null){
+                ServerUser().getUserInfo(applicationContext, tvName, tvTelNr, tvEmail)
+            }
         }
 
         btnProfilePicture.setOnClickListener{
