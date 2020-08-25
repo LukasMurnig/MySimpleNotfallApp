@@ -171,8 +171,17 @@ class ServerApi : ICheckPermission {
                     }
                 },
                 { error ->
-                    val resErrorBody = JSONObject(String(error.networkResponse.data))
-                    Log.e(TAG, "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get("Error"))
+                    try {
+                        val resErrorBody = JSONObject(String(error.networkResponse.data))
+                        Log.e(
+                            TAG,
+                            "problem occurred, volley error: " + error.networkResponse.statusCode + " " + resErrorBody.get(
+                                "Error"
+                            )
+                        )
+                    }catch (ex: java.lang.Exception){
+
+                    }
                 }
             )
             if(volleyRequestQueue != null){

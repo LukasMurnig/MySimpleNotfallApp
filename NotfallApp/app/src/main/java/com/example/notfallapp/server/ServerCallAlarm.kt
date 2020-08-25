@@ -11,6 +11,7 @@ import com.android.volley.toolbox.Volley
 import com.example.notfallapp.BroadcastReciever.ActionsBracelet
 import com.example.notfallapp.alarm.AlarmFailedActivity
 import com.example.notfallapp.alarm.AlarmSuccessfulActivity
+import com.example.notfallapp.interfaces.BeaconInRange
 import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.login.LoginActivity
 import org.json.JSONArray
@@ -80,12 +81,14 @@ class ServerCallAlarm {
             volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             val body = JSONObject()
+            val beaconBody = JSONObject()
             val arrayBody = JSONArray()
+            val arrayBodyBeacon = JSONArray()
             val time = Timestamp(System.currentTimeMillis()).toString()
             val times = time.split(" ")
             val currentTime = times[0]+"T"+times[1]+"+00:00"
             val location = CurrentLocation.currentLocation
-
+            val beacon = BeaconInRange.beacon
             body.put("Timestamp", currentTime)
 
             if(location?.longitude != null){
@@ -108,7 +111,16 @@ class ServerCallAlarm {
 
             body.put("Source", "gps")
             arrayBody.put(body)
+            if(beacon != null){
+                beaconBody.put("Timestamp", currentTime)
+                beaconBody.put("Type", beacon.beaconTypeCode)
+                beaconBody.put("Identifier", beacon.id1)
+                beaconBody.put("Mac", beacon.bluetoothAddress)
+                beaconBody.put("SignalStrength", beacon.distance)
+                arrayBodyBeacon.put(beaconBody)
+            }
             reqBody.put("Positions", arrayBody)
+            reqBody.put("Beacon", arrayBodyBeacon)
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
 
@@ -119,7 +131,6 @@ class ServerCallAlarm {
                 }catch(ex: ParseException){
                     Log.e(TAG, ex.toString())
                 }
-
                 if (statusCode in 200..299){
                     positionSuccessful = true
                 }
