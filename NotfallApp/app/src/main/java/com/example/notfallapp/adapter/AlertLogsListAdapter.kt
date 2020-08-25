@@ -11,12 +11,18 @@ import com.example.notfallapp.server.ServerUser
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class AlertLogsListAdapter(private var alertLogs: List<AlertLog>) : RecyclerView.Adapter<AlertLogsListAdapter.AlertLogsViewHolder>(){
+class AlertLogsListAdapter(private var alertLogs: List<AlertLog>, private var white: Boolean) : RecyclerView.Adapter<AlertLogsListAdapter.AlertLogsViewHolder>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): AlertLogsViewHolder {
-        val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item_alertlog, parent, false)
+
+        val itemView: View = if(white){
+            LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item_alertlogswhite, parent, false)
+        }else{
+            LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item_alertlog, parent, false)
+        }
+
         return AlertLogsViewHolder(itemView)
     }
 

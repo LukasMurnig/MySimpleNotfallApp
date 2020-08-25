@@ -66,13 +66,13 @@ class ServerAlarm {
      * Function which check if there is an active Alarm
      */
     fun getActiveAlarm(context: Context){
-            createGetArrayCall(Request.Method.GET, "/alerts?state=0") { response ->
-                if(response.length() != 0){
-                    var intent = Intent(context, AlarmSuccessfulActivity::class.java)
-                    context.startActivity(intent)
-                }
+        createGetArrayCall(Request.Method.GET, "/alerts?state=0") { response ->
+            if (response.length() != 0) {
+                val intent = Intent(context, AlarmSuccessfulActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.putExtra("Id", (response.getJSONObject(0).get("ID") as Int).toLong())
             }
-
+        }
     }
 
     /**
@@ -88,7 +88,10 @@ class ServerAlarm {
         }
     }
 
-    fun getAlertLogs(context: Context, rvAlarmLogs: RecyclerView, alarmId: Long){
+    /**
+     * function to get all alert logs of a alert
+     */
+    fun getAlertLogs(rvAlarmLogs: RecyclerView, alarmId: Long, white: Boolean){
         createGetArrayCall(Request.Method.GET, "/alerts/$alarmId/alertlogs") { response ->
 
             if(response.length() == 0){
@@ -109,9 +112,16 @@ class ServerAlarm {
                             ResponseConverter().isStringOrNull("Message", js)
                         ))
                 }
-                val adapter = AlertLogsListAdapter(result)
-                rvAlarmLogs.adapter = adapter
-                adapter.notifyDataSetChanged()
+                val adapter = AlertLogsListAdapter(result, white)
+                if(rvAlarmLogs.adapter != null){
+                    if(rvAlarmLogs.adapter!!.itemCount < adapter.itemCount){
+                        rvAlarmLogs.adapter = adapter
+                        adapter.notifyDataSetChanged()
+                    }
+                } else {
+                    rvAlarmLogs.adapter = adapter
+                    adapter.notifyDataSetChanged()
+                }
             }
         }
     }

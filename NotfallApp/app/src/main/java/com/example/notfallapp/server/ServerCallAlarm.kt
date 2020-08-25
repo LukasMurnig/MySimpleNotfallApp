@@ -10,7 +10,6 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.notfallapp.BroadcastReciever.ActionsBracelet
 import com.example.notfallapp.alarm.AlarmFailedActivity
-import com.example.notfallapp.alarm.AlarmSuccessfulActivity
 import com.example.notfallapp.interfaces.BeaconInRange
 import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.login.LoginActivity
@@ -55,9 +54,10 @@ class ServerCallAlarm {
             createJsonObjectRequest(Request.Method.POST, "/users/$userId/alert", reqBody){ response ->
                 Log.e(ServerApi.TAG, "response Alarm: $response")
                     alarmSuccessful = true
-                    val intent = Intent(context, AlarmSuccessfulActivity::class.java)
+                    /*val intent = Intent(context, AlarmSuccessfulActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    context.startActivity(intent)
+                    context.startActivity(intent)*/
+                    ServerAlarm().getActiveAlarm(context)
                 }
         }
 

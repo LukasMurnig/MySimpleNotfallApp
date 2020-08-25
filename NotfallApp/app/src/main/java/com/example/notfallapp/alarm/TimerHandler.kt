@@ -1,11 +1,8 @@
 package com.example.notfallapp.alarm
 
 import android.content.Context
-import android.content.Intent
 import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.server.ServerCallAlarm
 
