@@ -19,6 +19,7 @@ class BeaconInRange : Fragment(), BeaconConsumer{
 
     companion object{
         var beacons: ArrayList<Beacon?> = ArrayList()
+        var timer = Timer()
     }
     lateinit var beaconManager: BeaconManager
 
@@ -83,23 +84,11 @@ class BeaconInRange : Fragment(), BeaconConsumer{
                 if (beaconsCollection!!.isNotEmpty()) {
                         for (indx in beaconsCollection.indices) {
                             if(beacons.size < 5) {
-                                Log.e("Size", beacons.size.toString())
-                                Log.e("BEACON", beaconsCollection.elementAt(indx).toString())
                                 beacons.add(beaconsCollection.elementAt(indx))
                             }else{
                                     beaconManager!!.stopRangingBeaconsInRegion(region!!)
                                 }
                         }
-                }
-                try {
-                    var timer = Timer()
-                    timer.schedule(object : TimerTask() {
-                        override fun run() {
-                            beaconManager!!.stopRangingBeaconsInRegion(region!!)
-                        }
-                    }, 0, 30000)
-                }catch(ex: Exception){
-                    Log.e("TimerException", ex.toString())
                 }
             }
 
