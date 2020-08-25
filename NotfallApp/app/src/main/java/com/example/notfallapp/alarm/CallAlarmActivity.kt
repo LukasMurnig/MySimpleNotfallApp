@@ -48,7 +48,8 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
             startService(intent)
             finish()
         }
-
+        var sb = BeaconInRange()
+        sb.getBeacon(this)
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         if(activeNetwork?.isConnected == true){

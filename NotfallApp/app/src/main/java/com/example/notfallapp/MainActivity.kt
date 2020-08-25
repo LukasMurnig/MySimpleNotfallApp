@@ -78,8 +78,6 @@ class MainActivity : AppCompatActivity(),
         }catch(ex: Exception){
             ex.toString()
         }
-        var sb = BeaconInRange()
-        sb.getBeacon(this)
 
         val filter = IntentFilter()
         filter.addAction("ACTION_GATT_CONNECTED")
