@@ -2,6 +2,7 @@ package com.example.notfallapp.server
 
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,7 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
+import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlertLogsListAdapter
 import com.example.notfallapp.adapter.AlertsListAdapter
@@ -64,9 +66,23 @@ class ServerAlarm {
      * Function which check if there is an active Alarm
      */
     fun getActiveAlarm(context: Context){
-        createGetArrayCall(Request.Method.GET, "/alerts?state=0"){response ->
-            if(response.length() != 0) {
-                var intent = Intent(context, AlarmSuccessfulActivity::class.java)
+            createGetArrayCall(Request.Method.GET, "/alerts?state=0") { response ->
+                if(response.length() != 0){
+                    var intent = Intent(context, AlarmSuccessfulActivity::class.java)
+                    context.startActivity(intent)
+                }
+            }
+
+    }
+
+    /**
+     * Function which check if Alarm is not Active any more
+     */
+
+    fun checkAlarmActive(context: Context){
+        createGetArrayCall(Request.Method.GET, "/alerts?state=0") { response ->
+            if(response.length() == 0){
+                var intent = Intent(context, MainActivity::class.java)
                 context.startActivity(intent)
             }
         }

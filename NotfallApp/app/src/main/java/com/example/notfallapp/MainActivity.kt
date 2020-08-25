@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.toolbox.Volley
 import com.example.notfallapp.BroadcastReciever.ActionsBracelet
+import com.example.notfallapp.alarm.AlarmSuccessfulActivity
 import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.interfaces.ICheckPermission
