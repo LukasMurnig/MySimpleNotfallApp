@@ -50,6 +50,32 @@
     <string name="device">Gerät:</string>
     <string name="date">Datum:</string>
     <string name="alarmType">Alarm Typ:</string>
+    <string name="user">Benutzer:</string>
+    <string name="comment">Kommentar:</string>
+
+    <!-- AlertLogsTypes -->
+    <string name="alertLog_AlertTriggered">Alarm ausgelöst</string>
+    <string name="alertLog_AlertAccepted">Alarm akzeptiert</string>
+    <string name="alertLog_AlertInvalidated">Alarm ungültig</string>
+    <string name="alertLog_AlertClosed">Alarm geschlossen</string>
+    <string name="alertLog_CloseForcedBySystem">Schließen durch System erzwungen</string>
+    <string name="alertLog_CloseForcedByMovementZone">Schließen durch Bewegungszone erzwungen</string>
+    <string name="alertLog_CloseForcedByWlanConnection">Schließen durch Wlan Verbindung erzwungen</string>
+    <string name="alertLog_UserContacted">Benutzer kontaktiert</string>
+    <string name="alertLog_UserStatusRecallDeprecated">User erinnern</string>
+    <string name="alertLog_UserContactedViaSms">Benutzer per SMS kontaktiert</string>
+    <string name="alertLog_UserContactedViaEmail">Benutzer per E-Mail kontaktiert</string>
+    <string name="alertLog_CallCenterContacted">Call Center kontaktiert</string>
+    <string name="alertLog_UserNotReachable">Der Alarm wurde von keinem Benutzer angenommen. Erneuter Versuch später</string>
+    <string name="alertLog_UserAbsent">Benutzer nicht ereichbar</string>
+    <string name="alertLog_UserInactive">Benutzer ist inaktiv</string>
+    <string name="alertLog_UserPhoneNumberMissing">Benutzer Telefon Nummer fehlt</string>
+    <string name="alertLog_UserNoContactTypeActivated">Benutzer keine Benachrichtu</string>
+    <string name="alertLog_UserAlreadyAlerted">Benutzer wurde bereits per Email und/oder SMS benachrichtigt</string>
+    <string name="alertLog_UserRefused">Benutzer lehnte ab</string>
+    <string name="alertLog_UserHangUp">Benutzer legte auf</string>
+    <string name="alertLog_alertRestartChain">Der Alarm wurde von keinem Benutzer angenommen. Erneuter Versuch später</string>
+    <string name="alertLog_alertingChainCompleted">Alarm geschlossen. (Vom System automatisch geschlossen.)</string>
 
     <!-- Settings -->
     <string name="ChangeProfil">Ändere Daten</string>

@@ -9,8 +9,10 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.notfallapp.R
+import com.example.notfallapp.adapter.AlertLogsListAdapter
 import com.example.notfallapp.adapter.AlertsListAdapter
 import com.example.notfallapp.bll.Alert
+import com.example.notfallapp.bll.AlertLog
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -53,6 +55,34 @@ class ServerAlarm {
                     rvAlarms.adapter = adapter
                     adapter.notifyDataSetChanged()
                 }
+        }
+    }
+
+    fun getAlertLogs(context: Context, rvAlarmLogs: RecyclerView, alarmId: Long){
+        createGetArrayCall(Request.Method.GET, "/alerts/$alarmId/alertlogs") { response ->
+
+            if(response.length() == 0){
+                return@createGetArrayCall
+            }else{
+                val result = mutableListOf<AlertLog>()
+
+                for (i in 0 until response.length()) {
+                    val js = response.getJSONObject(i)
+
+                    result.add(
+                        AlertLog(
+                            (js.get("ID") as Int).toLong(),
+                            (js.get("AlertId") as Int).toLong(),
+                            (js.get("Date") as String),
+                            (js.get("LogType") as Int),
+                            ResponseConverter().convertFromStringToUUID(ResponseConverter().isStringOrNull("UserId", js)),
+                            ResponseConverter().isStringOrNull("Message", js)
+                        ))
+                }
+                val adapter = AlertLogsListAdapter(result)
+                rvAlarmLogs.adapter = adapter
+                adapter.notifyDataSetChanged()
+            }
         }
     }
 
