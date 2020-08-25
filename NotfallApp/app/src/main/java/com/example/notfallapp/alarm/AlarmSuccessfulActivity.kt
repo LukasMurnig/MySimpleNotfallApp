@@ -1,6 +1,5 @@
 package com.example.notfallapp.alarm
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -10,7 +9,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.server.ServerAlarm
@@ -71,7 +69,7 @@ class AlarmSuccessfulActivity : AppCompatActivity(), ICheckPermission {
             }
 
             startTimer()
-        }, 10000)
+        }, 10000) //every 10s
     }
 
     /**
@@ -81,12 +79,12 @@ class AlarmSuccessfulActivity : AppCompatActivity(), ICheckPermission {
         builder.setTitle(resources.getString(R.string.confirm))
         builder.setMessage(resources.getString(R.string.sureStopSearching))
 
-        builder.setPositiveButton(resources.getString(R.string.Yes)) { dialog, which ->
-            ServerCallAlarm.stopAlarm(this, idOfCurrentAlert.toString())
+        builder.setPositiveButton(resources.getString(R.string.Yes)) { dialog, _ ->
+            ServerCallAlarm.stopAlarm(applicationContext, idOfCurrentAlert.toString())
             dialog.dismiss()
         }
 
-        builder.setNegativeButton(resources.getString(R.string.No)) { dialog, which ->
+        builder.setNegativeButton(resources.getString(R.string.No)) { dialog, _ ->
             dialog.dismiss()
         }
     }
