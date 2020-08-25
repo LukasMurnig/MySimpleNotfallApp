@@ -20,8 +20,17 @@ class BeaconInRange : Fragment(), BeaconConsumer{
     companion object{
         var beacons: ArrayList<Beacon?> = ArrayList()
         var timer = Timer()
+        lateinit var region: Region
+        lateinit var beaconManager: BeaconManager
+        fun stopSearchingBeacons(){
+            try {
+                beaconManager.stopMonitoringBeaconsInRegion(region)
+            }catch(ex: Exception){
+                Log.e("BEACONMANAGER", ex.toString())
+            }
+        }
     }
-    lateinit var beaconManager: BeaconManager
+
 
     override fun onBeaconServiceConnect() {}
     override fun getApplicationContext(): Context? {
@@ -45,7 +54,7 @@ class BeaconInRange : Fragment(), BeaconConsumer{
      * Function should look for the first beacon it founds.
      */
     fun getBeacon(context: Context){
-        var region = Region("Beacons", null, null, null)
+        region = Region("Beacons", null, null, null)
         beaconManager = BeaconManager.getInstanceForApplication(context)!!
         beaconManager.beaconParsers.clear()
         beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"))
@@ -86,8 +95,8 @@ class BeaconInRange : Fragment(), BeaconConsumer{
                             if(beacons.size < 5) {
                                 beacons.add(beaconsCollection.elementAt(indx))
                             }else{
-                                    beaconManager!!.stopRangingBeaconsInRegion(region!!)
-                                }
+                                    stopSearchingBeacons()
+                            }
                         }
                 }
             }

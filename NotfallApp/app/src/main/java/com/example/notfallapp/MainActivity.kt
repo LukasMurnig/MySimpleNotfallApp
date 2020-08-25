@@ -67,11 +67,8 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var handler = Handler(this.mainLooper)
-        handler.post(){
-            var s = ServerAlarm()
-            s.getActiveAlarm(this)
-        }
+        var s = ServerAlarm()
+         s.getActiveAlarm(this)
         configureButtons()
         initComponents()
 
@@ -81,8 +78,8 @@ class MainActivity : AppCompatActivity(),
         }catch(ex: Exception){
             ex.toString()
         }
-        var s = BeaconInRange()
-        s.getBeacon(this)
+        var sb = BeaconInRange()
+        sb.getBeacon(this)
 
         val filter = IntentFilter()
         filter.addAction("ACTION_GATT_CONNECTED")

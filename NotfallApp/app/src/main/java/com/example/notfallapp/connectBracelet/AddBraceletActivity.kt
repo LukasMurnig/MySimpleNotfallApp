@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.BluetoothListAdapter
+import com.example.notfallapp.interfaces.BeaconInRange
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.server.ServerApi.Companion.TAG
@@ -62,7 +63,6 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
 
             if(devices.size != 0) {
                 val device = devices[position]
-
                 valrtSelectDevice(this, device)
                 valrtConnectToSelectedDevice(this, false, { string ->
                     Log.e(TAG, string)
@@ -115,6 +115,7 @@ class AddBraceletActivity : Activity(), ICreatingOnClickListener, ICheckPermissi
      * Function which calls our Libary which look for Bracelet in distance.
      */
     private fun searchDevice(){
+        BeaconInRange.stopSearchingBeacons()
         btnRetrySearching.isEnabled = false
         valrtScanForDevices(this, { message ->
             tvConnectBracelet.text = this.getString(R.string.nobluetoothdevicesfound)
