@@ -219,7 +219,6 @@ class MainActivity : AppCompatActivity(),
      */
     private fun checkConnected(){
         tvStatusbracelet.textSize = 30F
-        Log.e("TAG", ActionsBracelet.connected.toString())
         if (ActionsBracelet.connected){
             tvStatusbracelet.text = resources.getString(R.string.braceleteconnected)
             btnBracelet.visibility = View.VISIBLE

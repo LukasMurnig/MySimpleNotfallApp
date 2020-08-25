@@ -38,7 +38,7 @@ class ServerCallAlarm {
          * function send a alarm to the server and handle the response
          */
         fun sendAlarm(context: Context) {
-            volleyRequestQueue = Volley.newRequestQueue(context)
+            /*volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
 
@@ -55,7 +55,7 @@ class ServerCallAlarm {
                 Log.e(ServerApi.TAG, "response Alarm: $response")
                     alarmSuccessful = true
                     ServerAlarm().getActiveAlarm(context)
-                }
+                }*/
         }
 
         /**
@@ -72,7 +72,7 @@ class ServerCallAlarm {
             val times = time.split(" ")
             val currentTime = times[0]+"T"+times[1]+"+00:00"
             val location = CurrentLocation.currentLocation
-            val beacon = BeaconInRange.beacon
+            val beacons = BeaconInRange.beacons
             body.put("Timestamp", currentTime)
 
             if(location?.longitude != null){
@@ -95,16 +95,21 @@ class ServerCallAlarm {
 
             body.put("Source", "gps")
             arrayBody.put(body)
-            if(beacon != null){
-                beaconBody.put("Timestamp", currentTime)
-                beaconBody.put("Type", beacon.beaconTypeCode)
-                beaconBody.put("Identifier", beacon.id1)
-                beaconBody.put("Mac", beacon.bluetoothAddress)
-                beaconBody.put("SignalStrength", beacon.distance)
-                arrayBodyBeacon.put(beaconBody)
+            if(beacons != null) {
+                for (indx in beacons.indices) {
+                    var beacon = beacons.get(indx)
+                    beaconBody.put("Timestamp", currentTime)
+                    beaconBody.put("Type", beacon!!.beaconTypeCode)
+                    beaconBody.put("Identifier", beacon.id1)
+                    beaconBody.put("Mac", beacon.bluetoothAddress)
+                    beaconBody.put("SignalStrength", beacon.distance)
+                    arrayBodyBeacon.put(beaconBody)
+                }
+                Log.e("ArrayBody",arrayBodyBeacon.toString())
             }
             reqBody.put("Positions", arrayBody)
             reqBody.put("Beacon", arrayBodyBeacon)
+            Log.e("TAG", reqBody.toString())
             sharedPreferences = LoginActivity.sharedPreferences!!
             userId = sharedPreferences.getString("UserId", "")
 

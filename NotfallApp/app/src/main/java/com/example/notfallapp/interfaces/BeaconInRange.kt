@@ -7,6 +7,9 @@ import android.os.RemoteException
 import android.util.Log
 import androidx.fragment.app.Fragment
 import org.altbeacon.beacon.*
+import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -15,7 +18,7 @@ import org.altbeacon.beacon.*
 class BeaconInRange : Fragment(), BeaconConsumer{
 
     companion object{
-        var beacon: Beacon? = null
+        var beacons: ArrayList<Beacon?> = ArrayList()
     }
     lateinit var beaconManager: BeaconManager
 
@@ -76,19 +79,27 @@ class BeaconInRange : Fragment(), BeaconConsumer{
         })
 
         beaconManager?.addRangeNotifier(object : RangeNotifier {
-            override fun didRangeBeaconsInRegion(beacons: MutableCollection<Beacon>?, p1: Region?) {
-                if (beacons!!.isNotEmpty()) {
-                    for(indx in beacons.indices) {
-                        if (indx == 0) {
-                            beacon = beacons.elementAt(indx)
-                        }else{
-                            var checkBeacon = beacons.elementAt(indx)
-                            if(checkBeacon.distance < beacon!!.distance){
-                                beacon = checkBeacon
-                            }
+            override fun didRangeBeaconsInRegion(beaconsCollection: MutableCollection<Beacon>?, p1: Region?) {
+                if (beaconsCollection!!.isNotEmpty()) {
+                        for (indx in beaconsCollection.indices) {
+                            if(beacons.size < 5) {
+                                Log.e("Size", beacons.size.toString())
+                                Log.e("BEACON", beaconsCollection.elementAt(indx).toString())
+                                beacons.add(beaconsCollection.elementAt(indx))
+                            }else{
+                                    beaconManager!!.stopRangingBeaconsInRegion(region!!)
+                                }
                         }
-                    }
-                    beaconManager!!.stopRangingBeaconsInRegion(region!!)
+                }
+                try {
+                    var timer = Timer()
+                    timer.schedule(object : TimerTask() {
+                        override fun run() {
+                            beaconManager!!.stopRangingBeaconsInRegion(region!!)
+                        }
+                    }, 0, 30000)
+                }catch(ex: Exception){
+                    Log.e("TimerException", ex.toString())
                 }
             }
 
