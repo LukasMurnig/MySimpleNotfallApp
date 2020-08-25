@@ -39,7 +39,7 @@ class ServerCallAlarm {
          * function send a alarm to the server and handle the response
          */
         fun sendAlarm(context: Context) {
-            /*volleyRequestQueue = Volley.newRequestQueue(context)
+            volleyRequestQueue = Volley.newRequestQueue(context)
             val reqBody = JSONObject()
             reqBody.put("Type", 0)
 
@@ -56,7 +56,7 @@ class ServerCallAlarm {
                 Log.e(ServerApi.TAG, "response Alarm: $response")
                     alarmSuccessful = true
                     ServerAlarm().getActiveAlarm(context)
-                }*/
+                }
         }
 
         /**
