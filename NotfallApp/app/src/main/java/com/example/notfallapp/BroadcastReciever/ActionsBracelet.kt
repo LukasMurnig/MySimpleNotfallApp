@@ -19,7 +19,6 @@ class ActionsBracelet : BroadcastReceiver(), VALRTIBracelet {
     override fun onReceive(p0: Context?, p1: Intent?) {
         context = p0
         val action = p1?.action
-        Log.e(TAG, action)
         checkBatteryState()
 
         when (action){

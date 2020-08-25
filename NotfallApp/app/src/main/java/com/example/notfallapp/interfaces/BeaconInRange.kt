@@ -49,7 +49,6 @@ class BeaconInRange : Fragment(), BeaconConsumer{
         beaconManager?.addMonitorNotifier(object : MonitorNotifier {
             override fun didDetermineStateForRegion(p0: Int, region: Region?) {
                 try {
-                    Log.e("Region", region.toString())
                     beaconManager!!.startRangingBeaconsInRegion(region!!)
 
                 } catch (e: RemoteException) {
@@ -78,8 +77,7 @@ class BeaconInRange : Fragment(), BeaconConsumer{
 
         beaconManager?.addRangeNotifier(object : RangeNotifier {
             override fun didRangeBeaconsInRegion(beacons: MutableCollection<Beacon>?, p1: Region?) {
-                Log.e("TAG", beacons!!.size.toString())
-                if (beacons.isNotEmpty()) {
+                if (beacons!!.isNotEmpty()) {
                     for(indx in beacons.indices) {
                         if (indx == 0) {
                             beacon = beacons.elementAt(indx)

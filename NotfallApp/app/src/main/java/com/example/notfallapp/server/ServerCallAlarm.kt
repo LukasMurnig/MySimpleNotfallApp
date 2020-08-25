@@ -54,9 +54,6 @@ class ServerCallAlarm {
             createJsonObjectRequest(Request.Method.POST, "/users/$userId/alert", reqBody){ response ->
                 Log.e(ServerApi.TAG, "response Alarm: $response")
                     alarmSuccessful = true
-                    /*val intent = Intent(context, AlarmSuccessfulActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    context.startActivity(intent)*/
                     ServerAlarm().getActiveAlarm(context)
                 }
         }
