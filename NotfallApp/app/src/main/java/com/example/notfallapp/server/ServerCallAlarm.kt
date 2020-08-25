@@ -54,21 +54,9 @@ class ServerCallAlarm {
 
             createJsonObjectRequest(Request.Method.POST, "/users/$userId/alert", reqBody){ response ->
                 Log.e(ServerApi.TAG, "response Alarm: $response")
-                var statusCode = 0
-                try {
-                    //statusCode = response.
-                }catch(ex: ParseException){
-                    Log.e(TAG, ex.toString())
-                }
-
-                if(statusCode in 200..299) {
                     alarmSuccessful = true
                     val intent = Intent(context, AlarmSuccessfulActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    context.startActivity(intent)
-                }else{
-                    val intent = Intent(context, AlarmFailedActivity::class.java)
-                    intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 }
             }
