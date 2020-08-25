@@ -68,15 +68,10 @@ class ServerAlarm {
     fun getActiveAlarm(context: Context){
         createGetArrayCall(Request.Method.GET, "/alerts?state=0") { response ->
             if (response.length() != 0) {
-                try {
-                    Log.e("GGG", "HELLO")
-                    val intent = Intent(context, AlarmSuccessfulActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    intent.putExtra("Id", (response.getJSONObject(0).get("ID") as Int).toLong())
-                    context.startActivity(intent)
-                }catch(ex: java.lang.Exception){
-                    Log.e("GGG", ex.toString())
-                }
+                val intent = Intent(context, AlarmSuccessfulActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.putExtra("Id", (response.getJSONObject(0).get("ID") as Int).toLong())
+                context.startActivity(intent)
             }
         }
     }
@@ -84,11 +79,13 @@ class ServerAlarm {
     /**
      * Function which check if Alarm is not Active any more
      */
-
-    fun checkAlarmActive(context: Context){
+    fun checkAlarmActive(context: Context, handler: Handler?){
         createGetArrayCall(Request.Method.GET, "/alerts?state=0") { response ->
             if(response.length() == 0){
-                var intent = Intent(context, MainActivity::class.java)
+                handler?.removeCallbacksAndMessages(null)
+                AlarmSuccessfulActivity.isActive = false
+                val intent = Intent(context, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
             }
         }

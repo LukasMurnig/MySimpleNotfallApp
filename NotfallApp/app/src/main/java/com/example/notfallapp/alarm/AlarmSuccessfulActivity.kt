@@ -23,6 +23,8 @@ class AlarmSuccessfulActivity : AppCompatActivity(), ICheckPermission {
 
     companion object{
         var idOfCurrentAlert: Long? = null
+        var handler: Handler? = null
+        var isActive: Boolean = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,8 @@ class AlarmSuccessfulActivity : AppCompatActivity(), ICheckPermission {
 
         setContentView(R.layout.activity_call_alarm_succesful)
         initComponents()
+
+        isActive = true
 
         val extras = intent.extras ?: return
         idOfCurrentAlert = extras.getLong("Id")
@@ -46,10 +50,13 @@ class AlarmSuccessfulActivity : AppCompatActivity(), ICheckPermission {
     }
 
     private fun startTimer() {
-        Handler().postDelayed({ //Do something after 10000ms
+        if(handler == null){
+            handler = Handler()
+        }
+        handler!!.postDelayed({ //Do something after 10000ms
             Log.i("RefreshLog", "Refresh Alert Log")
-
             MainScope().launch {
+                ServerAlarm().checkAlarmActive(applicationContext, handler)
                 ServerAlarm().getAlertLogs(rvSuccessfulAlertLogs, idOfCurrentAlert!!, true)
             }
 

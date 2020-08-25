@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.example.notfallapp.alarm.AlarmSuccessfulActivity
 import com.example.notfallapp.server.ServerApi.Companion.TAG
 import com.example.notfallapp.service.ServiceCallAlarm
 import com.example.notfallappLibrary.interfaces.VALRTIBracelet
@@ -29,8 +30,10 @@ class ActionsBracelet : BroadcastReceiver(), VALRTIBracelet {
         }
     }
     private fun callAlarm(){
-        val intent = Intent(context!!, ServiceCallAlarm::class.java)
-        context!!.startService(intent)
+        if(!AlarmSuccessfulActivity.isActive){
+            val intent = Intent(context!!, ServiceCallAlarm::class.java)
+            context!!.startService(intent)
+        }
     }
 
     private fun checkBatteryState(){
