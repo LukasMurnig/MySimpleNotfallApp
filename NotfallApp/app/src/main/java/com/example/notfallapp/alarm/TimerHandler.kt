@@ -39,10 +39,6 @@ class TimerHandler {
 
                         // Create the notification "Alarm was successful"
                         createNotificationSuccessfulAlarm(context)
-
-                        val intent = Intent(context, AlarmSuccessfulActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(context, intent, null)
                     }
                 }, timerAfterSosWillSend)
             }

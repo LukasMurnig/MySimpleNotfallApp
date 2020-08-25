@@ -21,6 +21,7 @@ import com.example.notfallapp.interfaces.ICreatingOnClickListener
 import com.example.notfallapp.interfaces.INotifications
 import com.example.notfallapp.menubar.settings.SettingsActivity
 import com.example.notfallapp.interfaces.*
+import com.example.notfallapp.server.ServerAlarm
 import com.example.notfallapp.server.ServerApi
 import com.example.notfallapp.server.ServerUser
 import com.example.notfallapp.service.ForegroundServiceCreateSOSButton
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity(),
     companion object {
         var context: Context? = null
         var timer: Timer = Timer()
+        var count = 0
     }
 
     private lateinit var btnSos: Button
@@ -64,7 +66,11 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        var handler = Handler(this.mainLooper)
+        handler.post(){
+            var s = ServerAlarm()
+            s.getActiveAlarm(this)
+        }
         configureButtons()
         initComponents()
 
@@ -198,6 +204,10 @@ class MainActivity : AppCompatActivity(),
         context = this
         CurrentLocation.getCurrentLocation(this)
         checkInternetGPSPermissions(this)
+        if(count == 0) {
+            checkBluetoothPermission(this)
+            count++
+        }
         val intent = Intent(this, ServiceStartChecking::class.java)
         context?.startService(intent)
     }

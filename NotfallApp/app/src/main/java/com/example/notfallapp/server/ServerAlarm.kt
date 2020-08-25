@@ -1,6 +1,7 @@
 package com.example.notfallapp.server
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.example.notfallapp.R
 import com.example.notfallapp.adapter.AlertLogsListAdapter
 import com.example.notfallapp.adapter.AlertsListAdapter
+import com.example.notfallapp.alarm.AlarmSuccessfulActivity
 import com.example.notfallapp.bll.Alert
 import com.example.notfallapp.bll.AlertLog
 import org.json.JSONArray
@@ -58,7 +60,17 @@ class ServerAlarm {
         }
     }
 
-    fun getAlertLogs(rvAlarmLogs: RecyclerView, alarmId: Long, white: Boolean){
+    /**
+     * Function which check if there is an active Alarm
+     */
+    fun getActiveAlarm(context: Context){
+        createGetArrayCall(Request.Method.GET, "/alerts?state=0"){response ->
+            var intent = Intent(context, AlarmSuccessfulActivity::class.java)
+            context.startActivity(intent)
+        }
+    }
+
+    fun getAlertLogs(context: Context, rvAlarmLogs: RecyclerView, alarmId: Long, white: Boolean){
         createGetArrayCall(Request.Method.GET, "/alerts/$alarmId/alertlogs") { response ->
 
             if(response.length() == 0){
