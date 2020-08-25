@@ -109,6 +109,7 @@
     <string name="batterie">Batterie Stand:</string>
     <string name="notConnected">nicht Verbunden</string>
     <string name="connected">Verbunden</string>
+    <string name="endAlarm">Schließen</string>
 
     <!-- Profil -->
     <string name="Imagesaved">Bild gespeichert!</string>
