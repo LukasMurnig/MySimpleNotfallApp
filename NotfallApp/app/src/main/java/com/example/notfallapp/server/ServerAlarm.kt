@@ -65,10 +65,12 @@ class ServerAlarm {
      */
     fun getActiveAlarm(context: Context){
         createGetArrayCall(Request.Method.GET, "/alerts?state=0"){response ->
-            val intent = Intent(context, AlarmSuccessfulActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.putExtra("Id", (response.getJSONObject(0).get("ID") as Int).toLong())
-            context.startActivity(intent)
+            if(response.length() != 0) {
+                val intent = Intent(context, AlarmSuccessfulActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.putExtra("Id", (response.getJSONObject(0).get("ID") as Int).toLong())
+                context.startActivity(intent)
+            }
         }
     }
 
