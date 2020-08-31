@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notfallapp.BroadcastReciever.ActionsBracelet
 import com.example.notfallapp.R
+import com.example.notfallapp.connectBracelet.AddBraceletActivity
 import com.example.notfallapp.interfaces.BeaconInRange
 import com.example.notfallapp.interfaces.CurrentLocation
 import com.example.notfallapp.interfaces.ICheckPermission
@@ -48,8 +49,10 @@ class CallAlarmActivity : AppCompatActivity(), ICheckPermission {
             startService(intent)
             finish()
         }
-        var sb = BeaconInRange()
-        sb.getBeacon(this)
+        /*if (!ActionsBracelet.connected) {
+            var sb = BeaconInRange()
+            sb.getBeacon(this)
+        }*/
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         if(activeNetwork?.isConnected == true){
