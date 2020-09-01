@@ -15,6 +15,7 @@ import com.example.notfallapp.MainActivity
 import com.example.notfallapp.R
 import com.example.notfallapp.interfaces.ICheckPermission
 import com.example.notfallapp.server.ServerApi
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -31,7 +32,9 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
     }
 
     private lateinit var usernameText: EditText
+    private lateinit var tilusername: TextInputLayout
     private lateinit var passwordText: EditText
+    private lateinit var tilpassword: TextInputLayout
     private lateinit var loginButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,17 +115,17 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
         val password: String? = passwordText.text.toString()
 
         if (username?.isEmpty()!!) {
-            usernameText.error = resources.getString(R.string.emailTooShort)
+            tilusername.error = resources.getString(R.string.emailTooShort)
             validate = false
         }else{
-            usernameText.error = null
+            tilusername.error = null
         }
 
         if (password?.isEmpty()!! || password.length < 4) {
-            passwordText.error = resources.getString(R.string.passwordTooShort)
+            tilpassword.error = resources.getString(R.string.passwordTooShort)
             validate = false
         }else{
-            passwordText.error = null
+            tilpassword.error = null
         }
 
         return validate
@@ -130,7 +133,9 @@ class LoginActivity : AppCompatActivity(), ICheckPermission {
 
     private fun setLoginControls() {
         usernameText = findViewById(R.id.input_username)
+        tilusername = findViewById(R.id.til_username)
         passwordText = findViewById(R.id.input_password)
+        tilpassword = findViewById(R.id.til_password)
         loginButton = findViewById(R.id.btn_login)
         errorLogin = findViewById(R.id.error_login)
         checkInternetAccess(this)

@@ -201,10 +201,10 @@ class MainActivity : AppCompatActivity(),
         context = this
         CurrentLocation.getCurrentLocation(this)
         checkInternetGPSPermissions(this)
-        if(count == 0) {
+        /*if(count == 0) {
             checkBluetoothPermission(this)
             count++
-        }
+        }*/
         val intent = Intent(this, ServiceStartChecking::class.java)
         context?.startService(intent)
     }

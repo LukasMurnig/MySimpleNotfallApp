@@ -14,7 +14,7 @@
     <string name="noUser">Sie haben noch keinen Benutzer? Registrieren Sie sich!</string>
     <string name="Authenticate">Verifizieren....</string>
     <string name="LoginFailed">Login fehlgeschlagen</string>
-    <string name="emailTooShort">Feld für Email und Benutzer darf nicht leer sein!</string>
+    <string name="emailTooShort">Feld für Benutzernamen darf nicht leer sein!</string>
     <string name="passwordTooShort">Kennwort muss mindestens 4 Zeichen lang sein.</string>
 
     <!-- Database -->

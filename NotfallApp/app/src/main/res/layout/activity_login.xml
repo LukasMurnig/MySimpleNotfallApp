@@ -24,13 +24,16 @@
 
         <!-- Username Label -->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:theme="@style/TextLabel"
             app:startIconDrawable="@drawable/user"
-            app:startIconTint="@color/colorDark">
+            app:startIconTint="@color/colorDark"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/colorDark">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_username"
@@ -45,6 +48,7 @@
         <!-- Password Label -->
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -54,7 +58,10 @@
             app:startIconTint="@color/colorDark"
             app:passwordToggleEnabled="true"
             app:passwordToggleDrawable="@drawable/show_password_selector"
-            app:passwordToggleTint="@color/colorDark">
+            app:passwordToggleTint="@color/colorDark"
+            app:errorEnabled="true"
+            app:errorIconDrawable="@null"
+            app:errorTextColor="@color/colorDark">
             <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
