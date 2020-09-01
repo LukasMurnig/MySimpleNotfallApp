@@ -69,7 +69,7 @@ class ServerCallAlarm {
             val beaconBody = JSONObject()
             val arrayBody = JSONArray()
             val arrayBodyBeacon = JSONArray()
-            val time = Timestamp(System.currentTimeMillis()).toString()
+            val time = Timestamp(System.currentTimeMillis() - 7200000).toString() // remove 2 hours on the timestamp
             val times = time.split(" ")
             val currentTime = times[0]+"T"+times[1]+"+00:00"
             val location = CurrentLocation.currentLocation
