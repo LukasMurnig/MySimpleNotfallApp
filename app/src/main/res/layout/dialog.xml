@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff">
+
+    <ImageView
+        android:id="@+id/a"
+        android:layout_width="match_parent"
+        android:layout_height="103dp"
+        android:background="@color/dialogHeader"
+        android:contentDescription="@string/descriptionDialog"
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/alert_icon" />
+
+    <TextView
+        android:id="@+id/text_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/a"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/noPermission"
+        android:textColor="#ff000000"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_dialog"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_dialog_negative"
+            android:layout_width="130dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/colorWhite"
+            android:text="@string/deny"
+            android:textColor="@color/buttonText" />
+
+        <Button
+            android:id="@+id/btn_dialog_positive"
+            android:layout_width="130dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/colorWhite"
+            android:text="@string/access"
+            android:textColor="@color/buttonText" />
+    </LinearLayout>
+</RelativeLayout>

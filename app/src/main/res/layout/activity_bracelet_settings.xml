@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="@color/blueLogin"
+    >
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/backBtn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blueLogin"
+        android:text="@string/back"
+        android:textColor="@color/colorWhite"
+        app:icon="@drawable/arrow_back"
+        app:iconTint="@color/colorWhite" />
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingTop="10dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="40dp">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="100dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="176dp"
+                android:layout_height="216dp"
+                card_view:srcCompat="@drawable/watch" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginBottom="30dp"
+                    android:drawableLeft="@drawable/circle"
+                    android:drawablePadding="10dp"
+                    android:text="@string/braceletStatus"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvBattery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/circle"
+                    android:drawablePadding="10dp"
+                    android:text="@string/braceletBattery"
+                    android:textSize="25dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnPair"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="70dp"
+            android:backgroundTint="@color/colorWhite"
+            android:text="@string/pair"
+            android:textColor="@color/buttonText" />
+
+        <Button
+            android:id="@+id/btnAddNewBracelet"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="30dp"
+
+            android:backgroundTint="@color/colorWhite"
+            android:text="@string/addNewBracelet"
+            android:textColor="@color/buttonText" />
+
+        <Button
+            android:id="@+id/btnDisconnect"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/colorWhite"
+            android:text="@string/braceletDisconnect"
+            android:textColor="@color/buttonText"
+            android:visibility="gone"/>
+    </LinearLayout>
+</RelativeLayout>

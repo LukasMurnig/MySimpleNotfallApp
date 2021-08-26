@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/VAlrt"
+        android:checkableBehavior="single">
+        <item android:id="@+id/menu_connect"
+            android:title="@string/braceletRegister"
+            android:icon="@drawable/watch"/>
+        <item android:id="@+id/menu_checkpoint"
+            android:title="@string/bookOnRegister"
+            android:icon="@drawable/book"/>
+    </group>
+    <group
+        android:id="@+id/dataProtection"
+        android:checkableBehavior="single">
+        <item android:id="@+id/menu_dataProtection"
+            android:title="@string/dataProtection"
+            android:icon="@drawable/ic_baseline_description_24" />
+        <item android:id="@+id/menu_logout"
+            android:title="@string/logout"
+            android:icon="@drawable/ic_logout"/>
+    </group>
+</menu>

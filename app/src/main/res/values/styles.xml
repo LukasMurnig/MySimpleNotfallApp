@@ -1,0 +1,36 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@color/colorRed</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorDark</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
+    <!-- Theme for TextLabel email and password in Login -->
+    <style name="TextLabel" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/hintColor</item>
+        <item name="android:textSize">@dimen/size20</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+    <!-- Theme for Buttons in Button bar -->
+    <style name="ButtonStyle" parent="android:Widget.ImageButton">
+        <item name="background">@color/colorDodgerBlue</item>
+    </style>
+    <style name="ButtonTheme" parent="">
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+    </style>
+
+    <style name="Theme.App" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+</resources>

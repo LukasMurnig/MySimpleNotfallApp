@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="350dp"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="103dp"
+        android:background="@color/dialog_success"
+        android:contentDescription="@string/descriptionDialog"
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/check" />
+
+    <TextView
+        android:id="@+id/tv_success_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivSuccess"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/success"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_ok"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_success_dialog"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/colorWhite"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:text="@string/OK"
+        android:textColor="@color/buttonText" />
+</RelativeLayout >

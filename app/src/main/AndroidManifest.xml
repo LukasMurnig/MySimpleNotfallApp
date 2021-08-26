@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.notfallapp">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature android:name="android.hardware.bluetooth" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:allowBackup="true"
+        android:debuggable="true"
+        android:icon="@drawable/notfallapplogo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        tools:ignore="HardcodedDebugMode"
+        tools:replace="android:label">
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <uses-library
+            android:name="com.google.android.maps"
+            android:required="false"/>
+        <uses-library android:name="org.altbeacon.beacon" android:required="false"/>
+        <uses-library android:name="VALRTILogsLibrary-debug" android:required="false"/>
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    <activity
+        android:name=".MainActivity"
+        android:screenOrientation="portrait" />
+    <activity
+        android:name=".menubar.contact.ContactActivity"
+        android:screenOrientation="portrait" />
+    <activity
+        android:name=".menubar.alert.AlarmsActivity"
+        android:screenOrientation="portrait" />
+    <activity
+        android:name=".menubar.alert.DetailAlertActivity"
+        android:screenOrientation="portrait" />
+    <activity
+        android:name=".menubar.settings.SettingsActivity"
+        android:screenOrientation="portrait" />
+    <activity
+        android:name=".alarm.CallAlarmActivity"
+        android:persistent="true"
+        android:screenOrientation="portrait" />
+    <activity
+        android:name=".alarm.AlarmCanceledActivity"
+        android:screenOrientation="portrait" />
+    <activity
+        android:name=".alarm.AlarmSuccessfulActivity"
+        android:screenOrientation="portrait" />
+    <activity
+        android:name=".connectBracelet.AddBraceletActivity"
+        android:screenOrientation="portrait" />
+    <activity
+        android:name=".menubar.settings.SelectProfilPictureActivity"
+        android:screenOrientation="portrait" />
+    <activity
+        android:name=".alarm.AlarmFailedActivity"
+        android:screenOrientation="portrait" />
+        <activity
+            android:name=".connectBracelet.BraceletSettings"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".connectBracelet.BraceletSettingsConnect"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".checkpoint.CheckpointActivity"
+            android:screenOrientation="portrait" />
+
+
+    <service android:name=".service.ServiceCallAlarm" />
+    <service android:name=".service.ServiceCancelAlarm" />
+    <service android:name=".service.ServiceStartChecking" />
+    <service android:name=".service.ForegroundServiceCreateSOSButton" />
+
+    <receiver android:name=".service.ReceiverNotificationClose">
+        <intent-filter>
+            <action android:name="com.notfallApp.service.ReceiverNotificationClose" />
+        </intent-filter>
+    </receiver>
+
+    <!--Maps Android Key-->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD79o3PuKG5lDyJhFm_CcIl6v5xpvZaKsU"/>
+
+        <!--Maps-->
+    </application>
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+</manifest>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blueLogin"
+    android:backgroundTint="@color/blueLogin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingTop="20dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="40dp">
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="326dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="arial"
+            android:gravity="left"
+            android:paddingLeft="0dp"
+            android:paddingTop="20dp"
+            android:text="@string/sendAlarm"
+            android:textColor="@color/yellowLogin"
+            android:textSize="@dimen/size30" />
+
+        <ImageView
+            android:id="@+id/alert_View"
+            android:layout_width="144dp"
+            android:layout_height="135dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/sending_alert" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_View"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:background="#fff"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:orientation="vertical"
+                android:paddingLeft="0dp"
+                android:paddingTop="10dp"
+                android:paddingRight="24dp">
+
+
+                <TextView
+                    android:id="@+id/lbAlertSlide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="@string/abortAlarm"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorDark"
+                    android:textSize="@dimen/size20" />
+
+                <com.ebanx.swipebtn.SwipeButton
+                    android:id="@+id/swipe_btn"
+                    android:layout_width="255dp"
+                    android:layout_height="94dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="70dp"
+                    app:button_background="@drawable/shape_button"
+                    app:button_bottom_padding="20dp"
+                    app:button_image_disabled="@drawable/arrow_forward"
+                    app:button_image_enabled="@drawable/arrow_forward"
+                    app:button_image_height="70dp"
+                    app:button_image_width="70dp"
+                    app:button_left_padding="20dp"
+                    app:button_right_padding="20dp"
+                    app:button_top_padding="20dp"
+                    app:has_activate_state="true"
+                    app:initial_state="disabled"
+                    app:inner_text_background="@drawable/shape_rounded"
+                    app:inner_text_bottom_padding="18dp"
+                    app:inner_text_color="@color/gray"
+                    app:inner_text_size="25sp"
+                    app:inner_text_top_padding="18dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dataProtection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="left"
+                        android:text="Data Protection"
+                        android:textColor="@color/hintColor"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</RelativeLayout>

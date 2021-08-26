@@ -1,0 +1,312 @@
+<resources>
+    <string name="app_name">NotfallApp</string>
+
+    <!-- Simple emergencyApp -->
+    <string name="alertIsActive">Alarm ist aktiv!</string>
+    <string name="alertInit">Alarm wird initialisiert</string>
+    <string name="positionLocated">Position lokalisiert</string>
+    <string name="alertTransferredInc">Alarm übertragen</string>
+
+    <!-- Sign up & Log in-->
+    <string name="email">Email adresse</string>
+    <string name="password">Password</string>
+    <string name="username">Benutzername</string>
+    <string name="createAccount">Erstelle Benutzer</string>
+    <string name="loginbutton">Einloggen</string>
+    <string name="alreadyMember">Bereits einen Benutzer? Login</string>
+    <string name="noUser">Sie haben noch keinen Benutzer? Registrieren Sie sich!</string>
+    <string name="Authenticate">Verifizieren....</string>
+    <string name="LoginFailed">Login fehlgeschlagen</string>
+    <string name="emailTooShort">Feld für Benutzernamen darf nicht leer sein!</string>
+    <string name="passwordTooShort">Kennwort muss mindestens 4 Zeichen lang sein.</string>
+    <string name="loginMessage">Willkommen &amp; fühlen Sie sich sicher</string>
+
+    <!-- Main Activity -->
+    <string name="raiseAlart">Alarm auslösen</string>
+    <string name="lbAlarm">Schieben Sie, um einen Alarm auszulösen</string>
+    <string name="userName">John Doe</string>
+    <string name="dataProtection"><a href="https://www.wko.at/branchen/handel/D_05b-Datenschutzerklaerung-zur-Veroeffentlichung-auf-Websit.pdf">Datenschutzerklärung</a></string>
+    <string name="pairFailed">Keine V.Alrt zum verbinden vorhanden!</string>
+    <string name="pairSuccessfully">Erfolgreich mit V.Alrt verbunden!</string>
+    <!-- Call Alarm -->
+    <string name="sendAlarm">Alarm wird gesendet ...</string>
+    <string name="abortAlarm">Zum Abbrechen schieben</string>
+    <!-- Database -->
+    <string name="Database">alarms.db</string>
+    <!-- Button SOS -->
+    <string name="sos">SOS</string>
+
+    <!-- Button bar -->
+    <string name="btnHome">Button Home</string>
+    <string name="btnAlarms">Button Alarms</string>
+    <string name="btnContact">Button Contact</string>
+    <string name="btnSettings">Button Settings</string>
+
+    <!-- Contacts -->
+    <string name="noContacts">Sie besitzen leider noch keine Kontakte!</string>
+    <string name="contactName">Name</string>
+    <string name="contactActive">Aktiv</string>
+    <string name="add">Hinzufügen</string>
+
+    <!-- Alarms -->
+    <string name="noAlarms">Gottseidank besitzen Sie noch keine Alarme!</string>
+    <string name="time">Zeitpunkt:</string>
+    <string name="AlarmAnswered">Wer nahm an:</string>
+    <string name="AlarmAccepted">Derzeit niemand!</string>
+    <string name="numberAlarmDatabas">number</string>
+    <string name="firstnameAlarmDatabase">firstname</string>
+    <string name="lastnameAlarmDatabase">lastname</string>
+    <string name="emailAlarmDatabase">email</string>
+    <string name="image">image</string>
+    <string name="priority">priority</string>
+    <string name="active">active</string>
+    <string name="prio">prio</string>
+    <string name="device">Gerät:</string>
+    <string name="date">Datum:</string>
+    <string name="alarmType">Alarm Typ:</string>
+    <string name="user">Benutzer:</string>
+    <string name="comment">Kommentar:</string>
+
+    <!-- AlertLogsTypes -->
+    <string name="alertLog_AlertTriggered">Alarm ausgelöst</string>
+    <string name="alertLog_AlertAccepted">Alarm akzeptiert</string>
+    <string name="alertLog_AlertInvalidated">Alarm ungültig</string>
+    <string name="alertLog_AlertClosed">Alarm geschlossen</string>
+    <string name="alertLog_CloseForcedBySystem">Schließen durch System erzwungen</string>
+    <string name="alertLog_CloseForcedByMovementZone">Schließen durch Bewegungszone erzwungen</string>
+    <string name="alertLog_CloseForcedByWlanConnection">Schließen durch Wlan Verbindung erzwungen</string>
+    <string name="alertLog_UserContacted">Benutzer kontaktiert</string>
+    <string name="alertLog_UserStatusRecallDeprecated">User erinnern</string>
+    <string name="alertLog_UserContactedViaSms">Benutzer per SMS kontaktiert</string>
+    <string name="alertLog_UserContactedViaEmail">Benutzer per E-Mail kontaktiert</string>
+    <string name="alertLog_CallCenterContacted">Call Center kontaktiert</string>
+    <string name="alertLog_UserNotReachable">Der Alarm wurde von keinem Benutzer angenommen. Erneuter Versuch später</string>
+    <string name="alertLog_UserAbsent">Benutzer nicht ereichbar</string>
+    <string name="alertLog_UserInactive">Benutzer ist inaktiv</string>
+    <string name="alertLog_UserPhoneNumberMissing">Benutzer Telefon Nummer fehlt</string>
+    <string name="alertLog_UserNoContactTypeActivated">Benutzer keine Benachrichtu</string>
+    <string name="alertLog_UserAlreadyAlerted">Benutzer wurde bereits per Email und/oder SMS benachrichtigt</string>
+    <string name="alertLog_UserRefused">Benutzer lehnte ab</string>
+    <string name="alertLog_UserHangUp">Benutzer legte auf</string>
+    <string name="alertLog_alertRestartChain">Der Alarm wurde von keinem Benutzer angenommen. Erneuter Versuch später</string>
+    <string name="alertLog_alertingChainCompleted">Alarm geschlossen. (Vom System automatisch geschlossen.)</string>
+
+    <!-- Settings -->
+    <string name="ChangeProfil">Ändere Daten</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="deny">Ablehnen</string>
+    <string name="lastname">Nachname</string>
+    <string name="firstname">Vorname</string>
+    <string name="number">Telefonnummer</string>
+    <string name="updateProfil">Aktualisieren</string>
+    <string name="cancelProfil">Abbrechen</string>
+    <string name="nameSettings">name</string>
+    <string name="numberSettings">telNr</string>
+    <string name="ReadFile">ReadFile</string>
+    <string name="ReadFilePath">File Read::---> $1§s</string>
+    <string name="logout"><a onClick="">Abmelden</a></string>
+
+    <!-- Alarm called -->
+    <string name="alarmcalled">Ein Alarm wurde ausgelöst!
+                            In Kürze wird ein Alarm an die Zentrale weitergeleitet!</string>
+    <string name="alarmcanceled">Der Alarm wurde erfolgreich abgebrochen!</string>
+    <string name="alarmcanceledok">OK</string>
+    <string name="alarmcalledsuccesful">Ihr Alarm wurde erfolgreich an die Zentrale weitergeleitet!
+                                        Hilfe ist unterwegs!</string>
+    <string name="alarmFailed">Ihr Alarm konnte leider nicht abgesendet werden, deswegen versuchen wir es nochmals!</string>
+    <string name="stopAlarm">Alarm abbrechen!</string>
+    <string name="unexpectedErrorLogin">Hoppla anscheinend ist ein Fehler aufgetretten der so nicht passieren sollte!
+                                        Bitte verständigen Sie unseren Support!</string>
+    <string name="longitude">Längengrad:</string>
+    <string name="latitude">Breitengrad:</string>
+    <string name="accuracy">Genauigkeit:</string>
+    <string name="errorGeoInfo">konnte kein GPS bekommen</string>
+    <string name="batterie">Batterie Stand:</string>
+    <string name="notConnected">nicht Verbunden</string>
+    <string name="connected">Verbunden</string>
+    <string name="endAlarm">Schließen</string>
+
+    <!-- Profil -->
+    <string name="Imagesaved">Bild gespeichert!</string>
+    <string name="Failed">Bild speichern fehlgeschlagen!</string>
+    <string name="data">data</string>
+    <string name="namePicture">ProfilePicture.jpg</string>
+    <string name="PictureType">image/jpeg</string>
+    <string name="selectProfilPicture">Wähle ein Profilbild aus</string>
+    <string name="saveProfilPicture">Speichern</string>
+
+    <!-- Connect bracelet -->
+    <string name="nobraceletconnected">Sie haben kein Armband mit Ihrer App Verbunden</string>
+    <string name="braceleteconnected">Ihr Armband wurde erfolgreich verbunden.</string>
+    <string name="tryToConnectBracelet">Verbinden mit dem V.Alrt Knopf</string>
+    <string name="retrySearching">Erneut suchen</string>
+    <string name="sureStopSearching">Sind Sie sich sicher, dass Sie das suchen nach einem Bluetootharmband
+                                    beenden wollen?</string>
+    <string name="deviceNotSupportBluetooth">Es tut uns schrecklich leid, aber Ihr Geräte unterstützt
+                                            kein Bluetooth!</string>
+    <string name="nobluetoothdevicesfound">Wir haben leider keine Bluetoothgeräte in Ihrer nähe gefunden.
+                                            Bitte versuchen Sie es erneut!</string>
+    <string name="braceleterror">Hoppla, da ist wohl etwas schiefgelaufen bitte versuchen Sie es nochmal!</string>
+    <string name="connect">Verbinden</string>
+    <string name="noDeviceToPair">Anscheinend noch kein Gerät zum Verbinden vorhanden!</string>
+    <string name="pair">Koppeln</string>
+    <!-- DIALOG -->
+    <!-- Success Dialog -->
+    <string name="success">%1$s war Erfolgreich!</string>
+    <!-- Sure dialog -->
+    <string name="confirm">Bestätigen</string>
+    <string name="Yes">JA</string>
+    <string name="No">NEIN</string>
+    <!--OK dialog -->
+    <string name="noPermission">Fehlende Berechtigungen</string>
+    <string name="noPermissionText">Leider konnten wir nicht die notwendigen Berechtigungen von Ihnen erhalten.
+                                    Deshalb können Sie die App nur eingeschränkt nutzen!</string>
+    <string name="noGPS">Leider benötigen wir GPS damit wir im Falle eines Alarms ihr Position kennen.</string>
+    <string name="OK">OK</string>
+    <!--Internet Access -->
+    <string name="access">Zulassen</string>
+    <string name="noInternetAccess">Damit Sie die App Einwandfrei nutzen können benötigen wir
+                                    Internetzugang!</string>
+    <!-- Bluetooth Required -->
+    <string name="noBluetooth">Damit Sie die App Einwandfrei nutzen können benötigen wir Bluetooth!</string>
+    <!-- Notification -->
+    <string name="notificationTitle">Notfall App</string>
+    <string name="alarmWasCalled">Ein Alarm wurde ausgelöst!</string>
+    <string name="alarmWasSuccessful">Der Alarm war erfolgreich!</string>
+    <string name="alarmWasCanceled">Der Alarm wurde abgebrochen!</string>
+    <string name="title_activity_map">Map</string>
+    <string name="noInternet">Kein Internet</string>
+    <string name="enableInternet">Bitte schalten Sie Internet ein, damit die App funktioniert!</string>
+    <string name="noGPSNotificationbar">Kein GPS</string>
+    <string name="enableGPS">Bitte schalten Sie GPS ein, damit die App funktioniert!</string>
+    <string name="needGPS">Damit Sie die App Einwandfrei benutzen können benötigen wir Ihren Standort!</string>
+    <string name="lostConnection">Armband entfernt</string>
+    <string name="reconnectBracelet">Wir haben leider die Verbindung zu Ihrem Armband verloren!</string>
+    <string name="forbidden">Hoppla anscheinend stimmt Benutzername oder Passwort nicht! </string>
+    <string name="internError">Hoppla anscheinend haben wir gerade Probleme mit unserem Server.</string>
+    <string name="hint">Hinweis!</string>
+    <string name="hintMessage">Damit wir Sie bei einem Alarm besser finden können benötigen wir, dass Sie
+                                Bluetooth einschalten!</string>
+    <string name="descriptionDialog">yellow warning sign with red background</string>
+    <string name="personDownRegister">Person Down Timer</string>
+    <string name="bookOnRegister">Book On</string>
+    <string name="bookOffRegister">Book Off</string>
+    <string name="braceletRegister">Armband</string>
+    <string name="back">zurück</string>
+    <string name="braceletStatus">Nicht verbunden</string>
+    <string name="braceletBattery">0%</string>
+    <string name="braceletDisconnect">Trennen</string>
+    <string name="addNewBracelet">Neues Armband verbinden</string>
+    <string name="BookOnOffDialog">Wir versuchen Sie %1$s</string>
+    <string name="BookOn">ein zu checken</string>
+    <string name="BookOff">aus zu checken</string>
+    <string name="retry">Erneut versuchen</string>
+    <string name="book_error">Es gab ein Problem. %1$s</string>
+    <string name="book_no_Position">Wir konnten keine Position bestimmen!</string>
+    <string name="book_wrong_Position">Sie befinden sich an der falschen Position!</string>
+    <string name="book_inaccurate_Position">Ihre Position ist zu ungenau!</string>
+    <string name="checkIn">checkin</string>
+    <string name="checkout">checkout</string>
+    <!--Checkpoint -->
+    <string name="checkBluetoothBeacon">Wir versuchen Ihre Position mit Bluetooth Beacons zu bestimmen.</string>
+    <string name="checkWifiBeacon">Wir versuchen nun Ihre Position mit Wlan Beacons zu bestimmen.</string>
+    <string name="checkGPSLocation">Wir versuchen nun Ihre Position mit GPS zu bestimmen.</string>
+    <string name="checkpoint">Checkpoint</string>
+    <!-- Server -->
+    <!--ServerUser-->
+    <string name="UserMe">/users/me</string>
+    <string name="isSuccess">isSuccess</string>
+    <string name="code">code</string>
+    <string name="messageServer">message</string>
+    <string name="dataServer">data</string>
+    <string name="id">ID</string>
+    <string name="foreignId">ForeignId</string>
+    <string name="title">Title</string>
+    <string name="Forename">Forename</string>
+    <string name="Surename">Surename</string>
+    <string name="usernameServer">Username</string>
+    <string name="activeServer">Active</string>
+    <string name="roleServer">Role</string>
+    <string name="genderServer">Gender</string>
+    <string name="photoSetServer">PhotoSet</string>
+    <string name="birthdayServer">BirthDay</string>
+    <string name="emailAddressServer">EmailAddress</string>
+    <string name="phoneFixedServer">PhoneFixed</string>
+    <string name="OrgUnitSever">OrgUnit</string>
+    <string name="LanguageServer">Language</string>
+    <string name="TimezoneServer">Timezone</string>
+    <string name="authorizationServer">Authorization</string>
+    <!-- LOGS -->
+    <string name="userpermission">UserPermission</string>
+    <string name="GPSPermissionGranted">All permissions for getting GPS are granted by user!</string>
+    <string name="logo">Logo</string>
+    <string name="title_activity_settings_test">SettingsTestActivity</string>
+    <string name="buttonOk">ButtonOk</string>
+    <string name="buttonOkClicked">Button OK was clicked in %1$s!</string>
+    <string name="SOSButton">SOSButton</string>
+    <string name="SOSButtonClicked">SOS Button was clicked in %1$s!</string>
+    <string name="MenuItem">MenuItem</string>
+    <string name="HomeRegister">Homeregister was clicked in %1$s!</string>
+    <string name="AlarmRegister">Alarmregister was clicked in %1$s!</string>
+    <string name="ContactRegister">Contactregister was clicked in %1$s!</string>
+    <string name="SettingsRegister">Settingsregister was clicked in %1$s!</string>
+    <string name="CancelButton">CancelButton</string>
+    <string name="CancelButtonClicked">Cancel Button was clicked in %1$s!</string>
+    <string name="ErrorHandler">TimerHandler</string>
+    <string name="ErrorHandlerMessage">There was an error in %1$s with the message: %2$s</string>
+    <string name="ErrorBluetooth">Bluetooth</string>
+    <string name="ErrorBluetoothMessage">There was an error in %1$s with the message: %2$s</string>
+    <string name="AddButton">AddButton</string>
+    <string name="AddButtonPictureMessage">Add Button to add picture to Contact was clicked in %1$s!</string>
+    <string name="AddButtonContactMessage">Add Button to add Contact was clicked in %1$s!</string>
+    <string name="Image">There was an error in %1$s with the message: %2$s</string>
+    <string name="path">path</string>
+    <string name="ExceptionDatabase">Database</string>
+    <string name="ExceptionDatabaseMessage">There was an Error in %1$s with the message: %2$s</string>
+    <string name="ContactPicture">ContactPicture</string>
+    <string name="SelectContactPictureMessage">SelectContactPicture was clicked in %1$s!</string>
+    <string name="SaveContactPicture">SaveContactPicture</string>
+    <string name="SaveContactPictureMessage">SaveContactPicture was clicked in %1$s!</string>
+    <string name="CancelContactPicture">CancelContactPicture</string>
+    <string name="CancelContactPictureMessage">CancelContactPicture was clicked in %1$s!</string>
+    <string name="UserPermission">UserPermission</string>
+    <string name="UserPermissionGranted">External Storage permission for changing contact picture is granted by user!</string>
+    <string name="someError">Ein Fehler ist aufgetretten!</string>
+    <string name="savePicture">savePicture</string>
+    <string name="savePicturePath">File Saved::---> %1$s</string>
+    <string name="decide">Wähle aus:</string>
+    <string name="pictureGalerie">Wähle Foto von Gallerie aus</string>
+    <string name="takePicture">Mach ein Foto</string>
+    <string name="responseMessage">Response: %1$s</string>
+    <string name="ErrorServerUserMessage">There was an Error in %1$s with the message: %2$s</string>
+    <string name="ErrorServerUserResponseMessage">problem occurred, volley error: %1$s %2$s</string>
+    <string name="ErrorVerification">There was an Error in App Verification in %1$s with the message: %2$s</string>
+    <string name="CharacteristicReadMessage">Achieved Characteristic Read: %1$s</string>
+    <string name="DescriptorReadMessage">Received descriptor Read: %1$s</string>
+    <!-- Classes -->
+    <string name="AlarmCanceled">AlarmCanceledActivity</string>
+    <string name="AlarmSuccessful">AlarmSuccessfulActivity</string>
+    <string name="CallAlarm">CallAlarmActivity</string>
+    <string name="TimerHandler">TimerHandler</string>
+    <string name="Login">LoginActivity</string>
+    <string name="AddContact">AddContactActivity</string>
+    <string name="Contact">ContactActivity</string>
+    <string name="SelectContactPicture">SelectContactPictureActivity</string>
+    <string name="ServerUser">ServerUser</string>
+    <string name="ConnectBracelet">ConnectBracelet</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+    <string name="title_activity_simple_alert_active">activity_simpleAlertActive</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+
+</resources>

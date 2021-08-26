@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="@color/blueLogin"
+    >
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/backBtn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blueLogin"
+        android:text="@string/back"
+        android:textColor="@color/colorWhite"
+        app:icon="@drawable/arrow_back"
+        app:iconTint="@color/colorWhite" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingTop="10dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="40dp">
+
+        <TextView
+            android:id="@+id/tvConnectBracelet"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="100dp"
+            android:text="@string/tryToConnectBracelet"
+            android:textColor="@color/colorWhite"
+            android:textSize="25dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_View"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardElevation="8dp">
+
+            <ListView
+                android:id="@+id/lvDevices"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="50dp" />
+
+            <Button
+                android:id="@+id/btn_retry_searching_fab"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginTop="300dp"
+                android:layout_marginBottom="60dp"
+                android:backgroundTint="@color/colorDodgerBlue"
+                android:text="@string/retrySearching"
+                android:textColor="@color/colorDark" />
+
+            <Button
+                android:id="@+id/btn_cancel_searching_fab"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginTop="300dp"
+                android:backgroundTint="@color/colorDodgerBlue"
+                android:text="@string/cancel"
+                android:textColor="@color/colorDark" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</RelativeLayout>
